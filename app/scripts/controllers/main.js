@@ -8,10 +8,18 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .run(function(){
+
+    })
+    .controller('MainCtrl', function ($scope, $http) {
+
+        $scope.buckets = [];
+
+        //获取所有bucket列表
+        $http.get('test/buckets.xml').success(function(response){
+            var data = $.xml2json(response);
+            console.log('data',data);
+            $scope.buckets = data['ListAllMyBucketsResult']['Buckets']['Bucket'];
+
+        })
+    });

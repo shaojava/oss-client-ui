@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListAllMyBucketsResult xmlns="http://doc.oss.aliyuncs.com">
+    <Owner>
+        <ID>00220120222</ID>
+        <DisplayName>oss_doc</DisplayName>
+    </Owner>
+    <Buckets>
+        <Bucket>
+            <Name>multipart_upload</Name>
+            <CreationDate>2012-02-22T08:25:07.000Z</CreationDate>
+        </Bucket>
+        <Bucket>
+            <Name>my_oss</Name>
+            <CreationDate>2012-02-24T02:53:26.000Z</CreationDate>
+        </Bucket>
+    </Buckets>
+</ListAllMyBucketsResult>
