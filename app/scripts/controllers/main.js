@@ -8,18 +8,20 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .run(function(){
 
-    })
-    .controller('MainCtrl', function ($scope, $http) {
+    .controller('MainCtrl', function ($scope, OSSApi, OSSModal) {
 
         $scope.buckets = [];
 
         //获取所有bucket列表
-        $http.get('test/buckets.xml').success(function(response){
-            var data = $.xml2json(response);
-            console.log('data',data);
-            $scope.buckets = data['ListAllMyBucketsResult']['Buckets']['Bucket'];
+        OSSApi.getBuckets().success(function (res) {
+            var buckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+            $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
+        });
 
-        })
+        //显示新建bucket对话框
+        $scope.showAddBucketModal = function(){
+            OSSModal.addBucket();
+        }
+
     });

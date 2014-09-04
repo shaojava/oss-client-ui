@@ -6,6 +6,7 @@ body {
 button {
   background: none;
   border: 0 none;
+  outline: 0 none;
 }
 
 @for $i from 1 to 6 {

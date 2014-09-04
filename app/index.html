@@ -8,6 +8,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -19,7 +20,8 @@
         <div class="left-sidebar">
             <div class="left-header">
                 <h1>OSS</h1>
-                <button class="add-bucket"></button>
+                <button class="fa fa-plus add-bucket" ng-click="showAddBucketModal()">
+                </button>
             </div>
            <ul class="bucket-list">
                <li ng-repeat="bucket in buckets">
@@ -57,12 +59,15 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/jquery-xml2json/src/xml2json.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls-0.11.0.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/interface.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/services/service.js"></script>
     <!-- endbuild -->
 </body>
 </html>

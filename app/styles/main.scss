@@ -3,6 +3,10 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 // endbower
 
+$fa-font-path: "../bower_components/font-awesome/fonts";
+
+@import "font-awesome/scss/font-awesome";
+
 @import "_vars.scss";
 
 @import "_mixins.scss";
@@ -18,8 +22,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   background: $backgrundColor;
 }
 
-
-
 .left-sidebar {
   width: $leftSidebarWidth;
   background: $leftSidebarBgColor;
@@ -29,40 +31,35 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   bottom: 0;
   color: $leftSidebarFontColor;
 
-  .left-header{
-      position: relative;
-      height: $titleHeight;
-      line-height: $titleHeight;
-      padding: 0 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, .1);
+  .left-header {
+    position: relative;
+    height: $titleHeight;
+    line-height: $titleHeight;
+    padding: 0 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
 
-      .add-bucket{
+    .add-bucket {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      top: 50%;
+      right: 10px;
+      margin-top: -8px;
+      border: 2px solid $embedBgColor;
+      border-radius: 9px;
+      color: $embedBgColor;
+      line-height: 18px;
+      text-align: center;
+      &:before {
         position: absolute;
-        width: 16px;
-        height: 16px;
-        top:50%;
-        right: 10px;
-        margin-top: -8px;
-        border:2px solid $embedBgColor;
-        border-radius: 8px;
-        color: $embedBgColor;
-        line-height: 16px;
-        text-align: center;
-        &:after{
-          position: absolute;
-          content: "+";
-          display: block;
-          width: 16px;
-          height: 16px;
-          top:50%;
-          margin-top: -8px;
-          left: 50%;;
-          margin-left: -8px;
-          font-weight: 600;
-          font-family: "Arial";
-          font-size: 14px;
-        }
+        width: 18px;
+        height: 18px;
+        top: 50%;
+        margin-top: -9px;
+        left: 50%;;
+        margin-left: -9px;
       }
+    }
   }
 
   a {
@@ -91,12 +88,11 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
         border-left: 3px solid transparent;
 
         &:hover,
-        &.selected
-        {
+        &.selected {
           background: $bucketItemHoverBg;
         }
 
-        &.selected{
+        &.selected {
           border-left-color: $embedBgColor;
           color: $leftSidebarSelectFontColor;
         }
