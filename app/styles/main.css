@@ -8037,8 +8037,8 @@ button.close {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_bootstrap_overwirte\.scss}line{font-family:\000035}}
 .modal-content {
-  -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
 }
 
 /*!
@@ -10851,8 +10851,9 @@ ul {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\0000386}}
 .left-sidebar .bucket-list > li {
   margin: 4px 0;
+  position: relative;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\0000389}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\0000390}}
 .left-sidebar .bucket-list > li > a {
   display: block;
   height: 30px;
@@ -10860,11 +10861,11 @@ ul {
   padding: 0 20px;
   border-left: 3px solid transparent;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\0000397}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\0000398}}
 .left-sidebar .bucket-list > li > a:hover, .left-sidebar .bucket-list > li > a.selected {
   background: black;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003101}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003102}}
 .left-sidebar .bucket-list > li > a.selected {
   border-left-color: #50acf3;
   color: white;

@@ -19,9 +19,17 @@ angular.module('ossClientUiApp')
             $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
         });
 
-        //显示新建bucket对话框
-        $scope.showAddBucketModal = function(){
-            OSSModal.addBucket();
-        }
+        //新建bucket对话框
+        $scope.showAddBucketModal = function () {
+            OSSModal.addBucket().result.then(function (bucket) {
+                $scope.buckets.push(bucket);
+            });
+        };
+
+        $scope.editBucket = function (bucket) {
+            OSSModal.addBucket(bucket).result.then(function (bucket) {
+
+            });
+        };
 
     });

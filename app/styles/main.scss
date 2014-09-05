@@ -85,6 +85,7 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   .bucket-list {
     > li {
       margin: 4px 0;
+      position: relative;
 
       > a {
         display: block;

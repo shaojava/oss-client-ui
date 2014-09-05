@@ -20,12 +20,15 @@
         <div class="left-sidebar">
             <div class="left-header">
                 <h1>OSS</h1>
-                <button class="fa fa-plus add-bucket" ng-click="showAddBucketModal()">
-                </button>
+                <button class="fa fa-plus add-bucket" ng-click="showAddBucketModal()"></button>
             </div>
            <ul class="bucket-list">
-               <li ng-repeat="bucket in buckets">
-                   <a href="#" ng-bind="bucket.Name"></a>
+               <li ng-repeat="bucket in buckets" dropdown>
+                   <a href="#" dropdown-toggle>{{bucket.Name}}<span class="caret"></span></a>
+                   <ul class="dropdown-menu" role="menu">
+                       <li><a href="javascript:;" ng-click="editBucket(bucket)">属性管理</a></li>
+                       <li><a href="javascript:;" ng-click="manageBucketPartition(bucket)">分片管理</a></li>
+                   </ul>
                </li>
            </ul>
         </div>
@@ -66,6 +69,9 @@
     <script src="bower_components/cryptojslib/components/md5.js"></script>
     <script src="bower_components/cryptojslib/components/sha1.js"></script>
     <script src="bower_components/cryptojslib/components/hmac.js"></script>
+    <script src="bower_components/util.js/util.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/angular-spinner/angular-spinner.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
