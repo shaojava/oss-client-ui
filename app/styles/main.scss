@@ -1,7 +1,13 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+
+@import "bootstrap_vars";
+
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 // endbower
+
+@import "bootstrap_overwirte";
+
 
 $fa-font-path: "../bower_components/font-awesome/fonts";
 

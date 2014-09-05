@@ -35,5 +35,49 @@ var OSS = {
         if (window.debug) {
             console.log(name, info);
         }
+    },
+    /**
+     * @description 获取客户端useragent
+     * @returns {*|Array}
+     */
+    getUserAgent:function(){
+        return navigator.userAgent.split(';');
+    },
+    /**
+     * @description 获取客户端操作系统
+     * @returns {string}
+     */
+    getClientOS:function(){
+        var os = this.getUserAgent()[2] || '';
+        return os.toLowerCase();
+    },
+    /**
+     * @description 是否OSS window客户端
+     * @returns {boolean}
+     */
+    isWindowsClient:function(){
+        return this.getClientOS() == 'windows';
+    },
+    /**
+     * @description 是否OSS mac客户端
+     * @returns {boolean}
+     */
+    isMacClient:function(){
+        return this.getClientOS() == 'mac';
+    },
+    /**
+     * @description 是否客户端
+     * @returns {boolean}
+     */
+    isClientOS:function(){
+        return this.isWindowsClient() || this.isMacClient();
+    },
+    /**
+     * @description 是否oss客户端
+     * @returns {boolean}
+     */
+    isOSSClient:function(){
+        var sync = this.getUserAgent()[0] || '';
+        return sync.toLowerCase() == 'gk_sync';
     }
 };
