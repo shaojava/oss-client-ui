@@ -1,3 +1,14 @@
+html,
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input, textarea {
+  -webkit-user-select: default;
+  user-select: default;
+}
+
 body {
   font: $baseFont;
   color: $baseFontColor;
@@ -16,8 +27,43 @@ button {
   }
 }
 
-ul{
+ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+a {
+  outline: 0 none !important;
+  text-decoration: none !important;
+}
+
+input:focus {
+  outline: 0;
+}
+
+[disabled] .fa {
+  opacity: .2;
+  cursor: default;
+}
+
+//文件图标样式
+@each $size in 16, 32, 128 {
+
+  .file-icon-#{$size} {
+    display: inline-block;
+    width: #{$size}px;
+    height: #{$size}px;
+    vertical-align: middle;
+  }
+
+  @each $type in 'folder', 'video', 'audio', 'compress', 'document', 'image', 'execute', 'other', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk' {
+    .file-icon-#{$size}.icon-#{$type} {
+      background: url(../images/file-icons/#{$type}#{$size}x#{$size}.png) no-repeat center;
+      @include mq(retina) {
+        background: url(../images/file-icons/#{$type}#{$size*2}x#{$size*2}.png) no-repeat center;
+        background-size: #{$size}px #{$size}px;
+      }
+    }
+  }
 }

@@ -8,8 +8,186 @@
  * Factory in the ossClientUiApp.
  */
 angular.module('ossClientUiApp')
-    .factory('RequestXML', function () {
+    .factory('OSSLocationHistory', function ($location, $rootScope) {
+        var update = true,
+            history = [],
+            current,
+            maxLen = 100;
 
+        $rootScope.$on('$locationChangeSuccess', function () {
+            var url = $location.url();
+            var l = history.length;
+            console.log('url', url);
+            if (update) {
+                current >= 0 && l > current + 1 && history.splice(current + 1);
+                if (history[history.length - 1] != url) {
+                    history.push(url);
+                    if (history.length > maxLen) {
+                        history.splice(0, 1);
+                    }
+                }
+                current = history.length - 1;
+            }
+            update = true;
+            console.log('history', history);
+        });
+
+        return {
+            reset: function () {
+                history = [];
+                current = 0;
+                update = true;
+            },
+            go: function (isForward) {
+                console.log(123);
+                if ((isForward && this.canForward()) || (!isForward && this.canBackward())) {
+                    console.log(456);
+                    update = false;
+                    $location.url(history[isForward ? ++current : --current]);
+                }
+            },
+            forward: function () {
+                this.go(true);
+            },
+            backward: function () {
+                this.go();
+            },
+            canForward: function () {
+                return current < history.length - 1;
+            },
+            canBackward: function () {
+                return current > 0;
+            }
+        }
+    })
+    .factory('OSSObject', function ($location, $filter, OSSApi, $q) {
+        var fileSorts = {
+            'SORT_SPEC': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk', 'gknote'],
+            'SORT_MOVIE': ['mp4', 'mkv', 'rm', 'rmvb', 'avi', '3gp', 'flv', 'wmv', 'asf', 'mpeg', 'mpg', 'mov', 'ts', 'm4v'],
+            'SORT_MUSIC': ['mp3', 'wma', 'wav', 'flac', 'ape', 'ogg', 'aac', 'm4a'],
+            'SORT_IMAGE': ['jpg', 'png', 'jpeg', 'gif', 'psd', 'bmp', 'ai', 'cdr'],
+            'SORT_DOCUMENT': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'odt', 'rtf', 'ods', 'csv', 'odp', 'txt', 'gknote'],
+            'SORT_CODE': ['js', 'c', 'cpp', 'h', 'cs', 'vb', 'vbs', 'java', 'sql', 'ruby', 'php', 'asp', 'aspx', 'html', 'htm', 'py', 'jsp', 'pl', 'rb', 'm', 'css', 'go', 'xml', 'erl', 'lua', 'md'],
+            'SORT_ZIP': ['rar', 'zip', '7z', 'cab', 'tar', 'gz', 'iso'],
+            'SORT_EXE': ['exe', 'bat', 'com']
+        };
+        return {
+            list: function (bucket, prefix, delimiter, lastLoadMaker, loadFileCount) {
+                var _self = this;
+                var defer = $q.defer();
+                OSSApi.getObjects(bucket, prefix, delimiter, lastLoadMaker, loadFileCount).success(function (res) {
+                    OSS.log('list:res', res);
+                    var contents = res['ListBucketResult']['Contents'];
+                    contents = contents ? angular.isArray(contents) ? contents : contents : [];
+
+                    var commonPrefixes = res['ListBucketResult']['CommonPrefixes'];
+                    commonPrefixes = commonPrefixes ? angular.isArray(commonPrefixes) ? commonPrefixes : [commonPrefixes] : [];
+
+                    var files = [];
+                    angular.forEach($.merge(contents, commonPrefixes), function (file) {
+                        if (file.Key !== prefix && file.Prefix !== prefix) {
+                            files.push(_self.format(file));
+                        }
+                    })
+                    defer.resolve({
+                        files:files,
+                        marker:res['ListBucketResult']['NextMarker'],
+                        allLoaded:res['ListBucketResult']['IsTruncated'] === 'false'
+                    });
+
+                }).error(function(){
+
+                });
+                return defer.promise;
+            },
+            format: function (object) {
+                var path = object.Key || object.Prefix;
+                var isDir = Util.String.lastChar(path) === '/' ? 1 : 0;
+                var filename = isDir ? $filter('getPrefixName')(path, 1) : $filter('baseName')(path);
+                return {
+                    path: path,
+                    dir: isDir,
+                    filename: filename,
+                    lastModified: object.LastModified || '',
+                    size: object.Size || 0
+                }
+            },
+            open: function (bucket, path, isDir) {
+                if (isDir) {
+                    $location.path('/file/' + bucket.Name + '/' + path);
+                } else {
+
+                }
+            },
+            getIconSuffix: function (dir, filename) {
+                var suffix = '';
+                var sorts = fileSorts;
+                if (dir == 1) {
+                    suffix = 'folder';
+                } else {
+                    var ext = Util.String.getExt(filename);
+                    if (jQuery.inArray(ext, sorts['SORT_SPEC']) > -1) {
+                        suffix = ext;
+                    } else if (jQuery.inArray(ext, sorts['SORT_MOVIE']) > -1) {
+                        suffix = 'movie';
+                    } else if (jQuery.inArray(ext, sorts['SORT_MUSIC']) > -1) {
+                        suffix = 'music';
+                    } else if (jQuery.inArray(ext, sorts['SORT_IMAGE']) > -1) {
+                        suffix = 'image';
+                    } else if (jQuery.inArray(ext, sorts['SORT_DOCUMENT']) > -1) {
+                        suffix = 'document';
+                    } else if (jQuery.inArray(ext, sorts['SORT_ZIP']) > -1) {
+                        suffix = 'compress';
+                    } else if (jQuery.inArray(ext, sorts['SORT_EXE']) > -1) {
+                        suffix = 'execute';
+                    } else {
+                        suffix = 'other';
+                    }
+                }
+                return suffix;
+            },
+            getIcon: function (dir, name) {
+                return 'icon-' + this.getIconSuffix(dir, name);
+            }
+        }
+    })
+    .factory('OSSLocation', function () {
+        return {
+            getUrl: function (bucketName, prefix) {
+                prefix = angular.isUndefined(prefix) ? '' : prefix;
+                return ['/file/' , bucketName , '/' , prefix].join('');
+            }
+        }
+    })
+    .factory('Bread', function (OSSLocation) {
+        return {
+            getBreads: function (bucketName, path) {
+                var breads = [
+                    {
+                        name: bucketName,
+                        url: OSSLocation.getUrl(bucketName)
+                    }
+                ];
+                if (path && path.length) {
+                    path = Util.String.rtrim(Util.String.ltrim(path, '/'), '/');
+                    var paths = path.split('/');
+                    for (var i = 0; i < paths.length; i++) {
+                        var bread = {
+                            name: paths[i]
+                        };
+                        var fullpath = '';
+                        for (var j = 0; j <= i; j++) {
+                            fullpath += paths[j] + '/'
+                        }
+                        bread.url = OSSLocation.getUrl(bucketName, fullpath);
+                        breads.push(bread);
+                    }
+                }
+                return breads;
+            }
+        }
+    })
+    .factory('RequestXML', function () {
         return {
             getXMLHeader: function () {
                 return '<?xml version="1.0" encoding="UTF-8"?>';
@@ -26,8 +204,23 @@ angular.module('ossClientUiApp')
             }
         }
     })
-    .factory('Bucket', function () {
+    .factory('Bucket', function (OSSApi, $q) {
+        var buckets = null;
+        var deferred = $q.defer();
         return {
+            list: function () {
+                if (buckets) {
+                    deferred.resolve(deferred);
+                } else {
+                    OSSApi.getBuckets().success(function (res) {
+                        buckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                        deferred.resolve(angular.isArray(buckets) ? buckets : [buckets]);
+                    }).error(function () {
+                        deferred.reject();
+                    });
+                }
+                return deferred.promise;
+            },
             getRegions: function () {
                 return {
                     'oss-cn-hangzhou-a': '杭州',
@@ -55,7 +248,7 @@ angular.module('ossClientUiApp')
             https = angular.isUndefined(https) ? false : https;
             region = angular.isUndefined(region) ? "" : region;
             object = angular.isUndefined(object) ? "" : object;
-            var protocol = https ? 'https:' : ["https:", "http:"].indexOf(location.protocol) >= 0 ? location.protocol : "https:";
+            var protocol = https ? 'https:' : ["https:", "http:"].indexOf(location.protocol) >= 0 ? location.protocol : "http:";
             return protocol + '//' + (bucket ? bucket + "." : "") + (region ? region + "." : "") + 'aliyuncs.com' + object;
 
         };
@@ -75,7 +268,6 @@ angular.module('ossClientUiApp')
 
         return {
             getBuckets: function () {
-
                 var expires = getExpires();
                 var host = getOSSHost("oss", "", "/");
                 OSS.log('host', host);
@@ -93,7 +285,7 @@ angular.module('ossClientUiApp')
 
             },
             createBucket: function (bucketName, region, acl) {
-
+                OSS.log('createBucket', arguments);
                 var expires = getExpires();
                 var host = getOSSHost(bucketName, region);
 
@@ -164,10 +356,61 @@ angular.module('ossClientUiApp')
                 return $http.put(requestUrl, "", {
                     headers: headers
                 });
+            },
+            delBucket: function (bucket) {
+
+                var expires = getExpires();
+                var host = getOSSHost(bucket.Name, bucket.Location);
+                var canonicalizedOSSheaders = '';
+                var contentType = '';
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'DELETE',
+                    content_md5: '',
+                    content_type: contentType,
+                    expires: expires,
+                    canonicalized_oss_headers: canonicalizedOSSheaders,
+                    canonicalized_resource: '/' + bucket.Name + '/'
+                });
+
+                var requestUrl = getRequestUrl(host, expires, signature);
+                var headers = angular.extend({}, canonicalizedOSSheaders);
+                return $http.delete(requestUrl, "", {
+                    headers: headers
+                });
+            },
+            getObjects: function (bucket, prefix, delimiter, marker, maxKeys) {
+                var param = {
+                    prefix: prefix
+                };
+                $.extend(param, {
+                    delimiter: delimiter,
+                    marker: marker,
+                    'max-keys': maxKeys
+                })
+                console.log('param', param);
+                var queryStr = $.param(param, true);
+                console.log('queryStr', queryStr);
+                var expires = getExpires();
+                var host = getOSSHost(bucket.Name, bucket.Location);
+                var canonicalizedOSSheaders = "";
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'GET',
+                    content_md5: '',
+
+                    expires: expires,
+                    canonicalized_oss_headers: canonicalizedOSSheaders,
+                    canonicalized_resource: '/' + bucket.Name + '/'
+                });
+
+                var requestUrl = getRequestUrl(host, expires, signature, queryStr);
+                var headers = angular.extend({}, canonicalizedOSSheaders);
+                return $http.get(requestUrl, {
+                    headers: headers
+                });
             }
         };
     })
-    .factory('OSSModal', function ($modal, Bucket, OSSApi,usSpinnerService) {
+    .factory('OSSModal', function ($modal, Bucket, OSSApi) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -217,8 +460,7 @@ angular.module('ossClientUiApp')
                             $scope.loading = true;
                             OSSApi.getBucketAcl(bucket).success(function (res) {
                                 $scope.loading = false;
-                                console.log('res', res);
-                                $scope.acl = Util.Array.getObjectByKeyValue($scope.acls, 'value',res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
+                                $scope.acl = Util.Array.getObjectByKeyValue($scope.acls, 'value', res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
                             });
                         } else {
                             $scope.loading = true;
@@ -231,9 +473,12 @@ angular.module('ossClientUiApp')
                         $scope.createBucket = function (bucketName, region, acl) {
                             OSSApi.createBucket(bucketName, region.value, acl.value).success(function () {
                                 $modalInstance.close({
-                                    Name: bucketName,
-                                    Location: region.value,
-                                    Acl: acl.value
+                                    act: 'add',
+                                    bucket: {
+                                        Name: bucketName,
+                                        Location: region.value,
+                                        Acl: acl.value
+                                    }
                                 });
                             });
                         };
@@ -243,7 +488,19 @@ angular.module('ossClientUiApp')
                                 angular.extend(bucket, {
                                     Acl: acl.value
                                 })
-                                $modalInstance.close(bucket);
+                                $modalInstance.close({
+                                    act: 'edit',
+                                    bucket: bucket
+                                });
+                            });
+                        };
+
+                        $scope.delBucket = function () {
+                            OSSApi.delBucket(bucket).success(function () {
+                                $modalInstance.close({
+                                    act: 'del',
+                                    bucket: bucket
+                                });
                             });
                         };
                     }

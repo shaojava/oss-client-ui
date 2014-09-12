@@ -1,0 +1,16 @@
+<div class="clearfix filelist-header">
+    <div class="pull-left filename">文件名</div>
+    <div class="pull-right  file-create-time">创建时间</div>
+    <div class="pull-right filesize">大小</div>
+
+</div>
+<div class="filelist-body" scroll-load="loadMoreFile()" disable-scroll="loadingFile">
+    <div class="clearfix file-item" ng-repeat="file in files | orderBy:'-dir'" ng-dblclick="openFile(file,file.dir)">
+        <div class="pull-left filename">
+            <file-icon dir="{{file.dir}}" size="32" filename="{{file.filename}}"></file-icon>
+            <span class="name" ng-bind="file.filename"></span>
+        </div>
+        <div class="pull-right file-create-time" ng-bind="file.dir?'-' : (file.lastModified | formatTime)"></div>
+        <div class="pull-right filesize" ng-bind="file.dir?'-' : (file.size | bitSize)"></div>
+    </div>
+</div>

@@ -17,24 +17,29 @@ angular
         'ngSanitize',
         'ngTouch',
         'ui.bootstrap',
-        'angularSpinner'
+        'angularSpinner',
+        'OSSCommon'
     ])
     .config(function ($routeProvider, $httpProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
+            .when('/file/:bucket?/:object*?', {
+                templateUrl: 'views/filelist.html',
+                controller: 'FileListCtrl',
+                resolve: {
+                    buckets: function (Bucket) {
+                        return Bucket.list();
+                    }
+                }
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/file/'
             });
 
-        $httpProvider.defaults.transformResponse.unshift(function (response,header) {
-            if(header('content-type') == 'application/xml'){
+        $httpProvider.defaults.transformResponse.unshift(function (response, header) {
+            if (header('content-type') == 'application/xml') {
                 return $.xml2json(response);
             }
             return response;
-
         })
 
     });

@@ -7,7 +7,7 @@ $baseFont: 12px/1.428571429 "hiragino sans gb", "Helvetica Neue", "Helvetica", "
 //基础字体颜色
 $baseFontColor: #333;
 
-//侧边背景色
+//侧边背景色 + 文件条的区分色
 $lightBackgroundColor: #f7f7f7;
 
 //基础边框颜色
@@ -32,7 +32,7 @@ $embedBgColor:#50acf3;
 $itemSelectedBackgroundColor:#50acf3;
 
 //条目hover背景色
-$itemHoverBackgroundColor:#50acf3;
+$itemHoverBackgroundColor:#e1e3e7;
 
 //左侧背景色
 $leftSidebarBgColor:#24272b;
@@ -55,7 +55,30 @@ $titleHeight: 50px;
 //左侧item高度
 $bucketItemHeight: 30px;
 
+//左侧Item hover背景色
 $bucketItemHoverBg:#000;
+
+//按钮字体颜色
+$btnFontColor:#c9ccd0;
+
+//搜索wrapper的高度
+$searchWrapperHeight: 42px;
+
+//搜索输入框高度
+$searchInputHeight: 30px;
+
+//工具栏高度
+$toolbarHeight: 40px;
+
+//面包屑高度
+$breadHeight: 42px;
+
+//文件浏览的区域头部高度
+$fileListHeaderHeight:30px;
+
+//文件条高度
+$fileItemHeight:46px;
+
 
 
 

@@ -9,8 +9,8 @@
             <label for="bucket_name" class="col-sm-2 control-label">Bucket名称：</label>
 
             <div class="col-sm-10">
-                <span ng-if="bucket">{{bucket.Name}}</span>
-                <input ng-if="!bucket" type="text" class="form-control" ng-model="bucketName" id="bucket_name" placeholder="" />
+                <span ng-show="bucket">{{bucket.Name}}</span>
+                <input ng-show="!bucket" type="text" class="form-control" ng-model="bucketName" id="bucket_name" placeholder="" />
             </div>
         </div>
         <div class="form-group">
@@ -31,7 +31,7 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger pull-left" ng-show="bucket" ng-click="createBucket(bucketName,region,acl)">删除Bucket</button>
+    <button type="button" class="btn btn-danger pull-left" ng-show="bucket" ng-click="delBucket(bucket)">删除Bucket</button>
     <button type="button" class="btn btn-primary"  ng-show="!bucket" ng-click="createBucket(bucketName,region,acl)">确认</button>
     <button type="button" class="btn btn-primary"  ng-show="bucket" ng-click="editBucket(acl)" ng-disabled="loading">确认</button>
     <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>

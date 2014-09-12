@@ -4,8 +4,10 @@
 
 (function (window) {
 
-    var accessId = "fmVEoAkpUByBS1cs";
-    var accessSecret = "HWsJ79uEwsrh7PB6ASGpyrdZkwJWdR";
+//    var accessId = "fmVEoAkpUByBS1cs";
+//    var accessSecret = "HWsJ79uEwsrh7PB6ASGpyrdZkwJWdR";
+    var accessId = "aNgmvBucXXcJnOgj";
+    var accessSecret = "GBJN7GarVWrITZT9YZR64Ir6bOLEM5";
 
     function isOSSClient() {
         var sync = navigator.userAgent.split(';')[0] || '';
