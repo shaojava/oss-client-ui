@@ -53,6 +53,11 @@
             </ul>
         </div>
         <div class="toolbar">
+            <ul class="clearfix menu-list">
+                <li ng-repeat="menu in topMenuList" class="pull-left">
+                    <button ng-bind="menu.text" class="btn btn-default" ng-class="'menu-'+menu.name" ng-disabled="menu.disabled" ng-click="execCMD(menu.name)"></button>
+                </li>
+            </ul>
         </div>
         <div class="file-browser" ng-view>
 

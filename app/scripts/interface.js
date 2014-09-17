@@ -18,6 +18,7 @@ var OSS = {
         if (typeof callback === 'function') {
             args.push(function (re) {
                 re = JSON.parse(re);
+                this.log(name + ':callback', re);
                 callback(re);
             });
         }

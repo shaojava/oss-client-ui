@@ -1470,7 +1470,7 @@ img {
   line-height: 1.428571429;
   background-color: white;
   border: 1px solid #dddddd;
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -1983,7 +1983,7 @@ code {
   font-size: 90%;
   color: #c7254e;
   background-color: #f9f2f4;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_code\.scss}line{font-family:\0000324}}
@@ -2014,7 +2014,7 @@ pre {
   color: #333333;
   background-color: whitesmoke;
   border: 1px solid #cccccc;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_code\.scss}line{font-family:\0000354}}
 pre code {
@@ -3485,7 +3485,7 @@ input[type="checkbox"]:focus {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\0000384}}
 output {
   display: block;
-  padding-top: 7px;
+  padding-top: 5px;
   font-size: 14px;
   line-height: 1.428571429;
   color: #555555;
@@ -3495,15 +3495,15 @@ output {
 .form-control {
   display: block;
   width: 100%;
-  height: 34px;
-  padding: 6px 12px;
+  height: 30px;
+  padding: 4px 14px;
   font-size: 14px;
   line-height: 1.428571429;
   color: #555555;
   background-color: white;
   background-image: none;
   border: 1px solid #cccccc;
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -3552,7 +3552,7 @@ input[type="date"],
 input[type="time"],
 input[type="datetime-local"],
 input[type="month"] {
-  line-height: 34px;
+  line-height: 30px;
   line-height: 1.428571429 \0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003186}}
@@ -3679,8 +3679,8 @@ input[type="checkbox"] {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003291}}
 .form-control-static {
-  padding-top: 7px;
-  padding-bottom: 7px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin-bottom: 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003299}}
@@ -3761,7 +3761,7 @@ select[multiple].input-lg,
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003325}}
 .has-feedback .form-control {
-  padding-right: 42.5px;
+  padding-right: 37.5px;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003330}}
@@ -3771,9 +3771,9 @@ select[multiple].input-lg,
   right: 0;
   z-index: 2;
   display: block;
-  width: 34px;
-  height: 34px;
-  line-height: 34px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
   text-align: center;
 }
 
@@ -3974,12 +3974,12 @@ select[multiple].input-lg,
 .form-horizontal .checkbox-inline {
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 7px;
+  padding-top: 5px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003486}}
 .form-horizontal .radio,
 .form-horizontal .checkbox {
-  min-height: 27px;
+  min-height: 25px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003491}}
 .form-horizontal .form-group {
@@ -4000,7 +4000,7 @@ select[multiple].input-lg,
   .form-horizontal .control-label {
     text-align: right;
     margin-bottom: 0;
-    padding-top: 7px;
+    padding-top: 5px;
   }
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003509}}
@@ -4032,10 +4032,10 @@ select[multiple].input-lg,
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 6px 12px;
+  padding: 4px 14px;
   font-size: 14px;
   line-height: 1.428571429;
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -4382,7 +4382,7 @@ tbody.collapse.in {
   background-color: white;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
@@ -4700,13 +4700,13 @@ tbody.collapse.in {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_button-groups\.scss}line{font-family:\00003178}}
 .btn-group-vertical > .btn:first-child:not(:last-child) {
-  border-top-right-radius: 4px;
+  border-top-right-radius: 3px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_button-groups\.scss}line{font-family:\00003182}}
 .btn-group-vertical > .btn:last-child:not(:first-child) {
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 3px;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
@@ -4805,7 +4805,7 @@ tbody.collapse.in {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_input-groups\.scss}line{font-family:\0000373}}
 .input-group-addon {
-  padding: 6px 12px;
+  padding: 4px 14px;
   font-size: 14px;
   font-weight: normal;
   line-height: 1;
@@ -4813,7 +4813,7 @@ tbody.collapse.in {
   text-align: center;
   background-color: #eeeeee;
   border: 1px solid #cccccc;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_input-groups\.scss}line{font-family:\0000385}}
 .input-group-addon.input-sm, .form-horizontal .form-group-sm .input-group-addon.form-control,
@@ -4973,7 +4973,7 @@ tbody.collapse.in {
   margin-right: 2px;
   line-height: 1.428571429;
   border: 1px solid transparent;
-  border-radius: 4px 4px 0 0;
+  border-radius: 3px 3px 0 0;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navs\.scss}line{font-family:\0000389}}
 .nav-tabs > li > a:hover {
@@ -4994,7 +4994,7 @@ tbody.collapse.in {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navs\.scss}line{font-family:\00003122}}
 .nav-pills > li > a {
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navs\.scss}line{font-family:\00003125}}
 .nav-pills > li + li {
@@ -5053,7 +5053,7 @@ tbody.collapse.in {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navs\.scss}line{font-family:\00003193}}
 .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
   margin-right: 0;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navs\.scss}line{font-family:\00003201}}
 .nav-tabs-justified > .active > a, .nav-tabs.nav-justified > .active > a,
@@ -5067,7 +5067,7 @@ tbody.collapse.in {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navs\.scss}line{font-family:\00003206}}
   .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
     border-bottom: 1px solid #dddddd;
-    border-radius: 4px 4px 0 0;
+    border-radius: 3px 3px 0 0;
   }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navs\.scss}line{font-family:\00003212}}
   .nav-tabs-justified > .active > a, .nav-tabs.nav-justified > .active > a,
@@ -5114,7 +5114,7 @@ tbody.collapse.in {
 @media (min-width: 768px) {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navbar\.scss}line{font-family:\0000311}}
   .navbar {
-    border-radius: 4px;
+    border-radius: 3px;
   }
 }
 
@@ -5286,7 +5286,7 @@ tbody.collapse.in {
   background-color: transparent;
   background-image: none;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navbar\.scss}line{font-family:\00003203}}
 .navbar-toggle:focus {
@@ -5386,8 +5386,8 @@ tbody.collapse.in {
   border-bottom: 1px solid transparent;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 @media (max-width: 767px) {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navbar\.scss}line{font-family:\00003315}}
@@ -5428,8 +5428,8 @@ tbody.collapse.in {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navbar\.scss}line{font-family:\00003359}}
 .navbar-btn {
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_navbar\.scss}line{font-family:\00003362}}
 .navbar-btn.btn-sm, .btn-group-sm > .navbar-btn.btn {
@@ -5676,7 +5676,7 @@ tbody.collapse.in {
   margin-bottom: 20px;
   list-style: none;
   background-color: whitesmoke;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_breadcrumbs\.scss}line{font-family:\0000313}}
 .breadcrumb > li {
@@ -5698,7 +5698,7 @@ tbody.collapse.in {
   display: inline-block;
   padding-left: 0;
   margin: 20px 0;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_pagination\.scss}line{font-family:\0000310}}
 .pagination > li {
@@ -5709,7 +5709,7 @@ tbody.collapse.in {
 .pagination > li > span {
   position: relative;
   float: left;
-  padding: 6px 12px;
+  padding: 4px 14px;
   line-height: 1.428571429;
   text-decoration: none;
   color: #428bca;
@@ -5721,14 +5721,14 @@ tbody.collapse.in {
 .pagination > li:first-child > a,
 .pagination > li:first-child > span {
   margin-left: 0;
-  border-bottom-left-radius: 4px;
-  border-top-left-radius: 4px;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_pagination\.scss}line{font-family:\0000333}}
 .pagination > li:last-child > a,
 .pagination > li:last-child > span {
-  border-bottom-right-radius: 4px;
-  border-top-right-radius: 4px;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_pagination\.scss}line{font-family:\0000342}}
 .pagination > li > a:hover, .pagination > li > a:focus,
@@ -6041,7 +6041,7 @@ a.badge:hover, a.badge:focus {
   line-height: 1.428571429;
   background-color: white;
   border: 1px solid #dddddd;
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -6074,7 +6074,7 @@ a.thumbnail.active {
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_alerts\.scss}line{font-family:\0000316}}
 .alert h4 {
@@ -6199,7 +6199,7 @@ a.thumbnail.active {
   height: 20px;
   margin-bottom: 20px;
   background-color: whitesmoke;
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -6355,14 +6355,14 @@ a.thumbnail.active {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_list-group\.scss}line{font-family:\0000331}}
 .list-group-item:first-child {
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_list-group\.scss}line{font-family:\0000334}}
 .list-group-item:last-child {
   margin-bottom: 0;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_list-group\.scss}line{font-family:\0000340}}
 .list-group-item > .badge {
@@ -6545,7 +6545,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   margin-bottom: 20px;
   background-color: white;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
@@ -6568,8 +6568,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel-heading {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\0000327}}
 .panel-heading > .dropdown .dropdown-toggle {
@@ -6593,8 +6593,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   padding: 10px 15px;
   background-color: whitesmoke;
   border-top: 1px solid #dddddd;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\0000359}}
@@ -6609,14 +6609,14 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\0000369}}
 .panel > .list-group:first-child .list-group-item:first-child {
   border-top: 0;
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\0000376}}
 .panel > .list-group:last-child .list-group-item:last-child {
   border-bottom: 0;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\0000385}}
@@ -6638,8 +6638,8 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003106}}
 .panel > .table:first-child,
 .panel > .table-responsive:first-child > .table:first-child {
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003113}}
 .panel > .table:first-child > thead:first-child > tr:first-child td:first-child,
@@ -6650,7 +6650,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
-  border-top-left-radius: 3px;
+  border-top-left-radius: 2px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003117}}
 .panel > .table:first-child > thead:first-child > tr:first-child td:last-child,
@@ -6661,13 +6661,13 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
 .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
-  border-top-right-radius: 3px;
+  border-top-right-radius: 2px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003125}}
 .panel > .table:last-child,
 .panel > .table-responsive:last-child > .table:last-child {
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003132}}
 .panel > .table:last-child > tbody:last-child > tr:last-child td:first-child,
@@ -6678,7 +6678,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
-  border-bottom-left-radius: 3px;
+  border-bottom-left-radius: 2px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003136}}
 .panel > .table:last-child > tbody:last-child > tr:last-child td:last-child,
@@ -6689,7 +6689,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
 .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
-  border-bottom-right-radius: 3px;
+  border-bottom-right-radius: 2px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003143}}
 .panel > .panel-body + .table,
@@ -6771,7 +6771,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003202}}
 .panel-group .panel {
   margin-bottom: 0;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_panels\.scss}line{font-family:\00003205}}
 .panel-group .panel + .panel {
@@ -6975,7 +6975,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
   margin-bottom: 20px;
   background-color: whitesmoke;
   border: 1px solid #e3e3e3;
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
@@ -7237,7 +7237,7 @@ button.close {
   text-align: center;
   text-decoration: none;
   background-color: black;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_tooltip\.scss}line{font-family:\0000335}}
@@ -8039,6 +8039,11 @@ button.close {
 .modal-content {
   -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_bootstrap_overwirte\.scss}line{font-family:\000039}}
+.btn {
+  font-size: 13px;
 }
 
 /*!
@@ -11771,7 +11776,7 @@ input:focus {
   color: #fff;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003132}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003131}}
 .main {
   position: absolute;
   top: 0;
@@ -11779,21 +11784,21 @@ input:focus {
   right: 0;
   left: 190px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003139}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003138}}
 .main .search-wrapper {
   height: 42px;
   border-bottom: 1px solid #d8d8d8;
   padding: 6px 12px 0 54px;
   position: relative;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003145}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003144}}
 .main .search-wrapper > .fa {
   position: absolute;
   top: 15px;
   right: 21px;
   color: #c9ccd0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003152}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003151}}
 .main .search-wrapper input {
   height: 30px;
   border: 1px solid #d8d8d8;
@@ -11802,7 +11807,7 @@ input:focus {
   width: 100%;
   padding: 0 25px 0 15px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003161}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003160}}
 .main .search-wrapper .search-scope {
   position: absolute;
   left: 59px;
@@ -11814,7 +11819,7 @@ input:focus {
   color: #fff;
   padding: 0 12px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003172}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003171}}
 .main .search-wrapper .search-scope span {
   display: inline-block;
   max-width: 120px;
@@ -11824,7 +11829,7 @@ input:focus {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003182}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003181}}
 .main .bread {
   line-height: 42px;
   height: 42px;
@@ -11832,7 +11837,7 @@ input:focus {
   top: 0;
   left: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003189}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003188}}
 .main .bread > .history {
   float: left;
   font-size: 22px;
@@ -11840,26 +11845,26 @@ input:focus {
   width: 54px;
   text-align: center;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003196}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003195}}
 .main .bread > .history > button {
   margin: 0;
   padding: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003202}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003201}}
 .main .bread > .bread-list {
   float: left;
   margin-left: 15px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003205}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003204}}
 .main .bread > .bread-list > li {
   display: inline-block;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003208}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003207}}
 .main .bread > .bread-list > li a {
   color: #333333;
   text-decoration: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003213}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003212}}
 .main .bread > .bread-list > li:after {
   content: "";
   display: inline-block;
@@ -11869,15 +11874,23 @@ input:focus {
   border-left-color: #999999;
   margin: 0 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003224}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003223}}
 .main .bread > .bread-list > li:last-child:after {
   display: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003232}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003231}}
 .main .toolbar {
   height: 40px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003236}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003234}}
+.main .toolbar .menu-list {
+  margin: 5px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003239}}
+.main .toolbar li .btn {
+  margin-left: 5px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003245}}
 .main .file-browser {
   border-top: 1px solid #d8d8d8;
   background: #fff;
@@ -11887,50 +11900,50 @@ input:focus {
   top: 82px;
   bottom: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003245}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003254}}
 .main .file-browser .filelist-header {
   height: 30px;
   line-height: 30px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003250}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003259}}
 .main .file-browser .filename {
   padding-left: 15px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003252}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003261}}
 .main .file-browser .filename .file-icon-32 {
   margin-right: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003257}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003266}}
 .main .file-browser .filesize {
   width: 160px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003261}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003270}}
 .main .file-browser .file-create-time {
   width: 190px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003265}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003274}}
 .main .file-browser .file-item {
   line-height: 46px;
   cursor: default;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003269}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003278}}
 .main .file-browser .file-item:nth-child(even) {
   background: #f7f7f7;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003273}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003282}}
 .main .file-browser .file-item.selected {
   background: #50acf3;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003277}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003286}}
 .main .file-browser .file-item:hover {
   background: #e1e3e7;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003281}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003290}}
 .main .file-browser .file-item .filename {
   font-size: 14px;
   font-family: "hiragino sans gb", "Helvetica Neue", "Helvetica", "Arial", "宋体", "simsun", "sans-serif";
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003288}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/main\.scss}line{font-family:\00003297}}
 .main .file-browser .filelist-body {
   position: absolute;
   left: 0;

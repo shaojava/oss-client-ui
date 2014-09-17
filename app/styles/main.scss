@@ -128,7 +128,6 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   }
 }
 
-
 .main {
   position: absolute;
   top: 0;
@@ -231,6 +230,16 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 
   .toolbar {
     height: $toolbarHeight;
+
+    .menu-list {
+      margin: 5px;
+    }
+
+    li {
+      .btn {
+        margin-left: 5px;
+      }
+    }
   }
 
   .file-browser {

@@ -11,17 +11,12 @@ angular.module('ossClientUiApp')
     .run(function ($rootScope) {
         $rootScope.PAGE_CONFIG = {};
     })
-    .controller('MainCtrl', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory) {
-        //当前的bucket
-        $scope.currentBucket = null;
+    .controller('MainCtrl', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, OSSMenu,$rootScope) {
 
         //获取所有bucket列表
         $scope.buckets = [];
         Bucket.list().then(function (buckets) {
             $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
-            if (!$scope.currentBucket && $scope.buckets.length) {
-                $scope.currentBucket = $scope.buckets[0];
-            }
         })
 
         //新建bucket对话框
@@ -47,18 +42,36 @@ angular.module('ossClientUiApp')
         $scope.breads = [];
         $scope.$watchCollection('[PAGE_CONFIG.bucket,PAGE_CONFIG.objectPrefix]', function (newArr) {
             if (!newArr[0]) return;
-            $scope.breads = Bread.getBreads(newArr[0]['Name'], newArr[1]);
+            var bucket = newArr[0], objectPrefix = newArr[1];
+            $scope.breads = Bread.getBreads(bucket['Name'], objectPrefix);
             $scope.historyCanForward = OSSLocationHistory.canForward();
             $scope.historyCanBackward = OSSLocationHistory.canBackward();
-        })
 
+            //顶部操作菜单
+            $scope.topMenuList = OSSMenu.getMenu(bucket, objectPrefix);
+        });
+
+        //后退
         $scope.backward = function () {
             OSSLocationHistory.backward();
         };
 
+        //前进
         $scope.forward = function () {
             OSSLocationHistory.forward();
         };
+
+        //执行操作
+        $scope.execCMD = function (cmd) {
+            var args = [];
+            if (cmd == 'upload') {
+                args = [$rootScope.PAGE_CONFIG.bucket['Name'], $rootScope.PAGE_CONFIG.bucket['Location'], $rootScope.PAGE_CONFIG.objectPrefix];
+            }
+            OSSMenu.exec(cmd, args);
+        }
+
+        //右键菜单
+        $scope.contextMenu = [];
     })
     .controller('FileListCtrl', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject) {
         var bucketName = $routeParams.bucket ? $routeParams.bucket : buckets && buckets.length ? buckets[0]['Name'] : '',
@@ -111,4 +124,5 @@ angular.module('ossClientUiApp')
             }
             loadFile();
         }
+
     });

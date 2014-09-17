@@ -8,6 +8,138 @@
  * Factory in the ossClientUiApp.
  */
 angular.module('ossClientUiApp')
+    .factory('OSSCmd', function () {
+        return {
+            upload: function (bucketName, location, prefix) {
+                OSS.invoke('selectFileDlg', {
+                    path: '',
+                    disable_root: 1
+                }, function (res) {
+                    if (!res || !res['list'] || !res['list'].length) {
+                        return;
+                    }
+                    OSS.invoke('addFile', {
+                        location: location,
+                        bucket: bucketName,
+                        prefix: prefix,
+                        list: res['list']
+                    }, function (res) {
+
+                    })
+                });
+            },
+
+            download: function (objects) {
+                OSS.invoke('saveFile', {
+                    list: objects
+                }, function (res) {
+
+                })
+            },
+            create: function (bucket, prefix, newFolder) {
+
+            },
+            setHttpHeader: function (bucket, object) {
+
+            },
+            del: function (bucket, objects) {
+
+            },
+            getUri: function (bucket, object) {
+
+            }
+        };
+    })
+    .factory('OSSMenu', function (OSSCmd) {
+        var allMenu = [
+            {
+                name: 'upload',
+                text: '上传'
+            },
+            {
+                name: 'download',
+                text: '下载'
+            },
+            {
+                name: 'create',
+                text: '新建文件夹'
+            },
+            {
+                name: 'get_uri',
+                text: '获取地址'
+            },
+            {
+                name: 'set_header',
+                text: '设置HTTP头'
+            },
+            {
+                name: 'del',
+                text: '删除'
+            }
+        ];
+        return {
+            getDefaultMenus: function () {
+                return angular.extend([], allMenu);
+            },
+            checkPermission: function () {
+                return true;
+            },
+            getMenu: function (bucket, currentObject, selectedObjects) {
+                var menu = this.getDefaultMenus();
+                if (!selectedObjects || !selectedObjects.length) {
+                    this.getCurrentMenu(menu);
+                } else {
+                    if (selectedObjects.length == 1) {
+                        this.getSelectMenu(menu);
+                    } else {
+                        this.getMultiSelectMenu(menu);
+                        this.getSelectMenu(menu);
+                    }
+                }
+                OSS.log('getMenu', menu);
+                return menu;
+            },
+            getCurrentMenu: function (menu) {
+                this.disableMenu(menu, 'get_uri', 'set_header', 'del');
+            },
+            getMultiSelectMenu: function (menu) {
+                this.disableMenu(menu, 'upload', 'create', 'get_uri', 'set_header');
+            },
+            getSelectMenu: function (menu) {
+                this.disableMenu(menu, 'upload', 'download', 'create');
+            },
+            disableMenu: function (menu) {
+                var _self = this;
+                var disableOpts = Array.prototype.slice.call(arguments).splice(1);
+                angular.forEach(disableOpts, function (disableMenu) {
+                    var menuItem = _self.getMenuByName(menu, disableMenu);
+                    console.log('menuItem', menuItem);
+                    if (menuItem) {
+                        menuItem.disabled = 1;
+                    }
+                });
+            },
+            getMenuByName: function (menu, name) {
+                for (var i = 0; i < menu.length; i++) {
+                    if (menu[i]['name'] === name) {
+                        return menu[i];
+                        break;
+                    }
+                }
+                return null;
+            },
+            exec: function (cmd, args) {
+                console.log('arguments',arguments);
+                if (!angular.isFunction(OSSCmd[cmd])) {
+                    return;
+                }
+                if (!this.checkPermission(cmd)) {
+                    return;
+                }
+                OSSCmd[cmd].apply(this, args);
+            }
+        };
+    })
     .factory('OSSLocationHistory', function ($location, $rootScope) {
         var update = true,
             history = [],
@@ -17,7 +149,6 @@ angular.module('ossClientUiApp')
         $rootScope.$on('$locationChangeSuccess', function () {
             var url = $location.url();
             var l = history.length;
-            console.log('url', url);
             if (update) {
                 current >= 0 && l > current + 1 && history.splice(current + 1);
                 if (history[history.length - 1] != url) {
@@ -58,7 +189,7 @@ angular.module('ossClientUiApp')
             canBackward: function () {
                 return current > 0;
             }
-        }
+        };
     })
     .factory('OSSObject', function ($location, $filter, OSSApi, $q) {
         var fileSorts = {
@@ -90,12 +221,12 @@ angular.module('ossClientUiApp')
                         }
                     })
                     defer.resolve({
-                        files:files,
-                        marker:res['ListBucketResult']['NextMarker'],
-                        allLoaded:res['ListBucketResult']['IsTruncated'] === 'false'
+                        files: files,
+                        marker: res['ListBucketResult']['NextMarker'],
+                        allLoaded: res['ListBucketResult']['IsTruncated'] === 'false'
                     });
 
-                }).error(function(){
+                }).error(function () {
 
                 });
                 return defer.promise;
@@ -149,15 +280,15 @@ angular.module('ossClientUiApp')
             getIcon: function (dir, name) {
                 return 'icon-' + this.getIconSuffix(dir, name);
             }
-        }
+        };
     })
     .factory('OSSLocation', function () {
         return {
             getUrl: function (bucketName, prefix) {
                 prefix = angular.isUndefined(prefix) ? '' : prefix;
-                return ['/file/' , bucketName , '/' , prefix].join('');
+                return ['/file/', bucketName, '/', prefix].join('');
             }
-        }
+        };
     })
     .factory('Bread', function (OSSLocation) {
         return {
@@ -185,7 +316,7 @@ angular.module('ossClientUiApp')
                 }
                 return breads;
             }
-        }
+        };
     })
     .factory('RequestXML', function () {
         return {
@@ -202,7 +333,7 @@ angular.module('ossClientUiApp')
                     "</CreateBucketConfiguration >"
                 ].join('');
             }
-        }
+        };
     })
     .factory('Bucket', function (OSSApi, $q) {
         var buckets = null;
@@ -237,7 +368,7 @@ angular.module('ossClientUiApp')
                     "private": "私有"
                 }
             }
-        }
+        };
     })
     .factory('OSSApi', function ($http, RequestXML) {
 
@@ -508,5 +639,5 @@ angular.module('ossClientUiApp')
                 option = angular.extend({}, defaultOption, option);
                 return $modal.open(option);
             }
-        }
+        };
     });
