@@ -240,7 +240,7 @@ angular.module('ossClientUiApp')
                     dir: isDir,
                     filename: filename,
                     lastModified: object.LastModified || '',
-                    size: object.Size || 0
+                    size: object.Size ? parseInt(object.Size) : 0
                 }
             },
             open: function (bucket, path, isDir) {

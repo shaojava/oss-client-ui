@@ -141,7 +141,8 @@ angular.module('ossClientUiApp')
                         list.push({
                             location:$rootScope.PAGE_CONFIG.bucket['Location'],
                             bucket:$rootScope.PAGE_CONFIG.bucket['Name'],
-                            object:val.path
+                            object:val.path,
+                            filesize:val.size
                         })
                     })
                     args = [list];
