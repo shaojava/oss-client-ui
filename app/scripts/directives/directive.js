@@ -7,7 +7,7 @@
  * # directive
  */
 angular.module('ossClientUiApp')
-    .directive('smartSearch', function ($location, $rootScope, $filter) {
+    .directive('smartSearch', ['$location', '$rootScope', '$filter',function ($location, $rootScope, $filter) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -65,8 +65,8 @@ angular.module('ossClientUiApp')
                 });
             }
         };
-    })
-    .directive('fileIcon', function (OSSObject) {
+    }])
+    .directive('fileIcon', ['OSSObject',function (OSSObject) {
         return {
             template: '<i class="file-icon-{{size}} {{icon}}"></i>',
             restrict: 'E',
@@ -80,4 +80,4 @@ angular.module('ossClientUiApp')
                 scope.icon = OSSObject.getIcon(scope.dir, scope.filename);
             }
         };
-    });
+    }]);

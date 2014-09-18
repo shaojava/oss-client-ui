@@ -20,7 +20,7 @@ angular
         'angularSpinner',
         'OSSCommon'
     ])
-    .config(function ($routeProvider, $httpProvider) {
+    .config(['$routeProvider', '$httpProvider',function ($routeProvider, $httpProvider) {
         $routeProvider
             .when('/file/:bucket?/:object*?', {
                 templateUrl: 'views/filelist.html',
@@ -42,4 +42,4 @@ angular
             return response;
         })
 
-    });
+    }]);

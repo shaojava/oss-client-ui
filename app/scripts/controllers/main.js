@@ -8,10 +8,10 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .run(function ($rootScope) {
+    .run(['$rootScope',function ($rootScope) {
         $rootScope.PAGE_CONFIG = {};
-    })
-    .controller('MainCtrl', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, OSSMenu,$rootScope) {
+    }])
+    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', 'OSSMenu', '$rootScope', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, OSSMenu, $rootScope) {
 
         //获取所有bucket列表
         $scope.buckets = [];
@@ -72,8 +72,8 @@ angular.module('ossClientUiApp')
 
         //右键菜单
         $scope.contextMenu = [];
-    })
-    .controller('FileListCtrl', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject) {
+    }])
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject) {
         var bucketName = $routeParams.bucket ? $routeParams.bucket : buckets && buckets.length ? buckets[0]['Name'] : '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -125,4 +125,4 @@ angular.module('ossClientUiApp')
             loadFile();
         }
 
-    });
+    }]);

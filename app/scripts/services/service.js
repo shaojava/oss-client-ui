@@ -50,7 +50,7 @@ angular.module('ossClientUiApp')
             }
         };
     })
-    .factory('OSSMenu', function (OSSCmd) {
+    .factory('OSSMenu', ['OSSCmd', function (OSSCmd) {
         var allMenu = [
             {
                 name: 'upload',
@@ -129,7 +129,7 @@ angular.module('ossClientUiApp')
                 return null;
             },
             exec: function (cmd, args) {
-                console.log('arguments',arguments);
+                console.log('arguments', arguments);
                 if (!angular.isFunction(OSSCmd[cmd])) {
                     return;
                 }
@@ -139,8 +139,8 @@ angular.module('ossClientUiApp')
                 OSSCmd[cmd].apply(this, args);
             }
         };
-    })
-    .factory('OSSLocationHistory', function ($location, $rootScope) {
+    }])
+    .factory('OSSLocationHistory', ['$location', '$rootScope', function ($location, $rootScope) {
         var update = true,
             history = [],
             current,
@@ -190,8 +190,8 @@ angular.module('ossClientUiApp')
                 return current > 0;
             }
         };
-    })
-    .factory('OSSObject', function ($location, $filter, OSSApi, $q) {
+    }])
+    .factory('OSSObject', ['$location', '$filter', 'OSSApi', '$q', function ($location, $filter, OSSApi, $q) {
         var fileSorts = {
             'SORT_SPEC': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk', 'gknote'],
             'SORT_MOVIE': ['mp4', 'mkv', 'rm', 'rmvb', 'avi', '3gp', 'flv', 'wmv', 'asf', 'mpeg', 'mpg', 'mov', 'ts', 'm4v'],
@@ -281,7 +281,7 @@ angular.module('ossClientUiApp')
                 return 'icon-' + this.getIconSuffix(dir, name);
             }
         };
-    })
+    }])
     .factory('OSSLocation', function () {
         return {
             getUrl: function (bucketName, prefix) {
@@ -290,7 +290,7 @@ angular.module('ossClientUiApp')
             }
         };
     })
-    .factory('Bread', function (OSSLocation) {
+    .factory('Bread', ['OSSLocation', function (OSSLocation) {
         return {
             getBreads: function (bucketName, path) {
                 var breads = [
@@ -317,7 +317,7 @@ angular.module('ossClientUiApp')
                 return breads;
             }
         };
-    })
+    }])
     .factory('RequestXML', function () {
         return {
             getXMLHeader: function () {
@@ -335,7 +335,7 @@ angular.module('ossClientUiApp')
             }
         };
     })
-    .factory('Bucket', function (OSSApi, $q) {
+    .factory('Bucket', ['OSSApi', '$q', function (OSSApi, $q) {
         var buckets = null;
         var deferred = $q.defer();
         return {
@@ -369,8 +369,8 @@ angular.module('ossClientUiApp')
                 }
             }
         };
-    })
-    .factory('OSSApi', function ($http, RequestXML) {
+    }])
+    .factory('OSSApi', ['$http', 'RequestXML',function ($http, RequestXML) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
 
@@ -540,8 +540,8 @@ angular.module('ossClientUiApp')
                 });
             }
         };
-    })
-    .factory('OSSModal', function ($modal, Bucket, OSSApi) {
+    }])
+    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi',function ($modal, Bucket, OSSApi) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -640,4 +640,4 @@ angular.module('ossClientUiApp')
                 return $modal.open(option);
             }
         };
-    });
+    }]);

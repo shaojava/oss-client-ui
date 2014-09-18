@@ -12,11 +12,11 @@ angular.module('ossClientUiApp')
     .filter('bitSize', function () {
         return Util.Number.bitSize;
     })
-    .filter('formatTime', function ($filter) {
+    .filter('formatTime', ['$filter',function ($filter) {
         return function (dateStr) {
             return $filter('date')(Date.parse(dateStr), 'yyyy-MM-dd HH:mm:ss');
         };
-    })
+    }])
     .filter('getPrefixName', function () {
         return function (prefix, removeLastSlash) {
             removeLastSlash = angular.isUndefined(removeLastSlash) ? 0 : removeLastSlash;
