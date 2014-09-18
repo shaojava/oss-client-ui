@@ -232,28 +232,26 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
     height: $toolbarHeight;
 
     .menu-list {
-      margin: 5px;
+      margin: 0 5px;
     }
 
     li {
-      .btn {
-        margin-left: 5px;
-      }
+      margin: 5px 5px 0;
     }
   }
 
   .file-browser {
-    border-top: 1px solid $baseBorderColor;
-    background: #fff;
     position: absolute;
     left: 0;
     right: 0;
-    top: $breadHeight + $toolbarHeight;
+    top: $breadHeight;
     bottom: 0;
 
     .filelist-header {
+      border-top:1px solid $baseBorderColor;
       height: $fileListHeaderHeight;
       line-height: $fileListHeaderHeight;
+      background: #fff;
     }
 
     .filename {
@@ -279,12 +277,13 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
         background: $lightBackgroundColor;
       }
 
-      &.selected {
-        background: $itemSelectedBackgroundColor;
-      }
-
       &:hover {
         background: $itemHoverBackgroundColor;
+      }
+
+      &.selected {
+        background: $itemSelectedBackgroundColor;
+        color:#fff;
       }
 
       .filename {
@@ -298,9 +297,10 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
       position: absolute;
       left: 0;
       right: 0;
-      top: $fileListHeaderHeight;
+      top: $fileListHeaderHeight + $toolbarHeight;
       bottom: 0;
       overflow: auto;
+      background: #fff;
     }
   }
 }

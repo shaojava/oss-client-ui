@@ -1,3 +1,10 @@
+<div class="toolbar">
+    <ul class="clearfix menu-list">
+        <li ng-repeat="menu in topMenuList" class="pull-left">
+            <button ng-bind="menu.text" class="btn btn-default" ng-class="'menu-'+menu.name" ng-disabled="menu.disabled" ng-click="execCMD(menu.name)"></button>
+        </li>
+    </ul>
+</div>
 <div class="clearfix filelist-header">
     <div class="pull-left filename">文件名</div>
     <div class="pull-right  file-create-time">创建时间</div>
@@ -5,7 +12,7 @@
 
 </div>
 <div class="filelist-body" scroll-load="loadMoreFile()" disable-scroll="loadingFile">
-    <div class="clearfix file-item" ng-repeat="file in files | orderBy:'-dir'" ng-dblclick="openFile(file,file.dir)">
+    <div class="clearfix file-item" ng-repeat="file in files | orderBy:'-dir'" ng-dblclick="openFile(file,file.dir)" ng-class="{'selected':selectedFiles.indexOf(file)>=0}" ng-click="handleClick(file)">
         <div class="pull-left filename">
             <file-icon dir="{{file.dir}}" size="32" filename="{{file.filename}}"></file-icon>
             <span class="name" ng-bind="file.filename"></span>

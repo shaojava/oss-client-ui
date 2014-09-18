@@ -8,10 +8,10 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .run(['$rootScope',function ($rootScope) {
+    .run(['$rootScope', function ($rootScope) {
         $rootScope.PAGE_CONFIG = {};
     }])
-    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', 'OSSMenu', '$rootScope', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, OSSMenu, $rootScope) {
+    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope) {
 
         //获取所有bucket列表
         $scope.buckets = [];
@@ -47,8 +47,7 @@ angular.module('ossClientUiApp')
             $scope.historyCanForward = OSSLocationHistory.canForward();
             $scope.historyCanBackward = OSSLocationHistory.canBackward();
 
-            //顶部操作菜单
-            $scope.topMenuList = OSSMenu.getMenu(bucket, objectPrefix);
+
         });
 
         //后退
@@ -61,19 +60,8 @@ angular.module('ossClientUiApp')
             OSSLocationHistory.forward();
         };
 
-        //执行操作
-        $scope.execCMD = function (cmd) {
-            var args = [];
-            if (cmd == 'upload') {
-                args = [$rootScope.PAGE_CONFIG.bucket['Name'], $rootScope.PAGE_CONFIG.bucket['Location'], $rootScope.PAGE_CONFIG.objectPrefix];
-            }
-            OSSMenu.exec(cmd, args);
-        }
-
-        //右键菜单
-        $scope.contextMenu = [];
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu) {
         var bucketName = $routeParams.bucket ? $routeParams.bucket : buckets && buckets.length ? buckets[0]['Name'] : '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -109,13 +97,13 @@ angular.module('ossClientUiApp')
             }, function () {
                 $scope.loadingFile = false;
             });
-        }
+        };
         loadFile();
 
         //打开文件（夹）
         $scope.openFile = function (file, isDir) {
             OSSObject.open($rootScope.PAGE_CONFIG.bucket, file.path, isDir);
-        }
+        };
 
         //加载更多文件
         $scope.loadMoreFile = function () {
@@ -123,6 +111,49 @@ angular.module('ossClientUiApp')
                 return;
             }
             loadFile();
+        };
+
+        //已选中文件列表
+        $scope.selectedFiles = [];
+
+        //点击文件
+        $scope.handleClick = function (file) {
+            var index = $scope.selectedFiles.indexOf(file);
+            if (index >= 0) {
+                $scope.selectedFiles.splice(index, 1);
+            } else {
+                $scope.selectedFiles = [];
+                $scope.selectedFiles.push(file);
+            }
+        };
+
+        //执行操作
+        $scope.execCMD = function (cmd) {
+            var args = [];
+            switch (cmd) {
+                case 'upload':
+                    args = [$rootScope.PAGE_CONFIG.bucket['Name'], $rootScope.PAGE_CONFIG.bucket['Location'], $rootScope.PAGE_CONFIG.objectPrefix];
+                    break;
+                case 'download':
+                    var list = [];
+                    console.log('$scope.selectedFiles',$scope.selectedFiles);
+                    angular.forEach($scope.selectedFiles,function(val){
+                        list.push({
+                            location:$rootScope.PAGE_CONFIG.bucket['Location'],
+                            bucket:$rootScope.PAGE_CONFIG.bucket['Name'],
+                            object:val.path
+                        })
+                    })
+                    args = [list];
+                    break;
+            }
+            OSSMenu.exec(cmd, args);
         }
 
+        //顶部操作菜单
+        $scope.topMenuList = OSSMenu.getMenu($rootScope.PAGE_CONFIG.bucket, $rootScope.PAGE_CONFIG.objectPrefix);
+
+
+        //右键菜单
+        $scope.contextMenu = [];
     }]);

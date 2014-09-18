@@ -8,6 +8,7 @@ var OSS = {
      * @param {fn} callback 回调函数
      */
     invoke: function (name, param, callback) {
+        this.log(name, arguments);
         if (typeof OSSClient === 'undefined') {
             throw new Error('Can not find OSSClient');
         }
@@ -22,7 +23,6 @@ var OSS = {
                 callback(re);
             });
         }
-        this.log(name, args);
         var re = OSSClient[name].apply(this, args);
         this.log(name + ':return', re);
         return re;
