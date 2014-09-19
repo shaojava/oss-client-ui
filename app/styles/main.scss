@@ -383,6 +383,57 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
         }
       }
     }
+
+    .queue-list {
+      height: 190px;
+      overflow: auto;
+      .queue-item {
+        height: 30px;
+        line-height: 30px;
+        cursor: default;
+
+        > div {
+          text-align: center;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+
+        &:nth-child(even) {
+          background: $lightBackgroundColor;
+        }
+
+        &:hover {
+          background: $itemHoverBackgroundColor;
+        }
+
+        &.selected {
+          background: $itemSelectedBackgroundColor;
+          color: #fff;
+        }
+
+        .filename {
+          padding: 0 10px;
+        }
+
+        .filesize {
+          width: 80px;
+        }
+
+        .remain-time {
+          width: 90px;
+        }
+
+        .progress-wrapper {
+          width: 140px;
+        }
+
+        .progress {
+          height: 14px;
+          margin-bottom: 0;
+          margin-top: 8px;
+        }
+      }
+    }
   }
 }
 

@@ -57,6 +57,36 @@
             }
             var canonicalizedResource = parseParam.canonicalized_resource;
             return JSON.stringify(CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(arr.join('\n') + '\n' + canonicalizedOSSheaders + canonicalizedResource, accessSecret)));
+        },
+        getUpload: function () {
+            return JSON.stringify({
+                "download": 0,
+                "upload": 0,
+                "count": 1,
+                "list": [{
+                    "bucket": "121212121212",
+                    "object": "PhpStorm-8.0.dmg",
+                    "fullpath": "C:\\Users\\george\\Desktop\\PhpStorm-8.0.dmg",
+                    "offset": 100000000,
+                    "filesize": 137181104,
+                    "status": 5,
+                    "speed": 10000,
+                    "errormsg": ""
+                },
+                    {
+                        "bucket": "121212121212",
+                        "object": "PhpStorm-8.0.dmg",
+                        "fullpath": "C:\\Users\\george\\Desktop\\PhpStorm-8.0.dmg",
+                        "offset": 0,
+                        "filesize": 137181104,
+                        "status": 5,
+                        "speed": 0,
+                        "errormsg": ""
+                    }]
+            });
+        },
+        getDownload: function () {
+
         }
     };
 

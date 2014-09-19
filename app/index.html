@@ -2,7 +2,7 @@
 <html class="no-js" ng-app="ossClientUiApp">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>OSS</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -71,15 +71,38 @@
                         </ul>
                     </div>
                     <ul class="queue-list">
-                        <li class="queue-item" ng-repeat="uploadItem in uploadList">
-                            <div class="pull-left filename" ng-bind="uploadItem.object"></div>
-                            <div class="pull-right remain-time"></div>
-                            <div class="pull-right progress" ng-bind="uploadItem.object"></div>
-                            <div class="pull-right filesize" ng-bind="uploadItem.filesize"></div>
+                        <li class="clearfix queue-item" ng-repeat="item in uploadList" ng-class="{'selected':selectedUploadItems.indexOf(item)>=0}" ng-click="clickUploadItem(item)">
+                            <div class="pull-left filename" ng-bind="item.object"></div>
+                            <div class="pull-right remain-time" ng-bind="item.status | getUploadState:item.speed:item.filesize:item.offset:item.errormsg"></div>
+                            <div class="pull-right progress-wrapper">
+                                <progressbar max="item.filesize" class="progress-striped" value="item.offset"></progressbar>
+                            </div>
+                            <div class="pull-right filesize" ng-bind="item.filesize | bitSize"></div>
                         </li>
                     </ul>
                 </tab>
-                <tab heading="下载队列">Static content</tab>
+                <tab heading="下载队列">
+                    <div class="opt-bar">
+                        <ul class="clearfix opt-list">
+                            <li class="pull-left">
+                                <button class="btn btn-default">暂停</button>
+                            </li>
+                            <li class="pull-left">
+                                <button class="btn btn-default">取消</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="queue-list">
+                        <li class="clearfix queue-item" ng-repeat="item in downloadList" ng-class="{'selected':selectedDownloadItems.indexOf(item)>=0}" ng-click="clickDownloadItem(item)">
+                            <div class="pull-left filename" ng-bind="item.object"></div>
+                            <div class="pull-right remain-time" ng-bind="item.status | getDownloadState:item.speed:item.filesize:item.offset:item.errormsg"></div>
+                            <div class="pull-right progress-wrapper">
+                                <progressbar max="item.filesize" class="progress-striped" value="item.offset"></progressbar>
+                            </div>
+                            <div class="pull-right filesize" ng-bind="item.filesize | bitSize"></div>
+                        </li>
+                    </ul>
+                </tab>
                 <tab heading="错误日志">Static content</tab>
             </tabset>
         </div>
