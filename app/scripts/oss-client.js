@@ -41,7 +41,7 @@
 
     var OSSClient = {
         getAccessID: function () {
-            return accessId;
+            return JSON.stringify(accessId);
         },
         getSignature: function (param) {
             var parseParam = JSON.parse(param);
@@ -56,7 +56,7 @@
                 canonicalizedOSSheaders = getCanonicalizedOssHeaders(parseParam.canonicalized_oss_headers);
             }
             var canonicalizedResource = parseParam.canonicalized_resource;
-            return CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(arr.join('\n') + '\n' + canonicalizedOSSheaders + canonicalizedResource, accessSecret));
+            return JSON.stringify(CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(arr.join('\n') + '\n' + canonicalizedOSSheaders + canonicalizedResource, accessSecret)));
         }
     };
 

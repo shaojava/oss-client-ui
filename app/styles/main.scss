@@ -245,10 +245,10 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
     left: 0;
     right: 0;
     top: $breadHeight;
-    bottom: 0;
-
+    //bottom: 200px;
+    bottom: 270px;
     .filelist-header {
-      border-top:1px solid $baseBorderColor;
+      border-top: 1px solid $baseBorderColor;
       height: $fileListHeaderHeight;
       line-height: $fileListHeaderHeight;
       background: #fff;
@@ -283,7 +283,7 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 
       &.selected {
         background: $itemSelectedBackgroundColor;
-        color:#fff;
+        color: #fff;
       }
 
       .filename {
@@ -301,6 +301,87 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
       bottom: 0;
       overflow: auto;
       background: #fff;
+    }
+  }
+
+  .trans-queue {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 270px;
+    border-top: 1px solid $baseBorderColor;
+    background: #fff;
+
+    .nav-tabs {
+      background: #f2f2f2;
+      padding-top: 5px;
+      overflow: hidden;
+      padding-left: 10px;
+    }
+
+    .nav-tabs > li > a {
+      padding: 8px 15px;
+      border: 1px solid #ddd;
+      margin-right: 10px;
+      color: $baseFontColor;
+      cursor: pointer;
+    }
+    .nav-tabs > li.active {
+      z-index: 12;
+    }
+    .nav-tabs > li > a:after {
+      width: 0;
+      height: 0;
+      border-width: 17px 10px 17px 10px;
+      border-color: transparent;
+      border-style: solid;
+      border-left-color: #ddd;
+      border-bottom-color: #ddd;
+      display: block;
+      content: "";
+      position: absolute;
+      right: -20px;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-tabs > li > a:before {
+      width: 0;
+      height: 0;
+      border-width: 17px 10px 17px 10px;
+      border-color: transparent;
+      border-style: solid;
+      border-left-color: #f2f2f2;
+      border-bottom-color: #f2f2f2;
+      display: block;
+      content: "";
+      position: absolute;
+      right: -19px;
+      top: 0;
+      z-index: 11;
+    }
+    .nav-tabs > li > a:hover:before,
+    .nav-tabs > li > a:focus:before {
+      border-left-color: #eee;
+      border-bottom-color: #eee;
+    }
+    .nav-tabs > li.active > a:before,
+    .nav-tabs > li.active > a:hover:before,
+    .nav-tabs > li.active > a:focus:before {
+      border-left-color: #fff;
+      border-bottom-color: #fff;
+    }
+    .tab-content {
+      .opt-bar {
+        background: #fdfdfd;
+        padding: 5px 10px;
+        border-bottom: 1px solid $baseBorderColor;
+
+        .opt-list > li {
+          margin-right: 5px;
+        }
+      }
     }
   }
 }

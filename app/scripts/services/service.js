@@ -8,6 +8,17 @@
  * Factory in the ossClientUiApp.
  */
 angular.module('ossClientUiApp')
+    .factory('OSSQueue', function () {
+        return {
+            uploadList: function () {
+                return OSS.invoke('getUpload');
+            },
+
+            downloadList: function () {
+                return OSS.invoke('getDownload');
+            }
+        };
+    })
     .factory('OSSCmd', function () {
         return {
             upload: function (bucketName, location, prefix) {
@@ -51,35 +62,35 @@ angular.module('ossClientUiApp')
         };
     })
     .factory('OSSMenu', ['OSSCmd', function (OSSCmd) {
-        var allMenu = [
-            {
-                name: 'upload',
-                text: '上传'
-            },
-            {
-                name: 'download',
-                text: '下载'
-            },
-            {
-                name: 'create',
-                text: '新建文件夹'
-            },
-            {
-                name: 'get_uri',
-                text: '获取地址'
-            },
-            {
-                name: 'set_header',
-                text: '设置HTTP头'
-            },
-            {
-                name: 'del',
-                text: '删除'
-            }
-        ];
         return {
             getDefaultMenus: function () {
-                return angular.extend([], allMenu);
+                var allMenu = [
+                    {
+                        name: 'upload',
+                        text: '上传'
+                    },
+                    {
+                        name: 'create',
+                        text: '新建文件夹'
+                    },
+                    {
+                        name: 'download',
+                        text: '下载'
+                    },
+                    {
+                        name: 'get_uri',
+                        text: '获取地址'
+                    },
+                    {
+                        name: 'set_header',
+                        text: '设置HTTP头'
+                    },
+                    {
+                        name: 'del',
+                        text: '删除'
+                    }
+                ];
+                return allMenu.concat();
             },
             checkPermission: function () {
                 return true;
@@ -96,40 +107,38 @@ angular.module('ossClientUiApp')
                         this.getSelectMenu(menu);
                     }
                 }
-                OSS.log('getMenu', menu);
                 return menu;
             },
             getCurrentMenu: function (menu) {
-                this.disableMenu(menu, 'get_uri', 'set_header', 'del');
+                this.disableMenu(menu, 'download', 'get_uri', 'set_header', 'del');
             },
             getMultiSelectMenu: function (menu) {
                 this.disableMenu(menu, 'upload', 'create', 'get_uri', 'set_header');
             },
             getSelectMenu: function (menu) {
-                this.disableMenu(menu, 'upload', 'download', 'create');
+                this.disableMenu(menu, 'upload', 'create');
             },
             disableMenu: function (menu) {
                 var _self = this;
                 var disableOpts = Array.prototype.slice.call(arguments).splice(1);
                 angular.forEach(disableOpts, function (disableMenu) {
                     var menuItem = _self.getMenuByName(menu, disableMenu);
-                    console.log('menuItem', menuItem);
                     if (menuItem) {
                         menuItem.disabled = 1;
                     }
                 });
             },
             getMenuByName: function (menu, name) {
+                var item = null;
                 for (var i = 0; i < menu.length; i++) {
                     if (menu[i]['name'] === name) {
-                        return menu[i];
+                        item = menu[i];
                         break;
                     }
                 }
-                return null;
+                return item;
             },
             exec: function (cmd, args) {
-                console.log('arguments', arguments);
                 if (!angular.isFunction(OSSCmd[cmd])) {
                     return;
                 }
@@ -370,7 +379,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSApi', ['$http', 'RequestXML',function ($http, RequestXML) {
+    .factory('OSSApi', ['$http', 'RequestXML', function ($http, RequestXML) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
 
@@ -541,7 +550,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi',function ($modal, Bucket, OSSApi) {
+    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', function ($modal, Bucket, OSSApi) {
         var defaultOption = {
             backdrop: 'static'
         };

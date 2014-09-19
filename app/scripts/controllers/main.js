@@ -61,6 +61,44 @@ angular.module('ossClientUiApp')
         };
 
     }])
+    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueue', function ($scope, $interval, OSSQueue) {
+        //上传队列
+        $scope.uploadList = [];
+
+        //下载队列
+        $scope.downloadList = [];
+
+        //上传速度
+        $scope.uploadSpeed = 0;
+
+        //下载速度
+        $scope.downloadSpeed = 0;
+
+        //上传队列总数
+        $scope.uploadCount = 0;
+
+        //下载队列总数
+        $scope.downloadCount = 0;
+
+        //$interval(function () {
+        //    var res = OSSQueue.uploadList();
+        //    console.log('res',res);
+        //    $scope.uploadList = res['list'];
+        //    console.log('$scope.uploadList',$scope.uploadList);
+        //    $scope.uploadCount = res['count'];
+        //    $scope.uploadSpeed = res['upload'];
+        //    $scope.downloadSpeed = res['download'];
+        //}, 1000);
+
+        //$interval(function () {
+        //    var res = OSSQueue.uploadList();
+        //    $scope.downloadList = res['list'];
+        //    $scope.uploadSpeed = res['upload'];
+        //    $scope.downloadSpeed = res['downloadSpeed'];
+        //    $scope.downloadCount = res['count'];
+        //}, 1000);
+
+    }])
     .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu) {
         var bucketName = $routeParams.bucket ? $routeParams.bucket : buckets && buckets.length ? buckets[0]['Name'] : '',
             keyword = $routeParams.keyword || '',
@@ -136,13 +174,13 @@ angular.module('ossClientUiApp')
                     break;
                 case 'download':
                     var list = [];
-                    console.log('$scope.selectedFiles',$scope.selectedFiles);
-                    angular.forEach($scope.selectedFiles,function(val){
+                    console.log('$scope.selectedFiles', $scope.selectedFiles);
+                    angular.forEach($scope.selectedFiles, function (val) {
                         list.push({
-                            location:$rootScope.PAGE_CONFIG.bucket['Location'],
-                            bucket:$rootScope.PAGE_CONFIG.bucket['Name'],
-                            object:val.path,
-                            filesize:val.size
+                            location: $rootScope.PAGE_CONFIG.bucket['Location'],
+                            bucket: $rootScope.PAGE_CONFIG.bucket['Name'],
+                            object: val.path,
+                            filesize: val.size
                         })
                     })
                     args = [list];
@@ -152,8 +190,11 @@ angular.module('ossClientUiApp')
         }
 
         //顶部操作菜单
-        $scope.topMenuList = OSSMenu.getMenu($rootScope.PAGE_CONFIG.bucket, $rootScope.PAGE_CONFIG.objectPrefix);
+        //$scope.topMenuList = OSSMenu.getMenu($rootScope.PAGE_CONFIG.bucket, $rootScope.PAGE_CONFIG.objectPrefix);
 
+        $scope.$watch('selectedFiles', function (val) {
+            $scope.topMenuList = OSSMenu.getMenu($rootScope.PAGE_CONFIG.bucket, $rootScope.PAGE_CONFIG.objectPrefix, val);
+        })
 
         //右键菜单
         $scope.contextMenu = [];
