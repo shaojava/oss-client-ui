@@ -64,27 +64,21 @@ angular.module('ossClientUiApp')
     .factory('OSSMenu', ['OSSCmd', function (OSSCmd) {
         var allMenu = {
             'upload': {
-                name: 'upload',
                 text: '上传'
             },
             'create': {
-                name: 'create',
                 text: '新建文件夹'
             },
             'download': {
-                name: 'download',
                 text: '下载'
             },
             'get_uri': {
-                name: 'get_uri',
                 text: '获取地址'
             },
             'set_header': {
-                name: 'set_header',
                 text: '设置HTTP头'
             },
             'del': {
-                name: 'del',
                 text: '删除'
             }
         };
@@ -112,7 +106,11 @@ angular.module('ossClientUiApp')
             calculateMenu: function () {
                 var menus = [];
                 var calculatedMenu = _.prototype.union.apply(this,Array.prototype.slice.call(arguments));
-                angular.forEach(allMenu,function(val,key){
+                console.log('calculatedMenu',calculatedMenu);
+                $.each(allMenu,function(key,val){
+                    $.extend(val,{
+                        name:key
+                    })
                     if(_.indexOf(calculatedMenu,key) < 0){
                         val.disabled = 1;
                     }else{

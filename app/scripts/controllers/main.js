@@ -224,7 +224,7 @@ angular.module('ossClientUiApp')
 
         $scope.$watch('selectedFiles', function (val) {
             $scope.topMenuList = OSSMenu.getMenu($rootScope.PAGE_CONFIG.bucket, $rootScope.PAGE_CONFIG.objectPrefix, val);
-        })
+        },true)
 
         //右键菜单
         $scope.contextMenu = [];
