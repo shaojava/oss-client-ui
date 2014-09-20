@@ -90,17 +90,6 @@ angular.module('ossClientUiApp')
         console.log('res',res);
         $scope.uploadList = res['list'];
 
-        $scope.clickUploadItem = function(item){
-            console.log('item',item);
-            var index = $scope.selectedUploadItems.indexOf(item);
-            if (index >= 0) {
-                $scope.selectedUploadItems.splice(index, 1);
-            } else {
-                $scope.selectedUploadItems = [];
-                $scope.selectedUploadItems.push(item);
-            }
-        };
-
         //$interval(function () {
         //    var res = OSSQueue.uploadList();
         //    console.log('res',res);
@@ -111,13 +100,33 @@ angular.module('ossClientUiApp')
         //    $scope.downloadSpeed = res['download'];
         //}, 1000);
 
-        $interval(function () {
-            var res = OSSQueue.downloadList();
-            $scope.downloadList = res['list'];
-            $scope.uploadSpeed = res['upload'];
-            $scope.downloadSpeed = res['downloadSpeed'];
-            $scope.downloadCount = res['count'];
-        }, 1000);
+        //$interval(function () {
+        //    var res = OSSQueue.downloadList();
+        //    $scope.downloadList = res['list'];
+        //    $scope.uploadSpeed = res['upload'];
+        //    $scope.downloadSpeed = res['downloadSpeed'];
+        //    $scope.downloadCount = res['count'];
+        //}, 1000);
+
+        $scope.clickUploadItem = function(item){
+            var index = $scope.selectedUploadItems.indexOf(item);
+            if (index >= 0) {
+                $scope.selectedUploadItems.splice(index, 1);
+            } else {
+                $scope.selectedUploadItems = [];
+                $scope.selectedUploadItems.push(item);
+            }
+        };
+
+        $scope.clickDownloadItem = function(item){
+            var index = $scope.selectedDownloadItems.indexOf(item);
+            if (index >= 0) {
+                $scope.selectedDownloadItems.splice(index, 1);
+            } else {
+                $scope.selectedDownloadItems = [];
+                $scope.selectedDownloadItems.push(item);
+            }
+        };
 
     }])
     .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu) {

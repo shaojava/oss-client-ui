@@ -62,81 +62,79 @@ angular.module('ossClientUiApp')
         };
     })
     .factory('OSSMenu', ['OSSCmd', function (OSSCmd) {
+        var allMenu = {
+            'upload': {
+                name: 'upload',
+                text: '上传'
+            },
+            'create': {
+                name: 'create',
+                text: '新建文件夹'
+            },
+            'download': {
+                name: 'download',
+                text: '下载'
+            },
+            'get_uri': {
+                name: 'get_uri',
+                text: '获取地址'
+            },
+            'set_header': {
+                name: 'set_header',
+                text: '设置HTTP头'
+            },
+            'del': {
+                name: 'del',
+                text: '删除'
+            }
+        };
         return {
             getDefaultMenus: function () {
-                var allMenu = [
-                    {
-                        name: 'upload',
-                        text: '上传'
-                    },
-                    {
-                        name: 'create',
-                        text: '新建文件夹'
-                    },
-                    {
-                        name: 'download',
-                        text: '下载'
-                    },
-                    {
-                        name: 'get_uri',
-                        text: '获取地址'
-                    },
-                    {
-                        name: 'set_header',
-                        text: '设置HTTP头'
-                    },
-                    {
-                        name: 'del',
-                        text: '删除'
-                    }
-                ];
-                return allMenu.concat();
+                return _.keys(allMenu);
             },
             checkPermission: function () {
                 return true;
             },
             getMenu: function (bucket, currentObject, selectedObjects) {
-                var menu = this.getDefaultMenus();
+                var menu = this.getDefaultMenus(),
+                    currentMenu = this.getCurrentMenu(menu);
                 if (!selectedObjects || !selectedObjects.length) {
-                    this.getCurrentMenu(menu);
+                    return this.calculateMenu(currentMenu);
                 } else {
+                    var selectedMenu = this.getSelectMenu(menu);
                     if (selectedObjects.length == 1) {
-                        this.getSelectMenu(menu);
+                        return this.calculateMenu(currentMenu, selectedMenu);
                     } else {
-                        this.getMultiSelectMenu(menu);
-                        this.getSelectMenu(menu);
+                        return this.calculateMenu(currentMenu, selectedMenu, this.getMultiSelectMenu(menu));
                     }
                 }
-                return menu;
+            },
+            calculateMenu: function () {
+                var menus = [];
+                var calculatedMenu = _.prototype.union.apply(this,Array.prototype.slice.call(arguments));
+                angular.forEach(allMenu,function(val,key){
+                    if(_.indexOf(calculatedMenu,key) < 0){
+                        val.disabled = 1;
+                    }else{
+                        val.disabled =0;
+                    }
+                    menus.push(val);
+                })
+                return menus;
             },
             getCurrentMenu: function (menu) {
-                this.disableMenu(menu, 'download', 'get_uri', 'set_header', 'del');
+                return this.disableMenu(menu, 'download', 'get_uri', 'set_header', 'del');
             },
             getMultiSelectMenu: function (menu) {
-                this.disableMenu(menu, 'upload', 'create', 'get_uri', 'set_header');
+                return this.disableMenu(menu, 'upload', 'create', 'get_uri', 'set_header');
             },
             getSelectMenu: function (menu) {
-                this.disableMenu(menu, 'upload', 'create');
+                return this.disableMenu(menu, 'upload', 'create');
             },
             disableMenu: function (menu) {
-                var _self = this;
                 var disableOpts = Array.prototype.slice.call(arguments).splice(1);
-                angular.forEach(disableOpts, function (disableMenu) {
-                    var menuItem = _self.getMenuByName(menu, disableMenu);
-                    if (menuItem) {
-                        menuItem.disabled = 1;
-                    }
-                });
-            },
-            getMenuByName: function (menu, name) {
-                var item = null;
-                for (var i = 0; i < menu.length; i++) {
-                    if (menu[i]['name'] === name) {
-                        item = menu[i];
-                        break;
-                    }
-                }
-                return item;
+                 disableOpts.unshift(menu);
+                return _.without.apply(this,disableOpts);
             },
             exec: function (cmd, args) {
                 if (!angular.isFunction(OSSCmd[cmd])) {
@@ -169,7 +167,6 @@ angular.module('ossClientUiApp')
                 current = history.length - 1;
             }
             update = true;
-            console.log('history', history);
         });
 
         return {
@@ -179,9 +176,7 @@ angular.module('ossClientUiApp')
                 update = true;
             },
             go: function (isForward) {
-                console.log(123);
                 if ((isForward && this.canForward()) || (!isForward && this.canBackward())) {
-                    console.log(456);
                     update = false;
                     $location.url(history[isForward ? ++current : --current]);
                 }
@@ -527,9 +522,7 @@ angular.module('ossClientUiApp')
                     marker: marker,
                     'max-keys': maxKeys
                 })
-                console.log('param', param);
                 var queryStr = $.param(param, true);
-                console.log('queryStr', queryStr);
                 var expires = getExpires();
                 var host = getOSSHost(bucket.Name, bucket.Location);
                 var canonicalizedOSSheaders = "";
