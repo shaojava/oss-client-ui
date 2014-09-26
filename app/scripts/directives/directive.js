@@ -7,7 +7,7 @@
  * # directive
  */
 angular.module('ossClientUiApp')
-    .directive('smartSearch', ['$location', '$rootScope', '$filter',function ($location, $rootScope, $filter) {
+    .directive('smartSearch', ['$location', '$rootScope', '$filter', function ($location, $rootScope, $filter) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -66,7 +66,50 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .directive('fileIcon', ['OSSObject',function (OSSObject) {
+    .directive('queueItem', [function () {
+        return {
+            templateUrl: 'views/queue-item.html',
+            restrict: 'E',
+            replace: true,
+            scope: {
+                type: '@',
+                item: '=data',
+                onSelect: '&'
+            },
+            link: function postLink(scope, element, attrs) {
+                scope.clickItem = function ($event, item) {
+                    item.selected = !item.selected;
+                    scope.onSelect({
+                        $event: $event
+                    });
+                }
+            }
+        };
+    }])
+    .directive('menu', [function () {
+        return {
+            template: '<button class="btn btn-default" ng-class="menu-{{name}}" ng-disabled="state==0" ng-show="state>-1" ng-transclude></button>',
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            scope: {
+                text: "@",
+                name: "@",
+                state: "=",
+                shortcut: "@",
+                execute: "&"
+            },
+            link: function postLink(scope, element, attrs) {
+                element.click(function (event) {
+                    console.log('event',event);
+                    scope.execute({
+                        $event: event
+                    });
+                })
+            }
+        };
+    }])
+    .directive('fileIcon', ['OSSObject', function (OSSObject) {
         return {
             template: '<i class="file-icon-{{size}} {{icon}}"></i>',
             restrict: 'E',

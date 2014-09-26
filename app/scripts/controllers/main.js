@@ -61,12 +61,7 @@ angular.module('ossClientUiApp')
         };
 
     }])
-    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueue', function ($scope, $interval, OSSQueue) {
-        //上传队列
-        $scope.uploadList = [];
-
-        //下载队列
-        $scope.downloadList = [];
+    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue) {
 
         //上传速度
         $scope.uploadSpeed = 0;
@@ -86,47 +81,46 @@ angular.module('ossClientUiApp')
         //选中的下载条目
         $scope.selectedDownloadItems = [];
 
-        var res = OSSQueue.uploadList();
-        console.log('res',res);
-        $scope.uploadList = res['list'];
+        //上传的操作菜单
+        $scope.uploadQueueMenus = OSSQueueMenu.getUploadMenu();
 
-        //$interval(function () {
-        //    var res = OSSQueue.uploadList();
-        //    console.log('res',res);
-        //    $scope.uploadList = res['list'];
-        //    console.log('$scope.uploadList',$scope.uploadList);
-        //    $scope.uploadCount = res['count'];
-        //    $scope.uploadSpeed = res['upload'];
-        //    $scope.downloadSpeed = res['download'];
-        //}, 1000);
+        //下载的操作菜单
+        $scope.downloadQueueMenus = OSSQueueMenu.getDownloadMenu();
 
-        //$interval(function () {
-        //    var res = OSSQueue.downloadList();
-        //    $scope.downloadList = res['list'];
-        //    $scope.uploadSpeed = res['upload'];
-        //    $scope.downloadSpeed = res['downloadSpeed'];
-        //    $scope.downloadCount = res['count'];
-        //}, 1000);
-
-        $scope.clickUploadItem = function(item){
-            var index = $scope.selectedUploadItems.indexOf(item);
-            if (index >= 0) {
-                $scope.selectedUploadItems.splice(index, 1);
-            } else {
-                $scope.selectedUploadItems = [];
-                $scope.selectedUploadItems.push(item);
-            }
+        $scope.onUploadItemSelect = function ($event, item) {
+            console.log('arguments', arguments);
+            $scope.selectedUploadItems = _.where($scope.uploadList, {
+                selected: true
+            });
         };
 
-        $scope.clickDownloadItem = function(item){
-            var index = $scope.selectedDownloadItems.indexOf(item);
-            if (index >= 0) {
-                $scope.selectedDownloadItems.splice(index, 1);
-            } else {
-                $scope.selectedDownloadItems = [];
-                $scope.selectedDownloadItems.push(item);
-            }
+        $scope.onDownloadItemSelect = function ($event, item) {
+            $scope.selectedDownloadItems = _.where($scope.downloadList, {
+                selected: true
+            });
         };
+
+        //监听删除队列
+        $scope.$on('removeQueue', function (event, type, items) {
+            OSS.log('removeQueue', arguments);
+            if (type === 'upload') {
+                angular.forEach(items, function (item) {
+                    OSSUploadQueue.remove(item);
+                });
+            } else {
+                angular.forEach(items, function (item) {
+                    OSSDownloadQueue.remove(item);
+                });
+            }
+        })
+
+        //上传队列
+        $scope.uploadList = OSSUploadQueue.init();
+        OSSUploadQueue.refresh();
+
+        //下载队列
+        $scope.downloadList = OSSDownloadQueue.init();
+        OSSDownloadQueue.refresh();
 
     }])
     .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu) {
@@ -217,14 +211,10 @@ angular.module('ossClientUiApp')
                     break;
             }
             OSSMenu.exec(cmd, args);
-        }
+        };
 
-        //顶部操作菜单
-        //$scope.topMenuList = OSSMenu.getMenu($rootScope.PAGE_CONFIG.bucket, $rootScope.PAGE_CONFIG.objectPrefix);
 
-        $scope.$watch('selectedFiles', function (val) {
-            $scope.topMenuList = OSSMenu.getMenu($rootScope.PAGE_CONFIG.bucket, $rootScope.PAGE_CONFIG.objectPrefix, val);
-        },true)
+        $scope.topMenuList = OSSMenu.getAllMenu();
 
         //右键菜单
         $scope.contextMenu = [];

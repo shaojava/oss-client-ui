@@ -8,14 +8,123 @@
  * Factory in the ossClientUiApp.
  */
 angular.module('ossClientUiApp')
-    .factory('OSSQueue', function () {
+    .factory('OSSQueueItem', function () {
         return {
-            uploadList: function () {
-                return OSS.invoke('getUpload');
+            isUploading: function (item) {
+                return item.status == 1;
             },
-
-            downloadList: function () {
-                return OSS.invoke('getDownload');
+            isWaiting: function (item) {
+                return item.status == 2;
+            },
+            isPause: function (item) {
+                return item.status == 3;
+            },
+            isDone: function (item) {
+                return item.status == 4;
+            },
+            isError: function (item) {
+                return item.status == 5;
+            }
+        };
+    })
+    .factory('OSSUploadQueue', function ($interval) {
+        return {
+            items: [],
+            uploadCount: 0,
+            uploadSpeed: 0,
+            downloadSpeed: 0,
+            init: function () {
+                var res = OSS.invoke('getUpload');
+                this.items = res['list'];
+                this.uploadCount = res['count'];
+                this.uploadSpeed = res['upload'];
+                this.downloadSpeed = res['download'];
+                return this.items;
+            },
+            add: function (item) {
+                this.items.push(item);
+            },
+            get: function (bucket, object) {
+                return _.findWhere(this.items, {
+                    bucket: bucket,
+                    object: object
+                });
+            },
+            remove: function (item) {
+                var index = _.indexOf(this.items, item);
+                if (index > -1) {
+                    this.items.splice(index, 1);
+                }
+            },
+            update: function (item, param) {
+                angular.extend(item, param);
+            },
+            refresh: function () {
+                var _self = this;
+                $interval(function () {
+                    var res = OSS.invoke('getUpload', undefined, undefined);
+                    angular.forEach(res['list'], function (val) {
+                        var existItem = _self.get(val.bucket, val.object);
+                        if (existItem) {
+                            _self.update(existItem, val);
+                        } else {
+                            _self.add(val);
+                        }
+                    })
+                    _self.uploadCount = res['count'];
+                    _self.uploadSpeed = res['upload'];
+                    _self.downloadSpeed = res['download'];
+                }, 1000);
+            }
+        };
+    })
+    .factory('OSSDownloadQueue', function ($interval) {
+        return {
+            items: [],
+            uploadCount: 0,
+            uploadSpeed: 0,
+            downloadSpeed: 0,
+            init: function () {
+                var res = OSS.invoke('getDownload');
+                this.items = res['list'];
+                this.uploadCount = res['count'];
+                this.uploadSpeed = res['upload'];
+                this.downloadSpeed = res['download'];
+                return this.items;
+            },
+            add: function (item) {
+                this.items.push(item);
+            },
+            get: function (fullpath) {
+                return _.findWhere(this.items, {
+                    fullpath: fullpath
+                });
+            },
+            remove: function (item) {
+                var index = _.indexOf(this.items, item);
+                if (index > -1) {
+                    this.items.splice(index, 1);
+                }
+            },
+            update: function (item, param) {
+                angular.extend(item, param);
+            },
+            refresh: function () {
+                var _self = this;
+                $interval(function () {
+                    var res = OSS.invoke('getDownload', undefined, undefined);
+                    angular.forEach(res['list'], function (val) {
+                        var existItem = _self.get(val.fullpath);
+                        if (existItem) {
+                            _self.update(existItem, val);
+                        } else {
+                            _self.add(val);
+                        }
+                    })
+                    _self.uploadCount = res['count'];
+                    _self.uploadSpeed = res['upload'];
+                    _self.downloadSpeed = res['download'];
+                }, 1000);
             }
         };
     })
@@ -61,87 +170,308 @@ angular.module('ossClientUiApp')
             }
         };
     })
-    .factory('OSSMenu', ['OSSCmd', function (OSSCmd) {
-        var allMenu = {
-            'upload': {
-                text: '上传'
+    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', function ($rootScope, OSSQueueItem) {
+        /**
+         * 检测参数的合法性
+         * @param selectedItems
+         * @returns {boolean}
+         */
+        var checkArgValid = function (selectedItems) {
+            if (!angular.isArray(selectedItems) || !selectedItems.length) {
+                return false;
+            }
+            return true;
+        };
+
+        /**
+         * 准备uplad的请求参数
+         * @param selectedItems
+         * @returns {{all: number, list: Array}}
+         */
+        var prepareUpladParam = function (selectedItems) {
+            var param = {
+                all: 0,
+                list: []
+            };
+            angular.forEach(selectedItems, function (item) {
+                param.list.push({
+                    bucket: item.bucket,
+                    object: item.object
+                });
+            })
+            return param;
+        };
+
+        /**
+         * 准备download的请求参数
+         * @param selectedItems
+         * @returns {{all: number, list: Array}}
+         */
+        var prepareDownloadParam = function (selectedItems) {
+            var param = {
+                all: 0,
+                list: []
+            };
+            angular.forEach(selectedItems, function (item) {
+                param.list.push({
+                    fullpath: item.fullpath
+                });
+            })
+            return param;
+        };
+
+        var uploadMenu = [
+            {
+                name: 'start',
+                text: '开始',
+                execute: function (selectedItems) {
+                    if (!checkArgValid(selectedItems)) {
+                        return;
+                    }
+                    OSS.invoke('startUpload', prepareUpladParam(selectedItems));
+                },
+                getState: function (selectedItems) {
+                    var len = selectedItems.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    var hasUnValidItem = false;
+                    for (var i = 0; i < selectedItems.length; i++) {
+                        var item = selectedItems[i];
+                        if (!OSSQueueItem.isPause(item)) {
+                            hasUnValidItem = true;
+                        }
+                    }
+                    if (hasUnValidItem) {
+                        return 0;
+                    }
+                    return 1;
+                }
             },
-            'create': {
-                text: '新建文件夹'
+            {
+                name: 'pause',
+                text: '暂停',
+                execute: function (selectedItems) {
+                    if (!checkArgValid(selectedItems)) {
+                        return;
+                    }
+                    OSS.invoke('stopUpload', prepareUpladParam(selectedItems));
+                },
+                getState: function (selectedItems) {
+                    var len = selectedItems.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    var hasUnValidItem = false;
+                    for (var i = 0; i < selectedItems.length; i++) {
+                        var item = selectedItems[i];
+                        if (OSSQueueItem.isPause(item) || OSSQueueItem.isError(item) || OSSQueueItem.isDone(item)) {
+                            hasUnValidItem = true;
+                        }
+                    }
+                    if (hasUnValidItem) {
+                        return 0;
+                    }
+                    return 1;
+                }
             },
-            'download': {
-                text: '下载'
+            {
+                name: 'remove',
+                text: '取消',
+                execute: function (selectedItems) {
+                    if (!checkArgValid(selectedItems)) {
+                        return;
+                    }
+                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems));
+                    $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
+                },
+                getState: function (selectedItems) {
+                    var len = selectedItems.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                }
+            }
+        ];
+
+        var downloadMenu = [
+            {
+                name: 'start',
+                text: '开始',
+                execute: function (selectedItems) {
+                    if (!checkArgValid(selectedItems)) {
+                        return;
+                    }
+                    OSS.invoke('startDownload', prepareUpladParam(selectedItems));
+                },
+                getState: function (selectedItems) {
+                    var len = selectedItems.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    var hasUnValidItem = false;
+                    for (var i = 0; i < selectedItems.length; i++) {
+                        var item = selectedItems[i];
+                        if (!OSSQueueItem.isPause(item)) {
+                            hasUnValidItem = true;
+                        }
+                    }
+                    if (hasUnValidItem) {
+                        return 0;
+                    }
+                    return 1;
+                }
             },
-            'get_uri': {
-                text: '获取地址'
+            {
+                name: 'pause',
+                text: '暂停',
+                execute: function (selectedItems) {
+                    if (!checkArgValid(selectedItems)) {
+                        return;
+                    }
+                    OSS.invoke('stopDownload', prepareDownloadParam(selectedItems));
+                },
+                getState: function (selectedItems) {
+                    var len = selectedItems.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    var hasUnValidItem = false;
+                    for (var i = 0; i < selectedItems.length; i++) {
+                        var item = selectedItems[i];
+                        if (OSSQueueItem.isPause(item) || OSSQueueItem.isError(item) || OSSQueueItem.isDone(item)) {
+                            hasUnValidItem = true;
+                        }
+                    }
+                    if (hasUnValidItem) {
+                        return 0;
+                    }
+                    return 1;
+                }
             },
-            'set_header': {
-                text: '设置HTTP头'
+            {
+                name: 'remove',
+                text: '取消',
+                execute: function (selectedItems) {
+                    if (!checkArgValid(selectedItems)) {
+                        return;
+                    }
+                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems));
+                    $rootScope.$broadcast('removeQueue', 'download', selectedItems);
+                },
+                getState: function (selectedItems) {
+                    var len = selectedItems.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                }
+            }
+        ];
+        return {
+            getUploadMenu: function () {
+                return uploadMenu;
             },
-            'del': {
-                text: '删除'
+            getDownloadMenu: function () {
+                return downloadMenu;
             }
         };
-        return {
-            getDefaultMenus: function () {
-                return _.keys(allMenu);
-            },
-            checkPermission: function () {
-                return true;
-            },
-            getMenu: function (bucket, currentObject, selectedObjects) {
-                var menu = this.getDefaultMenus(),
-                    currentMenu = this.getCurrentMenu(menu);
-                if (!selectedObjects || !selectedObjects.length) {
-                    return this.calculateMenu(currentMenu);
-                } else {
-                    var selectedMenu = this.getSelectMenu(menu);
-                    if (selectedObjects.length == 1) {
-                        return this.calculateMenu(currentMenu, selectedMenu);
-                    } else {
-                        return this.calculateMenu(currentMenu, selectedMenu, this.getMultiSelectMenu(menu));
-                    }
+    }])
+    .factory('OSSMenu', ['OSSCmd', function (OSSCmd) {
+        var allMenu = [
+            {
+                name: 'upload',
+                text: '上传',
+                getState: function () {
+                    return 1;
+                },
+                execute: function (bucket, currentObject) {
+                    OSSCmd.upload(bucket['Name'], bucket['Location'], currentObject);
                 }
             },
-            calculateMenu: function () {
-                var menus = [];
-                var calculatedMenu = _.prototype.union.apply(this,Array.prototype.slice.call(arguments));
-                console.log('calculatedMenu',calculatedMenu);
-                $.each(allMenu,function(key,val){
-                    $.extend(val,{
-                        name:key
+            {
+                name: 'create',
+                text: '新建文件夹',
+                getState: function () {
+                    return 1;
+                },
+                execute: function () {
+
+                }
+            },
+            {
+                name: 'download',
+                text: '下载',
+                getState: function (selectedFiles) {
+                    var len = selectedFiles.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                },
+                execute: function (bucket, currentObject, selectedFiles) {
+                    var list = [];
+                    angular.forEach(selectedFiles, function (val) {
+                        list.push({
+                            location: bucket['Location'],
+                            bucket: bucket['Name'],
+                            object: val.path,
+                            filesize: val.size
+                        })
                     })
-                    if(_.indexOf(calculatedMenu,key) < 0){
-                        val.disabled = 1;
-                    }else{
-                        val.disabled =0;
+
+                    OSSCmd.download(list);
+                }
+            },
+            {
+                name: 'get_uri',
+                text: '获取地址',
+                getState: function (selectedFiles) {
+                    var len = selectedFiles.length;
+                    if (!len || len > 1) {
+                        return 0;
+                    } else {
+                        return selectedFiles[0].dir ? 0 : 1
                     }
-                    menus.push(val);
-                })
-                return menus;
-            },
-            getCurrentMenu: function (menu) {
-                return this.disableMenu(menu, 'download', 'get_uri', 'set_header', 'del');
-            },
-            getMultiSelectMenu: function (menu) {
-                return this.disableMenu(menu, 'upload', 'create', 'get_uri', 'set_header');
-            },
-            getSelectMenu: function (menu) {
-                return this.disableMenu(menu, 'upload', 'create');
-            },
-            disableMenu: function (menu) {
-                var disableOpts = Array.prototype.slice.call(arguments).splice(1);
-                 disableOpts.unshift(menu);
-                return _.without.apply(this,disableOpts);
-            },
-            exec: function (cmd, args) {
-                if (!angular.isFunction(OSSCmd[cmd])) {
-                    return;
+                },
+                execute: function () {
+
                 }
-                if (!this.checkPermission(cmd)) {
-                    return;
+            },
+            {
+                name: 'set_header',
+                text: '设置HTTP头',
+                getState: function (selectedFiles) {
+                    var len = selectedFiles.length;
+                    if (!len || len > 1) {
+                        return 0;
+                    } else {
+                        return selectedFiles[0].dir ? 0 : 1
+                    }
+                },
+                execute: function () {
+                    console.log(arguments);
                 }
-                OSSCmd[cmd].apply(this, args);
+            },
+            {
+                name: 'del',
+                text: '删除',
+                getState: function (selectedFiles) {
+                    var len = selectedFiles.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                },
+                execute: function () {
+
+                }
+            }
+        ];
+        return {
+            getAllMenu: function () {
+                return allMenu;
             }
         };
     }])

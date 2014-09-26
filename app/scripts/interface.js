@@ -7,8 +7,10 @@ var OSS = {
      * @param {object} param 请求参数
      * @param {fn} callback 回调函数
      */
-    invoke: function (name, param, callback) {
-        this.log(name, arguments);
+    invoke: function (name, param, callback, log) {
+        if (log !== false) {
+            this.log(name, arguments);
+        }
         if (typeof OSSClient === 'undefined') {
             throw new Error('Can not find OSSClient');
         }
@@ -19,12 +21,16 @@ var OSS = {
         if (typeof callback === 'function') {
             args.push(function (re) {
                 re = !re ? '' : JSON.parse(re);
-                this.log(name + ':callback', re);
+                if (log !== false) {
+                    this.log(name + ':callback', re);
+                }
                 callback(re);
             });
         }
         var re = OSSClient[name].apply(this, args);
-        this.log(name + ':return', re);
+        if (log !== false) {
+            this.log(name + ':return', re);
+        }
         re = !re ? '' : JSON.parse(re);
         return re;
     },

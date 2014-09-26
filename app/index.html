@@ -62,45 +62,25 @@
                 <tab heading="上传队列">
                     <div class="opt-bar">
                         <ul class="clearfix opt-list">
-                            <li class="pull-left">
-                                <button class="btn btn-default">暂停</button>
-                            </li>
-                            <li class="pull-left">
-                                <button class="btn btn-default">取消</button>
+                            <li class="pull-left" ng-repeat="menu in uploadQueueMenus">
+                                <menu name="{{menu.name}}" state="menu.getState(selectedUploadItems)" execute="menu.execute(selectedUploadItems)">{{menu.text}}</menu>
                             </li>
                         </ul>
                     </div>
                     <ul class="queue-list">
-                        <li class="clearfix queue-item" ng-repeat="item in uploadList" ng-class="{'selected':selectedUploadItems.indexOf(item)>=0}" ng-click="clickUploadItem(item)">
-                            <div class="pull-left filename" ng-bind="item.object"></div>
-                            <div class="pull-right remain-time" ng-bind="item.status | getUploadState:item.speed:item.filesize:item.offset:item.errormsg"></div>
-                            <div class="pull-right progress-wrapper">
-                                <progressbar max="item.filesize" class="progress-striped" value="item.offset"></progressbar>
-                            </div>
-                            <div class="pull-right filesize" ng-bind="item.filesize | bitSize"></div>
-                        </li>
+                        <queue-item type="upload" data="item" on-select="onUploadItemSelect($event,item)" ng-repeat="item in uploadList"></queue-item>
                     </ul>
                 </tab>
                 <tab heading="下载队列">
                     <div class="opt-bar">
                         <ul class="clearfix opt-list">
-                            <li class="pull-left">
-                                <button class="btn btn-default">暂停</button>
-                            </li>
-                            <li class="pull-left">
-                                <button class="btn btn-default">取消</button>
+                            <li class="pull-left" ng-repeat="menu in downloadQueueMenus">
+                                <menu type="download" name="{{menu.name}}" state="menu.getState(selectedDownloadItems)" execute="menu.execute(selectedDownloadItems)">{{menu.text}}</menu>
                             </li>
                         </ul>
                     </div>
                     <ul class="queue-list">
-                        <li class="clearfix queue-item" ng-repeat="item in downloadList" ng-class="{'selected':selectedDownloadItems.indexOf(item)>=0}" ng-click="clickDownloadItem(item)">
-                            <div class="pull-left filename" ng-bind="item.object"></div>
-                            <div class="pull-right remain-time" ng-bind="item.status | getDownloadState:item.speed:item.filesize:item.offset:item.errormsg"></div>
-                            <div class="pull-right progress-wrapper">
-                                <progressbar max="item.filesize" class="progress-striped" value="item.offset"></progressbar>
-                            </div>
-                            <div class="pull-right filesize" ng-bind="item.filesize | bitSize"></div>
-                        </li>
+                        <queue-item data="item" ng-repeat="item in downloadList" on-select="onDownloadItemSelect($event,item)"></queue-item>
                     </ul>
                 </tab>
                 <tab heading="错误日志">Static content</tab>
