@@ -580,7 +580,7 @@ angular.module('ossClientUiApp')
                 OSSApi.getObjects(bucket, prefix, delimiter, lastLoadMaker, loadFileCount).success(function (res) {
                     OSS.log('list:res', res);
                     var contents = res['ListBucketResult']['Contents'];
-                    contents = contents ? angular.isArray(contents) ? contents : contents : [];
+                    contents = contents ? angular.isArray(contents) ? contents : [contents] : [];
 
                     var commonPrefixes = res['ListBucketResult']['CommonPrefixes'];
                     commonPrefixes = commonPrefixes ? angular.isArray(commonPrefixes) ? commonPrefixes : [commonPrefixes] : [];
