@@ -41,7 +41,7 @@ var OSS = {
      */
     log: function (name, info) {
         if (window.debug) {
-            console.log(name, info);
+            console.log('%c' + name, 'color:blue', info);
         }
     },
     /**
