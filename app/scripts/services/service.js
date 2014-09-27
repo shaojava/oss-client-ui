@@ -431,6 +431,20 @@ angular.module('ossClientUiApp')
                 }
             },
             {
+                name: 'copy',
+                text: '复制',
+                getState: function (selectedFiles) {
+                    var len = selectedFiles.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                },
+                execute: function () {
+                    console.log(arguments);
+                }
+            },
+            {
                 name: 'del',
                 text: '删除',
                 getState: function (selectedFiles) {
@@ -449,6 +463,7 @@ angular.module('ossClientUiApp')
 
                     OSS.invoke('deleteObject', {
                         bucket:bucket['Name'],
+                        location:bucket['Location'],
                         list: list
                     }, function (res) {
 
