@@ -9,6 +9,30 @@
  * Main module of the application.
  */
 angular.module('OSSCommon', [])
+    .factory('Clipboard', function () {
+        var maxLen = 1,
+            container = [];
+        return {
+            clear: function () {
+                container = [];
+            },
+            len: function () {
+                return container.length;
+            },
+            get: function () {
+                var item = container.shift();
+                OSS.log('Clipboard.get', item);
+                return item;
+            },
+            add: function (data) {
+                container.push(data);
+                if (container.length > maxLen) {
+                    container.shift();
+                }
+                OSS.log('Clipboard.add', data);
+            }
+        };
+    })
     .directive('scrollLoad', ['$rootScope', '$parse', function ($rootScope, $parse) {
         return {
             restrict: 'A',

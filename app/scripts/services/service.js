@@ -62,7 +62,7 @@ angular.module('ossClientUiApp')
             refresh: function () {
                 var _self = this;
                 $interval(function () {
-                    var res = OSS.invoke('getUpload', undefined, undefined);
+                    var res = OSS.invoke('getUpload', undefined, undefined, false);
                     angular.forEach(res['list'], function (val) {
                         var existItem = _self.get(val.bucket, val.object);
                         if (existItem) {
@@ -112,7 +112,7 @@ angular.module('ossClientUiApp')
             refresh: function () {
                 var _self = this;
                 $interval(function () {
-                    var res = OSS.invoke('getDownload', undefined, undefined);
+                    var res = OSS.invoke('getDownload', undefined, undefined, false);
                     angular.forEach(res['list'], function (val) {
                         var existItem = _self.get(val.fullpath);
                         if (existItem) {
@@ -336,7 +336,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSMenu', [function () {
+    .factory('OSSMenu', ['Clipboard', function (Clipboard) {
         var allMenu = [
             {
                 name: 'upload',
@@ -401,6 +401,82 @@ angular.module('ossClientUiApp')
                 }
             },
             {
+                name: 'copy',
+                text: '复制',
+                getState: function (selectedFiles) {
+                    var len = selectedFiles.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                },
+                execute: function (bucket, currentObject, selectedFiles) {
+                    var data = JSON.stringify({
+                        ac: 'copy',
+                        bucket: bucket,
+                        objects: selectedFiles
+                    });
+                    Clipboard.add(data);
+                }
+            },
+            {
+                name: 'paste',
+                text: '粘贴',
+                getState: function () {
+                    return Clipboard.len() ? 1 : -1;
+                },
+                execute: function (bucket, currentObject, selectedFiles) {
+                    var clipData = Clipboard.get();
+                    if (!clipData) return;
+                    clipData = JSON.parse(clipData);
+                    if (clipData.ac == 'copy') {
+                        var targetBucket = clipData['bucket'];
+                        var list = clipData['objects'].map(function (object) {
+                            return {
+                                object: object.path,
+                                filesize: object.filesize
+                            }
+                        })
+                        OSS.invoke('copyObject', {
+                            dstbucket: bucket['Name'],
+                            dstobject: selectedFiles.length == 1 ? selectedFiles[0].path : currentObject,
+                            dstlocation: bucket['Location'],
+                            bucket: targetBucket['Name'],
+                            location: targetBucket['Location'],
+                            list: list
+                        }, function (res) {
+
+                        })
+                    }
+                }
+            },
+            {
+                name: 'del',
+                text: '删除',
+                getState: function (selectedFiles) {
+                    var len = selectedFiles.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                },
+                execute: function (bucket, currentObject, selectedFiles) {
+                    var list = _.map(selectedFiles, function (object) {
+                        return {
+                            object: object.path
+                        }
+                    });
+
+                    OSS.invoke('deleteObject', {
+                        bucket: bucket['Name'],
+                        location: bucket['Location'],
+                        list: list
+                    }, function (res) {
+
+                    })
+                }
+            },
+            {
                 name: 'get_uri',
                 text: '获取地址',
                 getState: function (selectedFiles) {
@@ -429,47 +505,8 @@ angular.module('ossClientUiApp')
                 execute: function () {
                     console.log(arguments);
                 }
-            },
-            {
-                name: 'copy',
-                text: '复制',
-                getState: function (selectedFiles) {
-                    var len = selectedFiles.length;
-                    if (!len) {
-                        return 0;
-                    }
-                    return 1;
-                },
-                execute: function () {
-                    console.log(arguments);
-                }
-            },
-            {
-                name: 'del',
-                text: '删除',
-                getState: function (selectedFiles) {
-                    var len = selectedFiles.length;
-                    if (!len) {
-                        return 0;
-                    }
-                    return 1;
-                },
-                execute: function (bucket, currentObject, selectedFiles) {
-                    var list = _.map(selectedFiles, function (object) {
-                        return {
-                            object: object.path
-                        }
-                    });
-
-                    OSS.invoke('deleteObject', {
-                        bucket:bucket['Name'],
-                        location:bucket['Location'],
-                        list: list
-                    }, function (res) {
-
-                    })
-                }
             }
+
         ];
         return {
             getAllMenu: function () {
