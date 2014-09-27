@@ -7,8 +7,7 @@ var OSS = {
      * @param {object} param 请求参数
      * @param {fn} callback 回调函数
      */
-    invoke: function (name, param, callback) {
-        log = false;
+    invoke: function (name, param, callback, log) {
         if (log !== false) {
             this.log(name, arguments);
         }
