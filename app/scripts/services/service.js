@@ -261,7 +261,7 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('startDownload', prepareUpladParam(selectedItems));
+                    OSS.invoke('startDownload', prepareDownloadParam(selectedItems));
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;

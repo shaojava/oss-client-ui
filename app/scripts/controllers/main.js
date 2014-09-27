@@ -12,7 +12,7 @@ angular.module('ossClientUiApp')
         $rootScope.PAGE_CONFIG = {};
     }])
     .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope','$filter', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope,$filter) {
-        console.log('$filter',$filter('date')(new Date().getTime() + 2000,'HH:mm:ss'));
+
         //获取所有bucket列表
         $scope.buckets = [];
         Bucket.list().then(function (buckets) {
@@ -188,31 +188,6 @@ angular.module('ossClientUiApp')
                 $scope.selectedFiles.push(file);
             }
         };
-
-        //执行操作
-        $scope.execCMD = function (cmd) {
-            var args = [];
-            switch (cmd) {
-                case 'upload':
-                    args = [$rootScope.PAGE_CONFIG.bucket['Name'], $rootScope.PAGE_CONFIG.bucket['Location'], $rootScope.PAGE_CONFIG.objectPrefix];
-                    break;
-                case 'download':
-                    var list = [];
-                    console.log('$scope.selectedFiles', $scope.selectedFiles);
-                    angular.forEach($scope.selectedFiles, function (val) {
-                        list.push({
-                            location: $rootScope.PAGE_CONFIG.bucket['Location'],
-                            bucket: $rootScope.PAGE_CONFIG.bucket['Name'],
-                            object: val.path,
-                            filesize: val.size
-                        })
-                    })
-                    args = [list];
-                    break;
-            }
-            OSSMenu.exec(cmd, args);
-        };
-
 
         $scope.topMenuList = OSSMenu.getAllMenu();
 
