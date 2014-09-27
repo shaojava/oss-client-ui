@@ -31,10 +31,10 @@ angular.module('ossClientUiApp')
                 return '--:--:--';
             }
             var time = (filesize - offset) / speed * 1000;
-            return time ? $filter('date')(time, 'HH:mm:ss') : '--:--:--';
+            //console.log('time',time);
+            return time ? $filter('date')(time, '00:mm:ss') : '--:--:--';
         }
     })
-
     .filter('getQueueState', function ($filter) {
         return function (type, status, speed, filesize, offset, errormsg) {
             var state = '';

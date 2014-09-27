@@ -128,48 +128,6 @@ angular.module('ossClientUiApp')
             }
         };
     })
-    .factory('OSSCmd', function () {
-        return {
-            upload: function (bucketName, location, prefix) {
-                OSS.invoke('selectFileDlg', {
-                    path: '',
-                    disable_root: 1
-                }, function (res) {
-                    if (!res || !res['list'] || !res['list'].length) {
-                        return;
-                    }
-                    OSS.invoke('addFile', {
-                        location: location,
-                        bucket: bucketName,
-                        prefix: prefix,
-                        list: res['list']
-                    }, function (res) {
-
-                    })
-                });
-            },
-
-            download: function (objects) {
-                OSS.invoke('saveFile', {
-                    list: objects
-                }, function (res) {
-
-                })
-            },
-            create: function (bucket, prefix, newFolder) {
-
-            },
-            setHttpHeader: function (bucket, object) {
-
-            },
-            del: function (bucket, objects) {
-
-            },
-            getUri: function (bucket, object) {
-
-            }
-        };
-    })
     .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', function ($rootScope, OSSQueueItem) {
         /**
          * 检测参数的合法性
@@ -378,7 +336,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSMenu', ['OSSCmd', function (OSSCmd) {
+    .factory('OSSMenu', [function () {
         var allMenu = [
             {
                 name: 'upload',
@@ -387,7 +345,22 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (bucket, currentObject) {
-                    OSSCmd.upload(bucket['Name'], bucket['Location'], currentObject);
+                    OSS.invoke('selectFileDlg', {
+                        path: '',
+                        disable_root: 1
+                    }, function (res) {
+                        if (!res || !res['list'] || !res['list'].length) {
+                            return;
+                        }
+                        OSS.invoke('addFile', {
+                            location: bucket['Location'],
+                            bucket: bucket['Name'],
+                            prefix: currentObject,
+                            list: res['list']
+                        }, function (res) {
+
+                        })
+                    });
                 }
             },
             {
@@ -411,17 +384,20 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
-                    var list = [];
-                    angular.forEach(selectedFiles, function (val) {
-                        list.push({
+                    var list = _.map(selectedFiles, function (val) {
+                        return {
                             location: bucket['Location'],
                             bucket: bucket['Name'],
                             object: val.path,
                             filesize: val.size
-                        })
-                    })
+                        }
+                    });
 
-                    OSSCmd.download(list);
+                    OSS.invoke('saveFile', {
+                        list: list
+                    }, function (res) {
+
+                    })
                 }
             },
             {
@@ -464,8 +440,19 @@ angular.module('ossClientUiApp')
                     }
                     return 1;
                 },
-                execute: function () {
+                execute: function (bucket, currentObject, selectedFiles) {
+                    var list = _.map(selectedFiles, function (object) {
+                        return {
+                            object: object.path
+                        }
+                    });
 
+                    OSS.invoke('deleteObject', {
+                        bucket:bucket['Name'],
+                        list: list
+                    }, function (res) {
+
+                    })
                 }
             }
         ];

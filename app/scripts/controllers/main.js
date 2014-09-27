@@ -11,8 +11,8 @@ angular.module('ossClientUiApp')
     .run(['$rootScope', function ($rootScope) {
         $rootScope.PAGE_CONFIG = {};
     }])
-    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope) {
-
+    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope','$filter', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope,$filter) {
+        console.log('$filter',$filter('date')(new Date().getTime() + 2000,'HH:mm:ss'));
         //获取所有bucket列表
         $scope.buckets = [];
         Bucket.list().then(function (buckets) {
@@ -184,7 +184,7 @@ angular.module('ossClientUiApp')
             if (index >= 0) {
                 $scope.selectedFiles.splice(index, 1);
             } else {
-                $scope.selectedFiles = [];
+                //$scope.selectedFiles = [];
                 $scope.selectedFiles.push(file);
             }
         };
