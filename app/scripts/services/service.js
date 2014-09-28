@@ -439,7 +439,7 @@ angular.module('ossClientUiApp')
                         })
                         OSS.invoke('copyObject', {
                             dstbucket: bucket['Name'],
-                            dstobject: selectedFiles.length == 1 ? selectedFiles[0].path : currentObject,
+                            dstobject: selectedFiles.length == 1 && selectedFiles[0].dir ? selectedFiles[0].path : currentObject,
                             dstlocation: bucket['Location'],
                             bucket: targetBucket['Name'],
                             location: targetBucket['Location'],
