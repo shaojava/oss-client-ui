@@ -9,3 +9,66 @@
 .btn{
   font-size: 13px;
 }
+
+.nav-tabs {
+
+  overflow: hidden;
+
+}
+
+.nav-tabs > li > a {
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+  color: $baseFontColor;
+  cursor: pointer;
+  background: $backgrundColor;
+}
+.nav-tabs > li > a:hover{
+  border-color:  #ddd;;
+}
+.nav-tabs > li.active {
+  z-index: 12;
+}
+.nav-tabs > li > a:after {
+  width: 0;
+  height: 0;
+  border-width: 17px 10px 17px 10px;
+  border-color: transparent;
+  border-style: solid;
+  border-left-color: #ddd;
+  border-bottom-color: #ddd;
+  display: block;
+  content: "";
+  position: absolute;
+  right: -20px;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-tabs > li > a:before {
+  width: 0;
+  height: 0;
+  border-width: 17px 10px 17px 10px;
+  border-color: transparent;
+  border-style: solid;
+  border-left-color: #f2f2f2;
+  border-bottom-color: #f2f2f2;
+  display: block;
+  content: "";
+  position: absolute;
+  right: -19px;
+  top: 0;
+  z-index: 11;
+}
+.nav-tabs > li > a:hover:before,
+.nav-tabs > li > a:focus:before {
+  border-left-color: #eee;
+  border-bottom-color: #eee;
+}
+.nav-tabs > li.active > a:before,
+.nav-tabs > li.active > a:hover:before,
+.nav-tabs > li.active > a:focus:before {
+  border-left-color: #fff;
+  border-bottom-color: #fff;
+}

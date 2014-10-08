@@ -1,0 +1,36 @@
+.set_http_header_modal {
+  .tab-content {
+    border: 1px solid $baseBorderColor;
+    border-top: 0;
+    padding: 30px 40px;
+    max-height: 300px;
+    overflow: auto;
+  }
+
+  .form-horizontal .control-label {
+    width: 35%;
+    padding-right: 15px;
+  }
+  .form-horizontal .input-wrapper{
+    width: 65%;
+    padding-right: 25px;
+  }
+
+  .custom-header-list .form-group:nth-child(1){
+    width: 35%;
+  }
+
+  .custom-header-list .form-group:nth-child(2){
+    width: 45%;
+  }
+
+  .custom-header-list .form-group:nth-child(3){
+    width: 20%;
+    padding-left: 5px;
+  }
+
+  .custom-header-list .form-group .btn{
+    margin-top: 23px;
+  }
+
+}

@@ -336,7 +336,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSMenu', ['Clipboard', function (Clipboard) {
+    .factory('OSSMenu', ['Clipboard', 'OSSModal', function (Clipboard, OSSModal) {
         var allMenu = [
             {
                 name: 'upload',
@@ -487,8 +487,8 @@ angular.module('ossClientUiApp')
                         return selectedFiles[0].dir ? 0 : 1
                     }
                 },
-                execute: function () {
-
+                execute: function (bucket, currentObject, selectedFiles) {
+                    OSSModal.getObjectURI(bucket, selectedFiles[0]);
                 }
             },
             {
@@ -502,8 +502,8 @@ angular.module('ossClientUiApp')
                         return selectedFiles[0].dir ? 0 : 1
                     }
                 },
-                execute: function () {
-                    console.log(arguments);
+                execute: function (bucket, currentObject, selectedFiles) {
+                    OSSModal.setObjectHttpHeader(bucket, selectedFiles[0]);
                 }
             }
 
@@ -650,6 +650,9 @@ angular.module('ossClientUiApp')
             },
             getIcon: function (dir, name) {
                 return 'icon-' + this.getIconSuffix(dir, name);
+            },
+            getURI: function (bucket, objectPath) {
+                return 'http://' + bucket.Name + bucket.Location + 'aliyuncs.com/' + objectPath;
             }
         };
     }])
@@ -745,66 +748,58 @@ angular.module('ossClientUiApp')
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
 
-        var getOSSHost = function (bucket, region, object, https) {
-            //https = angular.isUndefined(https) ? true : https;
-            https = angular.isUndefined(https) ? false : https;
-            region = angular.isUndefined(region) ? "" : region;
-            object = angular.isUndefined(object) ? "" : object;
-            var protocol = https ? 'https:' : ["https:", "http:"].indexOf(location.protocol) >= 0 ? location.protocol : "http:";
-            return protocol + '//' + (bucket ? bucket + "." : "") + (region ? region + "." : "") + 'aliyuncs.com' + object;
-
-        };
-
         var getExpires = function (expires) {
             expires = angular.isUndefined(expires) ? 60 : expires;
             return parseInt(new Date().getTime() / 1000) + expires;
         };
 
-        var getRequestUrl = function (host, expires, signature, resource) {
-            return host + '?' + (resource ? resource + '&' : '') + $.param({
+        var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam) {
+            var host = 'http://' + (bucket ? bucket + "." : "") + (region ? region + "." : "") + 'aliyuncs.com';
+            canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
+            var requestUrl = host + canonicalizedResource;
+            requestUrl += requestUrl.indexOf('?') >= 0 ? '&' : '?' + $.param({
                 OSSAccessKeyId: OSSAccessKeyId,
                 Expires: expires,
                 Signature: signature
-            });
+            }) + (extraParam ? '&' + $.param(extraParam) : '');
+
+            return requestUrl;
+        };
+
+        var getCanonicalizedResource = function (bucketName, objectName, subResources) {
+            var subResourcesStr = subResources ? $.param(subResources) : '';
+            return '/' + (bucketName ? bucketName + '/' : '') + (objectName ? objectName : '') + (subResourcesStr ? '?' + subResourcesStr : '');
         };
 
         return {
             getBuckets: function () {
                 var expires = getExpires();
-                var host = getOSSHost("oss", "", "/");
-                OSS.log('host', host);
+                var canonicalizedResource = getCanonicalizedResource();
                 var signature = OSS.invoke('getSignature', {
                     verb: 'GET',
-                    content_md5: '',
-                    content_type: '',
                     expires: expires,
-                    canonicalized_oss_headers: '',
-                    canonicalized_resource: '/'
+                    canonicalized_resource: canonicalizedResource
                 });
-
-                var requestUrl = getRequestUrl(host, expires, signature);
+                var requestUrl = getRequestUrl('oss', '', expires, signature, canonicalizedResource);
                 return $http.get(requestUrl);
 
             },
             createBucket: function (bucketName, region, acl) {
-                OSS.log('createBucket', arguments);
                 var expires = getExpires();
-                var host = getOSSHost(bucketName, region);
-
                 var canonicalizedOSSheaders = {
                     'x-oss-acl': acl
                 };
+                var canonicalizedResource = getCanonicalizedResource(bucketName);
                 var contentType = 'application/xml';
                 var signature = OSS.invoke('getSignature', {
                     verb: 'PUT',
-                    content_md5: '',
                     content_type: contentType,
                     expires: expires,
                     canonicalized_oss_headers: canonicalizedOSSheaders,
-                    canonicalized_resource: '/' + bucketName + '/'
+                    canonicalized_resource: canonicalizedResource
                 });
 
-                var requestUrl = getRequestUrl(host, expires, signature);
+                var requestUrl = getRequestUrl(bucketName, region, expires, signature, canonicalizedResource);
                 var headers = angular.extend({}, canonicalizedOSSheaders, {
                     'Content-Type': contentType
                 });
@@ -814,44 +809,32 @@ angular.module('ossClientUiApp')
             },
             getBucketAcl: function (bucket) {
                 var expires = getExpires();
-                var host = getOSSHost(bucket.Name, bucket.Location);
-                var canonicalizedOSSheaders = '';
-                var contentType = '';
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {acl: ''});
                 var signature = OSS.invoke('getSignature', {
                     verb: 'GET',
-                    content_md5: '',
-                    content_type: contentType,
                     expires: expires,
-                    canonicalized_oss_headers: canonicalizedOSSheaders,
-                    canonicalized_resource: '/' + bucket.Name + '/?acl'
+                    canonicalized_resource: canonicalizedResource
                 });
 
-                var requestUrl = getRequestUrl(host, expires, signature, 'acl');
-                var headers = angular.extend({}, canonicalizedOSSheaders, {
-                    'Content-Type': contentType
-                });
-                return $http.get(requestUrl, "", {
-                    headers: headers
-                });
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                return $http.get(requestUrl);
             },
             editBucket: function (bucket, acl) {
-
                 var expires = getExpires();
-                var host = getOSSHost(bucket.Name, bucket.Location);
                 var canonicalizedOSSheaders = {
                     'x-oss-acl': acl
                 };
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '');
                 var contentType = 'application/xml';
                 var signature = OSS.invoke('getSignature', {
                     verb: 'PUT',
-                    content_md5: '',
                     content_type: contentType,
                     expires: expires,
                     canonicalized_oss_headers: canonicalizedOSSheaders,
-                    canonicalized_resource: '/' + bucket.Name + '/'
+                    canonicalized_resource: canonicalizedResource
                 });
 
-                var requestUrl = getRequestUrl(host, expires, signature);
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
                 var headers = angular.extend({}, canonicalizedOSSheaders, {
                     'Content-Type': contentType
                 });
@@ -860,57 +843,69 @@ angular.module('ossClientUiApp')
                 });
             },
             delBucket: function (bucket) {
-
                 var expires = getExpires();
-                var host = getOSSHost(bucket.Name, bucket.Location);
-                var canonicalizedOSSheaders = '';
-                var contentType = '';
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '');
                 var signature = OSS.invoke('getSignature', {
                     verb: 'DELETE',
-                    content_md5: '',
-                    content_type: contentType,
                     expires: expires,
-                    canonicalized_oss_headers: canonicalizedOSSheaders,
-                    canonicalized_resource: '/' + bucket.Name + '/'
+                    canonicalized_resource: canonicalizedResource
                 });
 
-                var requestUrl = getRequestUrl(host, expires, signature);
-                var headers = angular.extend({}, canonicalizedOSSheaders);
-                return $http.delete(requestUrl, "", {
-                    headers: headers
-                });
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                return $http.delete(requestUrl);
             },
             getObjects: function (bucket, prefix, delimiter, marker, maxKeys) {
                 var param = {
-                    prefix: prefix
+                    'prefix': prefix
                 };
                 $.extend(param, {
-                    delimiter: delimiter,
-                    marker: marker,
+                    'delimiter': delimiter,
+                    'marker': marker,
                     'max-keys': maxKeys
                 })
-                var queryStr = $.param(param, true);
                 var expires = getExpires();
-                var host = getOSSHost(bucket.Name, bucket.Location);
-                var canonicalizedOSSheaders = "";
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '');
                 var signature = OSS.invoke('getSignature', {
                     verb: 'GET',
-                    content_md5: '',
-
                     expires: expires,
-                    canonicalized_oss_headers: canonicalizedOSSheaders,
-                    canonicalized_resource: '/' + bucket.Name + '/'
+                    canonicalized_resource: canonicalizedResource
                 });
 
-                var requestUrl = getRequestUrl(host, expires, signature, queryStr);
-                var headers = angular.extend({}, canonicalizedOSSheaders);
-                return $http.get(requestUrl, {
-                    headers: headers
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
+                return $http.get(requestUrl);
+            },
+            getObjectMeta: function (bucket, object) {
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, object);
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'HEAD',
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
+                });
+
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                return $http.head(requestUrl);
+            },
+            putObject: function (bucket, objectPath, headers, canonicalizedOSSheaders) {
+                console.log('putObject', arguments);
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectPath);
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'PUT',
+                    content_type: headers['Content-Type'],
+                    expires: expires,
+                    canonicalized_oss_headers: canonicalizedOSSheaders,
+                    canonicalized_resource: canonicalizedResource
+                });
+
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                return $http.put(requestUrl, '', {
+                    headers: angular.extend({}, headers, canonicalizedOSSheaders)
                 });
             }
         };
     }])
-    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', function ($modal, Bucket, OSSApi) {
+    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', function ($modal, Bucket, OSSApi, OSSObject) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -1002,6 +997,108 @@ angular.module('ossClientUiApp')
                                     bucket: bucket
                                 });
                             });
+                        };
+                    }
+                };
+                option = angular.extend({}, defaultOption, option);
+                return $modal.open(option);
+            },
+            /**
+             * 设置object的http header头
+             * @param bucket
+             * @param object
+             * @returns {*}
+             */
+            setObjectHttpHeader: function (bucket, object) {
+                var option = {
+                    templateUrl: 'views/set_http_header_modal.html',
+                    windowClass: 'set_http_header_modal',
+                    controller: function ($scope, $modalInstance) {
+
+                        $scope.object = object;
+
+                        $scope.headers = [];
+                        angular.forEach('Content-Type Content-Disposition Content-Language Cache-Control Expires'.split(' '), function (val) {
+                            $scope.headers.push({
+                                name: val,
+                                text: val
+                            })
+                        })
+
+                        $scope.customHeaders = [
+                            {
+                                nameModel: '',
+                                contentModel: ''
+                            }
+                        ];
+
+
+                        OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
+                            console.log('getHeader', getHeader());
+                            angular.forEach($scope.headers, function (header) {
+                                header.model = getHeader(header.name);
+                            })
+                            angular.forEach(getHeader(), function (val, key) {
+                                if (key.indexOf('x-oss-meta-') === 0) {
+                                    $scope.customHeaders.push({
+                                        nameModel: key.replace(/^x-oss-meta-/, ''),
+                                        contentModel: val
+                                    })
+                                }
+                            });
+                        }).error(function () {
+
+                        })
+
+                        $scope.setHttpHeader = function (headers, customHeaders) {
+                            var ossHeaders = {}, canonicalizedOSSheaders = {};
+                            angular.forEach(headers, function (val) {
+                                if (val.model) {
+                                    ossHeaders[val.name] = val.model;
+                                }
+                            })
+
+                            angular.forEach(customHeaders, function (val) {
+                                if (val.nameModel) {
+                                    canonicalizedOSSheaders['x-oss-meta-' + val.nameModel.toLowerCase()] = val.contentModel || '';
+                                }
+                            })
+
+                            OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
+                                $modalInstance.close();
+                            });
+                        };
+
+                        $scope.addCustomHeader = function () {
+                            $scope.customHeaders.push({
+                                nameModel: '',
+                                contentModel: ''
+                            })
+                        };
+
+                        $scope.removeCustomHeader = function (header) {
+                            var index = _.indexOf($scope.customHeaders, header);
+                            console.log('index', index);
+                            index > -1 && $scope.customHeaders.splice(index, 1);
+                        };
+
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    }
+                };
+                option = angular.extend({}, defaultOption, option);
+                return $modal.open(option);
+            },
+            getObjectURI: function (bucket, object) {
+                var option = {
+                    templateUrl: 'views/get_object_uri_modal.html',
+                    windowClass: 'get_object_uri_modal',
+                    controller: function ($scope, $modalInstance) {
+                        $scope.filename = Util.String.baseName(object.path);
+                        $scope.uri = OSSObject.getURI(bucket, object.path);
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
                         };
                     }
                 };
