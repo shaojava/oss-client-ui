@@ -24,11 +24,11 @@
         </div>
         <ul class="bucket-list">
             <li ng-repeat="bucket in buckets" dropdown title="{{bucket.Name}}">
-                <a href="#/file/{{bucket.Name}}/" ng-class="{'selected':bucket == PAGE_CONFIG.bucket}"><span
+                <a href="#/{{bucket.Name}}/file" ng-class="{'selected':bucket.selected}"><span
                         ng-bind="bucket.Name"></span><span class="caret" dropdown-toggle></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="javascript:;" ng-click="editBucket(bucket)">属性管理</a></li>
-                    <li><a href="javascript:;" ng-click="manageBucketPartition(bucket)">分片管理</a></li>
+                    <li><a href="#/{{bucket.Name}}/upload" ng-click="manageBucketPartition(bucket)">碎片管理</a></li>
                 </ul>
             </li>
         </ul>

@@ -22,7 +22,7 @@ angular
     ])
     .config(['$routeProvider', '$httpProvider',function ($routeProvider, $httpProvider) {
         $routeProvider
-            .when('/file/:bucket?/:object*?', {
+            .when('/:bucket?/file/?:object*?', {
                 templateUrl: 'views/filelist.html',
                 controller: 'FileListCtrl',
                 resolve: {
@@ -31,8 +31,17 @@ angular
                     }
                 }
             })
+            .when('/:bucket/upload/?', {
+                templateUrl: 'views/uploadlist.html',
+                controller: 'UploadListCtrl',
+                resolve: {
+                    buckets: function (Bucket) {
+                        return Bucket.list();
+                    }
+                }
+            })
             .otherwise({
-                redirectTo: '/file/'
+                redirectTo: '/'
             });
 
         $httpProvider.defaults.transformResponse.unshift(function (response, header) {

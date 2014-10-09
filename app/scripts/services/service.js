@@ -514,6 +514,50 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+    .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', function (Bucket, OSSApi, $rootScope) {
+        var allMenu = [
+            {
+                name: 'remove',
+                text: '删除',
+                getState: function (selectedUploads) {
+                    var len = selectedUploads.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                },
+                execute: function (selectedUploads) {
+                    angular.forEach(selectedUploads, function (upload) {
+                        OSSApi.deleteUpload(Bucket.getCurrentBucket(), upload).success(function () {
+                            $rootScope.$broadcast('removeUpload', upload);
+                        }).error(function () {
+
+                        });
+                    });
+                }
+            },
+            {
+                name: 'detail',
+                text: '详细',
+                getState: function (selectedUploads) {
+                    var len = selectedUploads.length;
+                    if (!len || len > 1) {
+                        return 0;
+                    }
+                    return 1;
+                },
+                execute: function (selectedUploads) {
+
+                }
+            }
+
+        ];
+        return {
+            getAllMenu: function () {
+                return allMenu;
+            }
+        };
+    }])
     .factory('OSSLocationHistory', ['$location', '$rootScope', function ($location, $rootScope) {
         var update = true,
             history = [],
@@ -616,7 +660,7 @@ angular.module('ossClientUiApp')
             },
             open: function (bucket, path, isDir) {
                 if (isDir) {
-                    $location.path('/file/' + bucket.Name + '/' + path);
+                    $location.path('/' + bucket.Name + '/file/' + path);
                 } else {
 
                 }
@@ -658,21 +702,46 @@ angular.module('ossClientUiApp')
     }])
     .factory('OSSLocation', function () {
         return {
-            getUrl: function (bucketName, prefix) {
+            getUrl: function (bucketName, prefix, filter) {
+                var url = '';
+                filter = angular.isUndefined(filter) ? 'file' : filter;
                 prefix = angular.isUndefined(prefix) ? '' : prefix;
-                return ['/file/', bucketName, '/', prefix].join('');
+                url += '/' + bucketName;
+                if (filter) {
+                    url += '/' + filter;
+                }
+                if (prefix) {
+                    url += '/' + prefix;
+                }
+                return url;
             }
         };
     })
     .factory('Bread', ['OSSLocation', function (OSSLocation) {
+        var getFilterName = function (filter) {
+            var filterName = '';
+            switch (filter) {
+                case 'upload':
+                    filterName = '碎片管理';
+                    break;
+
+            }
+            return filterName;
+        };
         return {
-            getBreads: function (bucketName, path) {
+            getBreads: function (bucketName, path, filter) {
                 var breads = [
                     {
                         name: bucketName,
                         url: OSSLocation.getUrl(bucketName)
                     }
                 ];
+                if (filter != 'file') {
+                    breads.push({
+                        name: getFilterName(filter),
+                        url: OSSLocation.getUrl(bucketName, '', filter)
+                    });
+                }
                 if (path && path.length) {
                     path = Util.String.rtrim(Util.String.ltrim(path, '/'), '/');
                     var paths = path.split('/');
@@ -712,19 +781,21 @@ angular.module('ossClientUiApp')
     .factory('Bucket', ['OSSApi', '$q', function (OSSApi, $q) {
         var buckets = null;
         var deferred = $q.defer();
+        var listPromise;
         return {
             list: function () {
-                if (buckets) {
-                    deferred.resolve(deferred);
+                if (listPromise) {
+                    return listPromise;
                 } else {
                     OSSApi.getBuckets().success(function (res) {
-                        buckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
-                        deferred.resolve(angular.isArray(buckets) ? buckets : [buckets]);
+                        var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                        buckets = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                        deferred.resolve(buckets);
                     }).error(function () {
                         deferred.reject();
                     });
+                    return listPromise = deferred.promise;
                 }
-                return deferred.promise;
             },
             getRegions: function () {
                 return {
@@ -741,6 +812,18 @@ angular.module('ossClientUiApp')
                     "public-read": "公共读",
                     "private": "私有"
                 }
+            },
+            getBucket: function (buckeName) {
+                return _.findWhere(buckets, {Name: buckeName});
+            },
+            select: function (bucket) {
+                bucket.selected = true;
+            },
+            unselected: function (bucket) {
+                bucket.selected = false;
+            },
+            getCurrentBucket: function () {
+                return _.findWhere(buckets, {selected: true});
             }
         };
     }])
@@ -756,18 +839,22 @@ angular.module('ossClientUiApp')
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam) {
             var host = 'http://' + (bucket ? bucket + "." : "") + (region ? region + "." : "") + 'aliyuncs.com';
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
+
             var requestUrl = host + canonicalizedResource;
-            requestUrl += requestUrl.indexOf('?') >= 0 ? '&' : '?' + $.param({
+
+            requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
                 OSSAccessKeyId: OSSAccessKeyId,
                 Expires: expires,
                 Signature: signature
-            }) + (extraParam ? '&' + $.param(extraParam) : '');
+            });
+
+            requestUrl += (extraParam ? '&' + $.param(extraParam) : '');
 
             return requestUrl;
         };
 
         var getCanonicalizedResource = function (bucketName, objectName, subResources) {
-            var subResourcesStr = subResources ? $.param(subResources) : '';
+            var subResourcesStr = subResources ? Util.param(subResources) : '';
             return '/' + (bucketName ? bucketName + '/' : '') + (objectName ? objectName : '') + (subResourcesStr ? '?' + subResourcesStr : '');
         };
 
@@ -887,7 +974,6 @@ angular.module('ossClientUiApp')
                 return $http.head(requestUrl);
             },
             putObject: function (bucket, objectPath, headers, canonicalizedOSSheaders) {
-                console.log('putObject', arguments);
                 var expires = getExpires();
                 var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectPath);
                 var signature = OSS.invoke('getSignature', {
@@ -902,8 +988,87 @@ angular.module('ossClientUiApp')
                 return $http.put(requestUrl, '', {
                     headers: angular.extend({}, headers, canonicalizedOSSheaders)
                 });
+            },
+            listUploads: function (bucket, prefix, delimiter, keyMarker, maxUploads) {
+                var param = {
+                    'prefix': prefix
+                };
+                $.extend(param, {
+                    'delimiter': delimiter,
+                    'key-marker': keyMarker,
+                    'max-uploads': maxUploads
+                })
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {uploads: undefined});
+                console.log('canonicalizedResource', canonicalizedResource)
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'GET',
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
+                });
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
+                return $http.get(requestUrl);
+            },
+            deleteUpload: function (bucket, upload) {
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, upload.path, {'uploadId': upload.id});
+                console.log('canonicalizedResource', canonicalizedResource);
+                //return;
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'DELETE',
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
+                });
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                return $http.delete(requestUrl);
             }
         };
+    }])
+    .factory('OSSUploadPart', ['OSSApi', '$filter', '$q', function (OSSApi, $filter, $q) {
+        return {
+            list: function (bucket, prefix, delimiter, lastLoadMaker, loadFileCount) {
+                var _self = this;
+                var defer = $q.defer();
+                OSSApi.listUploads(bucket, prefix, delimiter, lastLoadMaker, loadFileCount).success(function (res) {
+                    OSS.log('listUploads:res', res);
+                    var result = res['ListMultipartUploadsResult'];
+                    var contents = result['Upload'];
+                    contents = contents ? angular.isArray(contents) ? contents : [contents] : [];
+
+                    var commonPrefixes = result['CommonPrefixes'];
+                    commonPrefixes = commonPrefixes ? angular.isArray(commonPrefixes) ? commonPrefixes : [commonPrefixes] : [];
+
+                    var files = [];
+                    angular.forEach($.merge(contents, commonPrefixes), function (file) {
+                        if (file.Key !== prefix && file.Prefix !== prefix) {
+                            files.push(_self.format(file));
+                        }
+                    })
+                    defer.resolve({
+                        uploads: files,
+                        marker: result['NextMarker'],
+                        allLoaded: result['IsTruncated'] === 'false'
+                    });
+
+                }).error(function () {
+
+                });
+                return defer.promise;
+            },
+            format: function (upload) {
+                var path = upload.Key || upload.Prefix;
+                var isDir = Util.String.lastChar(path) === '/' ? 1 : 0;
+                var filename = isDir ? $filter('getPrefixName')(path, 1) : $filter('baseName')(path);
+                return {
+                    path: path,
+                    dir: isDir,
+                    filename: filename,
+                    id: upload.UploadId,
+                    initTime: upload.Initiated
+                }
+            }
+
+        }
     }])
     .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', function ($modal, Bucket, OSSApi, OSSObject) {
         var defaultOption = {

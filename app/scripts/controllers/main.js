@@ -11,13 +11,13 @@ angular.module('ossClientUiApp')
     .run(['$rootScope', function ($rootScope) {
         $rootScope.PAGE_CONFIG = {};
     }])
-    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope','$filter', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope,$filter) {
+    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter) {
 
         //获取所有bucket列表
         $scope.buckets = [];
         Bucket.list().then(function (buckets) {
             $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
-        })
+        });
 
         //新建bucket对话框
         $scope.showAddBucketModal = function () {
@@ -40,15 +40,6 @@ angular.module('ossClientUiApp')
 
         //面包屑
         $scope.breads = [];
-        $scope.$watchCollection('[PAGE_CONFIG.bucket,PAGE_CONFIG.objectPrefix]', function (newArr) {
-            if (!newArr[0]) return;
-            var bucket = newArr[0], objectPrefix = newArr[1];
-            $scope.breads = Bread.getBreads(bucket['Name'], objectPrefix);
-            $scope.historyCanForward = OSSLocationHistory.canForward();
-            $scope.historyCanBackward = OSSLocationHistory.canBackward();
-
-
-        });
 
         //后退
         $scope.backward = function () {
@@ -59,6 +50,22 @@ angular.module('ossClientUiApp')
         $scope.forward = function () {
             OSSLocationHistory.forward();
         };
+
+
+        $scope.$on('$routeChangeSuccess', function (event, current, prev) {
+            if (prev && prev.params) {
+                var oldBucket = Bucket.getBucket(prev.params.bucket);
+                oldBucket && Bucket.unselected(oldBucket);
+            }
+            if (current && current.params) {
+                var pathArr = current.$$route.originalPath.split('/');
+                var currentBucket = Bucket.getBucket(current.params.bucket);
+                currentBucket && Bucket.select(currentBucket);
+                $scope.breads = Bread.getBreads(currentBucket.Name, current.params.object, pathArr[2]);
+                $scope.historyCanForward = OSSLocationHistory.canForward();
+                $scope.historyCanBackward = OSSLocationHistory.canBackward();
+            }
+        })
 
     }])
     .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue) {
@@ -121,6 +128,7 @@ angular.module('ossClientUiApp')
         //下载队列
         $scope.downloadList = OSSDownloadQueue.init();
         OSSDownloadQueue.refresh();
+
 
     }])
     .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu) {
@@ -193,4 +201,78 @@ angular.module('ossClientUiApp')
 
         //右键菜单
         $scope.contextMenu = [];
+    }])
+    .controller('UploadListCtrl', ['$scope', '$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu', function ($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu) {
+
+        //是否加载中
+        $scope.loading = false;
+
+        //是否所有upload已加载完
+        var isAllLoaded = false;
+
+        //最近一次加载的起始位置
+        var lastLoadMaker = '';
+
+        //一次加载数量
+        var loadCount = 100;
+
+        //当前的bucket
+        var bucketName = $routeParams.bucket;
+
+        //加载upload列表
+        var loadUploads = function () {
+            if ($scope.loading) {
+                return;
+            }
+            $scope.loading = true;
+            OSSUploadPart.list(Bucket.getBucket(bucketName), '', '', lastLoadMaker, loadCount).then(function (res) {
+                $scope.loading = false;
+                $scope.uploads = $scope.uploads.concat(res.uploads);
+                lastLoadMaker = res.marker;
+                isAllLoaded = res.allLoaded;
+            }, function () {
+                $scope.loadingFile = false;
+            });
+        };
+
+        //碎片列表
+        $scope.uploads = [];
+
+        //加载更多upload
+        $scope.loadMoreUpload = function () {
+            if (isAllLoaded) {
+                return;
+            }
+            loadUploads();
+        };
+
+        //已选中upload列表
+        $scope.selectedUploads = [];
+
+        //初始加载
+        loadUploads();
+
+        //点击uploaditem
+        $scope.handleClick = function (upload) {
+            upload.selected = !upload.selected;
+        };
+
+        $scope.topMenuList = OSSUploadMenu.getAllMenu();
+
+        $scope.$watch('uploads', function () {
+            $scope.selectedUploads = _.where($scope.uploads, {
+                selected: true
+            });
+        }, true);
+
+        $scope.$on('removeUpload', function (event, uploads) {
+            if (!angular.isArray(uploads)) {
+                uploads = [uploads];
+            }
+            angular.forEach(uploads, function (upload) {
+                var index = _.indexOf($scope.uploads, upload);
+                index >= 0 && $scope.uploads.splice(index, 1);
+            });
+        })
+
     }]);

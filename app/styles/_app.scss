@@ -245,8 +245,13 @@
       width: 160px;
     }
 
-    .file-create-time {
+    .file-create-time,
+    .init-time{
       width: 190px;
+    }
+
+    .upload-id{
+      width: 330px;
     }
 
     .file-item {
@@ -342,7 +347,7 @@
           padding: 0 10px;
         }
 
-        .filesize {
+        .filesize, {
           width: 80px;
         }
 
