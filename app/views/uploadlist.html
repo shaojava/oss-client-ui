@@ -10,7 +10,7 @@
     <div class="pull-right init-time">创建时间</div>
     <div class="pull-right upload-id">UploadID</div>
 </div>
-<div class="filelist-body" scroll-load="loadMoreUploads()" disable-scroll="loading">
+<div class="filelist-body" scroll-load="loadMoreUpload()" disable-scroll="loading">
     <div class="clearfix file-item" ng-repeat="upload in uploads | orderBy:'-dir'" ng-click="handleClick(upload)" ng-class="{'selected':upload.selected}" >
         <div class="pull-left filename">
             <file-icon dir="{{upload.dir}}" size="32" filename="{{upload.filename}}"></file-icon>

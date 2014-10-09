@@ -11,26 +11,74 @@
     width: 35%;
     padding-right: 15px;
   }
-  .form-horizontal .input-wrapper{
+  .form-horizontal .input-wrapper {
     width: 65%;
     padding-right: 25px;
   }
 
-  .custom-header-list .form-group:nth-child(1){
+  .custom-header-list .form-group:nth-child(1) {
     width: 35%;
   }
 
-  .custom-header-list .form-group:nth-child(2){
+  .custom-header-list .form-group:nth-child(2) {
     width: 45%;
   }
 
-  .custom-header-list .form-group:nth-child(3){
+  .custom-header-list .form-group:nth-child(3) {
     width: 20%;
     padding-left: 5px;
   }
 
-  .custom-header-list .form-group .btn{
+  .custom-header-list .form-group .btn {
     margin-top: 23px;
   }
 
+}
+
+.upload_detail_modal {
+  .part-list-wrapper {
+    border: 1px solid $baseBorderColor;
+    text-align: center;
+
+    .part-list-header{
+      height: 32px;
+      line-height: 32px;
+      background: $backgrundColor;
+      border-bottom: 1px solid $baseBorderColor;
+    }
+    .number-cell{
+      padding: 0 10px;
+      width: 20%;
+    }
+
+    .last-modify-cell{
+      padding: 0 10px;
+      width: 40%;
+    }
+
+    .size-cell{
+      padding: 0 10px;
+      width: 40%;
+    }
+
+    .upload-part-list {
+      max-height: 300px;
+      overflow: auto;
+
+      > li {
+        height: 28px;
+        line-height:28px;
+        cursor: default;
+
+        &:nth-child(even) {
+          background: $lightBackgroundColor;
+        }
+
+        &:hover {
+          background: $itemHoverBackgroundColor;
+        }
+
+      }
+    }
+  }
 }

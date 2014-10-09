@@ -514,7 +514,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', function (Bucket, OSSApi, $rootScope) {
+    .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', 'OSSModal', function (Bucket, OSSApi, $rootScope, OSSModal) {
         var allMenu = [
             {
                 name: 'remove',
@@ -547,7 +547,7 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (selectedUploads) {
-
+                    OSSModal.uploadDetail(Bucket.getCurrentBucket(), selectedUploads[0]);
                 }
             }
 
@@ -675,7 +675,7 @@ angular.module('ossClientUiApp')
                     if (jQuery.inArray(ext, sorts['SORT_SPEC']) > -1) {
                         suffix = ext;
                     } else if (jQuery.inArray(ext, sorts['SORT_MOVIE']) > -1) {
-                        suffix = 'movie';
+                        suffix = 'video';
                     } else if (jQuery.inArray(ext, sorts['SORT_MUSIC']) > -1) {
                         suffix = 'music';
                     } else if (jQuery.inArray(ext, sorts['SORT_IMAGE']) > -1) {
@@ -989,18 +989,18 @@ angular.module('ossClientUiApp')
                     headers: angular.extend({}, headers, canonicalizedOSSheaders)
                 });
             },
-            listUploads: function (bucket, prefix, delimiter, keyMarker, maxUploads) {
+            listUploads: function (bucket, prefix, delimiter, keyMarker, maxUploads, uploadIdMaker) {
                 var param = {
                     'prefix': prefix
                 };
                 $.extend(param, {
                     'delimiter': delimiter,
                     'key-marker': keyMarker,
+                    'upload-id-marker': uploadIdMaker,
                     'max-uploads': maxUploads
                 })
                 var expires = getExpires();
                 var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {uploads: undefined});
-                console.log('canonicalizedResource', canonicalizedResource)
                 var signature = OSS.invoke('getSignature', {
                     verb: 'GET',
                     expires: expires,
@@ -1012,8 +1012,6 @@ angular.module('ossClientUiApp')
             deleteUpload: function (bucket, upload) {
                 var expires = getExpires();
                 var canonicalizedResource = getCanonicalizedResource(bucket.Name, upload.path, {'uploadId': upload.id});
-                console.log('canonicalizedResource', canonicalizedResource);
-                //return;
                 var signature = OSS.invoke('getSignature', {
                     verb: 'DELETE',
                     expires: expires,
@@ -1021,15 +1019,30 @@ angular.module('ossClientUiApp')
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
                 return $http.delete(requestUrl);
+            },
+            listUploadPart: function (bucket, upload, partNumberMaker, maxParts) {
+                var param = {
+                    'part-number-marker': partNumberMaker,
+                    'max-parts': maxParts
+                };
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, upload.path, {uploadId: upload.id});
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'GET',
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
+                });
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
+                return $http.get(requestUrl);
             }
         };
     }])
     .factory('OSSUploadPart', ['OSSApi', '$filter', '$q', function (OSSApi, $filter, $q) {
         return {
-            list: function (bucket, prefix, delimiter, lastLoadMaker, loadFileCount) {
+            list: function (bucket, prefix, delimiter, lastKeyMaker, loadFileCount, lastUploadMaker) {
                 var _self = this;
                 var defer = $q.defer();
-                OSSApi.listUploads(bucket, prefix, delimiter, lastLoadMaker, loadFileCount).success(function (res) {
+                OSSApi.listUploads(bucket, prefix, delimiter, lastKeyMaker, loadFileCount, lastUploadMaker).success(function (res) {
                     OSS.log('listUploads:res', res);
                     var result = res['ListMultipartUploadsResult'];
                     var contents = result['Upload'];
@@ -1046,7 +1059,8 @@ angular.module('ossClientUiApp')
                     })
                     defer.resolve({
                         uploads: files,
-                        marker: result['NextMarker'],
+                        keyMaker: result['NextKeyMarker'],
+                        uploadIdMaker: result['NextUploadIdMarker'],
                         allLoaded: result['IsTruncated'] === 'false'
                     });
 
@@ -1265,6 +1279,58 @@ angular.module('ossClientUiApp')
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
+                    }
+                };
+                option = angular.extend({}, defaultOption, option);
+                return $modal.open(option);
+            },
+            uploadDetail: function (bucket, upload) {
+                var option = {
+                    templateUrl: 'views/upload_detail_modal.html',
+                    windowClass: 'upload_detail_modal',
+                    controller: function ($scope, $modalInstance) {
+
+                        $scope.loading = false;
+
+                        $scope.parts = [];
+
+                        var size = 50;
+
+                        var lastMaker = '';
+
+                        var allLoaded = false;
+
+                        var loadPart = function () {
+                            if ($scope.loading) {
+                                return;
+                            }
+                            $scope.loading = true;
+                            OSSApi.listUploadPart(bucket, upload, lastMaker, size).success(function (res) {
+                                $scope.loading = false;
+                                var result = res['ListPartsResult'];
+                                lastMaker = result['NextPartNumberMarker'];
+                                allLoaded = result['IsTruncated'] === 'false';
+                                var parts = angular.isArray(result['Part']) ? result['Part'] : [result['Part']];
+                                $scope.parts = $scope.parts.concat(parts);
+                            }).error(function () {
+                                $scope.loading = false;
+                            })
+                        };
+
+                        loadPart();
+
+                        $scope.loadMore = function () {
+                            console.log(124);
+                            if (allLoaded) {
+                                return;
+                            }
+                            loadPart();
+                        }
+
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+
                     }
                 };
                 option = angular.extend({}, defaultOption, option);

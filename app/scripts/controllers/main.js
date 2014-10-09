@@ -211,7 +211,9 @@ angular.module('ossClientUiApp')
         var isAllLoaded = false;
 
         //最近一次加载的起始位置
-        var lastLoadMaker = '';
+        var lastKeyMaker = '';
+
+        var lastUploadMaker = '';
 
         //一次加载数量
         var loadCount = 100;
@@ -225,10 +227,12 @@ angular.module('ossClientUiApp')
                 return;
             }
             $scope.loading = true;
-            OSSUploadPart.list(Bucket.getBucket(bucketName), '', '', lastLoadMaker, loadCount).then(function (res) {
+            OSSUploadPart.list(Bucket.getBucket(bucketName), '', '', lastKeyMaker, loadCount, lastUploadMaker).then(function (res) {
+                console.log('res',res);
                 $scope.loading = false;
                 $scope.uploads = $scope.uploads.concat(res.uploads);
-                lastLoadMaker = res.marker;
+                lastKeyMaker = res.keyMaker;
+                lastUploadMaker = res.uploadIdMaker;
                 isAllLoaded = res.allLoaded;
             }, function () {
                 $scope.loadingFile = false;
