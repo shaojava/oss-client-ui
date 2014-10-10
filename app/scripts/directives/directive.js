@@ -78,7 +78,6 @@ angular.module('ossClientUiApp')
             },
             link: function postLink(scope, element, attrs) {
                 scope.clickItem = function ($event, item) {
-                    item.selected = !item.selected;
                     scope.onSelect({
                         $event: $event
                     });

@@ -2,7 +2,8 @@
     <div class="pull-left filename" ng-bind="item.object"></div>
     <div class="pull-right remain-time" ng-bind="type | getQueueState:item.status:item.speed:item.filesize:item.offset:item.errormsg"></div>
     <div class="pull-right progress-wrapper">
-        <progressbar max="item.filesize" class="progress-striped" value="item.offset"></progressbar>
+        <progressbar ng-if="item.filesize==0" max="1" class="progress-striped" value="1"></progressbar>
+        <progressbar ng-if="item.filesize>0" max="item.filesize" class="progress-striped" value="item.offset"></progressbar>
     </div>
     <div class="pull-right filesize" ng-bind="item.filesize | bitSize"></div>
 </li>

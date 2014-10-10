@@ -92,13 +92,32 @@ angular.module('ossClientUiApp')
         $scope.downloadQueueMenus = OSSQueueMenu.getDownloadMenu();
 
         $scope.onUploadItemSelect = function ($event, item) {
-            console.log('arguments', arguments);
+            if (item.selected) {
+                item.selected = false;
+            } else {
+                _.each(_.where($scope.uploadList, {
+                    selected: true
+                }), function (item) {
+                    item.selected = false;
+                });
+                item.selected = true;
+            }
             $scope.selectedUploadItems = _.where($scope.uploadList, {
                 selected: true
             });
         };
 
         $scope.onDownloadItemSelect = function ($event, item) {
+            if (item.selected) {
+                item.selected = false;
+            } else {
+                _.each(_.where($scope.downloadList, {
+                    selected: true
+                }), function (item) {
+                    item.selected = false;
+                });
+                item.selected = true;
+            }
             $scope.selectedDownloadItems = _.where($scope.downloadList, {
                 selected: true
             });
@@ -194,7 +213,7 @@ angular.module('ossClientUiApp')
             if (index >= 0) {
                 $scope.selectedFiles.splice(index, 1);
             } else {
-                //$scope.selectedFiles = [];
+                $scope.selectedFiles = [];
                 $scope.selectedFiles.push(file);
             }
         };

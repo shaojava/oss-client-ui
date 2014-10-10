@@ -228,7 +228,7 @@ angular.module('ossClientUiApp')
                         }
                     }
                     if (hasUnValidItem) {
-                        return -1;
+                        return 0;
                     }
                     return 1;
                 }
@@ -266,7 +266,7 @@ angular.module('ossClientUiApp')
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
                     if (!len) {
-                        return 0;
+                        return -1;
                     }
                     var hasUnValidItem = false;
                     for (var i = 0; i < selectedItems.length; i++) {
@@ -276,7 +276,7 @@ angular.module('ossClientUiApp')
                         }
                     }
                     if (hasUnValidItem) {
-                        return 0;
+                        return -1;
                     }
                     return 1;
                 }
