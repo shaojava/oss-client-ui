@@ -617,7 +617,14 @@ angular.module('ossClientUiApp')
             'SORT_ZIP': ['rar', 'zip', '7z', 'cab', 'tar', 'gz', 'iso'],
             'SORT_EXE': ['exe', 'bat', 'com']
         };
+        var currentObject = {};
         return {
+            getCurrentObject: function () {
+                return currentObject;
+            },
+            setCurrentObject:function(object){
+                currentObject = object;
+            },
             list: function (bucket, prefix, delimiter, lastLoadMaker, loadFileCount) {
                 var _self = this;
                 var defer = $q.defer();

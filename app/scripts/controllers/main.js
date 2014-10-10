@@ -8,9 +8,6 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .run(['$rootScope', function ($rootScope) {
-        $rootScope.PAGE_CONFIG = {};
-    }])
     .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter) {
 
         //获取所有bucket列表
@@ -131,7 +128,7 @@ angular.module('ossClientUiApp')
 
 
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket) {
         var bucketName = $routeParams.bucket ? $routeParams.bucket : buckets && buckets.length ? buckets[0]['Name'] : '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -141,14 +138,19 @@ angular.module('ossClientUiApp')
             lastLoadMaker = '',
             isAllFileLoaded = false;
 
-        $rootScope.PAGE_CONFIG.bucket = Util.Array.getObjectByKeyValue($scope.buckets, 'Name', bucketName);
-        $rootScope.PAGE_CONFIG.objectPrefix = $routeParams.object ? $routeParams.object : '';
+        $scope.bucket = Bucket.getBucket(bucketName);
+        $scope.objectPrefix = $routeParams.object ? $routeParams.object : '';
+
+        OSSObject.setCurrentObject({
+            path: $scope.objectPrefix,
+            dir: 1
+        });
 
         if (keyword.length) {
             prefix = keyword;
             isSearch = true;
         } else {
-            prefix = $rootScope.PAGE_CONFIG.objectPrefix;
+            prefix = $scope.objectPrefix;
             isSearch = false;
         }
 
@@ -159,7 +161,7 @@ angular.module('ossClientUiApp')
                 return;
             }
             $scope.loadingFile = true;
-            OSSObject.list($rootScope.PAGE_CONFIG.bucket, prefix, delimiter, lastLoadMaker, loadFileCount).then(function (res) {
+            OSSObject.list($scope.bucket, prefix, delimiter, lastLoadMaker, loadFileCount).then(function (res) {
                 $scope.loadingFile = false;
                 $scope.files = $scope.files.concat(res.files);
                 lastLoadMaker = res.marker;
@@ -172,7 +174,7 @@ angular.module('ossClientUiApp')
 
         //打开文件（夹）
         $scope.openFile = function (file, isDir) {
-            OSSObject.open($rootScope.PAGE_CONFIG.bucket, file.path, isDir);
+            OSSObject.open($scope.bucket, file.path, isDir);
         };
 
         //加载更多文件
@@ -228,7 +230,7 @@ angular.module('ossClientUiApp')
             }
             $scope.loading = true;
             OSSUploadPart.list(Bucket.getBucket(bucketName), '', '', lastKeyMaker, loadCount, lastUploadMaker).then(function (res) {
-                console.log('res',res);
+                console.log('res', res);
                 $scope.loading = false;
                 $scope.uploads = $scope.uploads.concat(res.uploads);
                 lastKeyMaker = res.keyMaker;

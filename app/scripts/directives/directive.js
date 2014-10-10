@@ -7,7 +7,7 @@
  * # directive
  */
 angular.module('ossClientUiApp')
-    .directive('smartSearch', ['$location', '$rootScope', '$filter', function ($location, $rootScope, $filter) {
+    .directive('smartSearch', ['$location', '$rootScope', '$filter', 'OSSObject', 'Bucket', function ($location, $rootScope, $filter, OSSObject, Bucket) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -18,7 +18,6 @@ angular.module('ossClientUiApp')
                     if (keyword != 13) {
                         return;
                     }
-                    console.log('ngModel.$modelValue', ngModel.$modelValue);
                     scope.$apply(function () {
                         $location.search({
                             keyword: ngModel.$modelValue,
@@ -33,9 +32,10 @@ angular.module('ossClientUiApp')
                     if (element.next('.search-scope').size()) {
                         return;
                     }
-                    var searchScopeName = $rootScope.PAGE_CONFIG.objectPrefix ? $filter('getPrefixName')($rootScope.PAGE_CONFIG.objectPrefix, 1) : $rootScope.PAGE_CONFIG.bucket.Name;
+                    var currentObj = OSSObject.getCurrentObject();
+                    var currentBucket = Bucket.getCurrentBucket();
+                    var searchScopeName = currentObj.path ? $filter('getPrefixName')(currentObj.path, 1) : currentBucket.Name;
                     var $removeIcon = $('<a href="javascript:;" class="fa fa-remove fa-lg"></a>');
-                    ;
                     var $searchScope = $('<div class="search-scope"> 在 <span>' + searchScopeName + '</span> 中搜索</div>');
                     element.next('.fa').hide();
                     element.after($searchScope).after($removeIcon);
@@ -101,7 +101,7 @@ angular.module('ossClientUiApp')
             },
             link: function postLink(scope, element, attrs) {
                 element.click(function (event) {
-                    console.log('event',event);
+                    console.log('event', event);
                     scope.execute({
                         $event: event
                     });
