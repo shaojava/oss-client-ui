@@ -336,7 +336,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSMenu', ['Clipboard', 'OSSModal', function (Clipboard, OSSModal) {
+    .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope',function (Clipboard, OSSModal,$rootScope) {
         var allMenu = [
             {
                 name: 'upload',
@@ -367,7 +367,7 @@ angular.module('ossClientUiApp')
                 name: 'create',
                 text: '新建文件夹',
                 getState: function () {
-                    return 1;
+                    return -1;
                 },
                 execute: function () {
 
@@ -445,7 +445,7 @@ angular.module('ossClientUiApp')
                             location: targetBucket['Location'],
                             list: list
                         }, function (res) {
-
+                            $rootScope.$broadcast('reloadFileList');
                         })
                     }
                 }
@@ -461,6 +461,9 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
+                    if(!confirm('确定要删除？')){
+                        return;
+                    }
                     var list = _.map(selectedFiles, function (object) {
                         return {
                             object: object.path
@@ -472,7 +475,7 @@ angular.module('ossClientUiApp')
                         location: bucket['Location'],
                         list: list
                     }, function (res) {
-
+                        $rootScope.$broadcast('removeObject',selectedFiles);
                     })
                 }
             },
@@ -622,7 +625,7 @@ angular.module('ossClientUiApp')
             getCurrentObject: function () {
                 return currentObject;
             },
-            setCurrentObject:function(object){
+            setCurrentObject: function (object) {
                 currentObject = object;
             },
             list: function (bucket, prefix, delimiter, lastLoadMaker, loadFileCount) {
@@ -903,7 +906,7 @@ angular.module('ossClientUiApp')
             },
             getBucketAcl: function (bucket) {
                 var expires = getExpires();
-                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {acl: ''});
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {acl: undefined});
                 var signature = OSS.invoke('getSignature', {
                     verb: 'GET',
                     expires: expires,
@@ -1107,8 +1110,9 @@ angular.module('ossClientUiApp')
                     windowClass: 'add_bucket_modal',
                     controller: function ($scope, $modalInstance) {
                         $scope.loading = false;
-                        $scope.bucket = bucket;
+                        $scope.bucket = bucket || null;
 
+                        $scope.cBucket = {};
                         var acls = [], regions = [];
                         angular.forEach(Bucket.getAcls(), function (val, key) {
                             acls.push({

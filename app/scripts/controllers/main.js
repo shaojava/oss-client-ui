@@ -147,7 +147,7 @@ angular.module('ossClientUiApp')
 
 
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route) {
         var bucketName = $routeParams.bucket ? $routeParams.bucket : buckets && buckets.length ? buckets[0]['Name'] : '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -222,6 +222,17 @@ angular.module('ossClientUiApp')
 
         //右键菜单
         $scope.contextMenu = [];
+
+        $scope.$on('reloadFileList', function () {
+            $route.reload();
+        })
+
+        $scope.$on('removeObject', function (event, objects) {
+            angular.forEach(objects, function (object) {
+                Util.Array.removeByValue($scope.files,object);
+                Util.Array.removeByValue($scope.selectedFiles,object);
+            })
+        })
     }])
     .controller('UploadListCtrl', ['$scope', '$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu', function ($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu) {
 
@@ -299,5 +310,6 @@ angular.module('ossClientUiApp')
                 index >= 0 && $scope.uploads.splice(index, 1);
             });
         })
+
 
     }]);
