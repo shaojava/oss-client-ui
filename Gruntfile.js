@@ -170,7 +170,7 @@ module.exports = function (grunt) {
                 cwd: '<%= yeoman.app %>'
             },
             app: {
-                src: ['<%= yeoman.app %>/index.html'],
+                src: ['<%= yeoman.app %>/index.html','<%= yeoman.app %>/login.html','<%= yeoman.app %>/import-authorization.html'],
                 ignorePath: /\.\.\//,
                 fileTypes: {
                     html: {

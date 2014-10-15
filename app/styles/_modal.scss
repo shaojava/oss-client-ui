@@ -40,23 +40,23 @@
     border: 1px solid $baseBorderColor;
     text-align: center;
 
-    .part-list-header{
+    .part-list-header {
       height: 32px;
       line-height: 32px;
       background: $backgrundColor;
       border-bottom: 1px solid $baseBorderColor;
     }
-    .number-cell{
+    .number-cell {
       padding: 0 10px;
       width: 20%;
     }
 
-    .last-modify-cell{
+    .last-modify-cell {
       padding: 0 10px;
       width: 40%;
     }
 
-    .size-cell{
+    .size-cell {
       padding: 0 10px;
       width: 40%;
     }
@@ -67,7 +67,7 @@
 
       > li {
         height: 28px;
-        line-height:28px;
+        line-height: 28px;
         cursor: default;
 
         &:nth-child(even) {
@@ -81,4 +81,45 @@
       }
     }
   }
+}
+
+.alert-modal {
+
+  section{
+    display: table;
+    padding: 35px;
+    > div{
+      display: table-cell;
+      vertical-align: middle;
+      padding: 0 10px;
+    }
+  }
+
+  &.success-alert-modal {
+    .modal-body{
+      color: $state-success-text;
+    }
+
+  }
+
+  &.error-alert-modal {
+    .modal-body{
+      color: $state-danger-text;
+    }
+
+  }
+
+  &.warn-alert-modal {
+    .modal-body{
+      color: $state-warning-text;
+    }
+
+  }
+
+  &.info-alert-modal {
+    .modal-body{
+      color: $state-info-text;
+    }
+  }
+
 }

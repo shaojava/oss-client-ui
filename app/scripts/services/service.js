@@ -8,6 +8,7 @@
  * Factory in the ossClientUiApp.
  */
 angular.module('ossClientUiApp')
+
     .factory('OSSQueueItem', function () {
         return {
             isUploading: function (item) {
@@ -27,6 +28,85 @@ angular.module('ossClientUiApp')
             }
         };
     })
+    .factory('OSSAlert', ['$modal', function ($modal) {
+
+        function openAlertModal(type, message, title, buttons) {
+            var option = {
+                templateUrl: 'views/alert_modal.html',
+                windowClass: 'alert-modal ' + type + '-alert-modal',
+                controller: function ($scope, $modalInstance) {
+
+                    $scope.type = type;
+
+                    $scope.message = message;
+
+                    $scope.title = title;
+
+                    $scope.buttons = buttons;
+
+                    $scope.buttonClick = function (button) {
+                        angular.isFunction(button.callback) && button.callback();
+                        $modalInstance.close();
+                    }
+
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+
+                }
+            };
+
+            return $modal.open(option);
+        }
+
+
+        return {
+            info: function (message, title, buttons) {
+                title = angular.isUndefined(title) ? '信息' : title;
+                buttons = angular.isUndefined(buttons) ? [
+                    {
+                        text: '关闭',
+                        classes: 'btn btn-default'
+                    }
+                ] : buttons;
+                return openAlertModal('info', message, title, buttons);
+            },
+            warning: function (message, title, buttons) {
+                title = angular.isUndefined(title) ? '警告' : title;
+                buttons = angular.isUndefined(buttons) ? [
+                    {
+                        text: '确认',
+                        classes: 'btn btn-primary'
+                    },
+                    {
+                        text: '关闭',
+                        classes: 'btn btn-default'
+                    }
+                ] : buttons;
+                return openAlertModal('warning', message, title, buttons);
+            },
+            error: function (message, title, buttons) {
+                title = angular.isUndefined(title) ? '错误' : title;
+                buttons = angular.isUndefined(buttons) ? [
+                    {
+                        text: '关闭',
+                        classes: 'btn btn-default'
+                    }
+                ] : buttons;
+                return openAlertModal('error', message, title, buttons);
+            },
+            success: function (message, title, buttons) {
+                title = angular.isUndefined(title) ? '成功' : title;
+                buttons = angular.isUndefined(buttons) ? [
+                    {
+                        text: '关闭',
+                        classes: 'btn btn-default'
+                    }
+                ] : buttons;
+                return openAlertModal('success', message, title, buttons);
+            }
+        }
+    }])
     .factory('OSSUploadQueue', function ($interval) {
         return {
             items: [],
@@ -336,7 +416,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope',function (Clipboard, OSSModal,$rootScope) {
+    .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', function (Clipboard, OSSModal, $rootScope, OSSApi) {
         var allMenu = [
             {
                 name: 'upload',
@@ -367,10 +447,22 @@ angular.module('ossClientUiApp')
                 name: 'create',
                 text: '新建文件夹',
                 getState: function () {
-                    return -1;
+                    return 1;
                 },
-                execute: function () {
-
+                execute: function (bucket, currentObject) {
+                    $rootScope.$broadcast('createObject', function (filename, callback) {
+                        var objectPath = currentObject ? currentObject + '/' + filename + '/' : filename + '/';
+                        OSSApi.putObject(bucket, objectPath, {
+                            'Content-Type': ''
+                        }, '').success(function () {
+                            $.isFunction(callback) && callback(true);
+                            $rootScope.$broadcast('addObject', {
+                                Prefix: objectPath
+                            }, true);
+                        }).error(function () {
+                            $.isFunction(callback) && callback(false);
+                        });
+                    })
                 }
             },
             {
@@ -461,7 +553,7 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
-                    if(!confirm('确定要删除？')){
+                    if (!confirm('确定要删除？')) {
                         return;
                     }
                     var list = _.map(selectedFiles, function (object) {
@@ -475,7 +567,7 @@ angular.module('ossClientUiApp')
                         location: bucket['Location'],
                         list: list
                     }, function (res) {
-                        $rootScope.$broadcast('removeObject',selectedFiles);
+                        $rootScope.$broadcast('removeObject', selectedFiles);
                     })
                 }
             },
@@ -1094,7 +1186,7 @@ angular.module('ossClientUiApp')
 
         }
     }])
-    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', function ($modal, Bucket, OSSApi, OSSObject) {
+    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion',function ($modal, Bucket, OSSApi, OSSObject, OSSException,OSSRegion) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -1126,7 +1218,7 @@ angular.module('ossClientUiApp')
                             $scope.acl = $scope.acls[0];
                         }
 
-                        angular.forEach(Bucket.getRegions(), function (val, key) {
+                        angular.forEach(OSSRegion.list(), function (val, key) {
                             regions.push({
                                 name: val,
                                 value: key
@@ -1165,6 +1257,8 @@ angular.module('ossClientUiApp')
                                         Acl: acl.value
                                     }
                                 });
+                            }).error(function (response, statusCode) {
+                                OSSException.handleAjaxException(response, statusCode);
                             });
                         };
 

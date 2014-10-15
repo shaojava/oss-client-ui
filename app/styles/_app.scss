@@ -246,11 +246,11 @@
     }
 
     .file-create-time,
-    .init-time{
+    .init-time {
       width: 190px;
     }
 
-    .upload-id{
+    .upload-id {
       width: 330px;
     }
 
@@ -286,6 +286,19 @@
       bottom: 0;
       overflow: auto;
       background: #fff;
+
+      .new-file-item {
+
+        .btn{
+          margin-left: 10px;
+        }
+
+        .form-control {
+          display: inline-block;
+          width: 300px;
+        }
+
+      }
     }
   }
 
@@ -298,7 +311,7 @@
     border-top: 1px solid $baseBorderColor;
     background: #fff;
 
-    .nav-tabs{
+    .nav-tabs {
       background: #f2f2f2;
       padding-left: 10px;
       padding-top: 5px;

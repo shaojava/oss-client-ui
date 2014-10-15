@@ -7,6 +7,65 @@
  * # directive
  */
 angular.module('ossClientUiApp')
+    .directive('createFile', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function postLink(scope, element, attrs) {
+                var fn = $parse(attrs.createFileCallback);
+                var createFileItem;
+                scope.$watch(attrs.createFile, function (value, oldValue) {
+                    if (value) {
+                        element.scrollTop(0);
+                        var defaultFilename = '新建文件夹';
+                        var $input = angular.element('<input name="folder-name" class="form-control" value="' + defaultFilename + '" />'),
+                            $okBtn = angular.element('<button class="btn btn-primary">确定</button>'),
+                            $cancelBtn = angular.element('<button class="btn btn-default">取消</button>');
+
+                        createFileItem = angular.element('<div class="clearfix file-item new-file-item"><div class="pull-left filename"><i class="file-icon-32 icon-folder"></i></div></div>');
+                        createFileItem.find('.filename').append($input).append($okBtn).append($cancelBtn);
+                        createFileItem.prependTo(element);
+                        $input[0].select();
+                        $input[0].selectionStart = 0;
+                        $input[0].selectionEnd = defaultFilename.length;
+                        $input.focus();
+                        $okBtn.click(function () {
+                            scope.$apply(function () {
+                                var filename = $.trim($input.val());
+                                createFileItem.find('button').prop('disabled', true);
+                                $.isFunction(fn) && fn(scope, {
+                                    filename: filename,
+                                    callback: function (success) {
+                                        if (success) {
+                                            scope[attrs.createFile] = false;
+                                        } else {
+                                            createFileItem.find('button').prop('disabled', false);
+                                        }
+
+                                    }
+                                });
+                            });
+                        });
+
+                        $cancelBtn.click(function () {
+                            scope.$apply(function () {
+                                scope[attrs.createFile] = false;
+                            })
+                        });
+
+
+                        $input.on('keydown', function (event) {
+                            if (event.keyCode == 13) {
+                                $okBtn.trigger('click');
+                            }
+                        });
+                    } else {
+                        createFileItem && createFileItem.remove();
+                    }
+
+                });
+            }
+        };
+    }])
     .directive('smartSearch', ['$location', '$rootScope', '$filter', 'OSSObject', 'Bucket', function ($location, $rootScope, $filter, OSSObject, Bucket) {
         return {
             restrict: 'A',

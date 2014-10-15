@@ -229,8 +229,24 @@ angular.module('ossClientUiApp')
 
         $scope.$on('removeObject', function (event, objects) {
             angular.forEach(objects, function (object) {
-                Util.Array.removeByValue($scope.files,object);
-                Util.Array.removeByValue($scope.selectedFiles,object);
+                Util.Array.removeByValue($scope.files, object);
+                Util.Array.removeByValue($scope.selectedFiles, object);
+            })
+        })
+
+        $scope.$on('createObject', function (event, callback) {
+            $scope.showCreateFile = true;
+            $scope.createFileCallback = callback;
+        })
+
+        $scope.$on('addObject', function (event, objects, selected) {
+            objects = $.isArray(objects) ? objects : [objects];
+            var addFiles = _.map(objects,OSSObject.format);
+            angular.forEach(addFiles, function (file) {
+                $scope.files.push(file);
+                if (selected) {
+                    $scope.selectedFiles.push(file);
+                }
             })
         })
     }])

@@ -1698,42 +1698,42 @@ a.text-primary:hover {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_text-emphasis\.scss}line{font-family:\000035}}
 .text-success {
-  color: #3c763d;
+  color: #f35050;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_text-emphasis\.scss}line{font-family:\000038}}
 a.text-success:hover {
-  color: #2b542c;
+  color: #f02020;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_text-emphasis\.scss}line{font-family:\000035}}
 .text-info {
-  color: #31708f;
+  color: #333333;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_text-emphasis\.scss}line{font-family:\000038}}
 a.text-info:hover {
-  color: #245269;
+  color: #1a1a1a;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_text-emphasis\.scss}line{font-family:\000035}}
 .text-warning {
-  color: #8a6d3b;
+  color: #ff9900;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_text-emphasis\.scss}line{font-family:\000038}}
 a.text-warning:hover {
-  color: #66512c;
+  color: #cc7a00;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_text-emphasis\.scss}line{font-family:\000035}}
 .text-danger {
-  color: #a94442;
+  color: #f35050;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_text-emphasis\.scss}line{font-family:\000038}}
 a.text-danger:hover {
-  color: #843534;
+  color: #f02020;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_type\.scss}line{font-family:\00003124}}
@@ -3787,27 +3787,27 @@ select[multiple].input-lg,
 .has-success .checkbox,
 .has-success .radio-inline,
 .has-success .checkbox-inline {
-  color: #3c763d;
+  color: #f35050;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000317}}
 .has-success .form-control {
-  border-color: #3c763d;
+  border-color: #f35050;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000320}}
 .has-success .form-control:focus {
-  border-color: #2b542c;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
+  border-color: #f02020;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #faafaf;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000327}}
 .has-success .input-group-addon {
-  color: #3c763d;
-  border-color: #3c763d;
+  color: #f35050;
+  border-color: #f35050;
   background-color: #dff0d8;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000333}}
 .has-success .form-control-feedback {
-  color: #3c763d;
+  color: #f35050;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000313}}
@@ -3817,27 +3817,27 @@ select[multiple].input-lg,
 .has-warning .checkbox,
 .has-warning .radio-inline,
 .has-warning .checkbox-inline {
-  color: #8a6d3b;
+  color: #ff9900;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000317}}
 .has-warning .form-control {
-  border-color: #8a6d3b;
+  border-color: #ff9900;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000320}}
 .has-warning .form-control:focus {
-  border-color: #66512c;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
+  border-color: #cc7a00;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ffc266;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000327}}
 .has-warning .input-group-addon {
-  color: #8a6d3b;
-  border-color: #8a6d3b;
+  color: #ff9900;
+  border-color: #ff9900;
   background-color: #fcf8e3;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000333}}
 .has-warning .form-control-feedback {
-  color: #8a6d3b;
+  color: #ff9900;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000313}}
@@ -3847,27 +3847,27 @@ select[multiple].input-lg,
 .has-error .checkbox,
 .has-error .radio-inline,
 .has-error .checkbox-inline {
-  color: #a94442;
+  color: #f35050;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000317}}
 .has-error .form-control {
-  border-color: #a94442;
+  border-color: #f35050;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000320}}
 .has-error .form-control:focus {
-  border-color: #843534;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+  border-color: #f02020;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #faafaf;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000327}}
 .has-error .input-group-addon {
-  color: #a94442;
-  border-color: #a94442;
+  color: #f35050;
+  border-color: #f35050;
   background-color: #f2dede;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_forms\.scss}line{font-family:\0000333}}
 .has-error .form-control-feedback {
-  color: #a94442;
+  color: #f35050;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_forms\.scss}line{font-family:\00003365}}
@@ -6078,7 +6078,7 @@ a.thumbnail.active {
 .alert-success {
   background-color: #dff0d8;
   border-color: #d6e9c6;
-  color: #3c763d;
+  color: #f35050;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_alerts\.scss}line{font-family:\000038}}
 .alert-success hr {
@@ -6086,14 +6086,14 @@ a.thumbnail.active {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_alerts\.scss}line{font-family:\0000311}}
 .alert-success .alert-link {
-  color: #2b542c;
+  color: #f02020;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_alerts\.scss}line{font-family:\0000360}}
 .alert-info {
   background-color: #d9edf7;
   border-color: #bce8f1;
-  color: #31708f;
+  color: #333333;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_alerts\.scss}line{font-family:\000038}}
 .alert-info hr {
@@ -6101,14 +6101,14 @@ a.thumbnail.active {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_alerts\.scss}line{font-family:\0000311}}
 .alert-info .alert-link {
-  color: #245269;
+  color: #1a1a1a;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_alerts\.scss}line{font-family:\0000363}}
 .alert-warning {
   background-color: #fcf8e3;
   border-color: #faebcc;
-  color: #8a6d3b;
+  color: #ff9900;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_alerts\.scss}line{font-family:\000038}}
 .alert-warning hr {
@@ -6116,14 +6116,14 @@ a.thumbnail.active {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_alerts\.scss}line{font-family:\0000311}}
 .alert-warning .alert-link {
-  color: #66512c;
+  color: #cc7a00;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_alerts\.scss}line{font-family:\0000366}}
 .alert-danger {
   background-color: #f2dede;
   border-color: #ebccd1;
-  color: #a94442;
+  color: #f35050;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_alerts\.scss}line{font-family:\000038}}
 .alert-danger hr {
@@ -6131,7 +6131,7 @@ a.thumbnail.active {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_alerts\.scss}line{font-family:\0000311}}
 .alert-danger .alert-link {
-  color: #843534;
+  color: #f02020;
 }
 
 @-webkit-keyframes progress-bar-stripes {
@@ -6376,13 +6376,13 @@ a.list-group-item:hover, a.list-group-item:focus {
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\000034}}
 .list-group-item-success {
-  color: #3c763d;
+  color: #f35050;
   background-color: #dff0d8;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000311}}
 a.list-group-item-success {
-  color: #3c763d;
+  color: #f35050;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000314}}
 a.list-group-item-success .list-group-item-heading {
@@ -6390,25 +6390,25 @@ a.list-group-item-success .list-group-item-heading {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000319}}
 a.list-group-item-success:hover, a.list-group-item-success:focus {
-  color: #3c763d;
+  color: #f35050;
   background-color: #d0e9c6;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000325}}
 a.list-group-item-success.active, a.list-group-item-success.active:hover, a.list-group-item-success.active:focus {
   color: #fff;
-  background-color: #3c763d;
-  border-color: #3c763d;
+  background-color: #f35050;
+  border-color: #f35050;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\000034}}
 .list-group-item-info {
-  color: #31708f;
+  color: #333333;
   background-color: #d9edf7;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000311}}
 a.list-group-item-info {
-  color: #31708f;
+  color: #333333;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000314}}
 a.list-group-item-info .list-group-item-heading {
@@ -6416,25 +6416,25 @@ a.list-group-item-info .list-group-item-heading {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000319}}
 a.list-group-item-info:hover, a.list-group-item-info:focus {
-  color: #31708f;
+  color: #333333;
   background-color: #c4e3f3;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000325}}
 a.list-group-item-info.active, a.list-group-item-info.active:hover, a.list-group-item-info.active:focus {
   color: #fff;
-  background-color: #31708f;
-  border-color: #31708f;
+  background-color: #333333;
+  border-color: #333333;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\000034}}
 .list-group-item-warning {
-  color: #8a6d3b;
+  color: #ff9900;
   background-color: #fcf8e3;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000311}}
 a.list-group-item-warning {
-  color: #8a6d3b;
+  color: #ff9900;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000314}}
 a.list-group-item-warning .list-group-item-heading {
@@ -6442,25 +6442,25 @@ a.list-group-item-warning .list-group-item-heading {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000319}}
 a.list-group-item-warning:hover, a.list-group-item-warning:focus {
-  color: #8a6d3b;
+  color: #ff9900;
   background-color: #faf2cc;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000325}}
 a.list-group-item-warning.active, a.list-group-item-warning.active:hover, a.list-group-item-warning.active:focus {
   color: #fff;
-  background-color: #8a6d3b;
-  border-color: #8a6d3b;
+  background-color: #ff9900;
+  border-color: #ff9900;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\000034}}
 .list-group-item-danger {
-  color: #a94442;
+  color: #f35050;
   background-color: #f2dede;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000311}}
 a.list-group-item-danger {
-  color: #a94442;
+  color: #f35050;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000314}}
 a.list-group-item-danger .list-group-item-heading {
@@ -6468,14 +6468,14 @@ a.list-group-item-danger .list-group-item-heading {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000319}}
 a.list-group-item-danger:hover, a.list-group-item-danger:focus {
-  color: #a94442;
+  color: #f35050;
   background-color: #ebcccc;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_list-group\.scss}line{font-family:\0000325}}
 a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-group-item-danger.active:focus {
   color: #fff;
-  background-color: #a94442;
-  border-color: #a94442;
+  background-color: #f35050;
+  border-color: #f35050;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/_list-group\.scss}line{font-family:\00003125}}
@@ -6797,7 +6797,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\000036}}
 .panel-success > .panel-heading {
-  color: #3c763d;
+  color: #f35050;
   background-color: #dff0d8;
   border-color: #d6e9c6;
 }
@@ -6808,7 +6808,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\0000314}}
 .panel-success > .panel-heading .badge {
   color: #dff0d8;
-  background-color: #3c763d;
+  background-color: #f35050;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\0000320}}
 .panel-success > .panel-footer + .panel-collapse > .panel-body {
@@ -6821,7 +6821,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\000036}}
 .panel-info > .panel-heading {
-  color: #31708f;
+  color: #333333;
   background-color: #d9edf7;
   border-color: #bce8f1;
 }
@@ -6832,7 +6832,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\0000314}}
 .panel-info > .panel-heading .badge {
   color: #d9edf7;
-  background-color: #31708f;
+  background-color: #333333;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\0000320}}
 .panel-info > .panel-footer + .panel-collapse > .panel-body {
@@ -6845,7 +6845,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\000036}}
 .panel-warning > .panel-heading {
-  color: #8a6d3b;
+  color: #ff9900;
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
@@ -6856,7 +6856,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\0000314}}
 .panel-warning > .panel-heading .badge {
   color: #fcf8e3;
-  background-color: #8a6d3b;
+  background-color: #ff9900;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\0000320}}
 .panel-warning > .panel-footer + .panel-collapse > .panel-body {
@@ -6869,7 +6869,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\000036}}
 .panel-danger > .panel-heading {
-  color: #a94442;
+  color: #f35050;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
@@ -6880,7 +6880,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:hover, a.list-g
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\0000314}}
 .panel-danger > .panel-heading .badge {
   color: #f2dede;
-  background-color: #a94442;
+  background-color: #f35050;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/bower_components\/bootstrap-sass-official\/assets\/stylesheets\/bootstrap\/mixins\/_panels\.scss}line{font-family:\0000320}}
 .panel-danger > .panel-footer + .panel-collapse > .panel-body {
@@ -11970,6 +11970,15 @@ input:focus {
   background: #fff;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003292}}
+.main .file-browser .filelist-body .new-file-item .btn {
+  margin-left: 10px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003296}}
+.main .file-browser .filelist-body .new-file-item .form-control {
+  display: inline-block;
+  width: 300px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003305}}
 .main .trans-queue {
   position: absolute;
   bottom: 0;
@@ -11979,69 +11988,69 @@ input:focus {
   border-top: 1px solid #d8d8d8;
   background: #fff;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003301}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003314}}
 .main .trans-queue .nav-tabs {
   background: #f2f2f2;
   padding-left: 10px;
   padding-top: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003308}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003321}}
 .main .trans-queue .tab-content .opt-bar {
   background: #fdfdfd;
   padding: 5px 10px;
   border-bottom: 1px solid #d8d8d8;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003313}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003326}}
 .main .trans-queue .tab-content .opt-bar .opt-list > li {
   margin-right: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003319}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003332}}
 .main .trans-queue .queue-list {
   height: 190px;
   overflow: auto;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003322}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003335}}
 .main .trans-queue .queue-list .queue-item {
   height: 30px;
   line-height: 30px;
   cursor: default;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003327}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003340}}
 .main .trans-queue .queue-list .queue-item > div {
   text-align: center;
   margin-left: 10px;
   margin-right: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003333}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003346}}
 .main .trans-queue .queue-list .queue-item:nth-child(even) {
   background: #f7f7f7;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003337}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003350}}
 .main .trans-queue .queue-list .queue-item:hover {
   background: #e1e3e7;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003341}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003354}}
 .main .trans-queue .queue-list .queue-item.selected {
   background: #50acf3;
   color: #fff;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003346}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003359}}
 .main .trans-queue .queue-list .queue-item .filename {
   padding: 0 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003350}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003363}}
 .main .trans-queue .queue-list .queue-item .filesize {
   width: 80px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003354}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003367}}
 .main .trans-queue .queue-list .queue-item .remain-time {
   width: 90px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003358}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003371}}
 .main .trans-queue .queue-list .queue-item .progress-wrapper {
   width: 140px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003362}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003375}}
 .main .trans-queue .queue-list .queue-item .progress {
   height: 14px;
   margin-bottom: 0;
@@ -12129,4 +12138,105 @@ input:focus {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\0000377}}
 .upload_detail_modal .part-list-wrapper .upload-part-list > li:hover {
   background: #e1e3e7;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\0000388}}
+.alert-modal section {
+  display: table;
+  padding: 35px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\0000391}}
+.alert-modal section > div {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 10px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\0000399}}
+.alert-modal.success-alert-modal .modal-body {
+  color: #f35050;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\00003106}}
+.alert-modal.error-alert-modal .modal-body {
+  color: #f35050;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\00003113}}
+.alert-modal.warn-alert-modal .modal-body {
+  color: #ff9900;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\00003120}}
+.alert-modal.info-alert-modal .modal-body {
+  color: #333333;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\000033}}
+#login-page {
+  background: #24272b;
+  color: #fff;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\000036}}
+#login-page .fa-info-circle {
+  color: #fc9701;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\000039}}
+#login-page h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000314}}
+#login-page .section-wrapper {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000318}}
+#login-page .section-wrapper section {
+  padding: 0 80px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000324}}
+#login-page .form-group {
+  color: #bababa;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000327}}
+#login-page .form-group .btn-wrapper {
+  margin-left: -2%;
+  margin-right: -3%;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000332}}
+#login-page .form-group .btn {
+  width: 45%;
+  margin: 0 2%;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000339}}
+#login-page .form-control {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: transparent;
+  border-radius: 2px;
+  color: #fff;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000346}}
+#login-page .form-control[disabled], #login-page .form-control[readonly], #login-page fieldset[disabled] .form-control {
+  color: #777777;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000350}}
+#login-page .input-group-addon {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: transparent;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000355}}
+#login-page .input-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000360}}
+#login-page .form-control:focus {
+  border-color: transparent;
+  outline: 0;
+  box-shadow: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000367}}
+#login-page .form-control::-webkit-input-placeholder {
+  transition: color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\0000371}}
+#login-page .form-control:focus::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }

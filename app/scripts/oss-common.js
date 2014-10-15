@@ -9,6 +9,38 @@
  * Main module of the application.
  */
 angular.module('OSSCommon', [])
+    .factory('OSSRegion', [ function () {
+        return {
+            list: function () {
+                return {
+                    'oss-cn-hangzhou-a': '杭州',
+                    'oss-cn-qingdao-a': '青岛',
+                    'oss-cn-beijing-a': '北京',
+                    'oss-cn-hongkong-a': '香港',
+                    'oss-cn-shenzhen-a': '深圳'
+                };
+            }
+        };
+    }])
+    .factory('OSSException', [function () {
+        var erroList = {
+
+        };
+        return {
+            getError: function (res, status) {
+                var resError = res['Error'];
+                var error = {
+                    status: status,
+                    code: resError.Code || '',
+                    msg: resError.Message || ''
+                };
+                return error;
+            },
+            getClientErrorMsg:function(res){
+                return res.message;
+            }
+        };
+    }])
     .factory('Clipboard', function () {
         var maxLen = 1,
             container = [];
