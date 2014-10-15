@@ -14,7 +14,15 @@ angular
     ])
     .controller('MainCtrl', ['$scope', 'OSSException', 'OSSRegion', function ($scope, OSSException, OSSRegion) {
 
-        $scope.step = 'loginById';
+        /**
+         * 登录到主界面
+         */
+        var loginToLanchpad = function () {
+            OSS.invoke('showLaunchpad');
+            OSS.invoke('closeWnd');
+        };
+
+        $scope.step = location.hash ? location.hash.replace(/^#/, '') : 'loginById';
 
         $scope.deviceCode = OSS.invoke('getDeviceEncoding');
 
@@ -47,7 +55,7 @@ angular
                 return;
             }
 
-            if(isCloudHost && !region.value){
+            if (isCloudHost && !region.value) {
                 alert('请选择区域');
                 return;
             }
@@ -59,9 +67,9 @@ angular
                 location: region.value
             }, function (res) {
                 if (!res.error) {
-                   $scope.$apply(function(){
-                       $scope.step = 'setPassword';
-                   })
+                    $scope.$apply(function () {
+                        $scope.step = 'setPassword';
+                    })
                 } else {
                     alert(OSSException.getClientErrorMsg(res));
                 }
@@ -88,8 +96,7 @@ angular
                 password: password
             }, function (res) {
                 if (!res.error) {
-                    OSS.invoke('showLaunchpad');
-                    OSS.invoke('closeWnd');
+                    loginToLanchpad();
                 } else {
                     alert(OSSException.getClientErrorMsg(res));
                 }
@@ -97,20 +104,55 @@ angular
 
         };
 
-        $scope.skipSetPassword = function(){
-            OSS.invoke('showLaunchpad');
-            OSS.invoke('closeWnd');
+        $scope.skipSetPassword = function () {
+            loginToLanchpad();
         };
 
-        $scope.copy = function(deviceCode){
-            OSS.invoke('setClipboardData',{
-                text:deviceCode
+        $scope.copy = function (deviceCode) {
+            OSS.invoke('setClipboardData', {
+                text: deviceCode
             });
             alert('复制成功');
         };
 
-        $scope.import = function(){
+        $scope.import = function (isCloudHost, region) {
+            OSS.invoke('loginByFile', {
+                ishost: isCloudHost ? 1 : 0,
+                location: region.value
+            }, function (res) {
+                $scope.$apply(function () {
+                    if (!res.error) {
+                        $scope.step = 'setPassword';
+                    } else if (res.error != 5) {
+                        alert(OSSException.getClientErrorMsg(res));
+                    }
+                });
+            });
+        };
 
+        //通过安全密码登录
+        $scope.loginByPassword = function (password) {
+            if (!password || !password.length) {
+                alert('请输入安全密码');
+                return;
+            }
+            OSS.invoke('loginPassword', {
+                password: password
+            }, function (res) {
+                $scope.$apply(function () {
+                    if (!res.error) {
+                        loginToLanchpad();
+                    } else {
+                        alert(OSSException.getClientErrorMsg(res));
+                    }
+                });
+
+            })
+        };
+
+        //清除安全密码
+        $scope.clearPassword = function () {
+            $scope.step = 'loginById';
         };
 
     }]);

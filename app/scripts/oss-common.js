@@ -9,7 +9,35 @@
  * Main module of the application.
  */
 angular.module('OSSCommon', [])
-    .factory('OSSRegion', [ function () {
+    .factory('OSSDialog', [function () {
+        var defaultParam = {
+            type: 'normal',
+            resize: 0,
+            width: 490,
+            height: 420
+        };
+        return {
+            /**
+             * 导出授权窗口
+             */
+            exportAuthorization: function () {
+                var UIPath = OSS.invoke('getUIPath');
+                OSS.invoke('showWnd', angular.extend({}, defaultParam, {
+                    url: UIPath +  'export-authorization.html'
+                }));
+            },
+            /**
+             * 自定义服务器地址
+             */
+            customServerHost: function () {
+                var UIPath = OSS.invoke('getUIPath');
+                OSS.invoke('showWnd', angular.extend({}, defaultParam, {
+                    url: UIPath +  'custom-domain.html'
+                }));
+            }
+        };
+    }])
+    .factory('OSSRegion', [function () {
         return {
             list: function () {
                 return {
@@ -23,9 +51,7 @@ angular.module('OSSCommon', [])
         };
     }])
     .factory('OSSException', [function () {
-        var erroList = {
-
-        };
+        var erroList = {};
         return {
             getError: function (res, status) {
                 var resError = res['Error'];
@@ -36,7 +62,7 @@ angular.module('OSSCommon', [])
                 };
                 return error;
             },
-            getClientErrorMsg:function(res){
+            getClientErrorMsg: function (res) {
                 return res.message;
             }
         };

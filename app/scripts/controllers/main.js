@@ -8,11 +8,10 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter) {
+    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog) {
 
         //获取所有bucket列表
         $scope.buckets = [];
-
 
         //新建bucket对话框
         $scope.showAddBucketModal = function () {
@@ -56,24 +55,22 @@ angular.module('ossClientUiApp')
                     oldBucket && Bucket.unselected(oldBucket);
                 }
 
-                console.log('$scope.buckets',$scope.buckets);
-
                 var currentBucket,
                     currentObjectPath = '/',
                     filter = 'file';
-                console.log('current',current);
+                console.log('current', current);
                 if (current && current.params && current.params.bucket) {
-                    if(current.$$route && $$route.originalPath){
+                    if (current.$$route && $$route.originalPath) {
                         var pathArr = current.$$route.originalPath.split('/');
                         currentBucket = Bucket.getBucket(current.params.bucket);
                         currentObjectPath = current.params.object;
-                        filter =  pathArr[2] || 'file';
+                        filter = pathArr[2] || 'file';
                     }
-                }else{
+                } else {
                     currentBucket = $scope.buckets[0]['Name'];
                 }
-                console.log('currentBucket',currentBucket);
-                if(currentBucket){
+                console.log('currentBucket', currentBucket);
+                if (currentBucket) {
                     Bucket.select(currentBucket);
                     $scope.breads = Bread.getBreads(currentBucket.Name, currentObjectPath, filter);
                     $scope.historyCanForward = OSSLocationHistory.canForward();
@@ -82,8 +79,10 @@ angular.module('ossClientUiApp')
             })
         });
 
-
-
+        //打开导出授权的页面
+        $scope.exportAuthorization = function () {
+            OSSDialog.exportAuthorization();
+        };
 
     }])
     .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue) {
@@ -262,7 +261,7 @@ angular.module('ossClientUiApp')
 
         $scope.$on('addObject', function (event, objects, selected) {
             objects = $.isArray(objects) ? objects : [objects];
-            var addFiles = _.map(objects,OSSObject.format);
+            var addFiles = _.map(objects, OSSObject.format);
             angular.forEach(addFiles, function (file) {
                 $scope.files.push(file);
                 if (selected) {

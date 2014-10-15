@@ -67,3 +67,80 @@ input:focus {
     }
   }
 }
+
+.dark-theme{
+
+  background: $darkThemeBg;
+  color: #fff;
+
+
+  .fa-info-circle {
+    color: #fc9701;
+  }
+
+  h1 {
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .section-wrapper {
+    margin-left: 15px;
+    margin-right: 15px;
+
+    section {
+      padding: 0 80px;
+    }
+
+  }
+
+  .form-group{
+    color:#bababa;
+
+    .btn-wrapper{
+      margin-left: -2%;
+      margin-right: -3%;
+    }
+
+    .btn{
+      width: 45%;
+      margin: 0 2%;
+    }
+  }
+
+
+  .form-control {
+    background-color: $darkThemeFormControlBg;
+    border-color: transparent;
+    border-radius: 2px;
+    color: #fff;
+  }
+
+  .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+    color: #777777;
+  }
+
+  .input-group-addon {
+    background: $darkThemeFormControlBg;
+    border-color: transparent;
+  }
+
+  .input-group .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .form-control:focus {
+    border-color: transparent;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .form-control::-webkit-input-placeholder {
+    transition: color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  }
+
+  .form-control:focus::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, .7);
+  }
+}

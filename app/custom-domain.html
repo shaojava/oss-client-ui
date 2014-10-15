@@ -1,0 +1,81 @@
+<!doctype html>
+<html class="no-js" ng-app="CustomDomain">
+<head>
+    <meta charset="utf-8">
+    <title>OSS</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- build:css(bower_components) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+<body ng-controller="MainCtrl" class="dark-theme">
+    <h1>
+        <!--<img src=""  alt=""/>-->
+        OSS
+    </h1>
+    <div class="section-wrapper">
+        <section class="current form-horizontal" >
+            <div class="form-group">
+                <input type="text" ng-model="host" class="form-control" placeholder="自定义服务器地址"/>
+            </div>
+            <div class="form-group">
+                <div class="btn-wrapper">
+                    <button class="btn btn-primary" ng-click="customDomain(host)">确 定</button>
+                    <button class="btn btn-default" ng-click="cancel()">关闭</button>
+                </div>
+            </div>
+        </section>
+</div>
+<!-- build:js(bower_components) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/es5-shim/es5-shim.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/json3/lib/json3.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+<script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
+<script src="../bower_components/angular-resource/angular-resource.js"></script>
+<script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/angular-touch/angular-touch.js"></script>
+<script src="../bower_components/angular-route/angular-route.js"></script>
+<script src="../bower_components/jquery-xml2json/src/xml2json.js"></script>
+<script src="../bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls-0.11.0.js"></script>
+<script src="../bower_components/angular-base64/angular-base64.js"></script>
+<script src="../bower_components/cryptojslib/components/core.js"></script>
+<script src="../bower_components/cryptojslib/components/enc-base64.js"></script>
+<script src="../bower_components/cryptojslib/components/md5.js"></script>
+<script src="../bower_components/cryptojslib/components/sha1.js"></script>
+<script src="../bower_components/cryptojslib/components/hmac.js"></script>
+<script src="../bower_components/util.js/util.js"></script>
+<script src="../bower_components/spin.js/spin.js"></script>
+<script src="../bower_components/angular-spinner/angular-spinner.js"></script>
+<script src="../bower_components/underscore/underscore.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/custom-domain.js -->
+<script src="scripts/oss-client.js"></script>
+<script src="scripts/interface.js"></script>
+<script src="scripts/oss-common.js"></script>
+<script src="scripts/custom-domain.js"></script>
+<!-- endbuild -->
+</body>
+</html>
