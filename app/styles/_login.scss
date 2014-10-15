@@ -19,6 +19,16 @@ $loginPageFormControlBg: rgba(255, 255, 255, .1);
       padding: 0 80px;
     }
 
+    .section.ng-hide-add.ng-hide-add-active,
+    .section.ng-hide-remove.ng-hide-remove-active {
+      -webkit-transition:all linear 0.5s;
+      transition:all linear 0.5s;
+    }
+
+    .section.ng-hide {
+      margin-left: -100%;
+    }
+
 
   }
 

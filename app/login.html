@@ -38,18 +38,15 @@
             <div class="form-group">
                 <div class="btn-wrapper">
                     <button class="btn btn-primary" ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region)">登录</button>
-                    <button class="btn btn-default" ng-click="export()">导入授权</button>
+                    <button class="btn btn-default" ng-click="step='importAuthorization'">导入授权</button>
                 </div>
             </div>
         </section>
         <section class="form-horizontal" ng-show="step=='importAuthorization'">
             <div class="form-group">
-                <input type="text" ng-model="deviveCode" class="form-control"/>
-            </div>
-            <div class="form-group">
                 <div class="input-group">
-                    <input type="text" ng-model="accessKeySecret" class="form-control"/>
-                    <div class="input-group-addon"><a href="javascript:void(0)" ng-click="copy(accessKeySecret)">复制机器码</a></div>
+                    <input type="text" ng-model="deviceCode" ng-disabled="true" class="form-control"/>
+                    <div class="input-group-addon"><a href="javascript:void(0)" ng-click="copy(deviceCode)">复制机器码</a></div>
                 </div>
 
             </div>
@@ -63,7 +60,7 @@
             </div>
             <div class="form-group">
                 <button class="btn btn-primary" ng-click="import()">选择文件并导入</button>
-                <button class="btn btn-default" ng-click="back()">返回</button>
+                <button class="btn btn-default" ng-click="step='loginById'">返回</button>
             </div>
         </section>
         <section class="form-horizontal" ng-show="step=='setPassword'">
@@ -81,7 +78,7 @@
             </div>
             <div class="form-group">
                 <button class="btn btn-primary" ng-click="setPassword(secretPassword,reSecretPassword)">确认设置</button>
-                <button class="btn btn-default" ng-click="">跳过设置</button>
+                <button class="btn btn-default" ng-click="skipSetPassword()">跳过设置</button>
             </div>
         </section>
         <section class="form-horizontal" ng-show="step=='loginByPassword'">

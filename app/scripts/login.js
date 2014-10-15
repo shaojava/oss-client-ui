@@ -16,6 +16,8 @@ angular
 
         $scope.step = 'loginById';
 
+        $scope.deviceCode = OSS.invoke('getDeviceEncoding');
+
         var regions = [];
         angular.forEach(OSSRegion.list(), function (val, key) {
             regions.push({
@@ -86,7 +88,8 @@ angular
                 password: password
             }, function (res) {
                 if (!res.error) {
-
+                    OSS.invoke('showLaunchpad');
+                    OSS.invoke('closeWnd');
                 } else {
                     alert(OSSException.getClientErrorMsg(res));
                 }
@@ -94,5 +97,20 @@ angular
 
         };
 
+        $scope.skipSetPassword = function(){
+            OSS.invoke('showLaunchpad');
+            OSS.invoke('closeWnd');
+        };
+
+        $scope.copy = function(deviceCode){
+            OSS.invoke('setClipboardData',{
+                text:deviceCode
+            });
+            alert('复制成功');
+        };
+
+        $scope.import = function(){
+
+        };
 
     }]);
