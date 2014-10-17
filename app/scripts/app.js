@@ -18,7 +18,8 @@ angular
         'ngTouch',
         'ui.bootstrap',
         'angularSpinner',
-        'OSSCommon'
+        'OSSCommon',
+        'angularSpinner'
     ])
     .config(['$routeProvider', '$httpProvider',function ($routeProvider, $httpProvider) {
         $routeProvider

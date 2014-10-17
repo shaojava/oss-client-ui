@@ -166,7 +166,7 @@ angular.module('ossClientUiApp')
 
 
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location','OSSLocation',function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route,$location,OSSLocation) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location','OSSLocation','usSpinnerService',function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route,$location,OSSLocation,usSpinnerService) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -204,13 +204,16 @@ angular.module('ossClientUiApp')
                 return;
             }
             $scope.loadingFile = true;
+            usSpinnerService.spin('file-list-spinner');
             OSSObject.list($scope.bucket, prefix, delimiter, lastLoadMaker, loadFileCount).then(function (res) {
                 $scope.loadingFile = false;
                 $scope.files = $scope.files.concat(res.files);
                 lastLoadMaker = res.marker;
                 isAllFileLoaded = res.allLoaded;
+                usSpinnerService.stop('file-list-spinner');
             }, function () {
                 $scope.loadingFile = false;
+                usSpinnerService.stop('file-list-spinner');
             });
         };
         loadFile();

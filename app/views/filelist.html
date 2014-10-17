@@ -20,4 +20,5 @@
         <div class="pull-right file-create-time" ng-bind="file.dir?'-' : (file.lastModified | formatTime)"></div>
         <div class="pull-right filesize" ng-bind="file.dir?'-' : (file.size | bitSize)"></div>
     </div>
+    <span us-spinner="{radius:10, length: 0}"  spinner-key="file-list-spinner"  spinner-start-active="1"></span>
 </div>
