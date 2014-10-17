@@ -109,9 +109,7 @@ angular
         };
 
         $scope.copy = function (deviceCode) {
-            OSS.invoke('setClipboardData', {
-                text: deviceCode
-            });
+            OSS.invoke('setClipboardData', deviceCode);
             alert('复制成功');
         };
 

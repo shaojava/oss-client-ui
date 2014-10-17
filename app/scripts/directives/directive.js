@@ -181,4 +181,183 @@ angular.module('ossClientUiApp')
                 scope.icon = OSSObject.getIcon(scope.dir, scope.filename);
             }
         };
+    }])
+    .directive('keyBoardNav', [function () {
+        return {
+            restrict: 'A',
+            scope: {
+                keyboardNavList: '=',
+                enableKeyboardNav: '@',
+                keyBoardNavStep: '@'
+            },
+            link: function postLink(scope, element, attrs) {
+                var list,
+                    enableKeyboardNav = false, //是否允许开启键盘选择,
+                    shiftLastIndex = 0,
+                    keyBoardNavStep = 1;
+
+                scope.$watch('keyBoardNavList', function (newVal, oldVal) {
+                    if (newVal === oldVal) {
+                        return;
+                    }
+                    shiftLastIndex = 0;
+                    list = newVal;
+                });
+
+                attrs.$observe('enableKeyboardNav', function (newVal, oldVal) {
+                    if (newVal === oldVal) {
+                        return;
+                    }
+                    enableKeyboardNav = newVal == 1 ? true : false;
+                });
+
+                attrs.$observe('keyBoardNavStep', function (newVal, oldVal) {
+                    if (newVal === oldVal) {
+                        return;
+                    }
+                    keyBoardNavStep = parseInt(newVal);
+                });
+
+                //已选中列表
+                var getSelectedList = function () {
+                    return _.where(list, {
+                        selected: true
+                    });
+                };
+
+                //获取已选中列表的最小index
+                var getSelectedMinIndex = function () {
+                    return _.indexOf(_.findWhere(list,{
+                        selected:true
+                    }));
+                };
+
+                //获取已选中列表的最大index
+                var getSelectedMaxIndex = function () {
+                    var selectedFiles = getSelectedList();
+                    if(selectedFiles && selectedFiles.length){
+                        return _.indexOf(selectedFiles[selectedFiles.length-1]);
+                    }
+                    return -1;
+                };
+
+                //选中
+                var select = function(item){
+                    item.selected = true;
+                };
+
+                //取消选中
+                var unSelect = function(item){
+                    item.selected = false;
+                };
+
+                //取消所有选中
+                var unSelectAll = function(){
+                    angular.forEach(getSelectedList(),function(item){
+                        unSelect(item);
+                    });
+                };
+
+
+                /**
+                 * up left 键
+                 * @param $event
+                 */
+                var upLeftPress = function ($event) {
+                    var step = keyBoardNavStep;
+
+                    /**
+                     * 初始index是最后一个
+                     * @type {number}
+                     */
+                    var initIndex = list.length + step - 1;
+                    /**
+                     * 如果已经选中，则取已选中的最小一个
+                     */
+                    var selectedIndex = getSelectedMinIndex();
+                    if (selectedIndex>=0) {
+                        initIndex = selectedIndex;
+                    }
+                    var newIndex = initIndex - step;
+                    if (newIndex < 0) {
+                        newIndex = 0;
+                    }
+
+                    if ($event.shiftKey) {
+                        for (var i = (initIndex > (list.length - 1) ? list.length - 1 : initIndex); i >= newIndex; i--) {
+                            select(list[i]);
+                        }
+                    } else {
+                        angular.forEach(getSelectedList, function (item) {
+                            unSelect(item);
+                        });
+                        select(list[newIndex]);
+                        shiftLastIndex = newIndex;
+                    }
+                };
+
+                /**
+                 * down right 键
+                 * @param $event
+                 */
+                var downRightPress = function ($event) {
+                    var step = keyBoardNavStep;
+
+                    /**
+                     * 初始index是第一个
+                     * @type {number}
+                     */
+                    var initIndex = -1 * step;
+                    /**
+                     * 如果已经选中，则取已选中的最大一个
+                     */
+                    var selectedIndex = getSelectedMaxIndex();
+                    if (selectedIndex >= 0) {
+                        initIndex = selectedIndex;
+                    }
+                    var newIndex = initIndex + step;
+                    if (newIndex > list.length - 1) {
+                        newIndex = list.length - 1;
+                    }
+                    if ($event.shiftKey) {
+                        for (var i = (initIndex > 0 ? initIndex : 0); i <= newIndex; i++) {
+                            select(list[i]);
+                        }
+                    } else {
+                        unSelectAll();
+                        select(list[newIndex]);
+                        shiftLastIndex = newIndex;
+                    }
+                };
+
+                /**
+                 * 监听键盘事件
+                 */
+                $(document).on('keydown.keyboardNav', function ($event) {
+
+                    if(!enableKeyboardNav){
+                        return;
+                    }
+
+                    if (['INPUT', 'TEXTAREA'].indexOf($event.target.nodeName) >=0) {
+                        return;
+                    }
+                    scope.$apply(function () {
+                        var ctrlKeyOn = $event.ctrlKey || $event.metaKey;
+                        switch ($event.keyCode) {
+                            case 37: //up
+                            case 38: //left
+                                upLeftPress($event);
+                                break;
+                            case 39: //down
+                            case 40: //right
+                                downRightPress($event);
+                                break;
+                        }
+                    });
+                    $event.preventDefault();
+                });
+
+            }
+        };
     }]);
