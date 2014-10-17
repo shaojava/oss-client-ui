@@ -72,7 +72,9 @@ input:focus {
 
   background: $darkThemeBg;
   color: #fff;
-
+  select option{
+    background: $darkThemeBg;
+  }
 
   .fa-info-circle {
     color: #fc9701;

@@ -182,21 +182,21 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .directive('keyBoardNav', [function () {
+    .directive('keyboardNav', [function () {
         return {
             restrict: 'A',
             scope: {
                 keyboardNavList: '=',
-                enableKeyboardNav: '@',
-                keyBoardNavStep: '@'
+                keyboardNav: '@',
+                keyboardNavStep: '@'
             },
             link: function postLink(scope, element, attrs) {
                 var list,
                     enableKeyboardNav = false, //是否允许开启键盘选择,
                     shiftLastIndex = 0,
-                    keyBoardNavStep = 1;
+                    keyboardNavStep = 1;
 
-                scope.$watch('keyBoardNavList', function (newVal, oldVal) {
+                scope.$watch('keyboardNavList', function (newVal, oldVal) {
                     if (newVal === oldVal) {
                         return;
                     }
@@ -204,18 +204,18 @@ angular.module('ossClientUiApp')
                     list = newVal;
                 });
 
-                attrs.$observe('enableKeyboardNav', function (newVal, oldVal) {
+                attrs.$observe('keyboardNav', function (newVal, oldVal) {
                     if (newVal === oldVal) {
                         return;
                     }
                     enableKeyboardNav = newVal == 1 ? true : false;
                 });
 
-                attrs.$observe('keyBoardNavStep', function (newVal, oldVal) {
+                attrs.$observe('keyboardNavStep', function (newVal, oldVal) {
                     if (newVal === oldVal) {
                         return;
                     }
-                    keyBoardNavStep = parseInt(newVal);
+                    keyboardNavStep = parseInt(newVal);
                 });
 
                 //已选中列表
@@ -264,7 +264,7 @@ angular.module('ossClientUiApp')
                  * @param $event
                  */
                 var upLeftPress = function ($event) {
-                    var step = keyBoardNavStep;
+                    var step = keyboardNavStep;
 
                     /**
                      * 初始index是最后一个
@@ -301,7 +301,7 @@ angular.module('ossClientUiApp')
                  * @param $event
                  */
                 var downRightPress = function ($event) {
-                    var step = keyBoardNavStep;
+                    var step = keyboardNavStep;
 
                     /**
                      * 初始index是第一个
@@ -334,7 +334,6 @@ angular.module('ossClientUiApp')
                  * 监听键盘事件
                  */
                 $(document).on('keydown.keyboardNav', function ($event) {
-
                     if(!enableKeyboardNav){
                         return;
                     }

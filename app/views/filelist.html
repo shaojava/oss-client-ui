@@ -11,7 +11,7 @@
     <div class="pull-right filesize">大小</div>
 
 </div>
-<div class="filelist-body" scroll-load="loadMoreFile()" disable-scroll="loadingFile" create-file="showCreateFile" create-file-callback="createFileCallback(filename,callback)" key-board-nav-list="files" key-board-nav-step="1" key-board-nav="{{enableKeyBoardNav}}" >
+<div class="filelist-body" scroll-load="loadMoreFile()" disable-scroll="loadingFile" create-file="showCreateFile" create-file-callback="createFileCallback(filename,callback)" keyboard-nav-list="files" keyboard-nav-step="1" keyboard-nav="{{enableKeyBoardNav}}" >
     <div class="clearfix file-item" ng-repeat="file in files | orderBy:'-dir'" ng-dblclick="openFile(file,file.dir)" ng-class="{'selected':selectedFiles.indexOf(file)>=0}" ng-click="handleClick(file)">
         <div class="pull-left filename">
             <file-icon dir="{{file.dir}}" size="32" filename="{{file.filename}}"></file-icon>

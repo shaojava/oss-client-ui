@@ -61,12 +61,12 @@ angular.module('ossClientUiApp')
             if (current && current.params && current.params.bucket) {
                 if (current.$$route && current.$$route.originalPath) {
                     var pathArr = current.$$route.originalPath.split('/');
-                    console.log('pathArr',pathArr);
+                    console.log('pathArr', pathArr);
                     currentBucket = Bucket.getBucket(current.params.bucket);
                     currentObjectPath = current.params.object;
                     filter = pathArr[1] || 'file';
                 }
-            } else if( $scope.buckets &&  $scope.buckets.length) {
+            } else if ($scope.buckets && $scope.buckets.length) {
                 currentBucket = $scope.buckets[0]['Name'];
             }
             console.log('currentBucket', currentBucket);
@@ -166,7 +166,7 @@ angular.module('ossClientUiApp')
 
 
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location','OSSLocation','usSpinnerService',function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route,$location,OSSLocation,usSpinnerService) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -177,7 +177,7 @@ angular.module('ossClientUiApp')
             isAllFileLoaded = false;
 
         //默认去第一个bucket
-        if(buckets.length && !bucketName){
+        if (buckets.length && !bucketName) {
             $location.path(OSSLocation.getUrl(buckets[0].Name));
             return;
         }
@@ -233,6 +233,15 @@ angular.module('ossClientUiApp')
 
         //已选中文件列表
         $scope.selectedFiles = [];
+
+        $scope.$watch('files', function (newList, oldList) {
+            if (newList == oldList) {
+                return;
+            }
+            $scope.selectedFiles = _.where($scope.files, {
+                selected: true
+            });
+        }, true);
 
         //点击文件
         $scope.handleClick = function (file) {
