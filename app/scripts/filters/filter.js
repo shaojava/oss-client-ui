@@ -58,7 +58,9 @@ angular.module('ossClientUiApp')
             return state;
         }
     })
-
+    .filter('getLocation', ['OSSLocation',function (OSSLocation) {
+        return OSSLocation.getUrl;
+    }])
     .filter('baseName', function () {
         return Util.String.baseName;
     });

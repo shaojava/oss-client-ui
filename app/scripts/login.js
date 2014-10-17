@@ -152,6 +152,10 @@ angular
 
         //清除安全密码
         $scope.clearPassword = function () {
+            if(!confirm('确定要清除安全密码？')){
+                return;
+            }
+            OSS.invoke('clearPassword');
             $scope.step = 'loginById';
         };
 

@@ -48,35 +48,34 @@ angular.module('ossClientUiApp')
 
         Bucket.list().then(function (buckets) {
             $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
+        });
 
-            $scope.$on('$routeChangeSuccess', function (event, current, prev) {
-                if (prev && prev.params) {
-                    var oldBucket = Bucket.getBucket(prev.params.bucket);
-                    oldBucket && Bucket.unselected(oldBucket);
+        $scope.$on('$routeChangeSuccess', function (event, current, prev) {
+            if (prev && prev.params) {
+                var oldBucket = Bucket.getBucket(prev.params.bucket);
+                oldBucket && Bucket.unselected(oldBucket);
+            }
+            var currentBucket,
+                currentObjectPath = '/',
+                filter = 'file';
+            if (current && current.params && current.params.bucket) {
+                if (current.$$route && current.$$route.originalPath) {
+                    var pathArr = current.$$route.originalPath.split('/');
+                    console.log('pathArr',pathArr);
+                    currentBucket = Bucket.getBucket(current.params.bucket);
+                    currentObjectPath = current.params.object;
+                    filter = pathArr[1] || 'file';
                 }
-
-                var currentBucket,
-                    currentObjectPath = '/',
-                    filter = 'file';
-                console.log('current', current);
-                if (current && current.params && current.params.bucket) {
-                    if (current.$$route && $$route.originalPath) {
-                        var pathArr = current.$$route.originalPath.split('/');
-                        currentBucket = Bucket.getBucket(current.params.bucket);
-                        currentObjectPath = current.params.object;
-                        filter = pathArr[2] || 'file';
-                    }
-                } else {
-                    currentBucket = $scope.buckets[0]['Name'];
-                }
-                console.log('currentBucket', currentBucket);
-                if (currentBucket) {
-                    Bucket.select(currentBucket);
-                    $scope.breads = Bread.getBreads(currentBucket.Name, currentObjectPath, filter);
-                    $scope.historyCanForward = OSSLocationHistory.canForward();
-                    $scope.historyCanBackward = OSSLocationHistory.canBackward();
-                }
-            })
+            } else if( $scope.buckets &&  $scope.buckets.length) {
+                currentBucket = $scope.buckets[0]['Name'];
+            }
+            console.log('currentBucket', currentBucket);
+            if (currentBucket) {
+                Bucket.select(currentBucket);
+                $scope.breads = Bread.getBreads(currentBucket.Name, currentObjectPath, filter);
+                $scope.historyCanForward = OSSLocationHistory.canForward();
+                $scope.historyCanBackward = OSSLocationHistory.canBackward();
+            }
         });
 
         //打开导出授权的页面
@@ -167,8 +166,8 @@ angular.module('ossClientUiApp')
 
 
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route) {
-        var bucketName = $routeParams.bucket ? $routeParams.bucket : buckets && buckets.length ? buckets[0]['Name'] : '',
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location','OSSLocation',function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route,$location,OSSLocation) {
+        var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
             delimiter = '/',
@@ -177,9 +176,14 @@ angular.module('ossClientUiApp')
             lastLoadMaker = '',
             isAllFileLoaded = false;
 
+        //默认去第一个bucket
+        if(buckets.length && !bucketName){
+            $location.path(OSSLocation.getUrl(buckets[0].Name));
+            return;
+        }
+
         $scope.bucket = Bucket.getBucket(bucketName);
         $scope.objectPrefix = $routeParams.object ? $routeParams.object : '';
-
         OSSObject.setCurrentObject({
             path: $scope.objectPrefix,
             dir: 1

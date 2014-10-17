@@ -701,7 +701,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSObject', ['$location', '$filter', 'OSSApi', '$q', function ($location, $filter, OSSApi, $q) {
+    .factory('OSSObject', ['$location', '$filter', 'OSSApi', '$q','OSSLocation', function ($location, $filter, OSSApi, $q,OSSLocation) {
         var fileSorts = {
             'SORT_SPEC': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk', 'gknote'],
             'SORT_MOVIE': ['mp4', 'mkv', 'rm', 'rmvb', 'avi', '3gp', 'flv', 'wmv', 'asf', 'mpeg', 'mpg', 'mov', 'ts', 'm4v'],
@@ -762,7 +762,7 @@ angular.module('ossClientUiApp')
             },
             open: function (bucket, path, isDir) {
                 if (isDir) {
-                    $location.path('/' + bucket.Name + '/file/' + path);
+                    $location.path(OSSLocation.getUrl(bucket.Name, path, 'file'));
                 } else {
 
                 }
@@ -805,16 +805,20 @@ angular.module('ossClientUiApp')
     .factory('OSSLocation', function () {
         return {
             getUrl: function (bucketName, prefix, filter) {
-                var url = '';
+
                 filter = angular.isUndefined(filter) ? 'file' : filter;
                 prefix = angular.isUndefined(prefix) ? '' : prefix;
+
+                var url = '';
+
+                url += '/' + filter;
+
                 url += '/' + bucketName;
-                if (filter) {
-                    url += '/' + filter;
-                }
+
                 if (prefix) {
                     url += '/' + prefix;
                 }
+
                 return url;
             }
         };
@@ -832,18 +836,20 @@ angular.module('ossClientUiApp')
         };
         return {
             getBreads: function (bucketName, path, filter) {
-                var breads = [
-                    {
-                        name: bucketName,
-                        url: OSSLocation.getUrl(bucketName)
-                    }
-                ];
-                if (filter != 'file') {
+                var breads = [];
+
+                breads.push({
+                    name: bucketName,
+                    url: OSSLocation.getUrl(bucketName)
+                });
+
+                if(filter !== 'file'){
                     breads.push({
                         name: getFilterName(filter),
                         url: OSSLocation.getUrl(bucketName, '', filter)
                     });
                 }
+
                 if (path && path.length) {
                     path = Util.String.rtrim(Util.String.ltrim(path, '/'), '/');
                     var paths = path.split('/');

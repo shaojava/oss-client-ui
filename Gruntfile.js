@@ -60,6 +60,10 @@ module.exports = function (grunt) {
                     '.tmp/styles/{,*/}*.css',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
+            },
+            oss:{
+                files: ['.tmp/styles/*.css'],
+                tasks: ['copy:oss']
             }
         },
 
@@ -402,6 +406,12 @@ module.exports = function (grunt) {
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
+            },
+            oss:{
+                expand: true,
+                cwd: '.tmp/styles/',
+                dest: '<%= yeoman.app %>/styles/',
+                src: '*.css'
             }
         },
 
