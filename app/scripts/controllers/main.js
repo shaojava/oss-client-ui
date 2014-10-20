@@ -166,7 +166,7 @@ angular.module('ossClientUiApp')
 
 
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -175,6 +175,9 @@ angular.module('ossClientUiApp')
             loadFileCount = 20,
             lastLoadMaker = '',
             isAllFileLoaded = false;
+
+        //默认排序
+        $scope.orderBy = '-dir';
 
         //默认去第一个bucket
         if (buckets.length && !bucketName) {
@@ -207,10 +210,11 @@ angular.module('ossClientUiApp')
             usSpinnerService.spin('file-list-spinner');
             OSSObject.list($scope.bucket, prefix, delimiter, lastLoadMaker, loadFileCount).then(function (res) {
                 $scope.loadingFile = false;
-                $scope.files = $scope.files.concat(res.files);
+                $scope.files = $filter('orderBy')($scope.files.concat(res.files), $scope.orderBy);
                 lastLoadMaker = res.marker;
                 isAllFileLoaded = res.allLoaded;
                 usSpinnerService.stop('file-list-spinner');
+
             }, function () {
                 $scope.loadingFile = false;
                 usSpinnerService.stop('file-list-spinner');
@@ -231,26 +235,45 @@ angular.module('ossClientUiApp')
             loadFile();
         };
 
-        //已选中文件列表
-        $scope.selectedFiles = [];
+        $scope.$watch('orderBy', function (val) {
+            $scope.files = $filter('orderBy')($scope.files, val);
+        });
 
-        $scope.$watch('files', function (newList, oldList) {
-            if (newList == oldList) {
-                return;
-            }
-            $scope.selectedFiles = _.where($scope.files, {
+        $scope.enableKeyBoardNav = 1;
+
+        //获取以选中的列表
+        $scope.getSelectedList = function () {
+            return _.where($scope.files, {
                 selected: true
+            })
+        };
+
+        //选中
+        $scope.select = function (item) {
+            item.selected = true;
+            console.log('index',_.indexOf($scope.files, item));
+            $scope.scrollToIndex = _.indexOf($scope.files, item);
+        };
+
+        //取消选中
+        $scope.unSelect = function (item) {
+            item.selected = false;
+        };
+
+        //取消所有选中
+        $scope.unSelectAll = function () {
+            angular.forEach($scope.getSelectedList(), function (item) {
+                $scope.unSelect(item);
             });
-        }, true);
+        };
 
         //点击文件
         $scope.handleClick = function (file) {
-            var index = $scope.selectedFiles.indexOf(file);
-            if (index >= 0) {
-                $scope.selectedFiles.splice(index, 1);
+            if (file.selected) {
+                $scope.unSelect(file);
             } else {
-                $scope.selectedFiles = [];
-                $scope.selectedFiles.push(file);
+                $scope.unSelectAll();
+                $scope.select(file);
             }
         };
 
@@ -266,7 +289,6 @@ angular.module('ossClientUiApp')
         $scope.$on('removeObject', function (event, objects) {
             angular.forEach(objects, function (object) {
                 Util.Array.removeByValue($scope.files, object);
-                Util.Array.removeByValue($scope.selectedFiles, object);
             })
         })
 
@@ -281,7 +303,7 @@ angular.module('ossClientUiApp')
             angular.forEach(addFiles, function (file) {
                 $scope.files.push(file);
                 if (selected) {
-                    $scope.selectedFiles.push(file);
+                    $scope.select(file);
                 }
             })
         })

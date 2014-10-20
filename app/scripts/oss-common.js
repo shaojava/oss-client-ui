@@ -23,7 +23,7 @@ angular.module('OSSCommon', [])
             exportAuthorization: function () {
                 var UIPath = OSS.invoke('getUIPath');
                 OSS.invoke('showWnd', angular.extend({}, defaultParam, {
-                    url: UIPath +  'export-authorization.html'
+                    url: UIPath + 'export-authorization.html'
                 }));
             },
             /**
@@ -32,7 +32,7 @@ angular.module('OSSCommon', [])
             customServerHost: function () {
                 var UIPath = OSS.invoke('getUIPath');
                 OSS.invoke('showWnd', angular.extend({}, defaultParam, {
-                    url: UIPath +  'custom-domain.html'
+                    url: UIPath + 'custom-domain.html'
                 }));
             }
         };
@@ -143,4 +143,28 @@ angular.module('OSSCommon', [])
             }
         }
     }])
+    .directive('scrollToItem', ['$timeout',function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                attrs.$observe('scrollToItem',function(newVal){
+                    $timeout(function(){
+                        var index = newVal;
+                        if (index < 0) return;
+                        var $fileItem = element.find(attrs.itemSelector + ':eq(' + index + ')');
+                        if (!$fileItem.size()) return;
+                        var top = $fileItem.position().top;
+                        var grep = top + $fileItem.height() - element.height() ;
+                        if(top < 0){
+                            element.scrollTop(element.scrollTop() + top);
+                        }else if(grep > 0){
+                            element.scrollTop(element.scrollTop() + grep);
+                        }
+                    })
+                })
+
+            }
+        }
+    }])
+;
 
