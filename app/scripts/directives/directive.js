@@ -159,7 +159,6 @@ angular.module('ossClientUiApp')
             },
             link: function postLink(scope, element, attrs) {
                 element.click(function (event) {
-                    console.log('event', event);
                     scope.execute({
                         $event: event
                     });
@@ -182,69 +181,59 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .directive('keyboardNav', ['$parse',function ($parse) {
+    .directive('keyboardNav', ['$parse', function ($parse) {
         return {
             restrict: 'A',
-            scope: {
-                keyboardNavList: '=',
-                keyboardNav: '@',
-                keyboardNavStep: '@',
-                select:'&',
-                unSelect:'&',
-                getSelectedList:'&'
-            },
             link: function postLink(scope, element, attrs) {
 
-                var list = scope.keyboardNavList,
+                var list = [],
                     enableKeyboardNav = false, //是否允许开启键盘选择,
                     shiftLastIndex = 0,
                     keyboardNavStep = 1;
 
-                scope.$watch('keyboardNavList', function (newVal, oldVal) {
+                scope.$watch(attrs.keyboardNavList, function (newVal) {
                     shiftLastIndex = 0;
                     list = newVal;
                 });
 
-                attrs.$observe('keyboardNav', function (newVal, oldVal) {
+                attrs.$observe('keyboardNav', function (newVal) {
                     enableKeyboardNav = newVal == 1 ? true : false;
                 });
 
-                attrs.$observe('keyboardNavStep', function (newVal, oldVal) {
+                attrs.$observe('keyboardNavStep', function (newVal) {
                     keyboardNavStep = parseInt(newVal);
                 });
 
                 //已选中列表
-                var getSelectedList = scope.getSelectedList;
+                var getSelectedList = $parse(attrs.getSelectedList);
 
                 //获取已选中列表的最小index
                 var getSelectedMinIndex = function () {
-                    return _.indexOf(list,_.findWhere(list,{
-                        selected:true
+                    return _.indexOf(list, _.findWhere(list, {
+                        selected: true
                     }));
                 };
 
                 //获取已选中列表的最大index
                 var getSelectedMaxIndex = function () {
-                    var selectedFiles = getSelectedList();
-                    if(selectedFiles && selectedFiles.length){
-                        return _.indexOf(list,selectedFiles[selectedFiles.length-1]);
+                    var selectedFiles = getSelectedList(scope);
+                    if (selectedFiles && selectedFiles.length) {
+                        return _.indexOf(list, selectedFiles[selectedFiles.length - 1]);
                     }
                     return -1;
                 };
 
                 //选中
-                var select = scope.select;
+                var select = $parse(attrs.select);
 
                 //取消选中
-                var unSelect =  scope.unSelect;
+                var unSelect = $parse(attrs.unSelect);
 
                 //取消所有选中
-                var unSelectAll = function(){
-                    console.log('getSelectedList()',getSelectedList());
-                    angular.forEach(getSelectedList(),function(item){
-
-                        unSelect({
-                            item:item
+                var unSelectAll = function () {
+                    angular.forEach(getSelectedList(scope), function (item) {
+                        unSelect(scope, {
+                            item: item
                         });
                     });
                 };
@@ -266,7 +255,7 @@ angular.module('ossClientUiApp')
                      * 如果已经选中，则取已选中的最小一个
                      */
                     var selectedIndex = getSelectedMinIndex();
-                    if (selectedIndex>=0) {
+                    if (selectedIndex >= 0) {
                         initIndex = selectedIndex;
                     }
                     var newIndex = initIndex - step;
@@ -276,14 +265,14 @@ angular.module('ossClientUiApp')
 
                     if ($event.shiftKey) {
                         for (var i = (initIndex > (list.length - 1) ? list.length - 1 : initIndex); i >= newIndex; i--) {
-                            select({
-                                item:list[i]
+                            select(scope, {
+                                item: list[i]
                             });
                         }
                     } else {
                         unSelectAll();
-                        select({
-                            item:list[newIndex]
+                        select(scope, {
+                            item: list[newIndex]
                         });
                         shiftLastIndex = newIndex;
                     }
@@ -305,7 +294,6 @@ angular.module('ossClientUiApp')
                      * 如果已经选中，则取已选中的最大一个
                      */
                     var selectedIndex = getSelectedMaxIndex();
-                    console.log('selectedIndex',selectedIndex);
                     if (selectedIndex >= 0) {
                         initIndex = selectedIndex;
                     }
@@ -313,17 +301,16 @@ angular.module('ossClientUiApp')
                     if (newIndex > list.length - 1) {
                         newIndex = list.length - 1;
                     }
-                    console.log('newIndex',newIndex);
                     if ($event.shiftKey) {
                         for (var i = (initIndex > 0 ? initIndex : 0); i <= newIndex; i++) {
-                            select({
-                                item:list[i]
+                            select(scope, {
+                                item: list[i]
                             });
                         }
                     } else {
                         unSelectAll();
-                        select({
-                            item:list[newIndex]
+                        select(scope, {
+                            item: list[newIndex]
                         });
                         shiftLastIndex = newIndex;
                     }
@@ -333,16 +320,14 @@ angular.module('ossClientUiApp')
                  * 监听键盘事件
                  */
                 $(document).on('keydown.keyboardNav', function ($event) {
-                    console.log('enableKeyboardNav',enableKeyboardNav);
-                    if(!enableKeyboardNav){
+                    if (!enableKeyboardNav) {
                         return;
                     }
 
-                    if (['INPUT', 'TEXTAREA'].indexOf($event.target.nodeName) >=0) {
+                    if (['INPUT', 'TEXTAREA'].indexOf($event.target.nodeName) >= 0) {
                         return;
                     }
                     scope.$apply(function () {
-                        var ctrlKeyOn = $event.ctrlKey || $event.metaKey;
                         switch ($event.keyCode) {
                             case 37: //up
                             case 38: //left

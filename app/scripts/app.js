@@ -19,7 +19,8 @@ angular
         'ui.bootstrap',
         'angularSpinner',
         'OSSCommon',
-        'angularSpinner'
+        'angularSpinner',
+        'ng-context-menu'
     ])
     .config(['$routeProvider', '$httpProvider',function ($routeProvider, $httpProvider) {
         $routeProvider

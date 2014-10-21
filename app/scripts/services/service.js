@@ -417,6 +417,8 @@ angular.module('ossClientUiApp')
         };
     }])
     .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', function (Clipboard, OSSModal, $rootScope, OSSApi) {
+        var currentMenus = 'upload create'.split(' '),
+            selectMenus = 'download copy paste del get_uri set_header'.split(' ');
         var allMenu = [
             {
                 name: 'upload',
@@ -606,6 +608,16 @@ angular.module('ossClientUiApp')
         return {
             getAllMenu: function () {
                 return allMenu;
+            },
+            getCurrentFileMenu:function(){
+                return _.filter(allMenu, function(menu){
+                    return _.indexOf(currentMenus,menu.name) >= 0;
+                })
+            },
+            getSelectFileMenu:function(){
+                return _.filter(allMenu, function(menu){
+                    return _.indexOf(selectMenus,menu.name) >= 0;
+                })
             }
         };
     }])

@@ -250,8 +250,8 @@ angular.module('ossClientUiApp')
 
         //选中
         $scope.select = function (item) {
+            console.log('$scope.select',item);
             item.selected = true;
-            console.log('index',_.indexOf($scope.files, item));
             $scope.scrollToIndex = _.indexOf($scope.files, item);
         };
 
@@ -267,20 +267,51 @@ angular.module('ossClientUiApp')
             });
         };
 
+        $scope.shiftLastIndex = 0;
+
         //点击文件
-        $scope.handleClick = function (file) {
-            if (file.selected) {
-                $scope.unSelect(file);
+        $scope.handleClick = function ($event,file,index) {
+            if ($event.ctrlKey || $event.metaKey) {
+                if (file.selected) {
+                    $scope.unSelect(file);
+                } else {
+                    $scope.select(file);
+                }
+            } else if ($event.shiftKey) {
+                var lastIndex = $scope.shiftLastIndex;
+                $scope.unSelectAll();
+                if (index > lastIndex) {
+                    for (var i = lastIndex; i <= index; i++) {
+                        $scope.select($scope.files[i]);
+                    }
+                } else if (index < lastIndex) {
+                    for (var i = index; i <= lastIndex; i++) {
+                        $scope.select($scope.files[i]);
+                    }
+                }
+
             } else {
+                $scope.unSelectAll();
+                $scope.select(file);
+            }
+
+            if (!$event.shiftKey) {
+                $scope.shiftLastIndex = index;
+            }
+        };
+
+        $scope.onContextMenuShow = function(file){
+            if(!file.selected){
                 $scope.unSelectAll();
                 $scope.select(file);
             }
         };
 
-        $scope.topMenuList = OSSMenu.getAllMenu();
+        //当前文件夹的菜单
+        $scope.currentFileMenuList = OSSMenu.getCurrentFileMenu();
 
-        //右键菜单
-        $scope.contextMenu = [];
+        //选中文件的菜单
+        $scope.selectFileMenuList = OSSMenu.getSelectFileMenu();
 
         $scope.$on('reloadFileList', function () {
             $route.reload();

@@ -1,6 +1,9 @@
 <div class="toolbar">
     <ul class="clearfix menu-list">
-        <li ng-repeat="menu in topMenuList" class="pull-left" ng-show="menu.getState(getSelectedList())>=0">
+        <li ng-repeat="menu in currentFileMenuList" class="pull-left" ng-show="menu.getState(getSelectedList())>=0">
+            <menu name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>
+        </li>
+        <li ng-repeat="menu in selectFileMenuList" class="pull-left" ng-show="menu.getState(getSelectedList())>=0">
             <menu name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>
         </li>
     </ul>
@@ -24,8 +27,10 @@
      select="select(item)"
      un-select="unSelect(item)"
      get-selected-list="getSelectedList()"
+     context-menu=""
+     data-target="menu-current-file"
         >
-    <div class="clearfix file-item" ng-repeat="file in files" ng-dblclick="openFile(file,file.dir)" ng-class="{'selected':file.selected}" ng-click="handleClick(file)">
+    <div class="clearfix file-item" ng-repeat="file in files" ng-dblclick="openFile(file,file.dir)" ng-class="{'selected':file.selected}" ng-click="handleClick($event,file,$index)"  context-menu="onContextMenuShow(file)" data-target="menu-select-file">
         <div class="pull-left filename">
             <file-icon dir="{{file.dir}}" size="32" filename="{{file.filename}}"></file-icon>
             <span class="name" ng-bind="file.filename"></span>
@@ -35,3 +40,24 @@
     </div>
     <span us-spinner="{radius:10, length: 0}"  spinner-key="file-list-spinner"  spinner-start-active="1"></span>
 </div>
+
+<div class="dropdown position-fixed" id="menu-select-file">
+    <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="menu in selectFileMenuList" ng-show="menu.getState(getSelectedList())>0">
+            <a class="pointer" href="javascript:void(0)" role="menuitem" tabindex="1" ng-click="menu.execute(bucket,objectPrefix,getSelectedList())">
+                {{menu.text}}
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="dropdown position-fixed" id="menu-current-file">
+    <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="menu in currentFileMenuList" ng-show="menu.getState(getSelectedList())>0">
+            <a class="pointer" href="javascript:void(0)" role="menuitem" tabindex="1" ng-click="menu.execute(bucket,objectPrefix,getSelectedList())">
+                {{menu.text}}
+            </a>
+        </li>
+    </ul>
+</div>
+
