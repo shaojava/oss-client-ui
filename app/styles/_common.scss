@@ -151,3 +151,49 @@ input:focus {
   position: fixed;
   z-index:999;
 }
+
+/* 滚动条样式 */
+.scrollbar::-webkit-scrollbar {
+  height:8px;
+  overflow:visible;
+  width:8px;
+  -webkit-transition:all linear 0.1s;
+  transition:all linear 0.1s;
+  -moz-transition:all linear 0.1s;
+  -o-transition:all linear 0.1s;
+}
+
+.scrollbar::-webkit-scrollbar-button {
+  height:0;
+  width:0;
+  display: none;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color:rgba(0,0,0,.2);
+  min-height:28px;
+  border-radius: 5px;
+}
+
+.scrollbar.dark::-webkit-scrollbar-thumb{
+  background-color:rgba(255,255,255,.1);
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color:#7c7c7c;
+}
+
+.scrollbar::-webkit-scrollbar-corner {
+  height: 0;
+  width: 0;
+  display: none;
+}
+.scrollbar::-webkit-resizer{
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+.empty{
+  color: $lightFontColor;
+  text-align: center;
+  padding-top: 60px;
+}

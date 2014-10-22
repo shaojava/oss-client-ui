@@ -8,7 +8,7 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog) {
+    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert) {
 
         //获取所有bucket列表
         $scope.buckets = [];
@@ -83,20 +83,27 @@ angular.module('ossClientUiApp')
             OSSDialog.exportAuthorization();
         };
 
+        //展开,展开传输队列
+        $scope.$on('toggleTransQueue', function (event, isShow) {
+            if (angular.isUndefined(isShow)) {
+                $scope.showTransQueue = !$scope.showTransQueue;
+            } else {
+                $scope.showTransQueue = isShow;
+            }
+
+        });
+
+        //显示错误提示框
+        $scope.$on('showError', function (event,errorMsg,errorTitle) {
+            if(!errorMsg) return;
+            OSSAlert.error(errorMsg,errorTitle);
+        });
+
     }])
     .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue) {
 
-        //上传速度
-        $scope.uploadSpeed = 0;
-
-        //下载速度
-        $scope.downloadSpeed = 0;
-
-        //上传队列总数
-        $scope.uploadCount = 0;
-
-        //下载队列总数
-        $scope.downloadCount = 0;
+        //当前选中的选项卡
+        $scope.activeTab = '';
 
         //选中的上传条目
         $scope.selectedUploadItems = [];
@@ -154,19 +161,41 @@ angular.module('ossClientUiApp')
                     OSSDownloadQueue.remove(item);
                 });
             }
-        })
+        });
+
 
         //上传队列
-        $scope.uploadList = OSSUploadQueue.init();
-        OSSUploadQueue.refresh();
+        $scope.OSSUploadQueue = OSSUploadQueue.init();
+        $scope.uploadList = $scope.OSSUploadQueue.items;
+        $scope.OSSUploadQueue.refresh();
+
 
         //下载队列
-        $scope.downloadList = OSSDownloadQueue.init();
-        OSSDownloadQueue.refresh();
+        $scope.OSSDownloadQueue = OSSDownloadQueue.init();
+        $scope.downloadList = $scope.OSSDownloadQueue.items;
+        $scope.OSSDownloadQueue.refresh();
 
+        //隐藏或展开消息队列
+        $scope.toggleSlideQueue = function () {
+            $scope.$emit('toggleTransQueue');
+        };
+
+        //支持双击
+        $scope.handleTransQueueDblClick = function ($event) {
+            var $target = $($event.target);
+            if ($target.hasClass('nav-tabs') || $target.parents('.nav').size()) {
+                $scope.toggleSlideQueue();
+            }
+        };
+
+        $scope.$on('toggleTransQueue', function ($event, isShow, currentTab) {
+            if (!angular.isUndefined(currentTab) && $scope.activeTab != currentTab) {
+                $scope.activeTab = currentTab;
+            }
+        });
 
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException',function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter,OSSException) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -250,7 +279,7 @@ angular.module('ossClientUiApp')
 
         //选中
         $scope.select = function (item) {
-            console.log('$scope.select',item);
+            console.log('$scope.select', item);
             item.selected = true;
             $scope.scrollToIndex = _.indexOf($scope.files, item);
         };
@@ -270,7 +299,7 @@ angular.module('ossClientUiApp')
         $scope.shiftLastIndex = 0;
 
         //点击文件
-        $scope.handleClick = function ($event,file,index) {
+        $scope.handleClick = function ($event, file, index) {
             if ($event.ctrlKey || $event.metaKey) {
                 if (file.selected) {
                     $scope.unSelect(file);
@@ -300,8 +329,8 @@ angular.module('ossClientUiApp')
             }
         };
 
-        $scope.onContextMenuShow = function(file){
-            if(!file.selected){
+        $scope.onContextMenuShow = function (file) {
+            if (!file.selected) {
                 $scope.unSelectAll();
                 $scope.select(file);
             }
@@ -313,21 +342,19 @@ angular.module('ossClientUiApp')
         //选中文件的菜单
         $scope.selectFileMenuList = OSSMenu.getSelectFileMenu();
 
+        //刷新当前列表
         $scope.$on('reloadFileList', function () {
             $route.reload();
-        })
+        });
 
-        $scope.$on('removeObject', function (event, objects) {
-            angular.forEach(objects, function (object) {
-                Util.Array.removeByValue($scope.files, object);
-            })
-        })
 
+        //向当前列表中添加object
         $scope.$on('createObject', function (event, callback) {
             $scope.showCreateFile = true;
             $scope.createFileCallback = callback;
-        })
+        });
 
+        //向当前列表中添加object
         $scope.$on('addObject', function (event, objects, selected) {
             objects = $.isArray(objects) ? objects : [objects];
             var addFiles = _.map(objects, OSSObject.format);
@@ -337,7 +364,33 @@ angular.module('ossClientUiApp')
                     $scope.select(file);
                 }
             })
-        })
+        });
+
+        //从当前列表中移除object
+        $scope.$on('removeObject', function (event, objects) {
+            angular.forEach(objects, function (object) {
+                Util.Array.removeByValue($scope.files, object);
+            })
+        });
+
+        //拖拽文件上传
+        $scope.handleSysDrop = function(){
+
+            var dragFiles = OSS.invoke('getDragFiles');
+            var params = {
+                location: $scope.bucket['Location'],
+                bucket: $scope.bucket['Name'],
+                prefix: $scope.objectPrefix,
+                list: dragFiles['list']
+            };
+            OSS.invoke('addFile', params, function (res) {
+                if(!res.error){
+                    $rootScope.$broadcast('toggleTransQueue',true);
+                }else{
+                    $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                }
+            });
+        };
     }])
     .controller('UploadListCtrl', ['$scope', '$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu', function ($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu) {
 

@@ -342,6 +342,10 @@ angular.module('ossClientUiApp')
                     $event.preventDefault();
                 });
 
+                scope.$on('$destroy',function(){
+                    $(document).off('keydown.keyboardNav');
+                });
+
             }
         };
     }]);

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="ossClientUiApp">
+<html class="no-js" ng-app="ossClientUiApp"  prevent-drag-drop>
 <head>
     <meta charset="utf-8">
     <title>OSS</title>
@@ -34,7 +34,7 @@
             </li>
         </ul>
     </div>
-    <div class="main">
+    <div class="main" ng-class="{'show-trans-queue':showTransQueue}">
         <div class="search-wrapper">
             <input name="keyword" id="keyword" ng-model="keyword" autocomplete="off" smart-search/>
             <a href="javascript:;" class="fa fa-search fa-lg"></a>
@@ -58,9 +58,14 @@
         <div class="file-browser" ng-view>
 
         </div>
-        <div class="trans-queue" ng-controller="TransQueueCtrl">
+        <div class="trans-queue" ng-controller="TransQueueCtrl" ng-dblclick="handleTransQueueDblClick($event)">
+            <div class="total-speed-wrapper">
+                <span>上传速度：<strong ng-show="OSSUploadQueue.uploadSpeed>0">{{OSSUploadQueue.uploadSpeed|bitSize}}/S</strong><em ng-show="OSSUploadQueue.uploadSpeed<=0">-</em></span>
+                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0">{{OSSDownloadQueue.downloadSpeed|bitSize}}/S</strong><em ng-show="OSSDownloadQueue.downloadSpeed<=0">-</em></span>
+            </div>
+            <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()"><i class="fa fa-lg" ng-class="{'fa-angle-double-up':!showTransQueue,'fa-angle-double-down':showTransQueue}"></i></a>
             <tabset>
-                <tab heading="上传队列">
+                <tab heading="上传队列" active="activeTab =='' || activeTab == 'upload'">
                     <div class="opt-bar">
                         <ul class="clearfix opt-list">
                             <li class="pull-left" ng-repeat="menu in uploadQueueMenus">
@@ -68,11 +73,11 @@
                             </li>
                         </ul>
                     </div>
-                    <ul class="queue-list">
+                    <ul class="scrollbar queue-list">
                         <queue-item type="upload" data="item" on-select="onUploadItemSelect($event,item)" ng-repeat="item in uploadList"></queue-item>
                     </ul>
                 </tab>
-                <tab heading="下载队列">
+                <tab heading="下载队列" active="activeTab == 'download'">
                     <div class="opt-bar">
                         <ul class="clearfix opt-list">
                             <li class="pull-left" ng-repeat="menu in downloadQueueMenus">
@@ -80,7 +85,7 @@
                             </li>
                         </ul>
                     </div>
-                    <ul class="queue-list">
+                    <ul class="scrollbar queue-list">
                         <queue-item data="item" ng-repeat="item in downloadList" on-select="onDownloadItemSelect($event,item)"></queue-item>
                     </ul>
                 </tab>

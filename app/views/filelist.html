@@ -14,7 +14,7 @@
     <div class="pull-right filesize">大小</div>
 
 </div>
-<div class="filelist-body"
+<div class="scrollbar filelist-body"
      scroll-load="loadMoreFile()"
      disable-scroll="loadingFile"
      create-file="showCreateFile"
@@ -29,7 +29,9 @@
      get-selected-list="getSelectedList()"
      context-menu=""
      data-target="menu-current-file"
+     on-drop="handleSysDrop()"
         >
+    <div class="empty" ng-if="!files.length && !loadingFile">没有文件</div>
     <div class="clearfix file-item" ng-repeat="file in files" ng-dblclick="openFile(file,file.dir)" ng-class="{'selected':file.selected}" ng-click="handleClick($event,file,$index)"  context-menu="onContextMenuShow(file)" data-target="menu-select-file">
         <div class="pull-left filename">
             <file-icon dir="{{file.dir}}" size="32" filename="{{file.filename}}"></file-icon>

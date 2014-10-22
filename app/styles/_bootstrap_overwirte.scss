@@ -6,16 +6,22 @@
   @include box-shadow(0 0 25px rgba(0,0,0,.2));
 }
 
+button{
+  outline:none !important;
+}
+
 .btn{
   font-size: 13px;
 }
 
 .nav-tabs {
-
-  overflow: hidden;
-
+  border-bottom: 0;
 }
-
+.tab-content{
+  border-top: 1px solid #ddd;
+  position: relative;
+  z-index: 12;
+}
 .nav-tabs > li > a {
   padding: 8px 15px;
   border: 1px solid #ddd;
@@ -23,12 +29,18 @@
   color: $baseFontColor;
   cursor: pointer;
   background: $backgrundColor;
+  border-bottom-color: transparent;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus{
+  border-bottom-color: #fff;
 }
 .nav-tabs > li > a:hover{
   border-color:  #ddd;;
 }
 .nav-tabs > li.active {
-  z-index: 12;
+  z-index: 13;
 }
 .nav-tabs > li > a:after {
   width: 0;

@@ -107,7 +107,7 @@ angular.module('ossClientUiApp')
             }
         }
     }])
-    .factory('OSSUploadQueue', function ($interval) {
+    .factory('OSSUploadQueue', ['$interval',function ($interval) {
         return {
             items: [],
             uploadCount: 0,
@@ -119,7 +119,7 @@ angular.module('ossClientUiApp')
                 this.uploadCount = res['count'];
                 this.uploadSpeed = res['upload'];
                 this.downloadSpeed = res['download'];
-                return this.items;
+                return this;
             },
             add: function (item) {
                 this.items.push(item);
@@ -157,8 +157,8 @@ angular.module('ossClientUiApp')
                 }, 1000);
             }
         };
-    })
-    .factory('OSSDownloadQueue', function ($interval) {
+    }])
+    .factory('OSSDownloadQueue', ['$interval',function ($interval) {
         return {
             items: [],
             uploadCount: 0,
@@ -170,7 +170,7 @@ angular.module('ossClientUiApp')
                 this.uploadCount = res['count'];
                 this.uploadSpeed = res['upload'];
                 this.downloadSpeed = res['download'];
-                return this.items;
+                return this;
             },
             add: function (item) {
                 this.items.push(item);
@@ -204,10 +204,11 @@ angular.module('ossClientUiApp')
                     _self.uploadCount = res['count'];
                     _self.uploadSpeed = res['upload'];
                     _self.downloadSpeed = res['download'];
+                    console.log('downloadSpeed',_self.downloadSpeed);
                 }, 1000);
             }
         };
-    })
+    }])
     .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', function ($rootScope, OSSQueueItem) {
         /**
          * 检测参数的合法性
@@ -416,9 +417,9 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', function (Clipboard, OSSModal, $rootScope, OSSApi) {
-        var currentMenus = 'upload create'.split(' '),
-            selectMenus = 'download copy paste del get_uri set_header'.split(' ');
+    .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi','OSSException', function (Clipboard, OSSModal, $rootScope, OSSApi,OSSException) {
+        var currentMenus = 'upload create paste'.split(' '),
+            selectMenus = 'download copy del get_uri set_header'.split(' ');
         var allMenu = [
             {
                 name: 'upload',
@@ -440,8 +441,12 @@ angular.module('ossClientUiApp')
                             prefix: currentObject,
                             list: res['list']
                         }, function (res) {
-
-                        })
+                            if(!res.error){
+                                $rootScope.$broadcast('toggleTransQueue',true);
+                            }else{
+                                $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                            }
+                        });
                     });
                 }
             },
@@ -461,8 +466,9 @@ angular.module('ossClientUiApp')
                             $rootScope.$broadcast('addObject', {
                                 Prefix: objectPath
                             }, true);
-                        }).error(function () {
+                        }).error(function (res, status) {
                             $.isFunction(callback) && callback(false);
+                            $rootScope.$broadcast('showError',OSSException.getError(res, status).msg);
                         });
                     })
                 }
@@ -490,7 +496,11 @@ angular.module('ossClientUiApp')
                     OSS.invoke('saveFile', {
                         list: list
                     }, function (res) {
-
+                        if(!res.error){
+                            $rootScope.$broadcast('toggleTransQueue',true,'download');
+                        }else{
+                            $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                        }
                     })
                 }
             },
@@ -539,7 +549,11 @@ angular.module('ossClientUiApp')
                             location: targetBucket['Location'],
                             list: list
                         }, function (res) {
-                            $rootScope.$broadcast('reloadFileList');
+                            if(!res.error){
+                                $rootScope.$broadcast('reloadFileList');
+                            }else{
+                                $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                            }
                         })
                     }
                 }
@@ -569,7 +583,11 @@ angular.module('ossClientUiApp')
                         location: bucket['Location'],
                         list: list
                     }, function (res) {
-                        $rootScope.$broadcast('removeObject', selectedFiles);
+                        if(!res.error){
+                            $rootScope.$broadcast('removeObject', selectedFiles);
+                        }else{
+                            $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                        }
                     })
                 }
             },

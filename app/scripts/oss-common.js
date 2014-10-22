@@ -166,5 +166,37 @@ angular.module('OSSCommon', [])
             }
         }
     }])
+    .directive('onDrop', ['$parse', function ($parse) {
+        return function (scope,element, attrs) {
+            var fn = $parse(attrs.onDrop);
+            element.on('drop', function (event) {
+                scope.$apply(function () {
+                    fn(scope, {$event: event});
+                });
+            });
+        };
+    }])
+    .directive('preventDragDrop', [function () {
+        return {
+            restrict: 'A',
+            link: function ($scope, $element) {
+                $element.on('dragstart', function (event) {
+                    var jTarget = jQuery(event.target);
+                    if (!jTarget.attr('draggable') && !jTarget.parents('[draggable]').size()) {
+                        event.preventDefault();
+                    }
+                })
+                $element.on('dragover', function (event) {
+                    event.preventDefault();
+                });
+                $element.on('dragenter', function (event) {
+                    event.preventDefault();
+                });
+                $element.on('drop', function (event) {
+                    event.preventDefault();
+                });
+            }
+        }
+    }])
 ;
 

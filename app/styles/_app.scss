@@ -114,6 +114,7 @@
   bottom: 0;
   right: 0;
   left: $leftSidebarWidth;
+  overflow: hidden;
 
   .search-wrapper {
     height: $searchWrapperHeight;
@@ -225,8 +226,9 @@
     left: 0;
     right: 0;
     top: $breadHeight;
-    //bottom: 200px;
-    bottom: 270px;
+    bottom:$initTransQueueHeigth;
+    transition: bottom 0.25s linear;
+
     .filelist-header {
       border-top: 1px solid $baseBorderColor;
       height: $fileListHeaderHeight;
@@ -304,12 +306,32 @@
 
   .trans-queue {
     position: absolute;
-    bottom: 0;
+    bottom: ($transQueueHeigth - $initTransQueueHeigth)*-1;
     left: 0;
     right: 0;
-    height: 270px;
+    height: $transQueueHeigth;
     border-top: 1px solid $baseBorderColor;
     background: #fff;
+    transition: bottom 0.25s linear;
+
+    .total-speed-wrapper{
+      position: absolute;
+      right: 50px;
+      line-height: 40px;
+
+      span{
+        margin: 0 5px;
+      }
+    }
+
+    .slide_queue{
+      position: absolute;
+      right: 20px;
+      top:12px;
+      .fa{
+        color: #000;
+      }
+    }
 
     .nav-tabs {
       background: #f2f2f2;
@@ -336,49 +358,68 @@
         height: 30px;
         line-height: 30px;
         cursor: default;
+        position: relative;
+        border-bottom: 1px solid $baseBorderColor;
 
         > div {
-          text-align: center;
           margin-left: 10px;
           margin-right: 10px;
+          position: relative;
         }
 
-        &:nth-child(even) {
-          background: $lightBackgroundColor;
+
+        > .queue-progress{
+          position: absolute;
+          top:0;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          margin: 0;
+          transition: width .6s ease;
         }
 
-        &:hover {
-          background: $itemHoverBackgroundColor;
-        }
+//        &:nth-child(even) {
+//          background: $lightBackgroundColor;
+//        }
+//
+//        &:hover {
+//          background: $itemHoverBackgroundColor;
+//        }
 
         &.selected {
-          background: $itemSelectedBackgroundColor;
+          background: $itemSelectedBackgroundColor !important;
           color: #fff;
         }
 
         .filename {
-          padding: 0 10px;
+          padding: 0 15px;
         }
 
         .filesize, {
           width: 80px;
+          @include ellipsis;
         }
 
         .remain-time {
-          width: 90px;
+          width: 200px;
+          text-align: right;
+          @include ellipsis;
         }
 
-        .progress-wrapper {
-          width: 140px;
-        }
-
-        .progress {
-          height: 14px;
-          margin-bottom: 0;
-          margin-top: 8px;
-        }
       }
     }
+  }
+
+  &.show-trans-queue{
+
+    .trans-queue{
+      bottom:0;
+    }
+
+    .file-browser{
+      bottom:$transQueueHeigth;
+    }
+
   }
 }
 
