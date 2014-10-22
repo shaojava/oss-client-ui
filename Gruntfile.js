@@ -61,9 +61,13 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             },
-            oss:{
+            ossstyle:{
                 files: ['.tmp/styles/*.css'],
-                tasks: ['copy:oss']
+                tasks: ['copy:ossstyle']
+            },
+            ossscript:{
+                files: ['.tmp/concat/scripts/vendor.js'],
+                tasks: ['copy:ossscript']
             }
         },
 
@@ -407,11 +411,17 @@ module.exports = function (grunt) {
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
             },
-            oss:{
+            ossstyle:{
                 expand: true,
                 cwd: '.tmp/styles/',
                 dest: '<%= yeoman.app %>/styles/',
                 src: '*.css'
+            },
+            ossscript:{
+                expand: true,
+                cwd: '.tmp/concat/scripts',
+                dest: '<%= yeoman.app %>/scripts/',
+                src: 'vendor.js'
             }
         },
 
