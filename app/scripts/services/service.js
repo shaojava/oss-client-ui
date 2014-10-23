@@ -107,7 +107,8 @@ angular.module('ossClientUiApp')
             }
         }
     }])
-    .factory('OSSUploadQueue', ['$interval',function ($interval) {
+    .factory('OSSUploadQueue', ['$interval', function ($interval) {
+        var refreshInterval = 500;
         return {
             items: [],
             uploadCount: 0,
@@ -154,11 +155,12 @@ angular.module('ossClientUiApp')
                     _self.uploadCount = res['count'];
                     _self.uploadSpeed = res['upload'];
                     _self.downloadSpeed = res['download'];
-                }, 1000);
+                }, refreshInterval);
             }
         };
     }])
-    .factory('OSSDownloadQueue', ['$interval',function ($interval) {
+    .factory('OSSDownloadQueue', ['$interval', function ($interval) {
+        var refreshInterval = 500;
         return {
             items: [],
             uploadCount: 0,
@@ -204,8 +206,8 @@ angular.module('ossClientUiApp')
                     _self.uploadCount = res['count'];
                     _self.uploadSpeed = res['upload'];
                     _self.downloadSpeed = res['download'];
-                    console.log('downloadSpeed',_self.downloadSpeed);
-                }, 1000);
+                    console.log('downloadSpeed', _self.downloadSpeed);
+                }, refreshInterval);
             }
         };
     }])
@@ -331,6 +333,24 @@ angular.module('ossClientUiApp')
                     }
                     return 1;
                 }
+            },
+            {
+                name: 'remove',
+                text: '移除',
+                execute: function (selectedItems) {
+                    if (!checkArgValid(selectedItems)) {
+                        return;
+                    }
+                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems));
+                    $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
+                },
+                getState: function (selectedItems) {
+                    var len = selectedItems.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                }
             }
         ];
 
@@ -414,6 +434,7 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
+                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems));
                     $rootScope.$broadcast('removeQueue', 'download', selectedItems);
                 },
                 getState: function (selectedItems) {
@@ -432,19 +453,19 @@ angular.module('ossClientUiApp')
             getDownloadMenu: function () {
                 return downloadMenu;
             },
-            getUploadMenuItem:function(menu){
-                return _.findWhere(uploadMenu,{
+            getUploadMenuItem: function (menu) {
+                return _.findWhere(uploadMenu, {
                     name: name
                 })
             },
-            getDownloadMenuItem:function(name){
-                return _.findWhere(downloadMenu,{
+            getDownloadMenuItem: function (name) {
+                return _.findWhere(downloadMenu, {
                     name: name
                 });
             }
         };
     }])
-    .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi','OSSException', function (Clipboard, OSSModal, $rootScope, OSSApi,OSSException) {
+    .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard, OSSModal, $rootScope, OSSApi, OSSException) {
         var currentMenus = 'upload create paste'.split(' '),
             selectMenus = 'download copy del get_uri set_header'.split(' ');
         var allMenu = [
@@ -468,10 +489,10 @@ angular.module('ossClientUiApp')
                             prefix: currentObject,
                             list: res['list']
                         }, function (res) {
-                            if(!res.error){
-                                $rootScope.$broadcast('toggleTransQueue',true,'upload');
-                            }else{
-                                $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                            if (!res.error) {
+                                $rootScope.$broadcast('toggleTransQueue', true, 'upload');
+                            } else {
+                                $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                             }
                         });
                     });
@@ -495,7 +516,7 @@ angular.module('ossClientUiApp')
                             }, true);
                         }).error(function (res, status) {
                             $.isFunction(callback) && callback(false);
-                            $rootScope.$broadcast('showError',OSSException.getError(res, status).msg);
+                            $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
                         });
                     })
                 }
@@ -523,10 +544,10 @@ angular.module('ossClientUiApp')
                     OSS.invoke('saveFile', {
                         list: list
                     }, function (res) {
-                        if(!res.error){
-                            $rootScope.$broadcast('toggleTransQueue',true,'download');
-                        }else{
-                            $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                        if (!res.error) {
+                            $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                        } else {
+                            $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                         }
                     })
                 }
@@ -576,10 +597,10 @@ angular.module('ossClientUiApp')
                             location: targetBucket['Location'],
                             list: list
                         }, function (res) {
-                            if(!res.error){
+                            if (!res.error) {
                                 $rootScope.$broadcast('reloadFileList');
-                            }else{
-                                $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                            } else {
+                                $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                             }
                         })
                     }
@@ -610,10 +631,10 @@ angular.module('ossClientUiApp')
                         location: bucket['Location'],
                         list: list
                     }, function (res) {
-                        if(!res.error){
+                        if (!res.error) {
                             $rootScope.$broadcast('removeObject', selectedFiles);
-                        }else{
-                            $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                        } else {
+                            $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                         }
                     })
                 }
@@ -654,14 +675,19 @@ angular.module('ossClientUiApp')
             getAllMenu: function () {
                 return allMenu;
             },
-            getCurrentFileMenu:function(){
-                return _.filter(allMenu, function(menu){
-                    return _.indexOf(currentMenus,menu.name) >= 0;
+            getCurrentFileMenu: function () {
+                return _.filter(allMenu, function (menu) {
+                    return _.indexOf(currentMenus, menu.name) >= 0;
                 })
             },
-            getSelectFileMenu:function(){
-                return _.filter(allMenu, function(menu){
-                    return _.indexOf(selectMenus,menu.name) >= 0;
+            getSelectFileMenu: function () {
+                return _.filter(allMenu, function (menu) {
+                    return _.indexOf(selectMenus, menu.name) >= 0;
+                })
+            },
+            getMenu: function (name) {
+                return _.findWhere(allMenu, {
+                    name: name
                 })
             }
         };
@@ -758,7 +784,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSObject', ['$location', '$filter', 'OSSApi', '$q','OSSLocation', function ($location, $filter, OSSApi, $q,OSSLocation) {
+    .factory('OSSObject', ['$location', '$filter', 'OSSApi', '$q', 'OSSLocation', function ($location, $filter, OSSApi, $q, OSSLocation) {
         var fileSorts = {
             'SORT_SPEC': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk', 'gknote'],
             'SORT_MOVIE': ['mp4', 'mkv', 'rm', 'rmvb', 'avi', '3gp', 'flv', 'wmv', 'asf', 'mpeg', 'mpg', 'mov', 'ts', 'm4v'],
@@ -900,7 +926,7 @@ angular.module('ossClientUiApp')
                     url: OSSLocation.getUrl(bucketName)
                 });
 
-                if(filter !== 'file'){
+                if (filter !== 'file') {
                     breads.push({
                         name: getFilterName(filter),
                         url: OSSLocation.getUrl(bucketName, '', filter)
@@ -1249,7 +1275,7 @@ angular.module('ossClientUiApp')
 
         }
     }])
-    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion',function ($modal, Bucket, OSSApi, OSSObject, OSSException,OSSRegion) {
+    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', function ($modal, Bucket, OSSApi, OSSObject, OSSException, OSSRegion) {
         var defaultOption = {
             backdrop: 'static'
         };

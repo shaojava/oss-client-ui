@@ -126,6 +126,13 @@ angular.module('ossClientUiApp')
                 element.next('.fa').on('click', function () {
                     showSearch();
                 });
+
+                scope.$on('$locationChangeSuccess',function(){
+                    var param = $location.search();
+                    if(!param || !param.keyword){
+                        hideSearch();
+                    }
+                });
             }
         };
     }])
@@ -153,6 +160,44 @@ angular.module('ossClientUiApp')
                         cmd:cmd,
                         item:item
                     });
+                };
+
+                //是否出错
+                scope.isError = function(item){
+                    return item.status == 5;
+                };
+
+                //是否正在上传或下载
+                scope.isInProgress = function(item){
+                    return item.status == 1;
+                };
+
+                //是否已完成
+                scope.isDone = function(item){
+                    return item.status == 4;
+                };
+
+                //是否在等待上传
+                scope.isWaiting = function(item){
+                    return item.status == 2;
+                };
+
+                //是否已暂停
+                scope.isPasued = function(item){
+                    return item.status == 3;
+                };
+
+                //获取进度
+                scope.getProgress = function(item){
+                    if(scope.isPasued(item) || scope.isWaiting(item) ||  scope.isInProgress(item)){
+                        if(item.filesize == 0){
+                            return 100;
+                        }
+                        return item.offset/item.filesize*100;
+                    }else{
+                        return 100;
+                    }
+
                 };
             }
         };

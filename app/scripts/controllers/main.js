@@ -100,7 +100,7 @@ angular.module('ossClientUiApp')
         });
 
     }])
-    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue) {
+    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope) {
 
         //选中的上传条目
         $scope.selectedUploadItems = [];
@@ -203,7 +203,6 @@ angular.module('ossClientUiApp')
 
         //选中tab
         $scope.$on('toggleTransQueue', function ($event, isShow, currentTab) {
-            console.log('currentTab',currentTab);
             if (!angular.isUndefined(currentTab)) {
                 var tab = _.findWhere($scope.tabs, {name: currentTab});
                 if (tab && !tab.selected) {
@@ -213,36 +212,41 @@ angular.module('ossClientUiApp')
         });
 
         //打开日志文件夹
-        $scope.openLogFolder = function(){
+        $scope.openLogFolder = function () {
             OSS.invoke('openLogFolder');
         };
 
         //错误日志
         $scope.errorLog = '';
-        $scope.selectTab = function(tab){
-            if(tab.name == 'log'){
+        var selectCount = 0;
+        $scope.selectTab = function (tab) {
+            if (tab.name == 'log') {
                 var errorLog = '';
-                var res =  OSS.invoke('getErrorLog');
-                if(res && res.list && res.list.length){
-                    angular.forEach(res.list,function(val){
+                var res = OSS.invoke('getErrorLog');
+                if (res && res.list && res.list.length) {
+                    angular.forEach(res.list, function (val) {
                         errorLog += val.msg + '\r\n';
                     });
                     $scope.errorLog = errorLog;
-                    console.log('$scope.errorLog',$scope.errorLog)
+                    console.log('$scope.errorLog', $scope.errorLog)
                 }
             }
+            if (!$rootScope.showTransQueue && selectCount > 0) {
+                $scope.$emit('toggleTransQueue', true);
+            }
+            selectCount++;
         };
 
-        $scope.executeDownloadCmd = function(cmd,item){
-           var menu = OSSQueueMenu.getDownloadMenuItem(cmd);
-            if(menu){
+        $scope.executeDownloadCmd = function (cmd, item) {
+            var menu = OSSQueueMenu.getDownloadMenuItem(cmd);
+            if (menu) {
                 menu.execute([item]);
             }
         };
 
-        $scope.executeUploadCmd = function(cmd,item){
+        $scope.executeUploadCmd = function (cmd, item) {
             var menu = OSSQueueMenu.getUploadMenuItem(cmd);
-            if(menu){
+            if (menu) {
                 menu.execute([item]);
             }
         };
@@ -259,7 +263,7 @@ angular.module('ossClientUiApp')
             isAllFileLoaded = false;
 
         //默认排序
-        $scope.orderBy = '-dir';
+        $scope.orderBy = '';
 
         //默认去第一个bucket
         if (buckets.length && !bucketName) {
@@ -306,7 +310,14 @@ angular.module('ossClientUiApp')
 
         //打开文件（夹）
         $scope.openFile = function (file, isDir) {
-            OSSObject.open($scope.bucket, file.path, isDir);
+            if (isDir == 1) {
+                OSSObject.open($scope.bucket, file.path, isDir);
+            } else {
+                var menu = OSSMenu.getMenu('download');
+                if (menu) {
+                    menu.execute($scope.bucket, $scope.objectPrefix, [file]);
+                }
+            }
         };
 
         //加载更多文件
@@ -444,6 +455,7 @@ angular.module('ossClientUiApp')
                 }
             });
         };
+
     }])
     .controller('UploadListCtrl', ['$scope', '$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu', function ($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu) {
 

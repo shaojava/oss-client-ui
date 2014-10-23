@@ -62,9 +62,9 @@
         <div class="trans-queue" ng-controller="TransQueueCtrl" ng-dblclick="handleTransQueueDblClick($event)">
             <div class="total-speed-wrapper">
                 <span>上传速度：<strong
-                        ng-show="OSSUploadQueue.uploadSpeed>0">{{OSSUploadQueue.uploadSpeed|bitSize}}/S</strong><em
+                        ng-show="OSSUploadQueue.uploadSpeed>0">{{OSSUploadQueue.uploadSpeed|bitSize}}/秒</strong><em
                         ng-show="OSSUploadQueue.uploadSpeed<=0">-</em></span>
-                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0">{{OSSDownloadQueue.downloadSpeed|bitSize}}/S</strong><em
+                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0">{{OSSDownloadQueue.downloadSpeed|bitSize}}/秒</strong><em
                         ng-show="OSSDownloadQueue.downloadSpeed<=0">-</em></span>
             </div>
             <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()"><i class="fa fa-lg"

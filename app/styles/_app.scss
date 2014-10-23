@@ -263,10 +263,10 @@
       &:nth-child(even) {
         background: $lightBackgroundColor;
       }
-
-      &:hover {
-        background: $itemHoverBackgroundColor;
-      }
+//
+//      &:hover {
+//        background: $itemHoverBackgroundColor;
+//      }
 
       &.selected {
         background: $itemSelectedBackgroundColor;
@@ -321,6 +321,10 @@
 
       span{
         margin: 0 5px;
+      }
+
+      strong{
+        font-weight: normal;
       }
     }
 
@@ -380,12 +384,12 @@
           left: 0;
           width: 0;
           margin: 0;
-          transition: width .6s ease;
+          transition: width 1.5s ease;
 
         }
 
         > .bg-success{
-          background: rgba(68,157,68,.5);
+          background: rgba(68,157,68,.3);
         }
 
 //        &:nth-child(even) {

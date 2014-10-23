@@ -14,9 +14,6 @@ var OSS = {
         if (typeof OSSClient === 'undefined') {
             throw new Error('Can not find OSSClient');
         }
-        if(name === 'getUIPath'){
-            return 'file:///Y:/project/oss-client-ui/app/';
-        }
         if (typeof OSSClient[name] !== 'function') {
             throw new Error('Can not find interface ' + name);
         }

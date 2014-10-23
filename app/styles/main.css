@@ -12100,16 +12100,12 @@ input:focus {
 }
 /* line 259, ../../app/styles/_app.scss */
 .main .file-browser .file-item {
-  line-height: 46px;
+  line-height: 40px;
   cursor: default;
 }
 /* line 263, ../../app/styles/_app.scss */
 .main .file-browser .file-item:nth-child(even) {
   background: #f7f7f7;
-}
-/* line 267, ../../app/styles/_app.scss */
-.main .file-browser .file-item:hover {
-  background: #e1e3e7;
 }
 /* line 271, ../../app/styles/_app.scss */
 .main .file-browser .file-item.selected {
@@ -12161,23 +12157,27 @@ input:focus {
 .main .trans-queue .total-speed-wrapper span {
   margin: 0 5px;
 }
-/* line 327, ../../app/styles/_app.scss */
+/* line 326, ../../app/styles/_app.scss */
+.main .trans-queue .total-speed-wrapper strong {
+  font-weight: normal;
+}
+/* line 331, ../../app/styles/_app.scss */
 .main .trans-queue .slide_queue {
   position: absolute;
   right: 20px;
   top: 12px;
 }
-/* line 331, ../../app/styles/_app.scss */
+/* line 335, ../../app/styles/_app.scss */
 .main .trans-queue .slide_queue .fa {
   color: #000;
 }
-/* line 336, ../../app/styles/_app.scss */
+/* line 340, ../../app/styles/_app.scss */
 .main .trans-queue .nav-tabs {
   background: #f2f2f2;
   padding-left: 10px;
   padding-top: 5px;
 }
-/* line 342, ../../app/styles/_app.scss */
+/* line 346, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content {
   position: absolute;
   left: 0;
@@ -12185,21 +12185,21 @@ input:focus {
   bottom: 0;
   top: 39px;
 }
-/* line 349, ../../app/styles/_app.scss */
+/* line 353, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content .opt-bar {
   background: #fff;
   padding: 5px 10px;
   border-bottom: 1px solid #d8d8d8;
 }
-/* line 354, ../../app/styles/_app.scss */
+/* line 358, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content .opt-bar .opt-list > li {
   margin-right: 5px;
 }
-/* line 360, ../../app/styles/_app.scss */
+/* line 364, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list {
   overflow: auto;
 }
-/* line 362, ../../app/styles/_app.scss */
+/* line 366, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item {
   height: 30px;
   line-height: 30px;
@@ -12208,13 +12208,13 @@ input:focus {
   border-bottom: 1px solid #d8d8d8;
   overflow: hidden;
 }
-/* line 369, ../../app/styles/_app.scss */
+/* line 373, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > div {
   margin-left: 10px;
   margin-right: 10px;
   position: relative;
 }
-/* line 376, ../../app/styles/_app.scss */
+/* line 380, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > .queue-progress {
   position: absolute;
   top: 0;
@@ -12222,29 +12222,29 @@ input:focus {
   left: 0;
   width: 0;
   margin: 0;
-  transition: width .6s ease;
+  transition: width 1.5s ease;
 }
-/* line 387, ../../app/styles/_app.scss */
+/* line 391, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > .bg-success {
-  background: rgba(68, 157, 68, 0.5);
+  background: rgba(68, 157, 68, 0.3);
 }
-/* line 399, ../../app/styles/_app.scss */
+/* line 403, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item.selected {
   background: #50acf3 !important;
   color: #fff;
 }
-/* line 404, ../../app/styles/_app.scss */
+/* line 408, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .filename {
   padding: 0 15px;
 }
-/* line 408, ../../app/styles/_app.scss */
+/* line 412, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .filesize {
   width: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 413, ../../app/styles/_app.scss */
+/* line 417, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .remain-time {
   width: 200px;
   text-align: right;
@@ -12252,13 +12252,13 @@ input:focus {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 423, ../../app/styles/_app.scss */
+/* line 427, ../../app/styles/_app.scss */
 .main .trans-queue .log-wrapper textarea {
   resize: none;
   border: 0;
   cursor: text;
 }
-/* line 431, ../../app/styles/_app.scss */
+/* line 435, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list,
 .main .trans-queue .log-wrapper textarea {
   position: absolute;
@@ -12268,11 +12268,11 @@ input:focus {
   right: 0;
   overflow: auto;
 }
-/* line 443, ../../app/styles/_app.scss */
+/* line 447, ../../app/styles/_app.scss */
 .main.show-trans-queue .trans-queue {
   bottom: 0;
 }
-/* line 447, ../../app/styles/_app.scss */
+/* line 451, ../../app/styles/_app.scss */
 .main.show-trans-queue .file-browser {
   bottom: 270px;
 }
