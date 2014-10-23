@@ -48,8 +48,16 @@ input:focus {
   cursor: default;
 }
 
+@function getIconSize($size) {
+  @if $size == 24 {
+    @return 32;
+  }
+  @return $size;
+}
+
+
 //文件图标样式
-@each $size in 16, 32, 128 {
+@each $size in 16, 24 ,32, 128 {
 
   .file-icon-#{$size} {
     display: inline-block;
@@ -60,9 +68,10 @@ input:focus {
 
   @each $type in 'folder', 'video', 'audio', 'compress', 'document', 'image', 'execute', 'other', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk' {
     .file-icon-#{$size}.icon-#{$type} {
-      background: url(../images/file-icons/#{$type}#{$size}x#{$size}.png) no-repeat center;
+      background: url(../images/file-icons/#{$type}#{getIconSize($size)}x#{getIconSize($size)}.png) no-repeat center;
+      @if $size == 24 { background-size: #{$size}px #{$size}px }
       @include mq(retina) {
-        background: url(../images/file-icons/#{$type}#{$size*2}x#{$size*2}.png) no-repeat center;
+        background: url(../images/file-icons/#{$type}#{getIconSize($size)*2}x#{getIconSize($size)*2}.png) no-repeat center;
         background-size: #{$size}px #{$size}px;
       }
     }

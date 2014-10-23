@@ -144,16 +144,9 @@ angular.module('ossClientUiApp')
             scope: {
                 type: '@',
                 item: '=data',
-                onSelect: '&',
                 executeCmd:'&'
             },
             link: function postLink(scope) {
-
-                scope.clickItem = function ($event, item) {
-                    scope.onSelect({
-                        $event: $event
-                    });
-                };
 
                 scope.handleCmdClick = function(cmd,item){
                     scope.executeCmd({

@@ -1,11 +1,11 @@
 <div class="toolbar">
     <ul class="clearfix menu-list">
-        <li ng-repeat="menu in currentFileMenuList" class="pull-left" ng-show="menu.getState(getSelectedList())>=0">
-            <menu name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>
-        </li>
-        <li ng-repeat="menu in selectFileMenuList" class="pull-left" ng-show="menu.getState(getSelectedList())>=0">
-            <menu name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>
-        </li>
+        <div class="btn-group" ng-repeat="menuGroup in menuGroups">
+            <menu ng-repeat="menu in menuGroup" ng-if="!isExclude(menu)" name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>
+        </div>
+
+
+        <!--<menu ng-repeat="menu in selectFileMenuList" name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>-->
     </ul>
 </div>
 <div class="clearfix filelist-header">

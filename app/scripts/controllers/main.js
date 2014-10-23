@@ -102,48 +102,80 @@ angular.module('ossClientUiApp')
     }])
     .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope) {
 
-        //选中的上传条目
-        $scope.selectedUploadItems = [];
-
-        //选中的下载条目
-        $scope.selectedDownloadItems = [];
-
         //上传的操作菜单
         $scope.uploadQueueMenus = OSSQueueMenu.getUploadMenu();
 
         //下载的操作菜单
         $scope.downloadQueueMenus = OSSQueueMenu.getDownloadMenu();
 
-        $scope.onUploadItemSelect = function ($event, item) {
-            if (item.selected) {
-                item.selected = false;
-            } else {
-                _.each(_.where($scope.uploadList, {
-                    selected: true
-                }), function (item) {
-                    item.selected = false;
-                });
-                item.selected = true;
-            }
-            $scope.selectedUploadItems = _.where($scope.uploadList, {
+        //获取以选中的列表
+        $scope.getSelectedList = function (type) {
+            return _.where(type == 'download'?$scope.downloadList:$scope.uploadList, {
                 selected: true
+            })
+        };
+
+        //选中
+        $scope.select = function (item,type) {
+            item.selected = true;
+            if(type == 'download'){
+                $scope.scrollToDownloadIndex = _.indexOf($scope.downloadList, item);
+            }else{
+                $scope.scrollToUploadIndex = _.indexOf($scope.uploadList, item);
+            }
+
+        };
+
+        //取消选中
+        $scope.unSelect = function (item) {
+            item.selected = false;
+        };
+
+        //取消所有选中
+        $scope.unSelectAll = function (type) {
+            angular.forEach($scope.getSelectedList(type), function (item) {
+                $scope.unSelect(item,type);
             });
         };
 
-        $scope.onDownloadItemSelect = function ($event, item) {
-            if (item.selected) {
-                item.selected = false;
+        //按住shift键选中的最后一个元素
+        $scope.shiftLastUploadIndex = 0;
+        $scope.shiftLastDownloadIndex = 0;
+
+        //点击条目
+        $scope.handleItemClick = function($event,index,item,type){
+            if ($event.ctrlKey || $event.metaKey) {
+                if (item.selected) {
+                    $scope.unSelect(item,type);
+                } else {
+                    $scope.select(item,type);
+                }
+            } else if ($event.shiftKey) {
+                var lastIndex = type == 'download'?$scope.shiftLastDownloadIndex:$scope.shiftLastUploadIndex;
+                $scope.unSelectAll(type);
+                if (index > lastIndex) {
+                    for (var i = lastIndex; i <= index; i++) {
+                        $scope.select(type=='download'?$scope.downloadList[i]:$scope.uploadList[i],type);
+                    }
+                } else if (index < lastIndex) {
+                    for (var i = index; i <= lastIndex; i++) {
+                        $scope.select(type=='download'?$scope.downloadList[i]:$scope.uploadList[i],type);
+                    }
+                }
+
             } else {
-                _.each(_.where($scope.downloadList, {
-                    selected: true
-                }), function (item) {
-                    item.selected = false;
-                });
-                item.selected = true;
+                $scope.unSelectAll(type);
+                $scope.select(item,type);
             }
-            $scope.selectedDownloadItems = _.where($scope.downloadList, {
-                selected: true
-            });
+
+            if (!$event.shiftKey) {
+                if(type == 'download'){
+                    $scope.shiftLastDownloadIndex = index;
+                }else{
+                    $scope.shiftLastUploadIndex = index;
+                }
+
+            }
         };
 
         //监听删除队列
@@ -237,6 +269,7 @@ angular.module('ossClientUiApp')
             selectCount++;
         };
 
+        //执行下载队列的操作命令
         $scope.executeDownloadCmd = function (cmd, item) {
             var menu = OSSQueueMenu.getDownloadMenuItem(cmd);
             if (menu) {
@@ -244,12 +277,41 @@ angular.module('ossClientUiApp')
             }
         };
 
+        //执行上传队列的操作命令
         $scope.executeUploadCmd = function (cmd, item) {
             var menu = OSSQueueMenu.getUploadMenuItem(cmd);
             if (menu) {
                 menu.execute([item]);
             }
         };
+
+        //是否是顶部要排除的menu
+        $scope.isExcludeTopMenu = function(menu){
+            return _.indexOf(['remove'],menu.name) >= 0;
+        };
+
+        //清空已完成
+        $scope.clearDone = function(type){
+            console.log('type',type);
+            var menu,list = [];
+            if(type == 'download'){
+                 menu = OSSQueueMenu.getDownloadMenuItem('remove');
+                list = _.filter($scope.downloadList,function(item){
+                    return _.indexOf([4,5],item.status) >= 0;
+                });
+
+            }else{
+                menu = OSSQueueMenu.getUploadMenuItem('remove');
+                list = _.filter($scope.uploadList,function(item){
+                    return _.indexOf([4,5],item.status) >= 0;
+                });
+            }
+            console.log('menu',menu);
+            console.log('list',list);
+            if (menu && list.length) {
+                menu.execute(list);
+            }
+        }
 
     }])
     .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException) {
@@ -405,6 +467,21 @@ angular.module('ossClientUiApp')
 
         //选中文件的菜单
         $scope.selectFileMenuList = OSSMenu.getSelectFileMenu();
+
+        //将menu组合成group
+        $scope.menuGroups = OSSMenu.groupMenu(_.union( $scope.currentFileMenuList,$scope.selectFileMenuList));
+
+        //顶部菜单要排除不显示的菜单
+        $scope.excludeTopMenu = OSSMenu.getTopExcludeMenus();
+
+        //是否是要排除的菜单
+        $scope.isExclude = function(menu){
+            return $scope.excludeTopMenu.indexOf(menu.name) >= 0;
+        };
+
+        $scope.$watch('currentFileMenuList',function(val){
+            console.log('currentFileMenuList',val);
+        })
 
         //刷新当前列表
         $scope.$on('reloadFileList', function () {

@@ -91,6 +91,15 @@ angular.module('OSSCommon', [])
             }
         };
     })
+    .filter('baseName', function () {
+        return Util.String.baseName;
+    })
+    .filter('isDir', function () {
+        return function(path){
+            var lastStr = Util.String.lastChar(path);
+            return lastStr === '/' || lastStr === '\\';
+        };
+    })
     .directive('scrollLoad', ['$rootScope', '$parse', function ($rootScope, $parse) {
         return {
             restrict: 'A',

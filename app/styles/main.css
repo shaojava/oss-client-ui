@@ -10848,7 +10848,7 @@ input:focus {
   cursor: default;
 }
 
-/* line 54, ../../app/styles/_common.scss */
+/* line 62, ../../app/styles/_common.scss */
 .file-icon-16 {
   display: inline-block;
   width: 16px;
@@ -10856,283 +10856,590 @@ input:focus {
   vertical-align: middle;
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-folder {
   background: url(../images/file-icons/folder16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-folder {
     background: url(../images/file-icons/folder32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-video {
   background: url(../images/file-icons/video16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-video {
     background: url(../images/file-icons/video32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-audio {
   background: url(../images/file-icons/audio16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-audio {
     background: url(../images/file-icons/audio32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-compress {
   background: url(../images/file-icons/compress16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-compress {
     background: url(../images/file-icons/compress32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-document {
   background: url(../images/file-icons/document16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-document {
     background: url(../images/file-icons/document32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-image {
   background: url(../images/file-icons/image16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-image {
     background: url(../images/file-icons/image32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-execute {
   background: url(../images/file-icons/execute16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-execute {
     background: url(../images/file-icons/execute32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-other {
   background: url(../images/file-icons/other16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-other {
     background: url(../images/file-icons/other32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-doc {
   background: url(../images/file-icons/doc16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-doc {
     background: url(../images/file-icons/doc32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-docx {
   background: url(../images/file-icons/docx16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-docx {
     background: url(../images/file-icons/docx32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-xls {
   background: url(../images/file-icons/xls16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-xls {
     background: url(../images/file-icons/xls32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-xlsx {
   background: url(../images/file-icons/xlsx16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-xlsx {
     background: url(../images/file-icons/xlsx32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-ppt {
   background: url(../images/file-icons/ppt16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-ppt {
     background: url(../images/file-icons/ppt32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-pptx {
   background: url(../images/file-icons/pptx16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-pptx {
     background: url(../images/file-icons/pptx32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-pdf {
   background: url(../images/file-icons/pdf16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-pdf {
     background: url(../images/file-icons/pdf32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-ai {
   background: url(../images/file-icons/ai16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-ai {
     background: url(../images/file-icons/ai32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-cdr {
   background: url(../images/file-icons/cdr16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-cdr {
     background: url(../images/file-icons/cdr32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-psd {
   background: url(../images/file-icons/psd16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-psd {
     background: url(../images/file-icons/psd32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-dmg {
   background: url(../images/file-icons/dmg16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-dmg {
     background: url(../images/file-icons/dmg32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-iso {
   background: url(../images/file-icons/iso16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-iso {
     background: url(../images/file-icons/iso32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-md {
   background: url(../images/file-icons/md16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-md {
     background: url(../images/file-icons/md32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-ipa {
   background: url(../images/file-icons/ipa16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-ipa {
     background: url(../images/file-icons/ipa32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-16.icon-apk {
   background: url(../images/file-icons/apk16x16.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-16.icon-apk {
     background: url(../images/file-icons/apk32x32.png) no-repeat center;
     background-size: 16px 16px;
   }
 }
 
-/* line 54, ../../app/styles/_common.scss */
+/* line 62, ../../app/styles/_common.scss */
+.file-icon-24 {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-folder {
+  background: url(../images/file-icons/folder32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-folder {
+    background: url(../images/file-icons/folder64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-video {
+  background: url(../images/file-icons/video32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-video {
+    background: url(../images/file-icons/video64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-audio {
+  background: url(../images/file-icons/audio32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-audio {
+    background: url(../images/file-icons/audio64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-compress {
+  background: url(../images/file-icons/compress32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-compress {
+    background: url(../images/file-icons/compress64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-document {
+  background: url(../images/file-icons/document32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-document {
+    background: url(../images/file-icons/document64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-image {
+  background: url(../images/file-icons/image32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-image {
+    background: url(../images/file-icons/image64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-execute {
+  background: url(../images/file-icons/execute32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-execute {
+    background: url(../images/file-icons/execute64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-other {
+  background: url(../images/file-icons/other32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-other {
+    background: url(../images/file-icons/other64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-doc {
+  background: url(../images/file-icons/doc32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-doc {
+    background: url(../images/file-icons/doc64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-docx {
+  background: url(../images/file-icons/docx32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-docx {
+    background: url(../images/file-icons/docx64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-xls {
+  background: url(../images/file-icons/xls32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-xls {
+    background: url(../images/file-icons/xls64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-xlsx {
+  background: url(../images/file-icons/xlsx32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-xlsx {
+    background: url(../images/file-icons/xlsx64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-ppt {
+  background: url(../images/file-icons/ppt32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-ppt {
+    background: url(../images/file-icons/ppt64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-pptx {
+  background: url(../images/file-icons/pptx32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-pptx {
+    background: url(../images/file-icons/pptx64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-pdf {
+  background: url(../images/file-icons/pdf32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-pdf {
+    background: url(../images/file-icons/pdf64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-ai {
+  background: url(../images/file-icons/ai32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-ai {
+    background: url(../images/file-icons/ai64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-cdr {
+  background: url(../images/file-icons/cdr32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-cdr {
+    background: url(../images/file-icons/cdr64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-psd {
+  background: url(../images/file-icons/psd32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-psd {
+    background: url(../images/file-icons/psd64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-dmg {
+  background: url(../images/file-icons/dmg32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-dmg {
+    background: url(../images/file-icons/dmg64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-iso {
+  background: url(../images/file-icons/iso32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-iso {
+    background: url(../images/file-icons/iso64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-md {
+  background: url(../images/file-icons/md32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-md {
+    background: url(../images/file-icons/md64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-ipa {
+  background: url(../images/file-icons/ipa32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-ipa {
+    background: url(../images/file-icons/ipa64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 70, ../../app/styles/_common.scss */
+.file-icon-24.icon-apk {
+  background: url(../images/file-icons/apk32x32.png) no-repeat center;
+  background-size: 24px 24px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  /* line 70, ../../app/styles/_common.scss */
+  .file-icon-24.icon-apk {
+    background: url(../images/file-icons/apk64x64.png) no-repeat center;
+    background-size: 24px 24px;
+  }
+}
+
+/* line 62, ../../app/styles/_common.scss */
 .file-icon-32 {
   display: inline-block;
   width: 32px;
@@ -11140,283 +11447,283 @@ input:focus {
   vertical-align: middle;
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-folder {
   background: url(../images/file-icons/folder32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-folder {
     background: url(../images/file-icons/folder64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-video {
   background: url(../images/file-icons/video32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-video {
     background: url(../images/file-icons/video64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-audio {
   background: url(../images/file-icons/audio32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-audio {
     background: url(../images/file-icons/audio64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-compress {
   background: url(../images/file-icons/compress32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-compress {
     background: url(../images/file-icons/compress64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-document {
   background: url(../images/file-icons/document32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-document {
     background: url(../images/file-icons/document64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-image {
   background: url(../images/file-icons/image32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-image {
     background: url(../images/file-icons/image64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-execute {
   background: url(../images/file-icons/execute32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-execute {
     background: url(../images/file-icons/execute64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-other {
   background: url(../images/file-icons/other32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-other {
     background: url(../images/file-icons/other64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-doc {
   background: url(../images/file-icons/doc32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-doc {
     background: url(../images/file-icons/doc64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-docx {
   background: url(../images/file-icons/docx32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-docx {
     background: url(../images/file-icons/docx64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-xls {
   background: url(../images/file-icons/xls32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-xls {
     background: url(../images/file-icons/xls64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-xlsx {
   background: url(../images/file-icons/xlsx32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-xlsx {
     background: url(../images/file-icons/xlsx64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-ppt {
   background: url(../images/file-icons/ppt32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-ppt {
     background: url(../images/file-icons/ppt64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-pptx {
   background: url(../images/file-icons/pptx32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-pptx {
     background: url(../images/file-icons/pptx64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-pdf {
   background: url(../images/file-icons/pdf32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-pdf {
     background: url(../images/file-icons/pdf64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-ai {
   background: url(../images/file-icons/ai32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-ai {
     background: url(../images/file-icons/ai64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-cdr {
   background: url(../images/file-icons/cdr32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-cdr {
     background: url(../images/file-icons/cdr64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-psd {
   background: url(../images/file-icons/psd32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-psd {
     background: url(../images/file-icons/psd64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-dmg {
   background: url(../images/file-icons/dmg32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-dmg {
     background: url(../images/file-icons/dmg64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-iso {
   background: url(../images/file-icons/iso32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-iso {
     background: url(../images/file-icons/iso64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-md {
   background: url(../images/file-icons/md32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-md {
     background: url(../images/file-icons/md64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-ipa {
   background: url(../images/file-icons/ipa32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-ipa {
     background: url(../images/file-icons/ipa64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-32.icon-apk {
   background: url(../images/file-icons/apk32x32.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-32.icon-apk {
     background: url(../images/file-icons/apk64x64.png) no-repeat center;
     background-size: 32px 32px;
   }
 }
 
-/* line 54, ../../app/styles/_common.scss */
+/* line 62, ../../app/styles/_common.scss */
 .file-icon-128 {
   display: inline-block;
   width: 128px;
@@ -11424,367 +11731,367 @@ input:focus {
   vertical-align: middle;
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-folder {
   background: url(../images/file-icons/folder128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-folder {
     background: url(../images/file-icons/folder256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-video {
   background: url(../images/file-icons/video128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-video {
     background: url(../images/file-icons/video256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-audio {
   background: url(../images/file-icons/audio128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-audio {
     background: url(../images/file-icons/audio256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-compress {
   background: url(../images/file-icons/compress128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-compress {
     background: url(../images/file-icons/compress256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-document {
   background: url(../images/file-icons/document128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-document {
     background: url(../images/file-icons/document256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-image {
   background: url(../images/file-icons/image128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-image {
     background: url(../images/file-icons/image256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-execute {
   background: url(../images/file-icons/execute128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-execute {
     background: url(../images/file-icons/execute256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-other {
   background: url(../images/file-icons/other128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-other {
     background: url(../images/file-icons/other256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-doc {
   background: url(../images/file-icons/doc128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-doc {
     background: url(../images/file-icons/doc256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-docx {
   background: url(../images/file-icons/docx128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-docx {
     background: url(../images/file-icons/docx256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-xls {
   background: url(../images/file-icons/xls128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-xls {
     background: url(../images/file-icons/xls256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-xlsx {
   background: url(../images/file-icons/xlsx128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-xlsx {
     background: url(../images/file-icons/xlsx256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-ppt {
   background: url(../images/file-icons/ppt128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-ppt {
     background: url(../images/file-icons/ppt256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-pptx {
   background: url(../images/file-icons/pptx128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-pptx {
     background: url(../images/file-icons/pptx256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-pdf {
   background: url(../images/file-icons/pdf128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-pdf {
     background: url(../images/file-icons/pdf256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-ai {
   background: url(../images/file-icons/ai128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-ai {
     background: url(../images/file-icons/ai256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-cdr {
   background: url(../images/file-icons/cdr128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-cdr {
     background: url(../images/file-icons/cdr256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-psd {
   background: url(../images/file-icons/psd128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-psd {
     background: url(../images/file-icons/psd256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-dmg {
   background: url(../images/file-icons/dmg128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-dmg {
     background: url(../images/file-icons/dmg256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-iso {
   background: url(../images/file-icons/iso128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-iso {
     background: url(../images/file-icons/iso256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-md {
   background: url(../images/file-icons/md128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-md {
     background: url(../images/file-icons/md256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-ipa {
   background: url(../images/file-icons/ipa128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-ipa {
     background: url(../images/file-icons/ipa256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 62, ../../app/styles/_common.scss */
+/* line 70, ../../app/styles/_common.scss */
 .file-icon-128.icon-apk {
   background: url(../images/file-icons/apk128x128.png) no-repeat center;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
-  /* line 62, ../../app/styles/_common.scss */
+  /* line 70, ../../app/styles/_common.scss */
   .file-icon-128.icon-apk {
     background: url(../images/file-icons/apk256x256.png) no-repeat center;
     background-size: 128px 128px;
   }
 }
 
-/* line 72, ../../app/styles/_common.scss */
+/* line 81, ../../app/styles/_common.scss */
 .dark-theme {
   background: #24272b;
   color: #fff;
 }
-/* line 76, ../../app/styles/_common.scss */
+/* line 85, ../../app/styles/_common.scss */
 .dark-theme select option {
   background: #24272b;
 }
-/* line 80, ../../app/styles/_common.scss */
+/* line 89, ../../app/styles/_common.scss */
 .dark-theme .fa-info-circle {
   color: #fc9701;
 }
-/* line 84, ../../app/styles/_common.scss */
+/* line 93, ../../app/styles/_common.scss */
 .dark-theme h1 {
   text-align: center;
   margin: 20px 0;
 }
-/* line 89, ../../app/styles/_common.scss */
+/* line 98, ../../app/styles/_common.scss */
 .dark-theme .section-wrapper {
   margin-left: 15px;
   margin-right: 15px;
 }
-/* line 93, ../../app/styles/_common.scss */
+/* line 102, ../../app/styles/_common.scss */
 .dark-theme .section-wrapper section {
   padding: 10px 80px;
 }
-/* line 99, ../../app/styles/_common.scss */
+/* line 108, ../../app/styles/_common.scss */
 .dark-theme .form-group {
   color: #bababa;
 }
-/* line 102, ../../app/styles/_common.scss */
+/* line 111, ../../app/styles/_common.scss */
 .dark-theme .form-group .btn-wrapper {
   margin-left: -2%;
   margin-right: -3%;
 }
-/* line 107, ../../app/styles/_common.scss */
+/* line 116, ../../app/styles/_common.scss */
 .dark-theme .form-group .btn {
   width: 45%;
   margin: 0 2%;
 }
-/* line 114, ../../app/styles/_common.scss */
+/* line 123, ../../app/styles/_common.scss */
 .dark-theme .form-control {
   background-color: rgba(255, 255, 255, 0.1);
   border-color: transparent;
   border-radius: 2px;
   color: #fff;
 }
-/* line 121, ../../app/styles/_common.scss */
+/* line 130, ../../app/styles/_common.scss */
 .dark-theme .form-control[disabled], .dark-theme .form-control[readonly], .dark-theme fieldset[disabled] .form-control {
   color: #777777;
 }
-/* line 125, ../../app/styles/_common.scss */
+/* line 134, ../../app/styles/_common.scss */
 .dark-theme .input-group-addon {
   background: rgba(255, 255, 255, 0.1);
   border-color: transparent;
 }
-/* line 130, ../../app/styles/_common.scss */
+/* line 139, ../../app/styles/_common.scss */
 .dark-theme .input-group .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-/* line 135, ../../app/styles/_common.scss */
+/* line 144, ../../app/styles/_common.scss */
 .dark-theme .form-control:focus {
   border-color: transparent;
   outline: 0;
   box-shadow: none;
 }
-/* line 142, ../../app/styles/_common.scss */
+/* line 151, ../../app/styles/_common.scss */
 .dark-theme .form-control::-webkit-input-placeholder {
   transition: color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-/* line 146, ../../app/styles/_common.scss */
+/* line 155, ../../app/styles/_common.scss */
 .dark-theme .form-control:focus::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* line 151, ../../app/styles/_common.scss */
+/* line 160, ../../app/styles/_common.scss */
 .position-fixed {
   position: fixed;
   z-index: 999;
 }
 
 /* 滚动条样式 */
-/* line 157, ../../app/styles/_common.scss */
+/* line 166, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar {
   height: 8px;
   overflow: visible;
@@ -11794,45 +12101,45 @@ input:focus {
   -o-transition: all linear 0.1s;
 }
 
-/* line 167, ../../app/styles/_common.scss */
+/* line 176, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar-button {
   height: 0;
   width: 0;
   display: none;
 }
 
-/* line 172, ../../app/styles/_common.scss */
+/* line 181, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   min-height: 28px;
   border-radius: 5px;
 }
 
-/* line 178, ../../app/styles/_common.scss */
+/* line 187, ../../app/styles/_common.scss */
 .scrollbar.dark::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* line 181, ../../app/styles/_common.scss */
+/* line 190, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #7c7c7c;
 }
 
-/* line 185, ../../app/styles/_common.scss */
+/* line 194, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar-corner {
   height: 0;
   width: 0;
   display: none;
 }
 
-/* line 190, ../../app/styles/_common.scss */
+/* line 199, ../../app/styles/_common.scss */
 .scrollbar::-webkit-resizer {
   height: 0;
   width: 0;
   display: none;
 }
 
-/* line 196, ../../app/styles/_common.scss */
+/* line 205, ../../app/styles/_common.scss */
 .empty {
   color: #999999;
   text-align: center;
@@ -12057,11 +12364,11 @@ input:focus {
 .main .toolbar .menu-list {
   margin: 0 5px;
 }
-/* line 219, ../../app/styles/_app.scss */
-.main .toolbar li {
-  margin: 5px 5px 0;
+/* line 218, ../../app/styles/_app.scss */
+.main .toolbar .menu-list .btn-group {
+  margin: 5px 5px 0 5px;
 }
-/* line 224, ../../app/styles/_app.scss */
+/* line 225, ../../app/styles/_app.scss */
 .main .file-browser {
   position: absolute;
   left: 0;
@@ -12070,54 +12377,54 @@ input:focus {
   bottom: 40px;
   transition: bottom 0.25s linear;
 }
-/* line 232, ../../app/styles/_app.scss */
+/* line 233, ../../app/styles/_app.scss */
 .main .file-browser .filelist-header {
   border-top: 1px solid #d8d8d8;
   height: 30px;
   line-height: 30px;
   background: #fff;
 }
-/* line 239, ../../app/styles/_app.scss */
+/* line 240, ../../app/styles/_app.scss */
 .main .file-browser .filename {
   padding-left: 15px;
 }
-/* line 241, ../../app/styles/_app.scss */
+/* line 242, ../../app/styles/_app.scss */
 .main .file-browser .filename .file-icon-32 {
   margin-right: 10px;
 }
-/* line 246, ../../app/styles/_app.scss */
+/* line 247, ../../app/styles/_app.scss */
 .main .file-browser .filesize {
   width: 160px;
 }
-/* line 251, ../../app/styles/_app.scss */
+/* line 252, ../../app/styles/_app.scss */
 .main .file-browser .file-create-time,
 .main .file-browser .init-time {
   width: 190px;
 }
-/* line 255, ../../app/styles/_app.scss */
+/* line 256, ../../app/styles/_app.scss */
 .main .file-browser .upload-id {
   width: 330px;
 }
-/* line 259, ../../app/styles/_app.scss */
+/* line 260, ../../app/styles/_app.scss */
 .main .file-browser .file-item {
   line-height: 40px;
   cursor: default;
 }
-/* line 263, ../../app/styles/_app.scss */
+/* line 264, ../../app/styles/_app.scss */
 .main .file-browser .file-item:nth-child(even) {
   background: #f7f7f7;
 }
-/* line 271, ../../app/styles/_app.scss */
+/* line 272, ../../app/styles/_app.scss */
 .main .file-browser .file-item.selected {
   background: #50acf3;
   color: #fff;
 }
-/* line 276, ../../app/styles/_app.scss */
+/* line 277, ../../app/styles/_app.scss */
 .main .file-browser .file-item .filename {
   font-size: 14px;
   font-family: "hiragino sans gb", "Helvetica Neue", "Helvetica", "Arial", "宋体", "simsun", "sans-serif";
 }
-/* line 283, ../../app/styles/_app.scss */
+/* line 284, ../../app/styles/_app.scss */
 .main .file-browser .filelist-body {
   position: absolute;
   left: 0;
@@ -12127,16 +12434,16 @@ input:focus {
   overflow: auto;
   background: #fff;
 }
-/* line 294, ../../app/styles/_app.scss */
+/* line 295, ../../app/styles/_app.scss */
 .main .file-browser .filelist-body .new-file-item .btn {
   margin-left: 10px;
 }
-/* line 298, ../../app/styles/_app.scss */
+/* line 299, ../../app/styles/_app.scss */
 .main .file-browser .filelist-body .new-file-item .form-control {
   display: inline-block;
   width: 300px;
 }
-/* line 307, ../../app/styles/_app.scss */
+/* line 308, ../../app/styles/_app.scss */
 .main .trans-queue {
   position: absolute;
   bottom: -230px;
@@ -12147,37 +12454,37 @@ input:focus {
   background: #fff;
   transition: bottom 0.25s linear;
 }
-/* line 317, ../../app/styles/_app.scss */
+/* line 318, ../../app/styles/_app.scss */
 .main .trans-queue .total-speed-wrapper {
   position: absolute;
   right: 50px;
   line-height: 40px;
 }
-/* line 322, ../../app/styles/_app.scss */
+/* line 323, ../../app/styles/_app.scss */
 .main .trans-queue .total-speed-wrapper span {
   margin: 0 5px;
 }
-/* line 326, ../../app/styles/_app.scss */
+/* line 327, ../../app/styles/_app.scss */
 .main .trans-queue .total-speed-wrapper strong {
   font-weight: normal;
 }
-/* line 331, ../../app/styles/_app.scss */
+/* line 332, ../../app/styles/_app.scss */
 .main .trans-queue .slide_queue {
   position: absolute;
   right: 20px;
   top: 12px;
 }
-/* line 335, ../../app/styles/_app.scss */
+/* line 336, ../../app/styles/_app.scss */
 .main .trans-queue .slide_queue .fa {
   color: #000;
 }
-/* line 340, ../../app/styles/_app.scss */
+/* line 341, ../../app/styles/_app.scss */
 .main .trans-queue .nav-tabs {
   background: #f2f2f2;
   padding-left: 10px;
   padding-top: 5px;
 }
-/* line 346, ../../app/styles/_app.scss */
+/* line 347, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content {
   position: absolute;
   left: 0;
@@ -12185,80 +12492,107 @@ input:focus {
   bottom: 0;
   top: 39px;
 }
-/* line 353, ../../app/styles/_app.scss */
+/* line 354, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content .opt-bar {
   background: #fff;
   padding: 5px 10px;
   border-bottom: 1px solid #d8d8d8;
 }
-/* line 358, ../../app/styles/_app.scss */
-.main .trans-queue .tab-content .opt-bar .opt-list > li {
-  margin-right: 5px;
+/* line 359, ../../app/styles/_app.scss */
+.main .trans-queue .tab-content .opt-bar .opt-list > .btn-group {
+  margin-right: 5px 5px 0 5px;
 }
-/* line 364, ../../app/styles/_app.scss */
+/* line 369, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list {
   overflow: auto;
 }
-/* line 366, ../../app/styles/_app.scss */
+/* line 372, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item {
-  height: 30px;
-  line-height: 30px;
+  height: 34px;
+  line-height: 34px;
   cursor: default;
   position: relative;
-  border-bottom: 1px solid #d8d8d8;
   overflow: hidden;
 }
-/* line 373, ../../app/styles/_app.scss */
+/* line 378, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > div {
-  margin-left: 10px;
-  margin-right: 10px;
   position: relative;
+  padding: 0 15px;
 }
-/* line 380, ../../app/styles/_app.scss */
+/* line 383, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > .queue-progress {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 0;
+  top: 24px;
+  left: 42px;
   margin: 0;
-  transition: width 1.5s ease;
+  right: 380px;
+  height: 5px;
+  padding: 0;
 }
 /* line 391, ../../app/styles/_app.scss */
+.main .trans-queue .queue-list .queue-item > .queue-progress .progress {
+  height: 100%;
+  margin-bottom: 0;
+}
+/* line 397, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > .bg-success {
   background: rgba(68, 157, 68, 0.3);
 }
-/* line 403, ../../app/styles/_app.scss */
+/* line 401, ../../app/styles/_app.scss */
+.main .trans-queue .queue-list .queue-item:nth-child(even) {
+  background: #f7f7f7;
+}
+/* line 405, ../../app/styles/_app.scss */
+.main .trans-queue .queue-list .queue-item:hover {
+  background: #e1e3e7;
+}
+/* line 409, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item.selected {
   background: #50acf3 !important;
   color: #fff;
 }
-/* line 408, ../../app/styles/_app.scss */
-.main .trans-queue .queue-list .queue-item .filename {
-  padding: 0 15px;
-}
-/* line 412, ../../app/styles/_app.scss */
+/* line 414, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .filesize {
-  width: 80px;
+  width: 140px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 0 20px;
+  text-align: center;
 }
-/* line 417, ../../app/styles/_app.scss */
+/* line 421, ../../app/styles/_app.scss */
+.main .trans-queue .queue-list .queue-item .filename {
+  padding: 0 10px;
+}
+/* line 423, ../../app/styles/_app.scss */
+.main .trans-queue .queue-list .queue-item .filename > i {
+  margin-right: 5px;
+}
+/* line 426, ../../app/styles/_app.scss */
+.main .trans-queue .queue-list .queue-item .filename .name {
+  position: relative;
+  bottom: 3px;
+}
+/* line 432, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .remain-time {
-  width: 200px;
-  text-align: right;
+  width: 140px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: center;
 }
-/* line 427, ../../app/styles/_app.scss */
+/* line 438, ../../app/styles/_app.scss */
+.main .trans-queue .queue-list .queue-item .opts {
+  width: 100px;
+  text-align: right;
+}
+/* line 446, ../../app/styles/_app.scss */
 .main .trans-queue .log-wrapper textarea {
   resize: none;
   border: 0;
   cursor: text;
 }
-/* line 435, ../../app/styles/_app.scss */
+/* line 454, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list,
 .main .trans-queue .log-wrapper textarea {
   position: absolute;
@@ -12268,11 +12602,11 @@ input:focus {
   right: 0;
   overflow: auto;
 }
-/* line 447, ../../app/styles/_app.scss */
+/* line 466, ../../app/styles/_app.scss */
 .main.show-trans-queue .trans-queue {
   bottom: 0;
 }
-/* line 451, ../../app/styles/_app.scss */
+/* line 470, ../../app/styles/_app.scss */
 .main.show-trans-queue .file-browser {
   bottom: 270px;
 }

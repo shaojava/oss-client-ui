@@ -214,11 +214,12 @@
 
     .menu-list {
       margin: 0 5px;
+
+      .btn-group{
+        margin:5px 5px 0 5px;
+      }
     }
 
-    li {
-      margin: 5px 5px 0;
-    }
   }
 
   .file-browser {
@@ -355,71 +356,89 @@
         padding: 5px 10px;
         border-bottom: 1px solid $baseBorderColor;
 
-        .opt-list > li {
-          margin-right: 5px;
+        .opt-list > .btn-group {
+          margin-right: 5px 5px 0 5px;
         }
       }
     }
 
+    $queueItemFilesizeCellWidth:140px;
+    $queueItemOptCellWidth:100px;
+    $queueItemRemainTimeCellWidth:140px;
+
     .queue-list {
       overflow: auto;
+
       .queue-item {
-        height: 30px;
-        line-height: 30px;
+        height: $queueItemHeight;
+        line-height: $queueItemHeight;
         cursor: default;
         position: relative;
-        border-bottom: 1px solid $baseBorderColor;
         overflow: hidden;
         > div {
-          margin-left: 10px;
-          margin-right: 10px;
           position: relative;
+          padding: 0 15px;
         }
-
 
         > .queue-progress{
           position: absolute;
-          top:0;
-          bottom: 0;
-          left: 0;
-          width: 0;
+          top:24px;
+          left: 42px;
           margin: 0;
-          transition: width 1.5s ease;
-
+          right: $queueItemFilesizeCellWidth + $queueItemOptCellWidth + $queueItemRemainTimeCellWidth;
+          height: 5px;
+          padding:0;
+          .progress{
+            height: 100%;
+            margin-bottom: 0;
+          }
         }
 
         > .bg-success{
           background: rgba(68,157,68,.3);
         }
 
-//        &:nth-child(even) {
-//          background: $lightBackgroundColor;
-//        }
-//
-//        &:hover {
-//          background: $itemHoverBackgroundColor;
-//        }
+        &:nth-child(even) {
+          background: $lightBackgroundColor;
+        }
+
+        &:hover {
+          background: $itemHoverBackgroundColor;
+        }
 
         &.selected {
           background: $itemSelectedBackgroundColor !important;
           color: #fff;
         }
 
-        .filename {
-          padding: 0 15px;
+        .filesize{
+          width: $queueItemFilesizeCellWidth;
+          @include ellipsis;
+          padding: 0 20px;
+          text-align: center;
         }
 
-        .filesize, {
-          width: 80px;
-          @include ellipsis;
+        .filename{
+          padding: 0 10px;
+          > i{
+            margin-right:5px;
+          }
+          .name{
+            position: relative;
+            bottom: 3px;
+          }
         }
 
         .remain-time {
-          width: 200px;
-          text-align: right;
+          width: $queueItemRemainTimeCellWidth;
           @include ellipsis;
+          text-align: center;
         }
 
+        .opts {
+          width: $queueItemOptCellWidth;
+          text-align: right;
+        }
       }
     }
 

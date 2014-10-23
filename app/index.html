@@ -62,9 +62,9 @@
         <div class="trans-queue" ng-controller="TransQueueCtrl" ng-dblclick="handleTransQueueDblClick($event)">
             <div class="total-speed-wrapper">
                 <span>上传速度：<strong
-                        ng-show="OSSUploadQueue.uploadSpeed>0">{{OSSUploadQueue.uploadSpeed|bitSize}}/秒</strong><em
+                        ng-show="OSSUploadQueue.uploadSpeed>0" ><span ng-bind="OSSUploadQueue.uploadSpeed|bitSize"></span>/秒</strong><em
                         ng-show="OSSUploadQueue.uploadSpeed<=0">-</em></span>
-                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0">{{OSSDownloadQueue.downloadSpeed|bitSize}}/秒</strong><em
+                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0" ><span ng-bind="OSSDownloadQueue.downloadSpeed|bitSize"></span>/秒</strong><em
                         ng-show="OSSDownloadQueue.downloadSpeed<=0">-</em></span>
             </div>
             <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()"><i class="fa fa-lg"
@@ -74,44 +74,69 @@
                     <div ng-switch on="tab.name">
                         <div ng-switch-when="upload">
                             <div class="opt-bar">
-                                <ul class="clearfix opt-list">
-                                    <li class="pull-left" ng-repeat="menu in uploadQueueMenus">
-                                        <menu name="{{menu.name}}" state="menu.getState(selectedUploadItems)"
-                                              execute="menu.execute(selectedUploadItems)">{{menu.text}}
+                                <div class="clearfix opt-list">
+                                    <div class="btn-group">
+                                        <menu name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('upload'))>=0" ng-repeat="menu in uploadQueueMenus" state=" menu.getState(getSelectedList('upload'))" execute="menu.execute(selectedUploadItems)">{{menu.text}}
                                         </menu>
-                                    </li>
-                                </ul>
+                                    </div>
+                                    <div class="btn-group">
+                                        <menu name="clearDown" state="1" execute="clearDone('upload')">
+                                            清空已完成
+                                        </menu>
+                                    </div>
+                                </div>
                             </div>
                             <div class="empty" ng-show="!uploadList || !uploadList.length">没有上传</div>
-                            <ul class="scrollbar queue-list">
-                                <queue-item type="upload" data="item" on-select="onUploadItemSelect($event,item)" execute-cmd="executeUploadCmd(cmd,item)" ng-repeat="item in uploadList"></queue-item>
+                            <ul class="scrollbar queue-list"
+                                keyboard-nav-list="uploadList"
+                                keyboard-nav-step="1"
+                                keyboard-nav="{{enableUploadKeyBoardNav}}"
+                                scroll-to-item = "{{scrollToUploadIndex}}"
+                                item-selector=".queue-item"
+                                select="select(item,'upload')"
+                                un-select="unSelect(item,'upload')"
+                                get-selected-list="getSelectedList('upload')">
+                                <queue-item ng-click="handleItemClick($event,$index,item,'upload')" type="upload" data="item"  execute-cmd="executeUploadCmd(cmd,item)" ng-repeat="item in uploadList"></queue-item>
                             </ul>
                         </div>
                         <div ng-switch-when="download">
                             <div class="opt-bar">
-                                <ul class="clearfix opt-list">
-                                    <li class="pull-left" ng-repeat="menu in downloadQueueMenus">
-                                        <menu type="download" name="{{menu.name}}" state="menu.getState(selectedDownloadItems)"
-                                              execute="menu.execute(selectedDownloadItems)">{{menu.text}}
+                                <div class="clearfix opt-list">
+                                   <div class="btn-group">
+                                        <menu ng-repeat="menu in downloadQueueMenus" type="download" name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('download'))>=0" state="menu.getState(getSelectedList('download'))"
+                                              execute="menu.execute(selectedDownloadItems)"><span ng-bind="menu.text"></span>
                                         </menu>
-                                    </li>
-                                </ul>
+                                   </div>
+                                    <div class="btn-group">
+                                        <menu name="clearDown" state="1" execute="clearDone('download')">
+                                            清空已完成
+                                        </menu>
+                                    </div>
+                                </div>
                             </div>
                             <div class="empty" ng-show="!downloadList || !downloadList.length">没有下载</div>
-                            <ul class="scrollbar queue-list">
-                                <queue-item data="item" ng-repeat="item in downloadList"
-                                            on-select="onDownloadItemSelect($event,item)"  execute-cmd="executeDownloadCmd(cmd,item)"></queue-item>
+                            <ul class="scrollbar queue-list"
+                                keyboard-nav-list="downloadList"
+                                keyboard-nav-step="1"
+                                keyboard-nav="{{enableDownloadKeyBoardNav}}"
+                                scroll-to-item = "{{scrollToDownloadIndex}}"
+                                item-selector=".queue-item"
+                                select="select(item,'download')"
+                                un-select="unSelect(item,'download')"
+                                get-selected-list="getSelectedList('download')">
+                                <queue-item data="item" ng-repeat="item in downloadList" ng-click="handleItemClick($event,$index,item,'download')" execute-cmd="executeDownloadCmd(cmd,item)"></queue-item>
                             </ul>
                         </div>
                         <div ng-switch-when="log">
                             <div class="opt-bar">
-                                <ul class="clearfix opt-list">
-                                    <li class="pull-left">
+                                <div class="clearfix opt-list">
+                                    <div class="btn-group">
                                         <menu name="openLogFolder"  state="1" execute="openLogFolder()">
                                             打开日志文件夹
                                         </menu>
-                                    </li>
-                                </ul>
+                                   </div>
+
+                                </div>
                             </div>
                             <div class="log-wrapper">
                                 <div class="empty" ng-show="!errorLog">没有日志</div>

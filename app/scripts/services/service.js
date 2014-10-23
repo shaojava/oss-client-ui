@@ -453,7 +453,7 @@ angular.module('ossClientUiApp')
             getDownloadMenu: function () {
                 return downloadMenu;
             },
-            getUploadMenuItem: function (menu) {
+            getUploadMenuItem: function (name) {
                 return _.findWhere(uploadMenu, {
                     name: name
                 })
@@ -467,7 +467,8 @@ angular.module('ossClientUiApp')
     }])
     .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard, OSSModal, $rootScope, OSSApi, OSSException) {
         var currentMenus = 'upload create paste'.split(' '),
-            selectMenus = 'download copy del get_uri set_header'.split(' ');
+            selectMenus = 'download copy del get_uri set_header'.split(' '),
+            groupMenu = ['upload create paste'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ')];
         var allMenu = [
             {
                 name: 'upload',
@@ -588,7 +589,7 @@ angular.module('ossClientUiApp')
                                 object: object.path,
                                 filesize: object.filesize
                             }
-                        })
+                        });
                         OSS.invoke('copyObject', {
                             dstbucket: bucket['Name'],
                             dstobject: selectedFiles.length == 1 && selectedFiles[0].dir ? selectedFiles[0].path : currentObject,
@@ -689,6 +690,23 @@ angular.module('ossClientUiApp')
                 return _.findWhere(allMenu, {
                     name: name
                 })
+            },
+            groupMenu: function (menus) {
+                var groupMenus = [];
+                angular.forEach(groupMenu, function (val, key) {
+                    if (!groupMenus[key]) {
+                        groupMenus[key] = [];
+                    }
+                    angular.forEach(val, function (menuName) {
+                        groupMenus[key].push(_.findWhere(menus, {
+                            name: menuName
+                        }));
+                    });
+                });
+                return groupMenus;
+            },
+            getTopExcludeMenus:function(){
+                return ['paste'];
             }
         };
     }])
@@ -815,7 +833,7 @@ angular.module('ossClientUiApp')
                     commonPrefixes = commonPrefixes ? angular.isArray(commonPrefixes) ? commonPrefixes : [commonPrefixes] : [];
 
                     var files = [];
-                    angular.forEach($.merge(contents, commonPrefixes), function (file) {
+                    angular.forEach($.merge(commonPrefixes, contents), function (file) {
                         if (file.Key !== prefix && file.Prefix !== prefix) {
                             files.push(_self.format(file));
                         }
@@ -862,7 +880,7 @@ angular.module('ossClientUiApp')
                     } else if (jQuery.inArray(ext, sorts['SORT_MOVIE']) > -1) {
                         suffix = 'video';
                     } else if (jQuery.inArray(ext, sorts['SORT_MUSIC']) > -1) {
-                        suffix = 'music';
+                        suffix = 'audio';
                     } else if (jQuery.inArray(ext, sorts['SORT_IMAGE']) > -1) {
                         suffix = 'image';
                     } else if (jQuery.inArray(ext, sorts['SORT_DOCUMENT']) > -1) {
@@ -1140,7 +1158,7 @@ angular.module('ossClientUiApp')
                     'delimiter': delimiter,
                     'marker': marker,
                     'max-keys': maxKeys
-                })
+                });
                 var expires = getExpires();
                 var canonicalizedResource = getCanonicalizedResource(bucket.Name, '');
                 var signature = OSS.invoke('getSignature', {
@@ -1189,7 +1207,7 @@ angular.module('ossClientUiApp')
                     'key-marker': keyMarker,
                     'upload-id-marker': uploadIdMaker,
                     'max-uploads': maxUploads
-                })
+                });
                 var expires = getExpires();
                 var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {uploads: undefined});
                 var signature = OSS.invoke('getSignature', {
@@ -1421,7 +1439,7 @@ angular.module('ossClientUiApp')
                             });
                         }).error(function () {
 
-                        })
+                        });
 
                         $scope.setHttpHeader = function (headers, customHeaders) {
                             var ossHeaders = {}, canonicalizedOSSheaders = {};
@@ -1429,13 +1447,13 @@ angular.module('ossClientUiApp')
                                 if (val.model) {
                                     ossHeaders[val.name] = val.model;
                                 }
-                            })
+                            });
 
                             angular.forEach(customHeaders, function (val) {
                                 if (val.nameModel) {
                                     canonicalizedOSSheaders['x-oss-meta-' + val.nameModel.toLowerCase()] = val.contentModel || '';
                                 }
-                            })
+                            });
 
                             OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
                                 $modalInstance.close();
