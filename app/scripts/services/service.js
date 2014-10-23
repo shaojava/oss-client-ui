@@ -390,13 +390,30 @@ angular.module('ossClientUiApp')
                 }
             },
             {
-                name: 'remove',
+                name: 'cancel',
                 text: '取消',
                 execute: function (selectedItems) {
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
                     OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems));
+                    $rootScope.$broadcast('removeQueue', 'download', selectedItems);
+                },
+                getState: function (selectedItems) {
+                    var len = selectedItems.length;
+                    if (!len) {
+                        return 0;
+                    }
+                    return 1;
+                }
+            },
+            {
+                name: 'remove',
+                text: '移除',
+                execute: function (selectedItems) {
+                    if (!checkArgValid(selectedItems)) {
+                        return;
+                    }
                     $rootScope.$broadcast('removeQueue', 'download', selectedItems);
                 },
                 getState: function (selectedItems) {
@@ -414,6 +431,16 @@ angular.module('ossClientUiApp')
             },
             getDownloadMenu: function () {
                 return downloadMenu;
+            },
+            getUploadMenuItem:function(menu){
+                return _.findWhere(uploadMenu,{
+                    name: name
+                })
+            },
+            getDownloadMenuItem:function(name){
+                return _.findWhere(downloadMenu,{
+                    name: name
+                });
             }
         };
     }])
@@ -442,7 +469,7 @@ angular.module('ossClientUiApp')
                             list: res['list']
                         }, function (res) {
                             if(!res.error){
-                                $rootScope.$broadcast('toggleTransQueue',true);
+                                $rootScope.$broadcast('toggleTransQueue',true,'upload');
                             }else{
                                 $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
                             }

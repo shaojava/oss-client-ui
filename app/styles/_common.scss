@@ -7,6 +7,7 @@ body {
 input, textarea {
   -webkit-user-select: default;
   user-select: default;
+  outline: none;
 }
 
 body {
@@ -17,7 +18,7 @@ body {
 button {
   background: none;
   border: 0 none;
-  outline: 0 none;
+  outline: none;
 }
 
 @for $i from 1 to 6 {

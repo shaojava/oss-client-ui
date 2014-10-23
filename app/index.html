@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="ossClientUiApp"  prevent-drag-drop>
+<html class="no-js" ng-app="ossClientUiApp" prevent-drag-drop>
 <head>
     <meta charset="utf-8">
     <title>OSS</title>
@@ -25,11 +25,12 @@
         </div>
         <ul class="bucket-list">
             <li ng-repeat="bucket in buckets" dropdown title="{{bucket.Name}}">
-                <a href="#{{bucket.Name|getLocation}}"  ng-class="{'selected':bucket.selected}"><span
+                <a href="#{{bucket.Name|getLocation}}" ng-class="{'selected':bucket.selected}"><span
                         ng-bind="bucket.Name"></span><span class="caret" dropdown-toggle></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="javascript:;" ng-click="editBucket(bucket)">属性管理</a></li>
-                    <li><a href="#{{bucket.Name|getLocation:'':'upload'}}" ng-click="manageBucketPartition(bucket)">碎片管理</a></li>
+                    <li><a href="#{{bucket.Name|getLocation:'':'upload'}}"
+                           ng-click="manageBucketPartition(bucket)">碎片管理</a></li>
                 </ul>
             </li>
         </ul>
@@ -60,36 +61,65 @@
         </div>
         <div class="trans-queue" ng-controller="TransQueueCtrl" ng-dblclick="handleTransQueueDblClick($event)">
             <div class="total-speed-wrapper">
-                <span>上传速度：<strong ng-show="OSSUploadQueue.uploadSpeed>0">{{OSSUploadQueue.uploadSpeed|bitSize}}/S</strong><em ng-show="OSSUploadQueue.uploadSpeed<=0">-</em></span>
-                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0">{{OSSDownloadQueue.downloadSpeed|bitSize}}/S</strong><em ng-show="OSSDownloadQueue.downloadSpeed<=0">-</em></span>
+                <span>上传速度：<strong
+                        ng-show="OSSUploadQueue.uploadSpeed>0">{{OSSUploadQueue.uploadSpeed|bitSize}}/S</strong><em
+                        ng-show="OSSUploadQueue.uploadSpeed<=0">-</em></span>
+                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0">{{OSSDownloadQueue.downloadSpeed|bitSize}}/S</strong><em
+                        ng-show="OSSDownloadQueue.downloadSpeed<=0">-</em></span>
             </div>
-            <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()"><i class="fa fa-lg" ng-class="{'fa-angle-double-up':!showTransQueue,'fa-angle-double-down':showTransQueue}"></i></a>
+            <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()"><i class="fa fa-lg"
+                                                                                              ng-class="{'fa-angle-double-up':!showTransQueue,'fa-angle-double-down':showTransQueue}"></i></a>
             <tabset>
-                <tab heading="上传队列" active="activeTab =='' || activeTab == 'upload'">
-                    <div class="opt-bar">
-                        <ul class="clearfix opt-list">
-                            <li class="pull-left" ng-repeat="menu in uploadQueueMenus">
-                                <menu name="{{menu.name}}" state="menu.getState(selectedUploadItems)" execute="menu.execute(selectedUploadItems)">{{menu.text}}</menu>
-                            </li>
-                        </ul>
+                <tab heading="{{tab.title}}" active="tab.active" ng-repeat="tab in tabs" select="selectTab(tab)">
+                    <div ng-switch on="tab.name">
+                        <div ng-switch-when="upload">
+                            <div class="opt-bar">
+                                <ul class="clearfix opt-list">
+                                    <li class="pull-left" ng-repeat="menu in uploadQueueMenus">
+                                        <menu name="{{menu.name}}" state="menu.getState(selectedUploadItems)"
+                                              execute="menu.execute(selectedUploadItems)">{{menu.text}}
+                                        </menu>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="empty" ng-show="!uploadList || !uploadList.length">没有上传</div>
+                            <ul class="scrollbar queue-list">
+                                <queue-item type="upload" data="item" on-select="onUploadItemSelect($event,item)" execute-cmd="executeUploadCmd(cmd,item)" ng-repeat="item in uploadList"></queue-item>
+                            </ul>
+                        </div>
+                        <div ng-switch-when="download">
+                            <div class="opt-bar">
+                                <ul class="clearfix opt-list">
+                                    <li class="pull-left" ng-repeat="menu in downloadQueueMenus">
+                                        <menu type="download" name="{{menu.name}}" state="menu.getState(selectedDownloadItems)"
+                                              execute="menu.execute(selectedDownloadItems)">{{menu.text}}
+                                        </menu>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="empty" ng-show="!downloadList || !downloadList.length">没有下载</div>
+                            <ul class="scrollbar queue-list">
+                                <queue-item data="item" ng-repeat="item in downloadList"
+                                            on-select="onDownloadItemSelect($event,item)"  execute-cmd="executeDownloadCmd(cmd,item)"></queue-item>
+                            </ul>
+                        </div>
+                        <div ng-switch-when="log">
+                            <div class="opt-bar">
+                                <ul class="clearfix opt-list">
+                                    <li class="pull-left">
+                                        <menu name="openLogFolder"  state="1" execute="openLogFolder()">
+                                            打开日志文件夹
+                                        </menu>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="log-wrapper">
+                                <div class="empty" ng-show="!errorLog">没有日志</div>
+                                <textarea ng-show="errorLog" ng-model="errorLog" readonly></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <ul class="scrollbar queue-list">
-                        <queue-item type="upload" data="item" on-select="onUploadItemSelect($event,item)" ng-repeat="item in uploadList"></queue-item>
-                    </ul>
                 </tab>
-                <tab heading="下载队列" active="activeTab == 'download'">
-                    <div class="opt-bar">
-                        <ul class="clearfix opt-list">
-                            <li class="pull-left" ng-repeat="menu in downloadQueueMenus">
-                                <menu type="download" name="{{menu.name}}" state="menu.getState(selectedDownloadItems)" execute="menu.execute(selectedDownloadItems)">{{menu.text}}</menu>
-                            </li>
-                        </ul>
-                    </div>
-                    <ul class="scrollbar queue-list">
-                        <queue-item data="item" ng-repeat="item in downloadList" on-select="onDownloadItemSelect($event,item)"></queue-item>
-                    </ul>
-                </tab>
-                <!--<tab heading="错误日志">Static content</tab>-->
             </tabset>
         </div>
     </div>

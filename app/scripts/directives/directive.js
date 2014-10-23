@@ -87,6 +87,14 @@ angular.module('ossClientUiApp')
                 var $breadList = bread.find('.bread-list');
                 var $searchWrapper = element.parent();
 
+                var hideSearch = function () {
+                    $searchWrapper.find('.search-scope').remove();
+                    $searchWrapper.find('.fa-remove').remove();
+                    $breadList.show();
+                    element.next('.fa').show();
+                    scope[attrs.ngModel] = '';
+                };
+
                 var showSearch = function () {
                     if (element.next('.search-scope').size()) {
                         return;
@@ -103,17 +111,13 @@ angular.module('ossClientUiApp')
                     });
                     $breadList.hide();
                     $removeIcon.on('click', function () {
-                        hideSearch();
+                        scope.$apply(function(){
+                            hideSearch();
+                        });
                     })
                     element.focus();
                 };
 
-                var hideSearch = function () {
-                    $searchWrapper.find('.search-scope').remove();
-                    $searchWrapper.find('.fa-remove').remove();
-                    $breadList.show();
-                    element.next('.fa').show();
-                };
 
                 element.on('mousedown', function () {
                     showSearch();
@@ -133,14 +137,23 @@ angular.module('ossClientUiApp')
             scope: {
                 type: '@',
                 item: '=data',
-                onSelect: '&'
+                onSelect: '&',
+                executeCmd:'&'
             },
-            link: function postLink(scope, element, attrs) {
+            link: function postLink(scope) {
+
                 scope.clickItem = function ($event, item) {
                     scope.onSelect({
                         $event: $event
                     });
-                }
+                };
+
+                scope.handleCmdClick = function(cmd,item){
+                    scope.executeCmd({
+                        cmd:cmd,
+                        item:item
+                    });
+                };
             }
         };
     }])
@@ -162,7 +175,7 @@ angular.module('ossClientUiApp')
                     scope.execute({
                         $event: event
                     });
-                })
+                });
             }
         };
     }])

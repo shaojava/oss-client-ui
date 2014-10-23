@@ -340,8 +340,14 @@
     }
 
     .tab-content {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 39px;
+
       .opt-bar {
-        background: #fdfdfd;
+        background: #fff;
         padding: 5px 10px;
         border-bottom: 1px solid $baseBorderColor;
 
@@ -352,7 +358,6 @@
     }
 
     .queue-list {
-      height: 190px;
       overflow: auto;
       .queue-item {
         height: 30px;
@@ -360,7 +365,7 @@
         cursor: default;
         position: relative;
         border-bottom: 1px solid $baseBorderColor;
-
+        overflow: hidden;
         > div {
           margin-left: 10px;
           margin-right: 10px;
@@ -376,6 +381,11 @@
           width: 0;
           margin: 0;
           transition: width .6s ease;
+
+        }
+
+        > .bg-success{
+          background: rgba(68,157,68,.5);
         }
 
 //        &:nth-child(even) {
@@ -407,6 +417,24 @@
         }
 
       }
+    }
+
+    .log-wrapper{
+      textarea{
+        resize: none;
+        border:0;
+        cursor: text;
+      }
+    }
+
+    .queue-list,
+    .log-wrapper textarea{
+      position: absolute;
+      top:39px;
+      bottom:0;
+      left:0;
+      right: 0;
+      overflow: auto;
     }
   }
 

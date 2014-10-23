@@ -94,16 +94,13 @@ angular.module('ossClientUiApp')
         });
 
         //显示错误提示框
-        $scope.$on('showError', function (event,errorMsg,errorTitle) {
-            if(!errorMsg) return;
-            OSSAlert.error(errorMsg,errorTitle);
+        $scope.$on('showError', function (event, errorMsg, errorTitle) {
+            if (!errorMsg) return;
+            OSSAlert.error(errorMsg, errorTitle);
         });
 
     }])
     .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue) {
-
-        //当前选中的选项卡
-        $scope.activeTab = '';
 
         //选中的上传条目
         $scope.selectedUploadItems = [];
@@ -188,14 +185,70 @@ angular.module('ossClientUiApp')
             }
         };
 
+        //选项卡集合
+        $scope.tabs = [
+            {
+                name: 'upload',
+                title: '上传队列'
+            },
+            {
+                name: 'download',
+                title: '下载队列'
+            },
+            {
+                name: 'log',
+                title: '错误日志'
+            }
+        ];
+
+        //选中tab
         $scope.$on('toggleTransQueue', function ($event, isShow, currentTab) {
-            if (!angular.isUndefined(currentTab) && $scope.activeTab != currentTab) {
-                $scope.activeTab = currentTab;
+            console.log('currentTab',currentTab);
+            if (!angular.isUndefined(currentTab)) {
+                var tab = _.findWhere($scope.tabs, {name: currentTab});
+                if (tab && !tab.selected) {
+                    tab.active = true;
+                }
             }
         });
 
+        //打开日志文件夹
+        $scope.openLogFolder = function(){
+            OSS.invoke('openLogFolder');
+        };
+
+        //错误日志
+        $scope.errorLog = '';
+        $scope.selectTab = function(tab){
+            if(tab.name == 'log'){
+                var errorLog = '';
+                var res =  OSS.invoke('getErrorLog');
+                if(res && res.list && res.list.length){
+                    angular.forEach(res.list,function(val){
+                        errorLog += val.msg + '\r\n';
+                    });
+                    $scope.errorLog = errorLog;
+                    console.log('$scope.errorLog',$scope.errorLog)
+                }
+            }
+        };
+
+        $scope.executeDownloadCmd = function(cmd,item){
+           var menu = OSSQueueMenu.getDownloadMenuItem(cmd);
+            if(menu){
+                menu.execute([item]);
+            }
+        };
+
+        $scope.executeUploadCmd = function(cmd,item){
+            var menu = OSSQueueMenu.getUploadMenuItem(cmd);
+            if(menu){
+                menu.execute([item]);
+            }
+        };
+
     }])
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException',function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter,OSSException) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -374,7 +427,7 @@ angular.module('ossClientUiApp')
         });
 
         //拖拽文件上传
-        $scope.handleSysDrop = function(){
+        $scope.handleSysDrop = function () {
 
             var dragFiles = OSS.invoke('getDragFiles');
             var params = {
@@ -384,10 +437,10 @@ angular.module('ossClientUiApp')
                 list: dragFiles['list']
             };
             OSS.invoke('addFile', params, function (res) {
-                if(!res.error){
-                    $rootScope.$broadcast('toggleTransQueue',true);
-                }else{
-                    $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                if (!res.error) {
+                    $rootScope.$broadcast('toggleTransQueue', true);
+                } else {
+                    $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                 }
             });
         };
