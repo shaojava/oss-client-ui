@@ -1,29 +1,33 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="cancel()">&times;</button>
     <h4 ng-if="!bucket">新建Bucket</h4>
-    <h4 ng-if="bucket"><span>{{ ::bucket.Name}}</span>的属性</h4>
+    <h4 ng-if="bucket"><span class="text-primary">{{ ::bucket.Name}}</span>的属性</h4>
 </div>
 <div class="modal-body">
     <form class="form-horizontal" role="form">
         <div class="form-group">
-            <label for="bucket_name" class="col-sm-2 control-label">Bucket名称：</label>
-
-            <div class="col-sm-10">
+            <label for="bucket_name" class="col-sm-3 control-label">Bucket名称：</label>
+            <div class="col-sm-5">
                 <span ng-if="bucket">{{bucket.Name}}</span>
                 <input ng-if="!bucket" type="text" class="form-control" ng-model="cBucket.name" id="bucket_name" placeholder="" />
             </div>
+            <div class="tip text-muted" ng-if="!bucket">
+                <p>·只能包含小写字母、数字和横线</p>
+                <p>·必须以小写字母和数字开头和</p>
+                <p>·长度限制在3-63之间</p>
+            </div>
         </div>
         <div class="form-group">
-            <label for="location" class="col-sm-2 control-label">所属地区：</label>
+            <label for="location" class="col-sm-3 control-label">所属地区：</label>
 
-            <div class="col-sm-10">
+            <div class="col-sm-5">
                 <span ng-if="bucket">{{region.name}}</span>
                 <select ng-if="!bucket" id="location" name="location" ng-model="region" class="form-control" ng-options="region.name for region in regions"></select>
             </div>
         </div>
         <div class="form-group">
-            <label for="permission" class="col-sm-2 control-label">读写权限：</label>
-            <div class="col-sm-10">
+            <label for="permission" class="col-sm-3 control-label">读写权限：</label>
+            <div class="col-sm-5">
                 <span us-spinner ng-show="bucket&&loading"></span>
                 <select ng-if="!bucket || !loading" id="permission" name="permission"  ng-model="acl" class="form-control" ng-options="acl.name for acl in acls"></select>
             </div>
@@ -32,7 +36,10 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-danger pull-left" ng-show="bucket" ng-click="delBucket(bucket)">删除Bucket</button>
-    <button type="button" class="btn btn-primary"  ng-show="!bucket" ng-click="createBucket(cBucket.name,region,acl)">确定</button>
-    <button type="button" class="btn btn-primary"  ng-show="bucket" ng-click="editBucket(acl)" ng-disabled="loading">确定</button>
-    <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+    <button type="button" class="btn btn-default pull-right" ng-click="cancel()">取消</button>
+    <button type="button" class="btn btn-primary pull-right"  ng-show="!bucket" ng-disabled="loading" ng-click="createBucket(cBucket.name,region,acl)">确定</button>
+    <button type="button" class="btn btn-primary pull-right"  ng-show="bucket" ng-disabled="loading" ng-click="editBucket(acl)" ng-disabled="loading">确定</button>
+    <div class="pull-right spinner-wrapper">
+        <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"  spinner-key="add-bucket-spinner"  spinner-start-active="1"></span>
+    </div>
 </div>

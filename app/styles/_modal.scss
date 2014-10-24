@@ -1,3 +1,15 @@
+.add_bucket_modal{
+
+  .tip{
+    position: absolute;
+    right: 10px;
+  }
+
+  .modal-body  span{
+    line-height: 32px;
+  }
+}
+
 .set_http_header_modal {
   .tab-content {
     border: 1px solid $baseBorderColor;
@@ -121,4 +133,8 @@
     }
   }
 
+}
+
+.del_bucket_confirm_modal .modal-dialog{
+  width: 500px;
 }

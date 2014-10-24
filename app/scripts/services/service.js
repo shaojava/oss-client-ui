@@ -705,7 +705,7 @@ angular.module('ossClientUiApp')
                 });
                 return groupMenus;
             },
-            getTopExcludeMenus:function(){
+            getTopExcludeMenus: function () {
                 return ['paste'];
             }
         };
@@ -1293,7 +1293,7 @@ angular.module('ossClientUiApp')
 
         }
     }])
-    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', function ($modal, Bucket, OSSApi, OSSObject, OSSException, OSSRegion) {
+    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -1304,6 +1304,7 @@ angular.module('ossClientUiApp')
              * @returns {*}
              */
             addBucket: function (bucket) {
+                var _context = this;
                 var option = {
                     templateUrl: 'views/add_bucket_modal.html',
                     windowClass: 'add_bucket_modal',
@@ -1331,7 +1332,13 @@ angular.module('ossClientUiApp')
                                 value: key
                             })
                         });
-
+                        $scope.$watch('loading', function (newVal) {
+                            if (newVal) {
+                                usSpinnerService.spin('add-bucket-spinner');
+                            } else {
+                                usSpinnerService.stop('add-bucket-spinner');
+                            }
+                        })
                         $scope.regions = regions;
                         if (!bucket) {
                             $scope.region = $scope.regions[0];
@@ -1339,9 +1346,11 @@ angular.module('ossClientUiApp')
                             $scope.region = Util.Array.getObjectByKeyValue($scope.regions, 'value', bucket.Location);
                         }
 
+
                         //获取ACl信息
                         if ($scope.bucket) {
                             $scope.loading = true;
+
                             OSSApi.getBucketAcl(bucket).success(function (res) {
                                 $scope.loading = false;
                                 $scope.acl = Util.Array.getObjectByKeyValue($scope.acls, 'value', res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
@@ -1354,8 +1363,15 @@ angular.module('ossClientUiApp')
                             $modalInstance.dismiss('cancel');
                         };
 
+                        $scope.loading = false;
                         $scope.createBucket = function (bucketName, region, acl) {
+                            if (!bucketName || !bucketName.length) {
+                                alert('Bucket的名称不能为空');
+                                return;
+                            }
+                            $scope.loading = true;
                             OSSApi.createBucket(bucketName, region.value, acl.value).success(function () {
+                                $scope.loading = false;
                                 $modalInstance.close({
                                     act: 'add',
                                     bucket: {
@@ -1365,12 +1381,15 @@ angular.module('ossClientUiApp')
                                     }
                                 });
                             }).error(function (response, statusCode) {
-                                OSSException.handleAjaxException(response, statusCode);
+                                $scope.loading = false;
+                                $rootScope.$broadcast('showError', OSSException.getError(response, statusCode).msg);
                             });
                         };
 
                         $scope.editBucket = function (acl) {
+                            $scope.loading = true;
                             OSSApi.editBucket(bucket, acl.value).success(function () {
+                                $scope.loading = false;
                                 angular.extend(bucket, {
                                     Acl: acl.value
                                 })
@@ -1378,15 +1397,27 @@ angular.module('ossClientUiApp')
                                     act: 'edit',
                                     bucket: bucket
                                 });
+                            }).error(function (response, statusCode) {
+                                $scope.loading = false;
+                                $rootScope.$broadcast('showError', OSSException.getError(response, statusCode).msg);
                             });
                         };
 
                         $scope.delBucket = function () {
-                            OSSApi.delBucket(bucket).success(function () {
-                                $modalInstance.close({
-                                    act: 'del',
-                                    bucket: bucket
-                                });
+                            _context.delBucketConfirm().result.then(function (param) {
+                                OSS.invoke('deleteBucket', {
+                                    keyid: param.accessKey,
+                                    keysecret: param.accessSecret,
+                                    bucket: bucket.Name,
+                                    location: bucket.Location
+                                }, function (res) {
+                                    if (!res.error) {
+                                        $rootScope.$broadcast('removeBucket', bucket);
+                                        $modalInstance.close();
+                                    } else {
+                                        $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                                    }
+                                })
                             });
                         };
                     }
@@ -1541,6 +1572,36 @@ angular.module('ossClientUiApp')
 
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
+                        };
+
+                    }
+                };
+                option = angular.extend({}, defaultOption, option);
+                return $modal.open(option);
+            },
+            delBucketConfirm: function () {
+
+                var option = {
+                    templateUrl: 'views/del_bucket_confirm_modal.html',
+                    windowClass: 'del_bucket_confirm_modal',
+                    controller: function ($scope, $modalInstance) {
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+
+                        $scope.delConfirm = function (accessKey, accessSecret) {
+                            if (!accessKey) {
+                                alert('请输入 Access Key ID');
+                                return;
+                            }
+                            if (!accessSecret) {
+                                alert('请输入 Access Key Secret');
+                                return;
+                            }
+                            $modalInstance.close({
+                                accessKey: accessKey,
+                                accessSecret: accessSecret
+                            });
                         };
 
                     }

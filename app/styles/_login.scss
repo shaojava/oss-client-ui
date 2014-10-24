@@ -2,7 +2,16 @@
 
 #login-page {
   .section-wrapper{
-    height: 220px;
+    height: 250px;
     overflow: hidden;
+  }
+
+  .tip{
+    color: #fff;
+    margin-bottom:10px;
+
+    .fa{
+      margin-right: 5px;
+    }
   }
 }

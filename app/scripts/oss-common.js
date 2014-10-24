@@ -23,7 +23,7 @@ angular.module('OSSCommon', [])
             exportAuthorization: function () {
                 var UIPath = OSS.invoke('getUIPath');
                 OSS.invoke('showWnd', angular.extend({}, defaultParam, {
-                    url: UIPath + 'export-authorization.html'
+                    url: UIPath + '/export-authorization.html'
                 }));
             },
             /**
@@ -32,7 +32,7 @@ angular.module('OSSCommon', [])
             customServerHost: function () {
                 var UIPath = OSS.invoke('getUIPath');
                 OSS.invoke('showWnd', angular.extend({}, defaultParam, {
-                    url: UIPath + 'custom-domain.html'
+                    url: UIPath + '/custom-domain.html'
                 }));
             }
         };

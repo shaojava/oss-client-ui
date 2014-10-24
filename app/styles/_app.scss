@@ -23,27 +23,33 @@
     padding: 0 15px;
     border-bottom: 1px solid rgba(255, 255, 255, .1);
 
+    .export-auth,
     .add-bucket {
       position: absolute;
-      width: 18px;
-      height: 18px;
-      top: 50%;
-      right: 10px;
-      margin-top: -8px;
-      border: 2px solid $embedBgColor;
-      border-radius: 9px;
-      color: $embedBgColor;
-      line-height: 18px;
       text-align: center;
-      &:before {
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        top: 50%;
-        margin-top: -9px;
-        left: 50%;;
-        margin-left: -9px;
-      }
+      color: $embedBgColor;
+    }
+
+    .add-bucket{
+      right: 10px;
+      box-shadow: 0 0 0 2px $embedBgColor;
+      border-radius: 9px;
+      height: 15px;
+      width: 15px;
+      margin-top: -8px;
+      top: 50%;
+    }
+
+    .export-auth{
+      right:32px;
+      top:17px;
+      font-size: 20px;
+    }
+
+    .add-bucket:before{
+      position: relative;
+      left: -3px;
+      top:1px;
     }
   }
 
@@ -62,6 +68,11 @@
   }
 
   .bucket-list {
+    position: absolute;
+    top:50px;
+    bottom: 0;
+    overflow: auto;
+    width: 100%;
     > li {
       margin: 4px 0;
       position: relative;
@@ -85,8 +96,8 @@
           background: $bucketItemHoverBg;
         }
 
-        &:focus .caret,
-        &:hover .caret {
+        &:focus .show-menu,
+        &:hover .show-menu {
           display: inline-block;
         }
 
@@ -95,12 +106,15 @@
           color: $leftSidebarSelectFontColor;
         }
 
-        .caret {
+        .show-menu {
           position: absolute;
-          right: 10px;
-          top: 14px;
+          right:0;
+          top: 0;
           display: none;
           color: #fff;
+          width: 24px;
+          height: 24px;
+          text-align: center;
         }
 
       }

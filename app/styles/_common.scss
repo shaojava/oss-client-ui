@@ -92,7 +92,7 @@ input:focus {
 
   h1 {
     text-align: center;
-    margin: 20px 0;
+    margin: 30px 0;
   }
 
   .section-wrapper {
@@ -116,6 +116,19 @@ input:focus {
     .btn{
       width: 45%;
       margin: 0 2%;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .btn-default{
+      background: #fff;
+      border-color: #fff;
+    }
+
+    .btn-primary{
+      background:#50acf3;
+      border-color:#50acf3;
     }
   }
 
@@ -125,6 +138,7 @@ input:focus {
     border-color: transparent;
     border-radius: 2px;
     color: #fff;
+    height: 34px;
   }
 
   .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
@@ -206,4 +220,10 @@ input:focus {
   color: $lightFontColor;
   text-align: center;
   padding-top: 60px;
+}
+
+.modal-footer .spinner-wrapper{
+  height: 30px;
+  width: 30px;
+  position: relative;
 }

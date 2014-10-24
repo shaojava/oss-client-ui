@@ -84,3 +84,31 @@ button{
   border-left-color: #fff;
   border-bottom-color: #fff;
 }
+
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+  cursor:default;
+}
+
+.modal-header{
+  padding: 12px 15px;
+  h4{
+    font-size: 15px;
+  }
+}
+
+.modal-content{
+  border-radius: 4px;
+}
+
+.modal-body{
+  padding: 30px 20px;
+}
+
+.form-group{
+  margin-bottom: 20px;
+}
+
+label{
+  font-weight: normal;
+}

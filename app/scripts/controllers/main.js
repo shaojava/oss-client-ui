@@ -32,6 +32,10 @@ angular.module('ossClientUiApp')
             });
         };
 
+        $scope.onConextMenuShow = function(bucket){
+            $scope.activeBucket = bucket;
+        }
+
         //面包屑
         $scope.breads = [];
 
@@ -97,6 +101,10 @@ angular.module('ossClientUiApp')
         $scope.$on('showError', function (event, errorMsg, errorTitle) {
             if (!errorMsg) return;
             OSSAlert.error(errorMsg, errorTitle);
+        });
+
+        $scope.$on('removeBucket',function(event,bucket){
+            Util.Array.removeByValue($scope.buckets, bucket);
         });
 
     }])
@@ -311,7 +319,7 @@ angular.module('ossClientUiApp')
             if (menu && list.length) {
                 menu.execute(list);
             }
-        }
+        };
 
     }])
     .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException) {

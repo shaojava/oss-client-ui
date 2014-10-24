@@ -16,8 +16,7 @@
 </head>
 <body ng-controller="MainCtrl" id="login-page" class="dark-theme">
     <h1>
-        <!--<img src=""  alt=""/>-->
-        OSS
+        <img src="images/oss_logo.png"  alt=""/>
     </h1>
     <div class="section-wrapper">
         <section class="current form-horizontal" ng-show="step=='loginById'">
@@ -37,7 +36,7 @@
             </div>
             <div class="form-group">
                 <div class="btn-wrapper">
-                    <button class="btn btn-primary" ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region)">登录</button>
+                    <button class="btn btn-primary" ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region)">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
                     <button class="btn btn-default" ng-click="step='importAuthorization'">导入授权</button>
                 </div>
             </div>
@@ -60,12 +59,12 @@
             </div>
             <div class="form-group">
                 <button class="btn btn-primary" ng-click="import(isCloudHost,region)">选择文件并导入</button>
-                <button class="btn btn-default" ng-click="step='loginById'">返回</button>
+                <button class="btn btn-default" ng-click="step='loginById'">返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
             </div>
         </section>
         <section class="form-horizontal" ng-show="step=='setPassword'">
             <div class="form-group">
-                <div>
+                <div class="tip">
                     <i class="fa fa-info-circle"></i>
                     <span>设置一个安全密码，下次打开客户端时只需要输入这个安全密码就能使用客户端</span>
                 </div>
@@ -83,8 +82,8 @@
         </section>
         <section class="form-horizontal" ng-show="step=='loginByPassword'">
             <div class="form-group">
-                <div>
-                    <i class="fa fa-info-circle"></i>
+                <div class="tip">
+                    <i class="fa fa-info-circle fa-lg" ></i>
                     <span>输入您设置的安全密码即可快速登录管理器</span>
                 </div>
             </div>
@@ -92,7 +91,7 @@
                 <input type="password" ng-model="secretPassword" class="form-control" placeholder="安全密码"/>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" ng-click="loginByPassword(secretPassword)">进入</button>
+                <button class="btn btn-primary" ng-click="loginByPassword(secretPassword)">进&nbsp;&nbsp;&nbsp;&nbsp;入</button>
                 <button class="btn btn-default" ng-click="clearPassword()">清除安全密码</button>
             </div>
         </section>

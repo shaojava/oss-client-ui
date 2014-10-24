@@ -19,14 +19,18 @@
 <div class="wrapper">
     <div class="left-sidebar">
         <div class="left-header">
-            <h1>OSS</h1>
-            <button class="fa fa-plus add-bucket" ng-click="showAddBucketModal()"></button>
-            <!--<button class="fa fa-plus" ng-click="exportAuthorization()">导出</button>-->
+            <h1><img src="images/oss_logo_small.png" alt=""/></h1>
+            <button title="创建Bucket" class="fa fa-plus add-bucket" ng-click="showAddBucketModal()"></button>
+            <button class="fa fa-cog fa-lg export-auth" ng-click="exportAuthorization()" title="设置"></button>
         </div>
-        <ul class="bucket-list">
-            <li ng-repeat="bucket in buckets" dropdown title="{{bucket.Name}}">
-                <a href="#{{bucket.Name|getLocation}}" ng-class="{'selected':bucket.selected}"><span
-                        ng-bind="bucket.Name"></span><span class="caret" dropdown-toggle></span></a>
+        <ul class="scrollbar dark bucket-list">
+            <li ng-repeat="bucket in buckets" dropdown title="{{bucket.Name}}" context-menu="onConextMenuShow(bucket)" data-target="bucket-menu">
+                <a href="#{{bucket.Name|getLocation}}" ng-class="{'selected':bucket.selected}">
+                    <span ng-bind="bucket.Name"></span>
+                    <span class="show-menu" dropdown-toggle>
+                        <i class="fa fa-caret-down fa-caret-lg"></i>
+                    </span>
+                </a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="javascript:;" ng-click="editBucket(bucket)">属性管理</a></li>
                     <li><a href="#{{bucket.Name|getLocation:'':'upload'}}"
@@ -34,6 +38,13 @@
                 </ul>
             </li>
         </ul>
+        <div class="dropdown position-fixed" id="bucket-menu">
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="javascript:;" ng-click="editBucket(activeBucket)">属性管理</a></li>
+                <li><a href="#{{activeBucket.Name|getLocation:'':'upload'}}"
+                       ng-click="manageBucketPartition(activeBucket)">碎片管理</a></li>
+            </ul>
+        </div>
     </div>
     <div class="main" ng-class="{'show-trans-queue':showTransQueue}">
         <div class="search-wrapper">
