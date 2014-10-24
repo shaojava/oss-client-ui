@@ -1404,7 +1404,7 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.delBucket = function () {
-                            _context.delBucketConfirm().result.then(function (param) {
+                            _context.delBucketConfirm(bucket).result.then(function (param) {
                                 OSS.invoke('deleteBucket', {
                                     keyid: param.accessKey,
                                     keysecret: param.accessSecret,
@@ -1415,7 +1415,7 @@ angular.module('ossClientUiApp')
                                         $rootScope.$broadcast('removeBucket', bucket);
                                         $modalInstance.close();
                                     } else {
-                                        $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                                        alert(OSSException.getClientErrorMsg(res));
                                     }
                                 })
                             });
@@ -1579,7 +1579,7 @@ angular.module('ossClientUiApp')
                 option = angular.extend({}, defaultOption, option);
                 return $modal.open(option);
             },
-            delBucketConfirm: function () {
+            delBucketConfirm: function (bucket) {
 
                 var option = {
                     templateUrl: 'views/del_bucket_confirm_modal.html',
@@ -1590,6 +1590,9 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.delConfirm = function (accessKey, accessSecret) {
+                            if(!confirm('确定要删除Bucket “' + bucket.Name +'“吗？删除后数据将无法恢复')){
+                                return;
+                            }
                             if (!accessKey) {
                                 alert('请输入 Access Key ID');
                                 return;

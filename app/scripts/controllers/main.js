@@ -8,7 +8,7 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert) {
+    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert','OSSLocation', '$location',function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert,OSSLocation,$location) {
 
         //获取所有bucket列表
         $scope.buckets = [];
@@ -18,6 +18,7 @@ angular.module('ossClientUiApp')
             OSSModal.addBucket().result.then(function (param) {
                 if (param.act == 'add') {
                     $scope.buckets.push(param.bucket);
+                    $location.path(OSSLocation.getUrl(param.bucket.Name));
                 }
 
             });
@@ -104,6 +105,9 @@ angular.module('ossClientUiApp')
         });
 
         $scope.$on('removeBucket',function(event,bucket){
+            if(bucket.selected && $scope.buckets.length){
+                $location.path(OSSLocation.getUrl($scope.buckets[0].Name));
+            }
             Util.Array.removeByValue($scope.buckets, bucket);
         });
 

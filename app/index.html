@@ -46,7 +46,7 @@
             </ul>
         </div>
     </div>
-    <div class="main" ng-class="{'show-trans-queue':showTransQueue}">
+    <div class="main" ng-class="{'show-trans-queue':showTransQueue}" ng-show="buckets && buckets.length">
         <div class="search-wrapper">
             <input name="keyword" id="keyword" ng-model="keyword" autocomplete="off" smart-search/>
             <a href="javascript:;" class="fa fa-search fa-lg"></a>
