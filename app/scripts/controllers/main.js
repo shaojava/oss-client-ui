@@ -594,24 +594,69 @@ angular.module('ossClientUiApp')
             loadUploads();
         };
 
-        //已选中upload列表
-        $scope.selectedUploads = [];
-
         //初始加载
         loadUploads();
 
+        $scope.enableKeyBoardNav = 1;
+
+        //获取以选中的列表
+        $scope.getSelectedList = function () {
+            return _.where($scope.uploads, {
+                selected: true
+            })
+        };
+
+        //选中
+        $scope.select = function (item) {
+            console.log('$scope.select', item);
+            item.selected = true;
+            $scope.scrollToIndex = _.indexOf($scope.uploads, item);
+        };
+
+        //取消选中
+        $scope.unSelect = function (item) {
+            item.selected = false;
+        };
+
+        //取消所有选中
+        $scope.unSelectAll = function () {
+            angular.forEach($scope.getSelectedList(), function (item) {
+                $scope.unSelect(item);
+            });
+        };
+
         //点击uploaditem
-        $scope.handleClick = function (upload) {
-            upload.selected = !upload.selected;
+        $scope.handleClick = function ($event,upload,index) {
+            if ($event.ctrlKey || $event.metaKey) {
+                if (upload.selected) {
+                    $scope.unSelect(upload);
+                } else {
+                    $scope.select(upload);
+                }
+            } else if ($event.shiftKey) {
+                var lastIndex = $scope.shiftLastIndex;
+                $scope.unSelectAll();
+                if (index > lastIndex) {
+                    for (var i = lastIndex; i <= index; i++) {
+                        $scope.select($scope.uploads[i]);
+                    }
+                } else if (index < lastIndex) {
+                    for (var i = index; i <= lastIndex; i++) {
+                        $scope.select($scope.uploads[i]);
+                    }
+                }
+
+            } else {
+                $scope.unSelectAll();
+                $scope.select(upload);
+            }
+
+            if (!$event.shiftKey) {
+                $scope.shiftLastIndex = index;
+            }
         };
 
         $scope.topMenuList = OSSUploadMenu.getAllMenu();
-
-        $scope.$watch('uploads', function () {
-            $scope.selectedUploads = _.where($scope.uploads, {
-                selected: true
-            });
-        }, true);
 
         $scope.$on('removeUpload', function (event, uploads) {
             if (!angular.isArray(uploads)) {
@@ -623,5 +668,11 @@ angular.module('ossClientUiApp')
             });
         })
 
+        $scope.onContextMenuShow = function (upload) {
+            if (!upload.selected) {
+                $scope.unSelectAll();
+                $scope.select(upload);
+            }
+        };
 
     }]);

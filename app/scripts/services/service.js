@@ -723,6 +723,9 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (selectedUploads) {
+                    if(!confirm('确定要删除选择的碎片？')){
+                        return;
+                    }
                     angular.forEach(selectedUploads, function (upload) {
                         OSSApi.deleteUpload(Bucket.getCurrentBucket(), upload).success(function () {
                             $rootScope.$broadcast('removeUpload', upload);
