@@ -434,6 +434,8 @@
 
         .filename{
           padding: 0 10px;
+          max-width: 70%;
+          @include ellipsis;
           > i{
             margin-right:5px;
           }

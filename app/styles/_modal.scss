@@ -4,7 +4,6 @@
     position: absolute;
     right: 10px;
   }
-
   .modal-body  span{
     line-height: 32px;
   }
@@ -13,9 +12,12 @@
 .set_http_header_modal {
   .tab-content {
     border: 1px solid $baseBorderColor;
-    padding: 30px 40px;
-    max-height: 300px;
-    overflow: auto;
+
+    .scrollbar{
+      padding: 25px 40px;
+      max-height: 300px;
+      overflow: auto;
+    }
   }
 
   .form-horizontal .control-label {
@@ -137,4 +139,8 @@
 
 .del_bucket_confirm_modal .modal-dialog{
   width: 500px;
+}
+
+.get_object_uri_modal .modal-body span{
+  line-height: 32px;
 }

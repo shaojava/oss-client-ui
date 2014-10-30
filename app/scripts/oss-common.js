@@ -207,5 +207,24 @@ angular.module('OSSCommon', [])
             }
         }
     }])
+    .directive('autoSelect', [function () {
+        return {
+            restrict: 'A',
+            link: function (scope, element,attrs) {
+                var isAutoSelect = false;
+                attrs.$observe('autoSelect',function(isAuto){
+                    isAutoSelect = isAuto;
+                });
+
+                element.on('click.autoSelect',function(){
+                    console.log('isAutoSelect',isAutoSelect);
+                    if(isAutoSelect){
+                        element.select();
+                    }
+                });
+
+            }
+        }
+    }])
 ;
 

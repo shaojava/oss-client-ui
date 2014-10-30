@@ -55,6 +55,15 @@ input:focus {
   @return $size;
 }
 
+//最小高度
+@each $size in 250, 300 ,400, 500 {
+
+  .min-height-#{$size} {
+    min-height: #{$size}px;
+  }
+
+}
+
 
 //文件图标样式
 @each $size in 16, 24 ,32, 128 {

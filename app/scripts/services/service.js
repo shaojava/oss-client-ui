@@ -108,7 +108,6 @@ angular.module('ossClientUiApp')
         }
     }])
     .factory('OSSUploadQueue', ['$interval', function ($interval) {
-        var refreshInterval = 500;
         return {
             items: [],
             uploadCount: 0,
@@ -125,10 +124,9 @@ angular.module('ossClientUiApp')
             add: function (item) {
                 this.items.push(item);
             },
-            get: function (bucket, object) {
+            get: function (pathhash) {
                 return _.findWhere(this.items, {
-                    bucket: bucket,
-                    object: object
+                    pathhash: pathhash
                 });
             },
             remove: function (item) {
@@ -140,27 +138,29 @@ angular.module('ossClientUiApp')
             update: function (item, param) {
                 angular.extend(item, param);
             },
-            refresh: function () {
+            refresh: function (isStop) {
                 var _self = this;
-                $interval(function () {
-                    var res = OSS.invoke('getUpload', undefined, undefined, false);
-                    angular.forEach(res['list'], function (val) {
-                        var existItem = _self.get(val.bucket, val.object);
-                        if (existItem) {
-                            _self.update(existItem, val);
-                        } else {
-                            _self.add(val);
-                        }
-                    })
-                    _self.uploadCount = res['count'];
-                    _self.uploadSpeed = res['upload'];
-                    _self.downloadSpeed = res['download'];
-                }, refreshInterval);
+                if (isStop) {
+                    OSS.invoke('changeUpload', {start: 0});
+                } else {
+                    OSS.invoke('changeUpload', {start: 1}, function (res) {
+                        angular.forEach(res['list'], function (val) {
+                            var existItem = _self.get(val.pathhash);
+                            if (existItem) {
+                                _self.update(existItem, val);
+                            } else {
+                                _self.add(val);
+                            }
+                        });
+                        _self.uploadCount = res['count'];
+                        _self.uploadSpeed = res['upload'];
+                        _self.downloadSpeed = res['download'];
+                    });
+                }
             }
         };
     }])
     .factory('OSSDownloadQueue', ['$interval', function ($interval) {
-        var refreshInterval = 500;
         return {
             items: [],
             uploadCount: 0,
@@ -191,23 +191,25 @@ angular.module('ossClientUiApp')
             update: function (item, param) {
                 angular.extend(item, param);
             },
-            refresh: function () {
+            refresh: function (isStop) {
                 var _self = this;
-                $interval(function () {
-                    var res = OSS.invoke('getDownload', undefined, undefined, false);
-                    angular.forEach(res['list'], function (val) {
-                        var existItem = _self.get(val.fullpath);
-                        if (existItem) {
-                            _self.update(existItem, val);
-                        } else {
-                            _self.add(val);
-                        }
-                    })
-                    _self.uploadCount = res['count'];
-                    _self.uploadSpeed = res['upload'];
-                    _self.downloadSpeed = res['download'];
-                    console.log('downloadSpeed', _self.downloadSpeed);
-                }, refreshInterval);
+                if (isStop) {
+                    OSS.invoke('changeDownload', {start: 0});
+                } else {
+                    OSS.invoke('changeDownload', {start: 1}, function (res) {
+                        angular.forEach(res['list'], function (val) {
+                            var existItem = _self.get(val.fullpath);
+                            if (existItem) {
+                                _self.update(existItem, val);
+                            } else {
+                                _self.add(val);
+                            }
+                        })
+                        _self.uploadCount = res['count'];
+                        _self.uploadSpeed = res['upload'];
+                        _self.downloadSpeed = res['download'];
+                    });
+                }
             }
         };
     }])
@@ -723,7 +725,7 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (selectedUploads) {
-                    if(!confirm('确定要删除选择的碎片？')){
+                    if (!confirm('确定要删除选择的碎片？')) {
                         return;
                     }
                     angular.forEach(selectedUploads, function (upload) {
@@ -900,9 +902,6 @@ angular.module('ossClientUiApp')
             },
             getIcon: function (dir, name) {
                 return 'icon-' + this.getIconSuffix(dir, name);
-            },
-            getURI: function (bucket, objectPath) {
-                return 'http://' + bucket.Name + bucket.Location + 'aliyuncs.com/' + objectPath;
             }
         };
     }])
@@ -1071,6 +1070,20 @@ angular.module('ossClientUiApp')
         };
 
         return {
+            getURI: function (bucket, objectName, expires) {
+                if (expires) {
+                    return 'http://' + bucket.Name + '.' + bucket.Location + '.' + 'aliyuncs.com/' + encodeURIComponent(objectName);
+                } else {
+                    expires = getExpires(expires);
+                    var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectName);
+                    var signature = OSS.invoke('getSignature', {
+                        verb: 'GET',
+                        expires: expires,
+                        canonicalized_resource: canonicalizedResource
+                    });
+                    return getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                }
+            },
             getBuckets: function () {
                 var expires = getExpires();
                 var canonicalizedResource = getCanonicalizedResource();
@@ -1313,6 +1326,7 @@ angular.module('ossClientUiApp')
                     windowClass: 'add_bucket_modal',
                     controller: function ($scope, $modalInstance) {
                         $scope.loading = false;
+                        $scope.getingBucketInfo = false;
                         $scope.bucket = bucket || null;
 
                         $scope.cBucket = {};
@@ -1326,7 +1340,7 @@ angular.module('ossClientUiApp')
 
                         $scope.acls = acls;
                         if (!bucket) {
-                            $scope.acl = $scope.acls[0];
+                            $scope.selectAcl = $scope.acls[0];
                         }
 
                         angular.forEach(OSSRegion.list(), function (val, key) {
@@ -1341,7 +1355,16 @@ angular.module('ossClientUiApp')
                             } else {
                                 usSpinnerService.stop('add-bucket-spinner');
                             }
-                        })
+                        });
+
+                        $scope.$watch('getingBucketInfo', function (newVal) {
+                            if (newVal) {
+                                usSpinnerService.spin('get-bucket-spinner');
+                            } else {
+                                usSpinnerService.stop('get-bucket-spinner');
+                            }
+                        });
+
                         $scope.regions = regions;
                         if (!bucket) {
                             $scope.region = $scope.regions[0];
@@ -1353,10 +1376,14 @@ angular.module('ossClientUiApp')
                         //获取ACl信息
                         if ($scope.bucket) {
                             $scope.loading = true;
-
+                            $scope.getingBucketInfo = true;
                             OSSApi.getBucketAcl(bucket).success(function (res) {
                                 $scope.loading = false;
-                                $scope.acl = Util.Array.getObjectByKeyValue($scope.acls, 'value', res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
+                                $scope.getingBucketInfo = false;
+                                $scope.selectAcl = Util.Array.getObjectByKeyValue($scope.acls, 'value', res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
+                            }).error(function () {
+                                $scope.loading = false;
+                                $scope.getingBucketInfo = false;
                             });
                         } else {
                             $scope.loading = true;
@@ -1520,8 +1547,44 @@ angular.module('ossClientUiApp')
                     templateUrl: 'views/get_object_uri_modal.html',
                     windowClass: 'get_object_uri_modal',
                     controller: function ($scope, $modalInstance) {
+
                         $scope.filename = Util.String.baseName(object.path);
-                        $scope.uri = OSSObject.getURI(bucket, object.path);
+
+                        $scope.expire = 3600;
+
+                        $scope.loading = true;
+
+                        $scope.$watch('loading', function (newVal) {
+                            if (newVal) {
+                                usSpinnerService.spin('get-acl-spinner');
+                            } else {
+                                usSpinnerService.stop('get-acl-spinner');
+                            }
+                        });
+
+                        //获取bucket的acl信息
+                        OSSApi.getBucketAcl(bucket).success(function (res) {
+                            $scope.loading = false;
+                            if (res && res["AccessControlPolicy"] && res["AccessControlPolicy"]["AccessControlList"] && res["AccessControlPolicy"]["AccessControlList"]["Grant"]) {
+                                var acl = res["AccessControlPolicy"]["AccessControlList"]["Grant"];
+                                if (acl != 'private') {
+                                    $scope.uri = OSSApi.getURI(bucket, object.path);
+                                }
+                            }
+                        }).error(function () {
+                            $scope.loading = false;
+                        });
+
+                        //获取私有bucket的uri
+                        $scope.getUri = function (expire) {
+                            $scope.uri = OSSApi.getURI(bucket, object.path, expire);
+                        };
+
+                        $scope.copyToClipborad = function (uri) {
+                            OSS.invoke('setClipboardData', uri);
+                            alert('已复制到剪切板');
+                        };
+
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
@@ -1593,7 +1656,7 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.delConfirm = function (accessKey, accessSecret) {
-                            if(!confirm('确定要删除Bucket “' + bucket.Name +'“吗？删除后数据将无法恢复')){
+                            if (!confirm('确定要删除Bucket “' + bucket.Name + '“吗？删除后数据将无法恢复')) {
                                 return;
                             }
                             if (!accessKey) {

@@ -6,7 +6,7 @@
     <section>
         <tabset>
             <tab heading="HTTP头">
-                <ul class="form-horizontal">
+                <ul class="scrollbar form-horizontal">
                     <li ng-repeat="header in headers">
                         <div class="form-group">
                             <label for="{{header.name}}" class="pull-left control-label" ng-bind="header.text+':'"></label>
@@ -18,7 +18,7 @@
                 </ul>
             </tab>
             <tab heading="自定义属性">
-                <ul class="custom-header-list">
+                <ul class="scrollbar custom-header-list">
                     <li ng-repeat="customHeader in customHeaders" class="clearfix">
                         <div class="pull-left form-group">
                             <label for="header_name" class="control-label">属性名称</label>
