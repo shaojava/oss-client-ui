@@ -116,9 +116,11 @@ angular.module('ossClientUiApp')
 
         //上传的操作菜单
         $scope.uploadQueueMenus = OSSQueueMenu.getUploadMenu();
+        $scope.uploadMenuGroup = OSSQueueMenu.groupBy($scope.uploadQueueMenus,'upload');
 
         //下载的操作菜单
         $scope.downloadQueueMenus = OSSQueueMenu.getDownloadMenu();
+        $scope.downloadMenuGroup = OSSQueueMenu.groupBy($scope.downloadQueueMenus,'download');
 
         //获取以选中的列表
         $scope.getSelectedList = function (type) {
@@ -311,10 +313,10 @@ angular.module('ossClientUiApp')
                 menu.execute([item]);
             }
         };
-
+        var excludeMenus = [];
         //是否是顶部要排除的menu
         $scope.isExcludeTopMenu = function(menu){
-            return _.indexOf(['remove'],menu.name) >= 0;
+            return _.indexOf(excludeMenus,menu.name) >= 0;
         };
 
         //清空已完成

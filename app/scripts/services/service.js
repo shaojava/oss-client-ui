@@ -8,26 +8,6 @@
  * Factory in the ossClientUiApp.
  */
 angular.module('ossClientUiApp')
-
-    .factory('OSSQueueItem', function () {
-        return {
-            isUploading: function (item) {
-                return item.status == 1;
-            },
-            isWaiting: function (item) {
-                return item.status == 2;
-            },
-            isPause: function (item) {
-                return item.status == 3;
-            },
-            isDone: function (item) {
-                return item.status == 4;
-            },
-            isError: function (item) {
-                return item.status == 5;
-            }
-        };
-    })
     .factory('OSSAlert', ['$modal', function ($modal) {
 
         function openAlertModal(type, message, title, buttons) {
@@ -107,13 +87,13 @@ angular.module('ossClientUiApp')
             }
         }
     }])
-    .factory('OSSUploadQueue', ['$rootScope', function ($rootScope) {
+    .factory('OSSUploadQueue', ['$rootScope','$timeout',function ($rootScope,$timeout) {
         return {
             items: [],
             uploadCount: 0,
             uploadSpeed: 0,
             downloadSpeed: 0,
-            isStop:true,
+            isStop: true,
             init: function () {
                 var res = OSS.invoke('getUpload');
                 this.items = res['list'];
@@ -142,7 +122,7 @@ angular.module('ossClientUiApp')
             refresh: function () {
                 var _self = this;
                 OSS.invoke('changeUpload', {start: 1}, function (res) {
-                    $rootScope.$apply(function(){
+                    $timeout(function () {
                         angular.forEach(res['list'], function (val) {
                             var existItem = _self.get(val.pathhash);
                             if (existItem) {
@@ -158,22 +138,73 @@ angular.module('ossClientUiApp')
                 },false);
                 this.isStop = false;
             },
-            stop:function(){
+            stop: function () {
                 OSS.invoke('changeUpload', {start: 0});
                 this.isStop = true;
             },
-            isStoped:function(){
+            isStoped: function () {
                 return this.isStop;
             }
         };
     }])
-    .factory('OSSDownloadQueue', ['$rootScope',function ($rootScope) {
+    .factory('OSSQueueItem', [function () {
+        var STATUS_ERROR = 5,
+            STATUS_PROGRESS = 1,
+            STATUS_DONE = 4,
+            STATUS_WAITING = 2,
+            STATUS_PASUED = 3;
+        var OSSQueueItem = {
+            setStatus:function(item,status){
+                console.log('setStatus',arguments);
+                item.status = status;
+            },
+            //是否出错
+            isError: function (item) {
+                return item.status == STATUS_ERROR;
+            },
+            //是否正在上传或下载
+            isInProgress: function (item) {
+                return item.status == STATUS_PROGRESS;
+            },
+            //是否已完成
+            isDone: function (item) {
+                return item.status == STATUS_DONE;
+            },
+            //是否在等待上传
+            isWaiting: function (item) {
+                return item.status == STATUS_WAITING;
+            },
+            //是否已暂停
+            isPaused: function (item) {
+                return item.status == STATUS_PASUED;
+            },
+            setError:function(item){
+                OSSQueueItem.setStatus(item,STATUS_ERROR);
+            },
+            setProgress:function(item){
+                OSSQueueItem.setStatus(item,STATUS_PROGRESS);
+            },
+            setDone:function(item){
+                OSSQueueItem.setStatus(item,STATUS_DONE);
+            },
+            setWaiting:function(item){
+                OSSQueueItem.setStatus(item,STATUS_WAITING);
+            },
+            setPaused:function(item){
+                console.log('item',item);
+                OSSQueueItem.setStatus(item,STATUS_PASUED);
+            }
+        };
+
+        return OSSQueueItem;
+    }])
+    .factory('OSSDownloadQueue', ['$rootScope','$timeout',function ($rootScope,$timeout) {
         return {
             items: [],
             uploadCount: 0,
             uploadSpeed: 0,
             downloadSpeed: 0,
-            isStop:true,
+            isStop: true,
             init: function () {
                 var res = OSS.invoke('getDownload');
                 this.items = res['list'];
@@ -203,7 +234,7 @@ angular.module('ossClientUiApp')
                 var _self = this;
                 this.isStop = false;
                 OSS.invoke('changeDownload', {start: 1}, function (res) {
-                    $rootScope.$apply(function(){
+                    $timeout(function () {
                         angular.forEach(res['list'], function (val) {
                             var existItem = _self.get(val.fullpath);
                             if (existItem) {
@@ -216,13 +247,13 @@ angular.module('ossClientUiApp')
                         _self.uploadSpeed = res['upload'];
                         _self.downloadSpeed = res['download'];
                     })
-                },false);
+                }, false);
             },
-            stop:function(){
+            stop: function () {
                 OSS.invoke('changeDownload', {start: 0});
                 this.isStop = true;
             },
-            isStoped:function(){
+            isStoped: function () {
                 return this.isStop;
             }
         };
@@ -247,15 +278,17 @@ angular.module('ossClientUiApp')
          */
         var prepareUpladParam = function (selectedItems) {
             var param = {
-                all: 0,
-                list: []
+                all: selectedItems && selectedItems.length ? 0 : 1
             };
-            angular.forEach(selectedItems, function (item) {
-                param.list.push({
-                    bucket: item.bucket,
-                    object: item.object
+            if (selectedItems) {
+                param.list = [];
+                angular.forEach(selectedItems, function (item) {
+                    param.list.push({
+                        bucket: item.bucket,
+                        object: item.object
+                    });
                 });
-            })
+            }
             return param;
         };
 
@@ -266,14 +299,16 @@ angular.module('ossClientUiApp')
          */
         var prepareDownloadParam = function (selectedItems) {
             var param = {
-                all: 0,
-                list: []
+                all: selectedItems && selectedItems.length ? 0 : 1
             };
-            angular.forEach(selectedItems, function (item) {
-                param.list.push({
-                    fullpath: item.fullpath
+            if (selectedItems) {
+                param.list = [];
+                angular.forEach(selectedItems, function (item) {
+                    param.list.push({
+                        fullpath: item.fullpath
+                    });
                 });
-            })
+            }
             return param;
         };
 
@@ -282,10 +317,12 @@ angular.module('ossClientUiApp')
                 name: 'start',
                 text: '开始',
                 execute: function (selectedItems) {
+                    console.log('selectedItems',selectedItems);
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
                     OSS.invoke('startUpload', prepareUpladParam(selectedItems));
+                    _.each(selectedItems, OSSQueueItem.setProgress);
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -295,7 +332,7 @@ angular.module('ossClientUiApp')
                     var hasUnValidItem = false;
                     for (var i = 0; i < selectedItems.length; i++) {
                         var item = selectedItems[i];
-                        if (!OSSQueueItem.isPause(item)) {
+                        if (!OSSQueueItem.isPaused(item)) {
                             hasUnValidItem = true;
                         }
                     }
@@ -313,6 +350,7 @@ angular.module('ossClientUiApp')
                         return;
                     }
                     OSS.invoke('stopUpload', prepareUpladParam(selectedItems));
+                    _.each(selectedItems, OSSQueueItem.setPaused);
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -320,14 +358,22 @@ angular.module('ossClientUiApp')
                         return 0;
                     }
                     var hasUnValidItem = false;
+                    var count = 0;
                     for (var i = 0; i < selectedItems.length; i++) {
                         var item = selectedItems[i];
-                        if (OSSQueueItem.isPause(item) || OSSQueueItem.isError(item) || OSSQueueItem.isDone(item)) {
+                        if (OSSQueueItem.isPaused(item) || OSSQueueItem.isError(item) || OSSQueueItem.isDone(item)) {
                             hasUnValidItem = true;
+                            if(OSSQueueItem.isPaused(item)){
+                                count++;
+                            }
                         }
                     }
                     if (hasUnValidItem) {
-                        return 0;
+                        if(count ==  selectedItems.length){
+                            return -1;
+                        }else{
+                            return 0;
+                        }
                     }
                     return 1;
                 }
@@ -336,7 +382,7 @@ angular.module('ossClientUiApp')
                 name: 'cancel',
                 text: '取消',
                 execute: function (selectedItems) {
-                    if(!confirm('你确定要取消' + (selectedItems.length==1 ? '这个' :'这'+ selectedItems.length + '个' + '文件') + '的上传？')){
+                    if (!confirm('你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的上传？')) {
                         return;
                     }
                     if (!checkArgValid(selectedItems)) {
@@ -350,7 +396,20 @@ angular.module('ossClientUiApp')
                     if (!len) {
                         return 0;
                     }
-                    return 1;
+                    var doneItemsList = _.filter(selectedItems,function(item){
+                        return OSSQueueItem.isDone(item) || OSSQueueItem.isError(item);
+                    });
+
+                    var progressList = _.filter(selectedItems,function(item){
+                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item)|| OSSQueueItem.isPaused(item);
+                    });
+
+                    if(doneItemsList && doneItemsList.length == selectedItems.length){
+                        return -1;
+                    }else if(progressList && progressList.length == selectedItems.length){
+                        return 1
+                    }
+                    return 0;
                 }
             },
             {
@@ -366,22 +425,61 @@ angular.module('ossClientUiApp')
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
                     if (!len) {
-                        return 0;
+                        return -1;
                     }
-                    return 1;
+                    var doneItemsList = _.filter(selectedItems,function(item){
+                        return OSSQueueItem.isDone(item) || OSSQueueItem.isError(item);
+                    });
+
+                    if(doneItemsList && doneItemsList.length == selectedItems.length){
+                        return 1;
+                    }
+                    return -1;
+                }
+            },
+            {
+                name: 'pauseAll',
+                text: '全部暂停',
+                execute: function (selectedItems,items) {
+                    OSS.invoke('stopUpload', prepareUpladParam());
+                    _.each(_.filter(items,function(item){
+                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
+                    }), OSSQueueItem.setPaused);
+                },
+                getState: function (selectItems, items) {
+                    return _.find(items,function(item){
+                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
+                    }) ? 1 : 0;
+                }
+            },
+            {
+                name: 'startAll',
+                text: '全部开始',
+                execute: function (selectedItems,items) {
+                    OSS.invoke('startUpload', prepareUpladParam());
+                    _.each(_.filter(items,function(item){
+                        return OSSQueueItem.isPaused(item);
+                    }), OSSQueueItem.setPaused);
+                },
+                getState: function (selectItems, items) {
+                    return _.find(items,function(item){
+                        return OSSQueueItem.isPaused(item);
+                    }) ? 1 : 0;
                 }
             },
             {
                 name: 'removeAll',
                 text: '清空已完成',
-                execute: function (selectItems,items) {
+                execute: function (selectItems, items) {
                     var menu = OSSQueueMenu.getUploadMenuItem('remove');
-                    if(menu && $.isFunction(menu.execute)){
-                        menu.execute(_.where(items,{status:4}));
+                    if (menu && $.isFunction(menu.execute)) {
+                        menu.execute(_.where(items, {status: 4}));
                     }
                 },
-                getState: function (selectItems,items) {
-                    return _.findWhere(items, {status: 4}) ? 1 : 0;
+                getState: function (selectItems, items) {
+                    return _.find(items,function(item){
+                        return OSSQueueItem.isDone(item);
+                    }) ? 1 : 0;
                 }
             }
         ];
@@ -395,6 +493,7 @@ angular.module('ossClientUiApp')
                         return;
                     }
                     OSS.invoke('startDownload', prepareDownloadParam(selectedItems));
+                    _.each(selectedItems,OSSQueueItem.setProgress);
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -404,7 +503,7 @@ angular.module('ossClientUiApp')
                     var hasUnValidItem = false;
                     for (var i = 0; i < selectedItems.length; i++) {
                         var item = selectedItems[i];
-                        if (!OSSQueueItem.isPause(item)) {
+                        if (!OSSQueueItem.isPaused(item)) {
                             hasUnValidItem = true;
                         }
                     }
@@ -422,6 +521,7 @@ angular.module('ossClientUiApp')
                         return;
                     }
                     OSS.invoke('stopDownload', prepareDownloadParam(selectedItems));
+                    _.each(selectedItems,OSSQueueItem.setPaused);
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -429,14 +529,23 @@ angular.module('ossClientUiApp')
                         return 0;
                     }
                     var hasUnValidItem = false;
+                    var count = 0;
                     for (var i = 0; i < selectedItems.length; i++) {
                         var item = selectedItems[i];
-                        if (OSSQueueItem.isPause(item) || OSSQueueItem.isError(item) || OSSQueueItem.isDone(item)) {
+                        if (OSSQueueItem.isPaused(item) || OSSQueueItem.isError(item) || OSSQueueItem.isDone(item)) {
                             hasUnValidItem = true;
+                            if(OSSQueueItem.isPaused(item)){
+                                count++;
+                            }
                         }
                     }
                     if (hasUnValidItem) {
-                        return 0;
+                        if(count == selectedItems.length){
+                            return -1;
+                        }else{
+                            return 0;
+                        }
+
                     }
                     return 1;
                 }
@@ -445,7 +554,7 @@ angular.module('ossClientUiApp')
                 name: 'cancel',
                 text: '取消',
                 execute: function (selectedItems) {
-                    if(!confirm('你确定要取消' + (selectedItems.length==1 ? '这个' :'这'+ selectedItems.length + '个') + '文件' + '的下载？')){
+                    if (!confirm('你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的下载？')) {
                         return;
                     }
                     if (!checkArgValid(selectedItems)) {
@@ -455,11 +564,21 @@ angular.module('ossClientUiApp')
                     $rootScope.$broadcast('removeQueue', 'download', selectedItems);
                 },
                 getState: function (selectedItems) {
-                    var len = selectedItems.length;
-                    if (!len) {
-                        return 0;
+                    if(!selectedItems || !selectedItems.length) return 0;
+                    var doneItemsList = _.filter(selectedItems,function(item){
+                        return OSSQueueItem.isDone(item) || OSSQueueItem.isError(item);
+                    });
+
+                    var progressList = _.filter(selectedItems,function(item){
+                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item) || OSSQueueItem.isPaused(item);
+                    });
+
+                    if(doneItemsList && doneItemsList.length == selectedItems.length){
+                        return -1;
+                    }else if(progressList && progressList.length == selectedItems.length){
+                        return 1
                     }
-                    return 1;
+                    return 0;
                 }
             },
             {
@@ -475,26 +594,68 @@ angular.module('ossClientUiApp')
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
                     if (!len) {
-                        return 0;
+                        return -1;
                     }
-                    return 1;
+                    var doneItemsList = _.filter(selectedItems,function(item){
+                        return OSSQueueItem.isDone(item) || OSSQueueItem.isError(item);
+                    });
+
+                    if(doneItemsList && doneItemsList.length == selectedItems.length){
+                        return 1;
+                    }
+                    return -1;
+                }
+            },
+            {
+                name: 'pauseAll',
+                text: '全部暂停',
+                execute: function (selectItems, items) {
+                    OSS.invoke('stopDownload', prepareDownloadParam());
+                    _.each(_.filter(items,function(item){
+                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
+                    }),OSSQueueItem.setPaused);
+                },
+                getState: function (selectItems, items) {
+                    return _.find(items,function(item){
+                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
+                    }) ? 1 : 0;
+                }
+            },
+            {
+                name: 'startAll',
+                text: '全部开始',
+                execute: function (selectItems, items) {
+                    OSS.invoke('startDownload', prepareDownloadParam());
+                    _.each(_.filter(items,function(item){
+                        return OSSQueueItem.isPaused(item);
+                    }),OSSQueueItem.setProgress);
+                },
+                getState: function (selectItems, items) {
+                    return _.find(items,function(item){
+                        return OSSQueueItem.isPaused(item);
+                    }) ? 1 : 0 ;
                 }
             },
             {
                 name: 'removeAll',
                 text: '清空已完成',
-                execute: function (selectItems,items) {
+                execute: function (selectItems, items) {
                     var menu = OSSQueueMenu.getDownloadMenuItem('remove');
-                    console.log('menu',menu);
-                    console.log('items',items);
-                    if(menu && $.isFunction(menu.execute)){
-                        menu.execute(_.where(items,{status:4}));
+                    if (menu && $.isFunction(menu.execute)) {
+                        menu.execute(_.where(items, {status: 4}));
                     }
                 },
-                getState: function (selectItems,items) {
-                    return _.findWhere(items, {status: 4}) ? 1 : 0;
+                getState: function (selectItems, items) {
+                    return _.find(items,function(item){
+                        return OSSQueueItem.isDone(item);
+                    }) ? 1 : 0;
                 }
             }
+        ];
+
+        var groupMenu = [
+            ['start','pause','cancel','remove'],
+            ['startAll','pauseAll','removeAll']
         ];
 
         var OSSQueueMenu = {
@@ -513,6 +674,20 @@ angular.module('ossClientUiApp')
                 return _.findWhere(downloadMenu, {
                     name: name
                 });
+            },
+            groupBy:function(menus){
+                var groupMenus = [];
+                angular.forEach(groupMenu, function (val, key) {
+                    if (!groupMenus[key]) {
+                        groupMenus[key] = [];
+                    }
+                    angular.forEach(val, function (menuName) {
+                        groupMenus[key].push(_.findWhere(menus, {
+                            name: menuName
+                        }));
+                    });
+                });
+                return groupMenus;
             }
         };
         return OSSQueueMenu;

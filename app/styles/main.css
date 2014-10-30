@@ -12592,7 +12592,7 @@ input:focus {
 }
 /* line 373, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content .opt-bar .opt-list > .btn-group {
-  margin-right: 5px 5px 0 5px;
+  margin-right: 5px;
 }
 /* line 383, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list {
@@ -12692,7 +12692,7 @@ input:focus {
 .main .trans-queue .queue-list,
 .main .trans-queue .log-wrapper textarea {
   position: absolute;
-  top: 39px;
+  top: 40px;
   bottom: 0;
   left: 0;
   right: 0;
