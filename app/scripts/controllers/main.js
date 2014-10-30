@@ -204,17 +204,11 @@ angular.module('ossClientUiApp')
             }
         });
 
+        $scope.OSSUploadQueue = OSSUploadQueue.init();
+        $scope.uploadList = $scope.OSSUploadQueue.items;
 
-        //上传队列
-        //$scope.OSSUploadQueue = OSSUploadQueue.init();
-        //$scope.uploadList = $scope.OSSUploadQueue.items;
-        //$scope.OSSUploadQueue.refresh();
-        //
-        //
-        ////下载队列
         $scope.OSSDownloadQueue = OSSDownloadQueue.init();
         $scope.downloadList = $scope.OSSDownloadQueue.items;
-        //$scope.OSSDownloadQueue.refresh();
 
         //隐藏或展开消息队列
         $scope.toggleSlideQueue = function () {
@@ -252,6 +246,11 @@ angular.module('ossClientUiApp')
                 if (tab && !tab.selected) {
                     tab.active = true;
                 }
+                if(tab == 'upload'){
+                    $scope.scrollToUploadIndex = $scope.uploadList.length -1 ;
+                }else if(tab === 'download'){
+                    $scope.scrollToDownloadIndex = $scope.downloadList.length -1 ;
+                }
             }
         });
 
@@ -264,6 +263,12 @@ angular.module('ossClientUiApp')
         $scope.errorLog = '';
         var selectCount = 0;
         $scope.selectTab = function (tab) {
+            if(tab.name != 'upload' && !$scope.OSSUploadQueue.isStoped()){
+                $scope.OSSUploadQueue.stop();
+            }
+            if(tab.name != 'download' && !$scope.OSSDownloadQueue.isStoped()){
+                $scope.OSSDownloadQueue.stop();
+            }
             if (tab.name == 'log') {
                 var errorLog = '';
                 var res = OSS.invoke('getErrorLog');
@@ -273,6 +278,16 @@ angular.module('ossClientUiApp')
                     });
                     $scope.errorLog = errorLog;
                     console.log('$scope.errorLog', $scope.errorLog)
+                }
+            }else if(tab.name == 'upload'){
+                //上传队列
+                if($scope.OSSUploadQueue.isStoped()){
+                    $scope.OSSUploadQueue.refresh();
+                }
+            }else if(tab.name == 'download'){
+                //下载队列
+                if($scope.OSSDownloadQueue.isStoped()){
+                    $scope.OSSDownloadQueue.refresh();
                 }
             }
             if (!$rootScope.showTransQueue && selectCount > 0) {

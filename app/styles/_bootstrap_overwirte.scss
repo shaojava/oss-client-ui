@@ -109,3 +109,8 @@ button{
 label{
   font-weight: normal;
 }
+
+.progress-bar{
+  background-color: #428bca;
+  transition: width 0.5s ease;
+}

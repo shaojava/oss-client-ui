@@ -87,12 +87,7 @@
                             <div class="opt-bar">
                                 <div class="clearfix opt-list">
                                     <div class="btn-group">
-                                        <menu name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('upload'))>=0" ng-repeat="menu in uploadQueueMenus" state=" menu.getState(getSelectedList('upload'))" execute="menu.execute(selectedUploadItems)">{{menu.text}}
-                                        </menu>
-                                    </div>
-                                    <div class="btn-group">
-                                        <menu name="clearDown" state="1" execute="clearDone('upload')">
-                                            清空已完成
+                                        <menu name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('upload'),uploadList)>=0" ng-repeat="menu in uploadQueueMenus" state=" menu.getState(getSelectedList('upload'),uploadList)" execute="menu.execute(selectedUploadItems,uploadList)">{{menu.text}}
                                         </menu>
                                     </div>
                                 </div>
@@ -114,15 +109,10 @@
                             <div class="opt-bar">
                                 <div class="clearfix opt-list">
                                    <div class="btn-group">
-                                        <menu ng-repeat="menu in downloadQueueMenus" type="download" name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('download'))>=0" state="menu.getState(getSelectedList('download'))"
-                                              execute="menu.execute(selectedDownloadItems)"><span ng-bind="menu.text"></span>
+                                        <menu ng-repeat="menu in downloadQueueMenus" type="download" name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('download'),downloadList)>=0" state="menu.getState(getSelectedList('download'),downloadList)"
+                                              execute="menu.execute(selectedDownloadItems,downloadList)"><span ng-bind="menu.text"></span>
                                         </menu>
                                    </div>
-                                    <div class="btn-group">
-                                        <menu name="clearDown" state="1" execute="clearDone('download')">
-                                            清空已完成
-                                        </menu>
-                                    </div>
                                 </div>
                             </div>
                             <div class="empty" ng-show="!downloadList || !downloadList.length">没有下载</div>

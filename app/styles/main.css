@@ -10792,6 +10792,12 @@ label {
   font-weight: normal;
 }
 
+/* line 113, ../../app/styles/_bootstrap_overwirte.scss */
+.progress-bar {
+  background-color: #428bca;
+  transition: width 0.5s ease;
+}
+
 /* line 2, ../../app/styles/_common.scss */
 html,
 body {
@@ -12661,7 +12667,7 @@ input:focus {
 /* line 442, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .filename .name {
   position: relative;
-  bottom: 3px;
+  bottom: 4px;
 }
 /* line 448, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .remain-time {
