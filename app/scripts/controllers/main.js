@@ -208,13 +208,13 @@ angular.module('ossClientUiApp')
         //上传队列
         $scope.OSSUploadQueue = OSSUploadQueue.init();
         $scope.uploadList = $scope.OSSUploadQueue.items;
-        //$scope.OSSUploadQueue.refresh();
+        $scope.OSSUploadQueue.refresh();
 
 
         //下载队列
         $scope.OSSDownloadQueue = OSSDownloadQueue.init();
         $scope.downloadList = $scope.OSSDownloadQueue.items;
-        //$scope.OSSDownloadQueue.refresh();
+        $scope.OSSDownloadQueue.refresh();
 
         //隐藏或展开消息队列
         $scope.toggleSlideQueue = function () {
