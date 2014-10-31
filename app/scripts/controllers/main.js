@@ -253,11 +253,13 @@ angular.module('ossClientUiApp')
         $scope.tabs = [
             {
                 name: 'upload',
-                title: '上传队列' + ($scope.OSSUploadQueue.totalCount ? '(' + $scope.OSSUploadQueue.doneCount + '/' + $scope.OSSUploadQueue.totalCount + ')' : '')
+                title: '上传队列'
+                //title: '上传队列' + ($scope.OSSUploadQueue.totalCount ? '(' + $scope.OSSUploadQueue.doneCount + '/' + $scope.OSSUploadQueue.totalCount + ')' : '')
             },
             {
                 name: 'download',
-                title: '下载队列' + ($scope.OSSDownloadQueue.doneCount ? '(' + $scope.OSSDownloadQueue.doneCount + '/' + $scope.OSSDownloadQueue.totalCount + ')' : '')
+                title: '下载队列'
+                //title: '下载队列' + ($scope.OSSDownloadQueue.doneCount ? '(' + $scope.OSSDownloadQueue.doneCount + '/' + $scope.OSSDownloadQueue.totalCount + ')' : '')
             },
             {
                 name: 'log',
