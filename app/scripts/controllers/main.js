@@ -217,6 +217,7 @@ angular.module('ossClientUiApp')
 
         $scope.OSSDownloadQueue = OSSDownloadQueue.init();
         $scope.downloadList = $scope.OSSDownloadQueue.items;
+        $scope.OSSDownloadQueue.refresh();
         $scope.$on('reloadDownloadQueue', function () {
             $scope.OSSDownloadQueue = OSSDownloadQueue.init();
             $scope.downloadList = $scope.OSSDownloadQueue.items;
@@ -248,7 +249,6 @@ angular.module('ossClientUiApp')
             }
         };
 
-        console.log('$scope.OSSUploadQueue', $scope.OSSUploadQueue);
         //选项卡集合
         $scope.tabs = [
             {
@@ -292,9 +292,9 @@ angular.module('ossClientUiApp')
             //if(tab.name != 'upload' && !$scope.OSSUploadQueue.isStoped()){
             //    $scope.OSSUploadQueue.stop();
             //}
-            if (tab.name != 'download' && !$scope.OSSDownloadQueue.isStoped()) {
-                $scope.OSSDownloadQueue.stop();
-            }
+            //if (tab.name != 'download' && !$scope.OSSDownloadQueue.isStoped()) {
+            //    $scope.OSSDownloadQueue.stop();
+            //}
             if (tab.name == 'log') {
                 var errorLog = '';
                 var res = OSS.invoke('getErrorLog');
@@ -311,9 +311,9 @@ angular.module('ossClientUiApp')
                 //}
             } else if (tab.name == 'download') {
                 //下载队列
-                if ($scope.OSSDownloadQueue.isStoped()) {
-                    $scope.OSSDownloadQueue.refresh();
-                }
+                //if ($scope.OSSDownloadQueue.isStoped()) {
+                //    $scope.OSSDownloadQueue.refresh();
+                //}
             }
             if (!$rootScope.showTransQueue && selectCount > 0) {
                 $scope.$emit('toggleTransQueue', true);
