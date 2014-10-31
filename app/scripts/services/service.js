@@ -105,6 +105,7 @@ angular.module('ossClientUiApp')
                     start:start,
                     count:size
                 });
+                OSS.log('OSSUploadQueue',res);
                 var list = angular.isArray(res['list']) ? res['list'] : [];
                 if(start == 0){
                     this.items = list;
@@ -138,6 +139,7 @@ angular.module('ossClientUiApp')
             refresh: function () {
                 var _self = this;
                 OSS.invoke('changeUpload', {start: 1}, function (res) {
+                    OSS.log('OSSUploadQueue:changeUpload',res);
                     $timeout(function () {
                         angular.forEach(res['list'], function (val) {
                             var existItem = _self.get(val.pathhash);
