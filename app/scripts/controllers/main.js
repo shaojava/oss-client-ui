@@ -66,7 +66,6 @@ angular.module('ossClientUiApp')
             if (current && current.params && current.params.bucket) {
                 if (current.$$route && current.$$route.originalPath) {
                     var pathArr = current.$$route.originalPath.split('/');
-                    console.log('pathArr', pathArr);
                     currentBucket = Bucket.getBucket(current.params.bucket);
                     currentObjectPath = current.params.object;
                     filter = pathArr[1] || 'file';
@@ -74,7 +73,6 @@ angular.module('ossClientUiApp')
             } else if ($scope.buckets && $scope.buckets.length) {
                 currentBucket = $scope.buckets[0]['Name'];
             }
-            console.log('currentBucket', currentBucket);
             if (currentBucket) {
                 Bucket.select(currentBucket);
                 $scope.breads = Bread.getBreads(currentBucket.Name, currentObjectPath, filter);
@@ -304,7 +302,6 @@ angular.module('ossClientUiApp')
                         errorLog += val.msg + '\r\n';
                     });
                     $scope.errorLog = errorLog;
-                    console.log('$scope.errorLog', $scope.errorLog)
                 }
             }else if(tab.name == 'upload'){
                 //上传队列
@@ -346,7 +343,6 @@ angular.module('ossClientUiApp')
 
         //清空已完成
         $scope.clearDone = function(type){
-            console.log('type',type);
             var menu,list = [];
             if(type == 'download'){
                  menu = OSSQueueMenu.getDownloadMenuItem('remove');
@@ -360,8 +356,6 @@ angular.module('ossClientUiApp')
                     return _.indexOf([4,5],item.status) >= 0;
                 });
             }
-            console.log('menu',menu);
-            console.log('list',list);
             if (menu && list.length) {
                 menu.execute(list);
             }
@@ -462,7 +456,6 @@ angular.module('ossClientUiApp')
 
         //选中
         $scope.select = function (item) {
-            console.log('$scope.select', item);
             item.selected = true;
             $scope.scrollToIndex = _.indexOf($scope.files, item);
         };
@@ -536,10 +529,6 @@ angular.module('ossClientUiApp')
             return $scope.excludeTopMenu.indexOf(menu.name) >= 0;
         };
 
-        $scope.$watch('currentFileMenuList',function(val){
-            console.log('currentFileMenuList',val);
-        })
-
         //刷新当前列表
         $scope.$on('reloadFileList', function () {
             $route.reload();
@@ -584,6 +573,7 @@ angular.module('ossClientUiApp')
             OSS.invoke('addFile', params, function (res) {
                 if (!res.error) {
                     $rootScope.$broadcast('toggleTransQueue', true);
+                    $rootScope.$broadcast('reloadUploadQueue');
                 } else {
                     $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                 }
@@ -620,7 +610,6 @@ angular.module('ossClientUiApp')
             }
             $scope.loading = true;
             OSSUploadPart.list(Bucket.getBucket(bucketName), '', '', lastKeyMaker, loadCount, lastUploadMaker).then(function (res) {
-                console.log('res', res);
                 $scope.loading = false;
                 $scope.uploads = $scope.uploads.concat(res.uploads);
                 lastKeyMaker = res.keyMaker;
@@ -656,7 +645,6 @@ angular.module('ossClientUiApp')
 
         //选中
         $scope.select = function (item) {
-            console.log('$scope.select', item);
             item.selected = true;
             $scope.scrollToIndex = _.indexOf($scope.uploads, item);
         };

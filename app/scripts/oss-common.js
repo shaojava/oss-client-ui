@@ -97,7 +97,7 @@ angular.module('OSSCommon', [])
     .filter('isDir', function () {
         return function(path){
             var lastStr = Util.String.lastChar(path);
-            return lastStr === '/' || lastStr === '\\';
+            return lastStr === '/' || lastStr === '\\' ? 1 : 0;
         };
     })
     .directive('scrollLoad', ['$rootScope', '$parse', function ($rootScope, $parse) {
@@ -217,7 +217,6 @@ angular.module('OSSCommon', [])
                 });
 
                 element.on('click.autoSelect',function(){
-                    console.log('isAutoSelect',isAutoSelect);
                     if(isAutoSelect){
                         element.select();
                     }

@@ -87,11 +87,9 @@ angular.module('ossClientUiApp')
             }
         }
     }])
-    .factory('OSSUploadQueue', ['$rootScope','$timeout','OSSQueueItem','OSSLocation',function ($rootScope,$timeout,OSSQueueItem,OSSLocation) {
-
+    .factory('OSSUploadQueue', ['$rootScope','$timeout','OSSQueueItem','OSSLocation','$filter',function ($rootScope,$timeout,OSSQueueItem,OSSLocation,$filter) {
         var size = 100;//每次加载多少条
-
-        return {
+        var OSSUploadQueue =  {
             items: [],
             uploadCount: 0,
             uploadSpeed: 0,
@@ -104,13 +102,15 @@ angular.module('ossClientUiApp')
             getQueueList:function(start){
                 var res = OSS.invoke('getUpload',{
                     start:start,
-                    size:size
+                    count:size
                 });
                 var list = angular.isArray(res['list']) ? res['list'] : [];
                 if(start == 0){
                     this.items = list;
                 }else{
-                    this.items = this.items.concat(list);
+                    angular.forEach(list,function(item){
+                        OSSUploadQueue.add(item);
+                    });
                 }
                 this.uploadCount = res['count'];
                 this.uploadSpeed = res['upload'];
@@ -146,7 +146,7 @@ angular.module('ossClientUiApp')
                                // _self.add(val);
                             }
                             //上传成功后如果是当前的object刷新文件列表
-                            var upPath = Util.String.dirName(val.object);
+                            var upPath = $filter('isDir')(val.object) ? Util.String.dirName(Util.String.dirName(val.object)) : Util.String.dirName(val.object);
                             if(OSSQueueItem.isDone(val) && OSSLocation.isCurrentObject(val.bucket,upPath)){
                                 $rootScope.$broadcast('reloadFileList');
                             }
@@ -166,6 +166,7 @@ angular.module('ossClientUiApp')
                 return this.isStop;
             }
         };
+        return OSSUploadQueue;
     }])
     .factory('OSSQueueItem', [function () {
         var STATUS_ERROR = 5,
@@ -175,7 +176,6 @@ angular.module('ossClientUiApp')
             STATUS_PASUED = 3;
         var OSSQueueItem = {
             setStatus:function(item,status){
-                console.log('setStatus',arguments);
                 item.status = status;
             },
             //是否出错
@@ -211,7 +211,6 @@ angular.module('ossClientUiApp')
                 OSSQueueItem.setStatus(item,STATUS_WAITING);
             },
             setPaused:function(item){
-                console.log('item',item);
                 OSSQueueItem.setStatus(item,STATUS_PASUED);
             }
         };
@@ -219,8 +218,8 @@ angular.module('ossClientUiApp')
         return OSSQueueItem;
     }])
     .factory('OSSDownloadQueue', ['$rootScope','$timeout',function ($rootScope,$timeout) {
-        var size = 2; //每次加载多少条
-        return {
+        var size = 100; //每次加载多少条
+        var OSSDownloadQueue = {
             items: [],
             uploadCount: 0,
             uploadSpeed: 0,
@@ -233,13 +232,15 @@ angular.module('ossClientUiApp')
             getQueueList:function(start){
                 var res = OSS.invoke('getDownload',{
                     start:start,
-                    size:size
+                    count:size
                 });
                 var list = angular.isArray(res['list']) ? res['list'] : [];
                 if(start == 0){
                     this.items = list;
                 }else{
-                    this.items = this.items.concat(list);
+                    angular.forEach(list,function(item){
+                        OSSDownloadQueue.add(item);
+                    });
                 }
                 this.uploadCount = res['count'];
                 this.uploadSpeed = res['upload'];
@@ -289,6 +290,7 @@ angular.module('ossClientUiApp')
                 return this.isStop;
             }
         };
+        return OSSDownloadQueue;
     }])
     .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout',function ($rootScope, OSSQueueItem,$timeout) {
         /**
@@ -353,7 +355,6 @@ angular.module('ossClientUiApp')
                 name: 'start',
                 text: '开始',
                 execute: function (selectedItems) {
-                    console.log('selectedItems',selectedItems);
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
@@ -826,7 +827,7 @@ angular.module('ossClientUiApp')
                 },
                 execute: function (bucket, currentObject) {
                     $rootScope.$broadcast('createObject', function (filename, callback) {
-                        var objectPath = currentObject ? currentObject + '/' + filename + '/' : filename + '/';
+                        var objectPath = currentObject ? currentObject + filename + '/' : filename + '/';
                         OSSApi.putObject(bucket, objectPath, {
                             'Content-Type': ''
                         }, '').success(function () {
@@ -1822,7 +1823,6 @@ angular.module('ossClientUiApp')
 
 
                         OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
-                            console.log('getHeader', getHeader());
                             angular.forEach($scope.headers, function (header) {
                                 header.model = getHeader(header.name);
                             })
@@ -1866,7 +1866,6 @@ angular.module('ossClientUiApp')
 
                         $scope.removeCustomHeader = function (header) {
                             var index = _.indexOf($scope.customHeaders, header);
-                            console.log('index', index);
                             index > -1 && $scope.customHeaders.splice(index, 1);
                         };
 
@@ -1965,7 +1964,6 @@ angular.module('ossClientUiApp')
                         loadPart();
 
                         $scope.loadMore = function () {
-                            console.log(124);
                             if (allLoaded) {
                                 return;
                             }
