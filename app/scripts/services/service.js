@@ -91,7 +91,8 @@ angular.module('ossClientUiApp')
         var size = 100;//每次加载多少条
         var OSSUploadQueue =  {
             items: [],
-            uploadCount: 0,
+            totalCount: 0,
+            doneCount:0,
             uploadSpeed: 0,
             downloadSpeed: 0,
             isStop: true,
@@ -112,7 +113,8 @@ angular.module('ossClientUiApp')
                         OSSUploadQueue.add(item);
                     });
                 }
-                this.uploadCount = res['count'];
+                this.totalCount = res['upload_total_count'];
+                this.doneCount = res['upload_done_count'];
                 this.uploadSpeed = res['upload'];
                 this.downloadSpeed = res['download'];
             },
@@ -151,7 +153,8 @@ angular.module('ossClientUiApp')
                                 $rootScope.$broadcast('reloadFileList');
                             }
                         });
-                        _self.uploadCount = res['count'];
+                        _self.totalCount = res['upload_total_count'];
+                        _self.doneCount = res['upload_done_count'];
                         _self.uploadSpeed = res['upload'];
                         _self.downloadSpeed = res['download'];
                     })
@@ -221,7 +224,8 @@ angular.module('ossClientUiApp')
         var size = 100; //每次加载多少条
         var OSSDownloadQueue = {
             items: [],
-            uploadCount: 0,
+            totalCount: 0,
+            doneCount:0,
             uploadSpeed: 0,
             downloadSpeed: 0,
             isStop: true,
@@ -242,7 +246,8 @@ angular.module('ossClientUiApp')
                         OSSDownloadQueue.add(item);
                     });
                 }
-                this.uploadCount = res['count'];
+                this.totalCount = res['download_total_count'];
+                this.doneCount = res['download_done_count'];
                 this.uploadSpeed = res['upload'];
                 this.downloadSpeed = res['download'];
             },
@@ -276,7 +281,8 @@ angular.module('ossClientUiApp')
                                // _self.add(val);
                             }
                         })
-                        _self.uploadCount = res['count'];
+                        _self.totalCount = res['download_total_count'];
+                        _self.doneCount = res['download_done_count'];
                         _self.uploadSpeed = res['upload'];
                         _self.downloadSpeed = res['download'];
                     })
