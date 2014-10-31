@@ -102,7 +102,10 @@
                                 item-selector=".queue-item"
                                 select="select(item,'upload')"
                                 un-select="unSelect(item,'upload')"
-                                get-selected-list="getSelectedList('upload')">
+                                get-selected-list="getSelectedList('upload')"
+                                scroll-load="loadMoreQueue('upload')"
+                                disable-scroll="loadingQueue"
+                                    >
                                 <queue-item ng-click="handleItemClick($event,$index,item,'upload')" type="upload" data="item"  execute-cmd="executeUploadCmd(cmd,item)" ng-repeat="item in uploadList"></queue-item>
                             </ul>
                         </div>
@@ -126,7 +129,10 @@
                                 item-selector=".queue-item"
                                 select="select(item,'download')"
                                 un-select="unSelect(item,'download')"
-                                get-selected-list="getSelectedList('download')">
+                                get-selected-list="getSelectedList('download')"
+                                scroll-load="loadMoreQueue('download')"
+                                disable-scroll="loadingQueue"
+                                    >
                                 <queue-item data="item" ng-repeat="item in downloadList" ng-click="handleItemClick($event,$index,item,'download')" execute-cmd="executeDownloadCmd(cmd,item)"></queue-item>
                             </ul>
                         </div>

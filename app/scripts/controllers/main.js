@@ -112,6 +112,9 @@ angular.module('ossClientUiApp')
         });
 
     }])
+/**
+ * 传输队列
+ */
     .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope) {
 
         //上传的操作菜单
@@ -122,7 +125,7 @@ angular.module('ossClientUiApp')
         $scope.downloadQueueMenus = OSSQueueMenu.getDownloadMenu();
         $scope.downloadMenuGroup = OSSQueueMenu.groupBy($scope.downloadQueueMenus,'download');
 
-        //获取以选中的列表
+        //获取选中的列表
         $scope.getSelectedList = function (type) {
             return _.where(type == 'download'?$scope.downloadList:$scope.uploadList, {
                 selected: true
@@ -208,9 +211,31 @@ angular.module('ossClientUiApp')
 
         $scope.OSSUploadQueue = OSSUploadQueue.init();
         $scope.uploadList = $scope.OSSUploadQueue.items;
+        $scope.OSSUploadQueue.refresh();
+        $scope.$on('reloadUploadQueue',function(){
+            $scope.OSSUploadQueue = OSSUploadQueue.init();
+            $scope.uploadList = $scope.OSSUploadQueue.items;
+        });
 
         $scope.OSSDownloadQueue = OSSDownloadQueue.init();
         $scope.downloadList = $scope.OSSDownloadQueue.items;
+        $scope.$on('reloadDownloadQueue',function(){
+            $scope.OSSDownloadQueue = OSSDownloadQueue.init();
+            $scope.downloadList = $scope.OSSDownloadQueue.items;
+        });
+
+        //滚到加载
+        $scope.loadMoreQueue = function(type){
+            if(type == 'download'){
+                $scope.loadingQueue = true;
+                $scope.OSSDownloadQueue.getQueueList($scope.downloadList.length);
+                $scope.loadingQueue = false;
+            }else if(type == 'upload'){
+                $scope.loadingQueue = true;
+                $scope.OSSUploadQueue.getQueueList($scope.uploadList.length);
+                $scope.loadingQueue = false;
+            }
+        };
 
         //隐藏或展开消息队列
         $scope.toggleSlideQueue = function () {
@@ -265,9 +290,9 @@ angular.module('ossClientUiApp')
         $scope.errorLog = '';
         var selectCount = 0;
         $scope.selectTab = function (tab) {
-            if(tab.name != 'upload' && !$scope.OSSUploadQueue.isStoped()){
-                $scope.OSSUploadQueue.stop();
-            }
+            //if(tab.name != 'upload' && !$scope.OSSUploadQueue.isStoped()){
+            //    $scope.OSSUploadQueue.stop();
+            //}
             if(tab.name != 'download' && !$scope.OSSDownloadQueue.isStoped()){
                 $scope.OSSDownloadQueue.stop();
             }
@@ -283,9 +308,9 @@ angular.module('ossClientUiApp')
                 }
             }else if(tab.name == 'upload'){
                 //上传队列
-                if($scope.OSSUploadQueue.isStoped()){
-                    $scope.OSSUploadQueue.refresh();
-                }
+                //if($scope.OSSUploadQueue.isStoped()){
+                //    $scope.OSSUploadQueue.refresh();
+                //}
             }else if(tab.name == 'download'){
                 //下载队列
                 if($scope.OSSDownloadQueue.isStoped()){
@@ -343,6 +368,9 @@ angular.module('ossClientUiApp')
         };
 
     }])
+/**
+ * 文件列表
+ */
     .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
@@ -563,6 +591,9 @@ angular.module('ossClientUiApp')
         };
 
     }])
+/**
+ * 上传碎片管理
+ */
     .controller('UploadListCtrl', ['$scope', '$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu', function ($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu) {
 
         //是否加载中

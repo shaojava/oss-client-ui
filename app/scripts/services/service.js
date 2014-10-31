@@ -87,7 +87,10 @@ angular.module('ossClientUiApp')
             }
         }
     }])
-    .factory('OSSUploadQueue', ['$rootScope','$timeout',function ($rootScope,$timeout) {
+    .factory('OSSUploadQueue', ['$rootScope','$timeout','OSSQueueItem','OSSLocation',function ($rootScope,$timeout,OSSQueueItem,OSSLocation) {
+
+        var size = 100;//每次加载多少条
+
         return {
             items: [],
             uploadCount: 0,
@@ -95,12 +98,23 @@ angular.module('ossClientUiApp')
             downloadSpeed: 0,
             isStop: true,
             init: function () {
-                var res = OSS.invoke('getUpload');
-                this.items = res['list'];
+                this.getQueueList(0);
+                return this;
+            },
+            getQueueList:function(start){
+                var res = OSS.invoke('getUpload',{
+                    start:start,
+                    size:size
+                });
+                var list = angular.isArray(res['list']) ? res['list'] : [];
+                if(start == 0){
+                    this.items = list;
+                }else{
+                    this.items = this.items.concat(list);
+                }
                 this.uploadCount = res['count'];
                 this.uploadSpeed = res['upload'];
                 this.downloadSpeed = res['download'];
-                return this;
             },
             add: function (item) {
                 this.items.push(item);
@@ -128,7 +142,13 @@ angular.module('ossClientUiApp')
                             if (existItem) {
                                 _self.update(existItem, val);
                             } else {
-                                _self.add(val);
+                                //不用增加，每次添加后重新去拿列表
+                               // _self.add(val);
+                            }
+                            //上传成功后如果是当前的object刷新文件列表
+                            var upPath = Util.String.dirName(val.object);
+                            if(OSSQueueItem.isDone(val) && OSSLocation.isCurrentObject(val.bucket,upPath)){
+                                $rootScope.$broadcast('reloadFileList');
                             }
                         });
                         _self.uploadCount = res['count'];
@@ -199,6 +219,7 @@ angular.module('ossClientUiApp')
         return OSSQueueItem;
     }])
     .factory('OSSDownloadQueue', ['$rootScope','$timeout',function ($rootScope,$timeout) {
+        var size = 2; //每次加载多少条
         return {
             items: [],
             uploadCount: 0,
@@ -206,12 +227,23 @@ angular.module('ossClientUiApp')
             downloadSpeed: 0,
             isStop: true,
             init: function () {
-                var res = OSS.invoke('getDownload');
-                this.items = res['list'];
+                this.getQueueList(0);
+                return this;
+            },
+            getQueueList:function(start){
+                var res = OSS.invoke('getDownload',{
+                    start:start,
+                    size:size
+                });
+                var list = angular.isArray(res['list']) ? res['list'] : [];
+                if(start == 0){
+                    this.items = list;
+                }else{
+                    this.items = this.items.concat(list);
+                }
                 this.uploadCount = res['count'];
                 this.uploadSpeed = res['upload'];
                 this.downloadSpeed = res['download'];
-                return this;
             },
             add: function (item) {
                 this.items.push(item);
@@ -240,7 +272,7 @@ angular.module('ossClientUiApp')
                             if (existItem) {
                                 _self.update(existItem, val);
                             } else {
-                                _self.add(val);
+                               // _self.add(val);
                             }
                         })
                         _self.uploadCount = res['count'];
@@ -258,7 +290,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', function ($rootScope, OSSQueueItem) {
+    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout',function ($rootScope, OSSQueueItem,$timeout) {
         /**
          * 检测参数的合法性
          * @param selectedItems
@@ -312,6 +344,10 @@ angular.module('ossClientUiApp')
             return param;
         };
 
+        /**
+         * 上传队列的操作菜单
+         * @type {{name: string, text: string, execute: Function, getState: Function}[]}
+         */
         var uploadMenu = [
             {
                 name: 'start',
@@ -321,8 +357,11 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('startUpload', prepareUpladParam(selectedItems));
-                    _.each(selectedItems, OSSQueueItem.setProgress);
+                    OSS.invoke('startUpload', prepareUpladParam(selectedItems),function(){
+                        $timeout(function(){
+                            _.each(selectedItems, OSSQueueItem.setProgress);
+                        });
+                    });
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -349,8 +388,11 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('stopUpload', prepareUpladParam(selectedItems));
-                    _.each(selectedItems, OSSQueueItem.setPaused);
+                    OSS.invoke('stopUpload', prepareUpladParam(selectedItems),function(){
+                        $timeout(function(){
+                            _.each(selectedItems, OSSQueueItem.setPaused);
+                        })
+                    });
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -388,8 +430,12 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems));
-                    $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
+                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems),function(){
+                        $timeout(function(){
+                            $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
+                        })
+                    });
+
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -419,8 +465,11 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems));
-                    $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
+                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems),function(){
+                        $timeout(function(){
+                            $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
+                        });
+                    });
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -441,10 +490,13 @@ angular.module('ossClientUiApp')
                 name: 'pauseAll',
                 text: '全部暂停',
                 execute: function (selectedItems,items) {
-                    OSS.invoke('stopUpload', prepareUpladParam());
-                    _.each(_.filter(items,function(item){
-                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
-                    }), OSSQueueItem.setPaused);
+                    OSS.invoke('stopUpload', prepareUpladParam(),function(){
+                        $timeout(function(){
+                            _.each(_.filter(items,function(item){
+                                return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
+                            }), OSSQueueItem.setPaused);
+                        })
+                    });
                 },
                 getState: function (selectItems, items) {
                     return _.find(items,function(item){
@@ -456,10 +508,13 @@ angular.module('ossClientUiApp')
                 name: 'startAll',
                 text: '全部开始',
                 execute: function (selectedItems,items) {
-                    OSS.invoke('startUpload', prepareUpladParam());
-                    _.each(_.filter(items,function(item){
-                        return OSSQueueItem.isPaused(item);
-                    }), OSSQueueItem.setPaused);
+                    OSS.invoke('startUpload', prepareUpladParam(),function(){
+                        $timeout(function(){
+                            _.each(_.filter(items,function(item){
+                                return OSSQueueItem.isPaused(item);
+                            }), OSSQueueItem.setPaused);
+                        });
+                    });
                 },
                 getState: function (selectItems, items) {
                     return _.find(items,function(item){
@@ -471,10 +526,16 @@ angular.module('ossClientUiApp')
                 name: 'removeAll',
                 text: '清空已完成',
                 execute: function (selectItems, items) {
-                    var menu = OSSQueueMenu.getUploadMenuItem('remove');
-                    if (menu && $.isFunction(menu.execute)) {
-                        menu.execute(_.where(items, {status: 4}));
-                    }
+                    OSS.invoke('deleteUpload', {
+                        finish:1,
+                        all:1
+                    },function(){
+                        $timeout(function(){
+                            $rootScope.$broadcast('removeQueue', 'upload', _.filter(items,function(item){
+                                return OSSQueueItem.isDone(item);
+                            }));
+                        });
+                    });
                 },
                 getState: function (selectItems, items) {
                     return _.find(items,function(item){
@@ -484,6 +545,10 @@ angular.module('ossClientUiApp')
             }
         ];
 
+        /**
+         * 下载队列的操作菜单
+         * @type {{name: string, text: string, execute: Function, getState: Function}[]}
+         */
         var downloadMenu = [
             {
                 name: 'start',
@@ -492,8 +557,11 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('startDownload', prepareDownloadParam(selectedItems));
-                    _.each(selectedItems,OSSQueueItem.setProgress);
+                    OSS.invoke('startDownload', prepareDownloadParam(selectedItems),function(){
+                        $timeout(function(){
+                            _.each(selectedItems,OSSQueueItem.setProgress);
+                        })
+                    });
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -520,8 +588,12 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('stopDownload', prepareDownloadParam(selectedItems));
-                    _.each(selectedItems,OSSQueueItem.setPaused);
+                    OSS.invoke('stopDownload', prepareDownloadParam(selectedItems),function(){
+                        $timeout(function(){
+                            _.each(selectedItems,OSSQueueItem.setPaused);
+                        })
+                    });
+
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -560,8 +632,12 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems));
-                    $rootScope.$broadcast('removeQueue', 'download', selectedItems);
+                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems),function(){
+                        $timeout(function(){
+                            $rootScope.$broadcast('removeQueue', 'download', selectedItems);
+                        })
+                    });
+
                 },
                 getState: function (selectedItems) {
                     if(!selectedItems || !selectedItems.length) return 0;
@@ -588,8 +664,12 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems));
-                    $rootScope.$broadcast('removeQueue', 'download', selectedItems);
+                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems),function(){
+                        $timeout(function(){
+                            $rootScope.$broadcast('removeQueue', 'download', selectedItems);
+                        });
+                    });
+
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -610,10 +690,14 @@ angular.module('ossClientUiApp')
                 name: 'pauseAll',
                 text: '全部暂停',
                 execute: function (selectItems, items) {
-                    OSS.invoke('stopDownload', prepareDownloadParam());
-                    _.each(_.filter(items,function(item){
-                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
-                    }),OSSQueueItem.setPaused);
+                    OSS.invoke('stopDownload', prepareDownloadParam(),function(){
+                        $timeout(function(){
+                            _.each(_.filter(items,function(item){
+                                return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
+                            }),OSSQueueItem.setPaused);
+                        });
+                    });
+
                 },
                 getState: function (selectItems, items) {
                     return _.find(items,function(item){
@@ -625,10 +709,11 @@ angular.module('ossClientUiApp')
                 name: 'startAll',
                 text: '全部开始',
                 execute: function (selectItems, items) {
-                    OSS.invoke('startDownload', prepareDownloadParam());
-                    _.each(_.filter(items,function(item){
-                        return OSSQueueItem.isPaused(item);
-                    }),OSSQueueItem.setProgress);
+                    OSS.invoke('startDownload', prepareDownloadParam(),function(){
+                        _.each(_.filter(items,function(item){
+                            return OSSQueueItem.isPaused(item);
+                        }),OSSQueueItem.setProgress);
+                    });
                 },
                 getState: function (selectItems, items) {
                     return _.find(items,function(item){
@@ -640,10 +725,16 @@ angular.module('ossClientUiApp')
                 name: 'removeAll',
                 text: '清空已完成',
                 execute: function (selectItems, items) {
-                    var menu = OSSQueueMenu.getDownloadMenuItem('remove');
-                    if (menu && $.isFunction(menu.execute)) {
-                        menu.execute(_.where(items, {status: 4}));
-                    }
+                    OSS.invoke('deleteDownload', {
+                        finish:1,
+                        all:1
+                    },function(){
+                        $timeout(function(){
+                            $rootScope.$broadcast('removeQueue', 'download', _.filter(items,function(item){
+                                return OSSQueueItem.isDone(item);
+                            }));
+                        });
+                    });
                 },
                 getState: function (selectItems, items) {
                     return _.find(items,function(item){
@@ -719,6 +810,7 @@ angular.module('ossClientUiApp')
                         }, function (res) {
                             if (!res.error) {
                                 $rootScope.$broadcast('toggleTransQueue', true, 'upload');
+                                $rootScope.$broadcast('reloadUploadQueue');
                             } else {
                                 $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                             }
@@ -774,6 +866,7 @@ angular.module('ossClientUiApp')
                     }, function (res) {
                         if (!res.error) {
                             $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                            $rootScope.$broadcast('reloadDownloadQueue');
                         } else {
                             $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                         }
@@ -1130,8 +1223,25 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .factory('OSSLocation', function () {
-        return {
+    .factory('OSSLocation', ['$routeParams',function ($routeParams) {
+        var OSSLocation = {
+            /**
+             * 传染的Bucket是否是当前正在浏览的bucket
+             * @param bucketName
+             */
+            isCurrentBucket:function(bucketName){
+                return bucketName == $routeParams.bucket;
+            },
+            /**
+             * 传入的object是否是当前正在浏览的object
+             * @param objectPath
+             */
+            isCurrentObject:function(bucketName,objectPath){
+                if(objectPath && Util.String.lastChar(objectPath) != '/'){
+                    objectPath += '/';
+                }
+                return OSSLocation.isCurrentBucket(bucketName) && objectPath == ($routeParams.object || '');
+            },
             getUrl: function (bucketName, prefix, filter) {
 
                 filter = angular.isUndefined(filter) ? 'file' : filter;
@@ -1150,7 +1260,8 @@ angular.module('ossClientUiApp')
                 return url;
             }
         };
-    })
+        return OSSLocation;
+    }])
     .factory('Bread', ['OSSLocation', function (OSSLocation) {
         var getFilterName = function (filter) {
             var filterName = '';
