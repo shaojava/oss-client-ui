@@ -1386,6 +1386,10 @@ angular.module('ossClientUiApp')
 
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam) {
             var host = 'http://' + (bucket ? bucket + "." : "") + (region ? region + "." : "") + 'aliyuncs.com';
+            if(bucket && region){
+                //如果是云主机需要走内网
+                host = 'http://' +  bucket + "." + OSS.invoke('changeHost',region);
+            }
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
 
             var requestUrl = host + canonicalizedResource;
