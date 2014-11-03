@@ -26,7 +26,6 @@ module.exports = function (grunt) {
 
         // Project settings
         yeoman: appConfig,
-
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             bower: {
@@ -283,7 +282,9 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                mangle: false //不混淆变量名
+                mangle: false, //不混淆变量名
+                compress:false,
+                beautify:true
             },
             dist: {
                 files: {
