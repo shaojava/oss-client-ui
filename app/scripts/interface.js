@@ -17,7 +17,10 @@ var OSS = {
         if (typeof OSSClient[name] !== 'function') {
             throw new Error('Can not find interface ' + name);
         }
-        var args = [JSON.stringify(param)];
+        var args = [];
+        if(param){
+            args.push(JSON.stringify(param));
+        }
         if (typeof callback === 'function') {
             args.push(function (re) {
                 re = !re ? '' : JSON.parse(re);
@@ -28,7 +31,19 @@ var OSS = {
             })
         }
 
-        var re = OSSClient[name].apply(this, args);
+        /***
+         * mac版不能使用apply方法
+         * @type {string}
+         */
+        //var re = OSSClient[name].apply(this, args);
+        var re = '';
+        if(!args.length){
+            re = OSSClient[name]();
+        }else if(args.length == 1){
+            re = OSSClient[name](args[0]);
+        }else if(args.length == 2){
+            re = OSSClient[name](args[0],args[1]);
+        }
         if (log !== false) {
             this.log(name + ':return', re);
         }
