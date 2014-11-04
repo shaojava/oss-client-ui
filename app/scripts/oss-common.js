@@ -45,7 +45,8 @@ angular.module('OSSCommon', [])
                     'oss-cn-qingdao-a': '青岛',
                     'oss-cn-beijing-a': '北京',
                     'oss-cn-hongkong-a': '香港',
-                    'oss-cn-shenzhen-a': '深圳'
+                    'oss-cn-shenzhen-a': '深圳',
+                    'oss-cn-guizhou-a': '贵州'
                 };
             }
         };

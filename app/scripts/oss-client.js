@@ -58,6 +58,17 @@
             var canonicalizedResource = parseParam.canonicalized_resource;
             return JSON.stringify(CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(arr.join('\n') + '\n' + canonicalizedOSSheaders + canonicalizedResource, accessSecret)));
         },
+        changeHost:function(region){
+            region = JSON.parse(region);
+            var host = [region,region ? '.' : '' ,'aliyuncs.com'].join('');
+            return JSON.stringify(host);
+        },
+        changeUpload:function(){
+
+        },
+        changeDownload:function(){
+
+        },
         getUpload: function () {
             return JSON.stringify({
                 "download": 0,

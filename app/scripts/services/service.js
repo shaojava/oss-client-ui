@@ -1157,7 +1157,6 @@ angular.module('ossClientUiApp')
                 var _self = this;
                 var defer = $q.defer();
                 OSSApi.getObjects(bucket, prefix, delimiter, lastLoadMaker, loadFileCount).success(function (res) {
-                    OSS.log('list:res', res);
                     var contents = res['ListBucketResult']['Contents'];
                     contents = contents ? angular.isArray(contents) ? contents : [contents] : [];
 
@@ -1195,7 +1194,7 @@ angular.module('ossClientUiApp')
             },
             open: function (bucket, path, isDir) {
                 if (isDir) {
-                    $location.path(OSSLocation.getUrl(bucket.Name, path, 'file'));
+                    $location.url(OSSLocation.getUrl(bucket.Name, path, 'file'));
                 } else {
 
                 }
@@ -1353,15 +1352,7 @@ angular.module('ossClientUiApp')
                     return listPromise = deferred.promise;
                 }
             },
-            getRegions: function () {
-                return {
-                    'oss-cn-hangzhou-a': '杭州',
-                    'oss-cn-qingdao-a': '青岛',
-                    'oss-cn-beijing-a': '北京',
-                    'oss-cn-hongkong-a': '香港',
-                    'oss-cn-shenzhen-a': '深圳'
-                };
-            },
+
             getAcls: function () {
                 return {
                     "public-read-write": "公共读写",
