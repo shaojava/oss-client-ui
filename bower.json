@@ -16,7 +16,7 @@
     "font-awesome": "~4.2.0",
     "angular-ui-bootstrap": "~0.11.0",
     "angular-base64": "~2.0.2",
-    "cryptojslib": "git@github.com:GeorgeXu/CryptoJS.git#~3.1.4",
+    "cryptojslib": "https://github.com/GeorgeXu/CryptoJS.git#~3.1.4",
     "util.js": "https://github.com/GeorgeXu/util.js.git#~0.0.2",
     "angular-spinner": "~0.5.1",
     "underscore": "~1.7.0",
