@@ -40,6 +40,10 @@
         <div class="pull-right file-create-time" ng-bind="file.dir?'-' : (file.lastModified | formatTime)"></div>
         <div class="pull-right filesize" ng-bind="file.dir?'-' : (file.size | bitSize)"></div>
     </div>
+    <div class="text-muted loading-banner" ng-show="loadingFile && files.length">
+    <i class="fa fa-circle-o-notch fa-spin"></i>
+    <span>加载中...</span>
+</div>
     <span us-spinner="{radius:10, length: 0}"  spinner-key="file-list-spinner"  spinner-start-active="1"></span>
 </div>
 

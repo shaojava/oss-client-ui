@@ -374,7 +374,7 @@ angular.module('ossClientUiApp')
             prefix = '',
             delimiter = '/',
             isSearch = false,
-            loadFileCount = 100,
+            loadFileCount = 50,
             lastLoadMaker = '',
             isAllFileLoaded = false;
 
@@ -426,9 +426,6 @@ angular.module('ossClientUiApp')
 
         //打开文件（夹）
         $scope.openFile = function (file, isDir) {
-            console.log('openFile',arguments);
-            console.log('$scope.bucket',$scope.bucket);
-            //return;
             if (isDir == 1) {
                 OSSObject.open($scope.bucket, file.path, isDir);
             } else {
