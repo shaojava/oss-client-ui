@@ -41,6 +41,13 @@
             var canonicalizedResource = parseParam.canonicalized_resource;
             return JSON.stringify(CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(arr.join("\n") + "\n" + canonicalizedOSSheaders + canonicalizedResource, accessSecret)));
         },
+        changeHost: function(region) {
+            region = JSON.parse(region);
+            var host = [ region, region ? "." : "", "aliyuncs.com" ].join("");
+            return JSON.stringify(host);
+        },
+        changeUpload: function() {},
+        changeDownload: function() {},
         getUpload: function() {
             return JSON.stringify({
                 download: 0,
@@ -174,7 +181,8 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
                 "oss-cn-qingdao-a": "青岛",
                 "oss-cn-beijing-a": "北京",
                 "oss-cn-hongkong-a": "香港",
-                "oss-cn-shenzhen-a": "深圳"
+                "oss-cn-shenzhen-a": "深圳",
+                "oss-cn-guizhou-a": "贵州"
             };
         }
     };

@@ -41,6 +41,13 @@
             var canonicalizedResource = parseParam.canonicalized_resource;
             return JSON.stringify(CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(arr.join("\n") + "\n" + canonicalizedOSSheaders + canonicalizedResource, accessSecret)));
         },
+        changeHost: function(region) {
+            region = JSON.parse(region);
+            var host = [ region, region ? "." : "", "aliyuncs.com" ].join("");
+            return JSON.stringify(host);
+        },
+        changeUpload: function() {},
+        changeDownload: function() {},
         getUpload: function() {
             return JSON.stringify({
                 download: 0,
@@ -174,7 +181,8 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
                 "oss-cn-qingdao-a": "青岛",
                 "oss-cn-beijing-a": "北京",
                 "oss-cn-hongkong-a": "香港",
-                "oss-cn-shenzhen-a": "深圳"
+                "oss-cn-shenzhen-a": "深圳",
+                "oss-cn-guizhou-a": "贵州"
             };
         }
     };
@@ -628,7 +636,7 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
         }
     };
 } ]).controller("FileListCtrl", [ "$scope", "$routeParams", "OSSApi", "buckets", "$rootScope", "OSSObject", "OSSMenu", "Bucket", "$route", "$location", "OSSLocation", "usSpinnerService", "$filter", "OSSException", function($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException) {
-    var bucketName = $routeParams.bucket || "", keyword = $routeParams.keyword || "", prefix = "", delimiter = "/", isSearch = false, loadFileCount = 20, lastLoadMaker = "", isAllFileLoaded = false;
+    var bucketName = $routeParams.bucket || "", keyword = $routeParams.keyword || "", prefix = "", delimiter = "/", isSearch = false, loadFileCount = 50, lastLoadMaker = "", isAllFileLoaded = false;
     $scope.orderBy = "";
     if (buckets.length && !bucketName) {
         $location.path(OSSLocation.getUrl(buckets[0].Name));
@@ -1906,7 +1914,6 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             var _self = this;
             var defer = $q.defer();
             OSSApi.getObjects(bucket, prefix, delimiter, lastLoadMaker, loadFileCount).success(function(res) {
-                OSS.log("list:res", res);
                 var contents = res["ListBucketResult"]["Contents"];
                 contents = contents ? angular.isArray(contents) ? contents : [ contents ] : [];
                 var commonPrefixes = res["ListBucketResult"]["CommonPrefixes"];
@@ -1939,7 +1946,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
         },
         open: function(bucket, path, isDir) {
             if (isDir) {
-                $location.path(OSSLocation.getUrl(bucket.Name, path, "file"));
+                $location.url(OSSLocation.getUrl(bucket.Name, path, "file"));
             } else {}
         },
         getIconSuffix: function(dir, filename) {
@@ -2065,15 +2072,6 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                 });
                 return listPromise = deferred.promise;
             }
-        },
-        getRegions: function() {
-            return {
-                "oss-cn-hangzhou-a": "杭州",
-                "oss-cn-qingdao-a": "青岛",
-                "oss-cn-beijing-a": "北京",
-                "oss-cn-hongkong-a": "香港",
-                "oss-cn-shenzhen-a": "深圳"
-            };
         },
         getAcls: function() {
             return {
