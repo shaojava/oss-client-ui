@@ -636,7 +636,7 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
             menu.execute(list);
         }
     };
-} ]).controller("FileListCtrl", [ "$scope", "$routeParams", "OSSApi", "buckets", "$rootScope", "OSSObject", "OSSMenu", "Bucket", "$route", "$location", "OSSLocation", "usSpinnerService", "$filter", "OSSException", function($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException) {
+} ]).controller("FileListCtrl", [ "$scope", "$routeParams", "OSSApi", "buckets", "$rootScope", "OSSObject", "OSSMenu", "Bucket", "$route", "$location", "OSSLocation", "usSpinnerService", "$filter", "OSSException", "$timeout", function($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException, $timeout) {
     var bucketName = $routeParams.bucket || "", keyword = $routeParams.keyword || "", prefix = "", delimiter = "/", isSearch = false, loadFileCount = 50, lastLoadMaker = "", isAllFileLoaded = false;
     $scope.orderBy = "";
     if (buckets.length && !bucketName) {
@@ -757,8 +757,10 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
         $route.reload();
     });
     $scope.$on("createObject", function(event, callback) {
-        $scope.showCreateFile = true;
-        $scope.createFileCallback = callback;
+        $timeout(function() {
+            $scope.showCreateFile = true;
+            $scope.createFileCallback = callback;
+        });
     });
     $scope.$on("addObject", function(event, objects, selected) {
         objects = $.isArray(objects) ? objects : [ objects ];
