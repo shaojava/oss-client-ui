@@ -1,8 +1,9 @@
+/**
+ * 模拟客户端接口，便于网页版调试开发，正式发布不能包含该文件
+ */
+
 'use strict';
-
-;
-
-(function (window) {
+;(function (window) {
 
     var accessId = "fmVEoAkpUByBS1cs";
     var accessSecret = "HWsJ79uEwsrh7PB6ASGpyrdZkwJWdR";

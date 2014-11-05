@@ -260,6 +260,11 @@
       }
     }
 
+
+    .new-file-item .filename{
+    max-width: none;
+    }
+
     .filesize {
       width: 160px;
     }
@@ -452,6 +457,7 @@
             bottom: 4px;
           }
         }
+
 
         .remain-time {
           width: $queueItemRemainTimeCellWidth;

@@ -1,19 +1,23 @@
+/**
+ * 调用客户端的本地接口
+ */
+
 'use strict';
 window.debug = true;
+var debugInterfaces = ['getConfig','getCurrentLocation'];
 var OSS = {
     /**
-     * @description 请求客户端接口
+     * @description 请求客户端接getCurrentLocation口
      * @param {string} name  接口名称
      * @param {object} param 请求参数
      * @param {fn} callback 回调函数
      */
     invoke: function (name, param, callback, log) {
         var _self = this;
-
         if (typeof OSSClient === 'undefined') {
             throw new Error('Can not find OSSClient');
         }
-        if (typeof OSSClient[name] !== 'function') {
+        if (typeof OSSClient[name] !== 'function' && debugInterfaces.indexOf(name) < 0) {
             throw new Error('Can not find interface ' + name);
         }
         var args = [];
@@ -42,21 +46,24 @@ var OSS = {
             this.log(name, args);
         }
         if(!args.length){
-            re = OSSClient[name]();
+            /**
+             * 调试用
+             */
+            if(debugInterfaces.indexOf(name) >= 0){
+                re = this[name]();
+            }else{
+                re = OSSClient[name]();
+            }
+
         }else if(args.length == 1){
             re = OSSClient[name](args[0]);
         }else if(args.length == 2){
-            if(name == 'loginByKey'){
-                re = OSSClient.loginByKey(args[0],args[1]);
-            }else{
-                re = OSSClient[name](args[0],args[1]);
-            }
-
+            re = OSSClient[name](args[0],args[1]);
         }
         if (log !== false) {
             this.log(name + ':return', re);
         }
-        re = !re ? '' : typeof re === 'object' ? re : JSON.parse(re);
+        re = !re ? '' : JSON.parse(re);
         return re;
     },
     /**
@@ -112,5 +119,101 @@ var OSS = {
     isOSSClient: function () {
         var sync = this.getUserAgent()[0] || '';
         return sync.toLowerCase() == 'gk_sync';
+    },
+
+    getConfig:function(){
+
+
+        return JSON.stringify({
+            source:'guizhou',
+            disable_location_select:1,
+            locations:[
+                {
+                    location:'oss-cn-guizhou-a',
+                    name:'贵州',
+                    enable:1
+                },
+                {
+                    location:'oss-cn-gzzwy-a',
+                    name:'政务网',
+                    enable:1
+                },
+                {
+                    location:'oss-cn-hangzhou-a',
+                    name:'杭州',
+                    enable:0
+                },
+                {
+                    location:'oss-cn-qingdao-a',
+                    name:'青岛',
+                    enable:0
+                },
+                {
+                    location:'oss-cn-beijing-a',
+                    name:'北京',
+                    enable:0
+                },
+                {
+                    location:'oss-cn-hongkong-a',
+                    name:'香港',
+                    enable:0
+                },
+                {
+                    location:'oss-cn-shenzhen-a',
+                    name:'深圳',
+                    enable:0
+                }
+            ]
+        });
+
+
+        return JSON.stringify({
+            source:'',
+            disable_location_select:0,
+            locations:[
+                {
+                    location:'oss-cn-guizhou-a',
+                    name:'贵州',
+                    enable:0
+                },
+                {
+                    location:'oss-cn-gzzwy-a',
+                    name:'政务网',
+                    enable:0
+                },
+                {
+                    location:'oss-cn-hangzhou-a',
+                    name:'杭州',
+                    enable:1
+                },
+                {
+                    location:'oss-cn-qingdao-a',
+                    name:'青岛',
+                    enable:1
+                },
+                {
+                    location:'oss-cn-beijing-a',
+                    name:'北京',
+                    enable:1
+                },
+                {
+                    location:'oss-cn-hongkong-a',
+                    name:'香港',
+                    enable:1
+                },
+                {
+                    location:'oss-cn-shenzhen-a',
+                    name:'深圳',
+                    enable:1
+                }
+            ]
+        });
+
+
+
+    },
+    getCurrentLocation:function(){
+        //return 'oss-cn-gzzwy-a';
+        return JSON.stringify('oss-cn-guizhou-a');
     }
 };

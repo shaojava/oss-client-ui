@@ -56,7 +56,7 @@ input:focus {
 }
 
 //最小高度
-@each $size in 250, 300 ,400, 500 {
+@each $size in 100, 200, 250, 300 ,400, 500 {
 
   .min-height-#{$size} {
     min-height: #{$size}px;

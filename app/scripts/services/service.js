@@ -8,6 +8,9 @@
  * Factory in the ossClientUiApp.
  */
 angular.module('ossClientUiApp')
+    /**
+     * 信息提示框
+     */
     .factory('OSSAlert', ['$modal', function ($modal) {
 
         function openAlertModal(type, message, title, buttons) {
@@ -87,6 +90,10 @@ angular.module('ossClientUiApp')
             }
         }
     }])
+
+    /**
+     * 上传队列
+     */
     .factory('OSSUploadQueue', ['$rootScope','$timeout','OSSQueueItem','OSSLocation','$filter',function ($rootScope,$timeout,OSSQueueItem,OSSLocation,$filter) {
         var size = 100;//每次加载多少条
         var OSSUploadQueue =  {
@@ -172,6 +179,10 @@ angular.module('ossClientUiApp')
         };
         return OSSUploadQueue;
     }])
+
+    /**
+     * 上传、下载队列单条
+     */
     .factory('OSSQueueItem', [function () {
         var STATUS_ERROR = 5,
             STATUS_PROGRESS = 1,
@@ -221,6 +232,10 @@ angular.module('ossClientUiApp')
 
         return OSSQueueItem;
     }])
+
+    /**
+     * 下载队列
+     */
     .factory('OSSDownloadQueue', ['$rootScope','$timeout',function ($rootScope,$timeout) {
         var size = 100; //每次加载多少条
         var OSSDownloadQueue = {
@@ -299,6 +314,10 @@ angular.module('ossClientUiApp')
         };
         return OSSDownloadQueue;
     }])
+
+    /**
+     * 上传、下载队列的操作菜单
+     */
     .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout',function ($rootScope, OSSQueueItem,$timeout) {
         /**
          * 检测参数的合法性
@@ -791,6 +810,10 @@ angular.module('ossClientUiApp')
         };
         return OSSQueueMenu;
     }])
+
+    /**
+     * object的操作菜单
+     */
     .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard, OSSModal, $rootScope, OSSApi, OSSException) {
         var currentMenus = 'upload create paste'.split(' '),
             selectMenus = 'download copy del get_uri set_header'.split(' '),
@@ -1038,6 +1061,10 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+
+    /**
+     * 碎片的的操作菜单
+     */
     .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', 'OSSModal', function (Bucket, OSSApi, $rootScope, OSSModal) {
         var allMenu = [
             {
@@ -1085,6 +1112,10 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+
+    /**
+     * 浏览的历史记录
+     */
     .factory('OSSLocationHistory', ['$location', '$rootScope', function ($location, $rootScope) {
         var update = true,
             history = [],
@@ -1133,6 +1164,10 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+
+    /**
+     * object相关
+     */
     .factory('OSSObject', ['$location', '$filter', 'OSSApi', '$q', 'OSSLocation', function ($location, $filter, OSSApi, $q, OSSLocation) {
         var fileSorts = {
             'SORT_SPEC': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk', 'gknote'],
@@ -1230,6 +1265,10 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+
+    /**
+     * 浏览路径相关
+     */
     .factory('OSSLocation', ['$routeParams',function ($routeParams) {
         var OSSLocation = {
             /**
@@ -1269,6 +1308,10 @@ angular.module('ossClientUiApp')
         };
         return OSSLocation;
     }])
+
+    /**
+     * 面包屑相关
+     */
     .factory('Bread', ['OSSLocation', function (OSSLocation) {
         var getFilterName = function (filter) {
             var filterName = '';
@@ -1315,6 +1358,10 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+
+    /**
+     * 请求时生成xml文档
+     */
     .factory('RequestXML', function () {
         return {
             getXMLHeader: function () {
@@ -1333,6 +1380,10 @@ angular.module('ossClientUiApp')
             }
         };
     })
+
+    /**
+     * bucket相关
+     */
     .factory('Bucket', ['OSSApi', '$q', function (OSSApi, $q) {
         var buckets = null;
         var deferred = $q.defer();
@@ -1374,6 +1425,10 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+
+    /**
+     * api相关
+     */
     .factory('OSSApi', ['$http', 'RequestXML', function ($http, RequestXML) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
@@ -1604,6 +1659,10 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+
+    /**
+     * 碎片相关
+     */
     .factory('OSSUploadPart', ['OSSApi', '$filter', '$q', function (OSSApi, $filter, $q) {
         return {
             list: function (bucket, prefix, delimiter, lastKeyMaker, loadFileCount, lastUploadMaker) {
@@ -1651,7 +1710,11 @@ angular.module('ossClientUiApp')
 
         }
     }])
-    .factory('OSSModal', ['$modal', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
+
+    /**
+     * 所有对话框
+     */
+    .factory('OSSModal', ['$modal','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSConfig,Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -1667,11 +1730,20 @@ angular.module('ossClientUiApp')
                     templateUrl: 'views/add_bucket_modal.html',
                     windowClass: 'add_bucket_modal',
                     controller: function ($scope, $modalInstance) {
+
+
+
+                        //是否在进行ajax请求
                         $scope.loading = false;
+
+                        //是否在加载bucket信息
                         $scope.getingBucketInfo = false;
+
                         $scope.bucket = bucket || null;
 
                         $scope.cBucket = {};
+
+                        //bucket的权限
                         var acls = [], regions = [];
                         angular.forEach(Bucket.getAcls(), function (val, key) {
                             acls.push({
@@ -1679,18 +1751,11 @@ angular.module('ossClientUiApp')
                                 value: key
                             })
                         });
-
                         $scope.acls = acls;
                         if (!bucket) {
                             $scope.selectAcl = $scope.acls[0];
                         }
 
-                        angular.forEach(OSSRegion.list(), function (val, key) {
-                            regions.push({
-                                name: val,
-                                value: key
-                            })
-                        });
                         $scope.$watch('loading', function (newVal) {
                             if (newVal) {
                                 usSpinnerService.spin('add-bucket-spinner');
@@ -1707,13 +1772,27 @@ angular.module('ossClientUiApp')
                             }
                         });
 
-                        $scope.regions = regions;
-                        if (!bucket) {
-                            $scope.region = $scope.regions[0];
-                        } else {
-                            $scope.region = Util.Array.getObjectByKeyValue($scope.regions, 'value', bucket.Location);
+                        //创建bucket时是否不允许选择区域
+                        $scope.isDisableLocationSelect = OSSConfig.isDisableLocationSelect();
+
+                        if(!$scope.isDisableLocationSelect){
+                            //bucket区域
+                            $scope.regions = OSSRegion.list();
                         }
 
+                        if (!bucket) {
+                            if(!$scope.isDisableLocationSelect){
+                                $scope.cBucket.region = $scope.regions[0];
+                            }else{
+                                var currentLocation = OSS.invoke('getCurrentLocation');
+                                if(!currentLocation){
+                                    return;
+                                }
+                                $scope.cBucket.region = OSSRegion.getRegionByLocation(currentLocation);
+                            }
+                        } else {
+                            $scope.cBucket.region = OSSRegion.getRegionByLocation(bucket.Location);
+                        }
 
                         //获取ACl信息
                         if ($scope.bucket) {
@@ -1731,10 +1810,12 @@ angular.module('ossClientUiApp')
                             $scope.loading = true;
                         }
 
+                        //取消
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
 
+                        //创建bucket
                         $scope.loading = false;
                         $scope.createBucket = function (bucketName, region, acl) {
                             if (!bucketName || !bucketName.length) {
@@ -1742,13 +1823,13 @@ angular.module('ossClientUiApp')
                                 return;
                             }
                             $scope.loading = true;
-                            OSSApi.createBucket(bucketName, region.value, acl.value).success(function () {
+                            OSSApi.createBucket(bucketName, region.location, acl.value).success(function () {
                                 $scope.loading = false;
                                 $modalInstance.close({
                                     act: 'add',
                                     bucket: {
                                         Name: bucketName,
-                                        Location: region.value,
+                                        Location: region.location,
                                         Acl: acl.value
                                     }
                                 });
@@ -1758,6 +1839,7 @@ angular.module('ossClientUiApp')
                             });
                         };
 
+                        //修改bucket
                         $scope.editBucket = function (acl) {
                             $scope.loading = true;
                             OSSApi.editBucket(bucket, acl.value).success(function () {
@@ -1775,6 +1857,7 @@ angular.module('ossClientUiApp')
                             });
                         };
 
+                        //删除bucket
                         $scope.delBucket = function () {
                             _context.delBucketConfirm(bucket).result.then(function (param) {
                                 OSS.invoke('deleteBucket', {

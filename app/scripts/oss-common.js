@@ -9,6 +9,10 @@
  * Main module of the application.
  */
 angular.module('OSSCommon', [])
+
+    /**
+     * 本地对话框
+     */
     .factory('OSSDialog', [function () {
         var defaultParam = {
             type: 'normal',
@@ -37,20 +41,61 @@ angular.module('OSSCommon', [])
             }
         };
     }])
-    .factory('OSSRegion', [function () {
+
+    /**
+     *   客户端配置的相关信息（定制时用）
+     */
+    .factory('OSSConfig', [function () {
+        var config  = OSS.invoke('getConfig');
         return {
-            list: function () {
-                return {
-                    'oss-cn-hangzhou-a': '杭州',
-                    'oss-cn-qingdao-a': '青岛',
-                    'oss-cn-beijing-a': '北京',
-                    'oss-cn-hongkong-a': '香港',
-                    'oss-cn-shenzhen-a': '深圳',
-                    'oss-cn-guizhou-a': '贵州'
-                };
+            /**
+             * 是否是定制客户端
+             * @returns {boolean}
+             */
+            isCustomClient:function(){
+                return config.source != '';
+            },
+            /**
+             * 是否是贵州的定制客户端
+             * @returns {boolean}
+             */
+            isGuiZhouClient:function(){
+                return  config.source == 'guizhou';
+            },
+            /**
+             * 创建bucket是否不允许选择区域
+             */
+            isDisableLocationSelect:function(){
+                return config.disable_location_select == 1;
+            },
+            getLocations:function(){
+                return  config.locations || [];
             }
         };
     }])
+
+    /**
+     * bucket区域
+     */
+    .factory('OSSRegion', ['OSSConfig',function (OSSConfig) {
+        var locations = OSSConfig.getLocations();
+        return {
+            list: function () {
+                return _.where(locations,{
+                    enable:1
+                });
+            },
+            getRegionByLocation:function(location){
+                return _.findWhere(locations,{
+                    location:location
+                });
+            }
+        };
+    }])
+
+    /**
+     * 抛错处理
+     */
     .factory('OSSException', [function () {
         var erroList = {};
         return {
@@ -68,6 +113,10 @@ angular.module('OSSCommon', [])
             }
         };
     }])
+
+    /**
+     * 剪切板
+     */
     .factory('Clipboard', function () {
         var maxLen = 1,
             container = [];
@@ -92,15 +141,27 @@ angular.module('OSSCommon', [])
             }
         };
     })
+
+    /**
+     * 显示传入路径的文件名
+     */
     .filter('baseName', function () {
         return Util.String.baseName;
     })
+
+    /**
+     * 判断传入的路径是否文件夹
+     */
     .filter('isDir', function () {
         return function(path){
             var lastStr = Util.String.lastChar(path);
             return lastStr === '/' || lastStr === '\\' ? 1 : 0;
         };
     })
+
+    /**
+     * 滚到加载
+     */
     .directive('scrollLoad', ['$rootScope', '$parse', function ($rootScope, $parse) {
         return {
             restrict: 'A',
@@ -153,6 +214,10 @@ angular.module('OSSCommon', [])
             }
         }
     }])
+
+    /**
+     * 滚到指定的item
+     */
     .directive('scrollToItem', ['$timeout',function ($timeout) {
         return {
             restrict: 'A',
@@ -176,6 +241,10 @@ angular.module('OSSCommon', [])
             }
         }
     }])
+
+    /**
+     * 拖拽
+     */
     .directive('onDrop', ['$parse', function ($parse) {
         return function (scope,element, attrs) {
             var fn = $parse(attrs.onDrop);
@@ -186,6 +255,10 @@ angular.module('OSSCommon', [])
             });
         };
     }])
+
+    /**
+     * 阻止默认的拖拽时间
+     */
     .directive('preventDragDrop', [function () {
         return {
             restrict: 'A',
@@ -208,6 +281,10 @@ angular.module('OSSCommon', [])
             }
         }
     }])
+
+    /**
+     *  input默认选中
+     */
     .directive('autoSelect', [function () {
         return {
             restrict: 'A',
@@ -223,6 +300,33 @@ angular.module('OSSCommon', [])
                     }
                 });
 
+            }
+        }
+    }])
+
+    /**
+     * bucket区域选择下拉框
+     */
+    .directive('locationSelect', ['OSSRegion',function (OSSRegion) {
+        return {
+            restrict: 'E',
+            replace:true,
+            scope:{
+                selectLocation: '=',
+                disableSelect:'=',
+                name:'@',
+                placeHolder:'@'
+            },
+            template:'<select ng-model="selectLocation" name="{{name}}" ng-disabled="disableSelect" class="form-control" ng-options="location.name for location in locations"></select>',
+            link: function (scope) {
+                scope.locations = OSSRegion.list();
+                if(scope.placeHolder){
+                    var defaultOption = {
+                        name:scope.placeHolder
+                    };
+                    scope.locations.unshift(defaultOption);
+                    scope.selectLocation = defaultOption;
+                }
             }
         }
     }])

@@ -12,7 +12,13 @@ angular
         'angularSpinner',
         'OSSCommon'
     ])
-    .controller('MainCtrl', ['$scope', 'OSSException', 'OSSRegion', function ($scope, OSSException, OSSRegion) {
+    .controller('MainCtrl', ['$scope', 'OSSException', 'OSSRegion','OSSConfig', function ($scope, OSSException, OSSRegion,OSSConfig) {
+
+        /**
+         * 是否定制客户端
+         * @type {boolean|*}
+         */
+        $scope.isCustomClient = OSSConfig.isCustomClient();
 
         /**
          * 登录到主界面
@@ -26,22 +32,8 @@ angular
 
         $scope.deviceCode = OSS.invoke('getDeviceEncoding');
 
-        var regions = [];
-        angular.forEach(OSSRegion.list(), function (val, key) {
-            regions.push({
-                name: val,
-                value: key
-            })
-        });
+        $scope.regionSelectTip = '选择区域';
 
-        $scope.region = {
-            name: '选择区域',
-            value: ''
-        };
-
-        regions.unshift($scope.region);
-
-        $scope.regions = regions;
 
         //提交登录
         $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, region) {
@@ -55,7 +47,7 @@ angular
                 return;
             }
 
-            if (isCloudHost && !region.value) {
+            if (isCloudHost && !region) {
                 alert('请选择区域');
                 return;
             }
@@ -64,7 +56,7 @@ angular
                 keyid: accessKeyId,
                 keysecret: accessKeySecret,
                 ishost: isCloudHost,
-                location: region.value
+                location: region.location
             }, function (res) {
                 if (!res.error) {
                     $scope.$apply(function () {
@@ -116,7 +108,7 @@ angular
         $scope.import = function (isCloudHost, region) {
             OSS.invoke('loginByFile', {
                 ishost: isCloudHost ? 1 : 0,
-                location: region.value
+                location: region.location
             }, function (res) {
                 $scope.$apply(function () {
                     if (!res.error) {
