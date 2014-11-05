@@ -9,9 +9,7 @@ var OSS = {
      */
     invoke: function (name, param, callback, log) {
         var _self = this;
-        if (log !== false) {
-            this.log(name, arguments);
-        }
+
         if (typeof OSSClient === 'undefined') {
             throw new Error('Can not find OSSClient');
         }
@@ -27,7 +25,7 @@ var OSS = {
                 if (log !== false) {
                     _self.log(name + ':callback', re);
                 }
-                re = !re ? '' : JSON.parse(re);
+                re = !re ? '' : typeof re === 'object' ? re : JSON.parse(re);
                 callback(re);
             })
         }
@@ -38,17 +36,25 @@ var OSS = {
          */
         //var re = OSSClient[name].apply(this, args);
         var re = '';
+        if (log !== false) {
+            this.log(name, args);
+        }
         if(!args.length){
             re = OSSClient[name]();
         }else if(args.length == 1){
             re = OSSClient[name](args[0]);
         }else if(args.length == 2){
-            re = OSSClient[name](args[0],args[1]);
+            if(name == 'loginByKey'){
+                re = OSSClient.loginByKey(args[0],args[1]);
+            }else{
+                re = OSSClient[name](args[0],args[1]);
+            }
+
         }
         if (log !== false) {
             this.log(name + ':return', re);
         }
-        re = !re ? '' : JSON.parse(re);
+        re = !re ? '' : typeof re === 'object' ? re : JSON.parse(re);
         return re;
     },
     /**
