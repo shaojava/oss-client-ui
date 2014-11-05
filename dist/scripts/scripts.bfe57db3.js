@@ -85,13 +85,15 @@
 
 window.debug = true;
 
+var debugInterfaces = [ "getConfig", "getCurrentLocation" ];
+
 var OSS = {
     invoke: function(name, param, callback, log) {
         var _self = this;
         if (typeof OSSClient === "undefined") {
             throw new Error("Can not find OSSClient");
         }
-        if (typeof OSSClient[name] !== "function") {
+        if (typeof OSSClient[name] !== "function" && debugInterfaces.indexOf(name) < 0) {
             throw new Error("Can not find interface " + name);
         }
         var args = [];
@@ -112,20 +114,20 @@ var OSS = {
             this.log(name, args);
         }
         if (!args.length) {
-            re = OSSClient[name]();
+            if (debugInterfaces.indexOf(name) >= 0) {
+                re = this[name]();
+            } else {
+                re = OSSClient[name]();
+            }
         } else if (args.length == 1) {
             re = OSSClient[name](args[0]);
         } else if (args.length == 2) {
-            if (name == "loginByKey") {
-                re = OSSClient.loginByKey(args[0], args[1]);
-            } else {
-                re = OSSClient[name](args[0], args[1]);
-            }
+            re = OSSClient[name](args[0], args[1]);
         }
         if (log !== false) {
             this.log(name + ":return", re);
         }
-        re = !re ? "" : typeof re === "object" ? re : JSON.parse(re);
+        re = !re ? "" : JSON.parse(re);
         return re;
     },
     log: function(name, info) {
@@ -152,6 +154,77 @@ var OSS = {
     isOSSClient: function() {
         var sync = this.getUserAgent()[0] || "";
         return sync.toLowerCase() == "gk_sync";
+    },
+    getConfig: function() {
+        return JSON.stringify({
+            source: "guizhou",
+            disable_location_select: 1,
+            locations: [ {
+                location: "oss-cn-guizhou-a",
+                name: "贵州",
+                enable: 1
+            }, {
+                location: "oss-cn-gzzwy-a",
+                name: "政务网",
+                enable: 1
+            }, {
+                location: "oss-cn-hangzhou-a",
+                name: "杭州",
+                enable: 0
+            }, {
+                location: "oss-cn-qingdao-a",
+                name: "青岛",
+                enable: 0
+            }, {
+                location: "oss-cn-beijing-a",
+                name: "北京",
+                enable: 0
+            }, {
+                location: "oss-cn-hongkong-a",
+                name: "香港",
+                enable: 0
+            }, {
+                location: "oss-cn-shenzhen-a",
+                name: "深圳",
+                enable: 0
+            } ]
+        });
+        return JSON.stringify({
+            source: "",
+            disable_location_select: 0,
+            locations: [ {
+                location: "oss-cn-guizhou-a",
+                name: "贵州",
+                enable: 0
+            }, {
+                location: "oss-cn-gzzwy-a",
+                name: "政务网",
+                enable: 0
+            }, {
+                location: "oss-cn-hangzhou-a",
+                name: "杭州",
+                enable: 1
+            }, {
+                location: "oss-cn-qingdao-a",
+                name: "青岛",
+                enable: 1
+            }, {
+                location: "oss-cn-beijing-a",
+                name: "北京",
+                enable: 1
+            }, {
+                location: "oss-cn-hongkong-a",
+                name: "香港",
+                enable: 1
+            }, {
+                location: "oss-cn-shenzhen-a",
+                name: "深圳",
+                enable: 1
+            } ]
+        });
+    },
+    getCurrentLocation: function() {
+        return JSON.stringify("oss-cn-guizhou-a");
     }
 };
 
@@ -178,17 +251,34 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
             }));
         }
     };
-} ]).factory("OSSRegion", [ function() {
+} ]).factory("OSSConfig", [ function() {
+    var config = OSS.invoke("getConfig");
+    return {
+        isCustomClient: function() {
+            return config.source != "";
+        },
+        isGuiZhouClient: function() {
+            return config.source == "guizhou";
+        },
+        isDisableLocationSelect: function() {
+            return config.disable_location_select == 1;
+        },
+        getLocations: function() {
+            return config.locations || [];
+        }
+    };
+} ]).factory("OSSRegion", [ "OSSConfig", function(OSSConfig) {
+    var locations = OSSConfig.getLocations();
     return {
         list: function() {
-            return {
-                "oss-cn-hangzhou-a": "杭州",
-                "oss-cn-qingdao-a": "青岛",
-                "oss-cn-beijing-a": "北京",
-                "oss-cn-hongkong-a": "香港",
-                "oss-cn-shenzhen-a": "深圳",
-                "oss-cn-guizhou-a": "贵州"
-            };
+            return _.where(locations, {
+                enable: 1
+            });
+        },
+        getRegionByLocation: function(location) {
+            return _.findWhere(locations, {
+                location: location
+            });
         }
     };
 } ]).factory("OSSException", [ function() {
@@ -347,6 +437,28 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
                     element.select();
                 }
             });
+        }
+    };
+} ]).directive("locationSelect", [ "OSSRegion", function(OSSRegion) {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            selectLocation: "=",
+            disableSelect: "=",
+            name: "@",
+            placeHolder: "@"
+        },
+        template: '<select ng-model="selectLocation" name="{{name}}" ng-disabled="disableSelect" class="form-control" ng-options="location.name for location in locations"></select>',
+        link: function(scope) {
+            scope.locations = OSSRegion.list();
+            if (scope.placeHolder) {
+                var defaultOption = {
+                    name: scope.placeHolder
+                };
+                scope.locations.unshift(defaultOption);
+                scope.selectLocation = defaultOption;
+            }
         }
     };
 } ]);
@@ -2361,7 +2473,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             };
         }
     };
-} ]).factory("OSSModal", [ "$modal", "Bucket", "OSSApi", "OSSObject", "OSSException", "OSSRegion", "$rootScope", "usSpinnerService", function($modal, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
+} ]).factory("OSSModal", [ "$modal", "OSSConfig", "Bucket", "OSSApi", "OSSObject", "OSSException", "OSSRegion", "$rootScope", "usSpinnerService", function($modal, OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
     var defaultOption = {
         backdrop: "static"
     };
@@ -2387,12 +2499,6 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                     if (!bucket) {
                         $scope.selectAcl = $scope.acls[0];
                     }
-                    angular.forEach(OSSRegion.list(), function(val, key) {
-                        regions.push({
-                            name: val,
-                            value: key
-                        });
-                    });
                     $scope.$watch("loading", function(newVal) {
                         if (newVal) {
                             usSpinnerService.spin("add-bucket-spinner");
@@ -2407,11 +2513,22 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                             usSpinnerService.stop("get-bucket-spinner");
                         }
                     });
-                    $scope.regions = regions;
+                    $scope.isDisableLocationSelect = OSSConfig.isDisableLocationSelect();
+                    if (!$scope.isDisableLocationSelect) {
+                        $scope.regions = OSSRegion.list();
+                    }
                     if (!bucket) {
-                        $scope.region = $scope.regions[0];
+                        if (!$scope.isDisableLocationSelect) {
+                            $scope.cBucket.region = $scope.regions[0];
+                        } else {
+                            var currentLocation = OSS.invoke("getCurrentLocation");
+                            if (!currentLocation) {
+                                return;
+                            }
+                            $scope.cBucket.region = OSSRegion.getRegionByLocation(currentLocation);
+                        }
                     } else {
-                        $scope.region = Util.Array.getObjectByKeyValue($scope.regions, "value", bucket.Location);
+                        $scope.cBucket.region = OSSRegion.getRegionByLocation(bucket.Location);
                     }
                     if ($scope.bucket) {
                         $scope.loading = true;
@@ -2437,13 +2554,13 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                             return;
                         }
                         $scope.loading = true;
-                        OSSApi.createBucket(bucketName, region.value, acl.value).success(function() {
+                        OSSApi.createBucket(bucketName, region.location, acl.value).success(function() {
                             $scope.loading = false;
                             $modalInstance.close({
                                 act: "add",
                                 bucket: {
                                     Name: bucketName,
-                                    Location: region.value,
+                                    Location: region.location,
                                     Acl: acl.value
                                 }
                             });
