@@ -139,7 +139,6 @@ angular.module('ossClientUiApp')
             refresh: function () {
                 var _self = this;
                 OSS.invoke('changeUpload', {start: 1}, function (res) {
-                    OSS.log('OSSUploadQueue:changeUpload',res);
                     $timeout(function () {
                         angular.forEach(res['list'], function (val) {
                             var existItem = _self.get(val.pathhash);

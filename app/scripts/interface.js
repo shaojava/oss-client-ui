@@ -24,10 +24,10 @@ var OSS = {
         }
         if (typeof callback === 'function') {
             args.push(function (re) {
-                re = !re ? '' : JSON.parse(re);
                 if (log !== false) {
                     _self.log(name + ':callback', re);
                 }
+                re = !re ? '' : JSON.parse(re);
                 callback(re);
             })
         }
