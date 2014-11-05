@@ -368,7 +368,7 @@ angular.module('ossClientUiApp')
 /**
  * 文件列表
  */
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException) {
+    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException','$timeout', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException,$timeout) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -540,8 +540,10 @@ angular.module('ossClientUiApp')
 
         //向当前列表中添加object
         $scope.$on('createObject', function (event, callback) {
-            $scope.showCreateFile = true;
-            $scope.createFileCallback = callback;
+            $timeout(function(){
+                $scope.showCreateFile = true;
+                $scope.createFileCallback = callback;
+            });
         });
 
         //向当前列表中添加object
