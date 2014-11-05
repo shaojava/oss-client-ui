@@ -1321,6 +1321,7 @@ angular.module('ossClientUiApp')
                 return '<?xml version="1.0" encoding="UTF-8"?>';
             },
             getCreateBucketXML: function (region) {
+                region.replace('-internal','');
                 return [
                     this.getXMLHeader(),
                     "<CreateBucketConfiguration >",

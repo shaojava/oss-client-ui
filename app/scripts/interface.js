@@ -25,6 +25,8 @@ var OSS = {
                 if (log !== false) {
                     _self.log(name + ':callback', re);
                 }
+
+                //mac上回调的参数不是JSONString，而是Object
                 re = !re ? '' : typeof re === 'object' ? re : JSON.parse(re);
                 callback(re);
             })
