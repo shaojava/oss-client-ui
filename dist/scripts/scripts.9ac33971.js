@@ -88,9 +88,6 @@ window.debug = true;
 var OSS = {
     invoke: function(name, param, callback, log) {
         var _self = this;
-        if (log !== false) {
-            this.log(name, arguments);
-        }
         if (typeof OSSClient === "undefined") {
             throw new Error("Can not find OSSClient");
         }
@@ -103,25 +100,32 @@ var OSS = {
         }
         if (typeof callback === "function") {
             args.push(function(re) {
-                re = !re ? "" : JSON.parse(re);
                 if (log !== false) {
                     _self.log(name + ":callback", re);
                 }
+                re = !re ? "" : typeof re === "object" ? re : JSON.parse(re);
                 callback(re);
             });
         }
         var re = "";
+        if (log !== false) {
+            this.log(name, args);
+        }
         if (!args.length) {
             re = OSSClient[name]();
         } else if (args.length == 1) {
             re = OSSClient[name](args[0]);
         } else if (args.length == 2) {
-            re = OSSClient[name](args[0], args[1]);
+            if (name == "loginByKey") {
+                re = OSSClient.loginByKey(args[0], args[1]);
+            } else {
+                re = OSSClient[name](args[0], args[1]);
+            }
         }
         if (log !== false) {
             this.log(name + ":return", re);
         }
-        re = !re ? "" : JSON.parse(re);
+        re = !re ? "" : typeof re === "object" ? re : JSON.parse(re);
         return re;
     },
     log: function(name, info) {
@@ -1001,7 +1005,6 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             OSS.invoke("changeUpload", {
                 start: 1
             }, function(res) {
-                OSS.log("OSSUploadQueue:changeUpload", res);
                 $timeout(function() {
                     angular.forEach(res["list"], function(val) {
                         var existItem = _self.get(val.pathhash);
@@ -2148,7 +2151,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                 expires: expires,
                 canonicalized_resource: canonicalizedResource
             });
-            var requestUrl = getRequestUrl("oss", "", expires, signature, canonicalizedResource);
+            var requestUrl = getRequestUrl("", "oss-cn-guizhou-a", expires, signature, canonicalizedResource);
             return $http.get(requestUrl);
         },
         createBucket: function(bucketName, region, acl) {
