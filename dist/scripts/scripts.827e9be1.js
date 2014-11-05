@@ -87,6 +87,7 @@ window.debug = true;
 
 var OSS = {
     invoke: function(name, param, callback, log) {
+        var _self = this;
         if (log !== false) {
             this.log(name, arguments);
         }
@@ -104,7 +105,7 @@ var OSS = {
             args.push(function(re) {
                 re = !re ? "" : JSON.parse(re);
                 if (log !== false) {
-                    this.log(name + ":callback", re);
+                    _self.log(name + ":callback", re);
                 }
                 callback(re);
             });
