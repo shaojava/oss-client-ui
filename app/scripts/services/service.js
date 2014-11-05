@@ -1432,8 +1432,8 @@ angular.module('ossClientUiApp')
                     expires: expires,
                     canonicalized_resource: canonicalizedResource
                 });
-                //var requestUrl = getRequestUrl('oss', '', expires, signature, canonicalizedResource);
-                var requestUrl = getRequestUrl('', 'oss-cn-guizhou-a', expires, signature, canonicalizedResource);
+                var requestUrl = getRequestUrl('oss', '', expires, signature, canonicalizedResource);
+                //var requestUrl = getRequestUrl('', 'oss-cn-guizhou-a', expires, signature, canonicalizedResource);
                 //var requestUrl = getRequestUrl('', 'oss-cn-gzzwy-a-internal', expires, signature, canonicalizedResource);
                 return $http.get(requestUrl);
 

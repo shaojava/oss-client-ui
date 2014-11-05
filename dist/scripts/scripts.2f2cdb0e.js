@@ -2057,6 +2057,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             return '<?xml version="1.0" encoding="UTF-8"?>';
         },
         getCreateBucketXML: function(region) {
+            region.replace("-internal", "");
             return [ this.getXMLHeader(), "<CreateBucketConfiguration >", "<LocationConstraint >", region, "</LocationConstraint >", "</CreateBucketConfiguration >" ].join("");
         }
     };
@@ -2151,7 +2152,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                 expires: expires,
                 canonicalized_resource: canonicalizedResource
             });
-            var requestUrl = getRequestUrl("", "oss-cn-guizhou-a", expires, signature, canonicalizedResource);
+            var requestUrl = getRequestUrl("oss", "", expires, signature, canonicalizedResource);
             return $http.get(requestUrl);
         },
         createBucket: function(bucketName, region, acl) {
