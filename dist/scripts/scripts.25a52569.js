@@ -281,6 +281,7 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
     };
 } ]).factory("OSSRegion", [ "OSSConfig", function(OSSConfig) {
     var locations = OSSConfig.getLocations();
+    var currentLocation = OSS.invoke("getCurrentLocation");
     return {
         list: function() {
             return _.where(locations, {
@@ -288,9 +289,18 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
             });
         },
         getRegionByLocation: function(location) {
-            return _.findWhere(locations, {
-                location: location
+            return _.find(locations, function(item) {
+                return item.location.replace("-internal", "") == location.replace("-internal", "");
             });
+        },
+        changeLocation: function(location) {
+            if (location.indexOf("-internal") > 0) {
+                return location;
+            }
+            if (currentLocation && location + "-internal" == currentLocation) {
+                return location + "-internal";
+            }
+            return location;
         }
     };
 } ]).factory("OSSException", [ function() {
@@ -2183,7 +2193,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             return '<?xml version="1.0" encoding="UTF-8"?>';
         },
         getCreateBucketXML: function(region) {
-            region.replace("-internal", "");
+            region = region.replace("-internal", "");
             return [ this.getXMLHeader(), "<CreateBucketConfiguration >", "<LocationConstraint >", region, "</LocationConstraint >", "</CreateBucketConfiguration >" ].join("");
         }
     };
@@ -2230,25 +2240,16 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             });
         }
     };
-} ]).factory("OSSApi", [ "$http", "RequestXML", "OSSConfig", function($http, RequestXML, OSSConfig) {
+} ]).factory("OSSApi", [ "$http", "RequestXML", "OSSConfig", "OSSRegion", function($http, RequestXML, OSSConfig, OSSRegion) {
     var OSSAccessKeyId = OSS.invoke("getAccessID");
     var currentLocation = OSS.invoke("getCurrentLocation");
     var host = OSSConfig.getHost();
-    var changeLocation = function(location) {
-        if (location.indexOf("-internal") > 0) {
-            return location;
-        }
-        if (currentLocation && location && location == currentLocation) {
-            return location + "-internal";
-        }
-        return location;
-    };
     var getExpires = function(expires) {
         expires = angular.isUndefined(expires) ? 60 : expires;
         return parseInt(new Date().getTime() / 1e3) + expires;
     };
     var getRequestUrl = function(bucket, region, expires, signature, canonicalizedResource, extraParam) {
-        region = changeLocation(region);
+        region = OSSRegion.changeLocation(region);
         var requestUrl = "http://" + (bucket ? bucket + "." : "") + (region ? region + "." : "") + host;
         canonicalizedResource = canonicalizedResource.replace(new RegExp("^/" + bucket), "");
         requestUrl += canonicalizedResource;

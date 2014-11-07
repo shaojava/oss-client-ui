@@ -34,9 +34,8 @@ angular
 
         $scope.regionSelectTip = '选择区域';
 
-
         //提交登录
-        $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, region) {
+        $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, location) {
             if (!accessKeyId || !accessKeyId.length) {
                 alert('请输入 Access Key ID');
                 return;
@@ -47,17 +46,32 @@ angular
                 return;
             }
 
-            if (isCloudHost && !region) {
-                alert('请选择区域');
-                return;
+            //如果是云主机
+            if (!$scope.isCustomClient && isCloudHost) {
+                if(!location){
+                    alert('请选择区域');
+                    return;
+                }
+                location += '-internal';
             }
 
-            OSS.invoke('loginByKey', {
+            if(OSSConfig.isGuiZhouClient()){
+                if(!location){
+                    alert('请选择区域');
+                    return;
+                }
+            }
+            var param = {
                 keyid: accessKeyId,
-                keysecret: accessKeySecret,
-                ishost: isCloudHost,
-                location: region.location
-            }, function (res) {
+                keysecret: accessKeySecret
+            };
+
+            if(location){
+                angular.extend(param,{
+                    location: location
+                })
+            }
+            OSS.invoke('loginByKey', param, function (res) {
                 if (!res.error) {
                     $scope.$apply(function () {
                         $scope.step = 'setPassword';
@@ -105,10 +119,10 @@ angular
             alert('复制成功');
         };
 
-        $scope.import = function (isCloudHost, region) {
+        $scope.import = function (isCloudHost, location) {
             OSS.invoke('loginByFile', {
                 ishost: isCloudHost ? 1 : 0,
-                location: region.location
+                location: location
             }, function (res) {
                 $scope.$apply(function () {
                     if (!res.error) {

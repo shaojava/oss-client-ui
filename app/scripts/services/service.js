@@ -1371,7 +1371,7 @@ angular.module('ossClientUiApp')
             },
             getCreateBucketXML: function (region) {
                 //去掉”-internal“
-                region.replace('-internal', '');
+                region = region.replace('-internal', '');
                 return [
                     this.getXMLHeader(),
                     "<CreateBucketConfiguration >",
@@ -1432,7 +1432,7 @@ angular.module('ossClientUiApp')
 /**
  * api相关
  */
-    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', function ($http, RequestXML, OSSConfig) {
+    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion',function ($http, RequestXML, OSSConfig,OSSRegion) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
 
@@ -1441,24 +1441,13 @@ angular.module('ossClientUiApp')
 
         var host = OSSConfig.getHost();
 
-        //如果当前的bucket与当前的区域在同一个地方，就走内网
-        var changeLocation = function (location) {
-            if(location.indexOf('-internal') > 0){
-                return location;
-            }
-            if (currentLocation && location && location == currentLocation) {
-                return location + '-internal';
-            }
-            return location;
-        };
-
         var getExpires = function (expires) {
             expires = angular.isUndefined(expires) ? 60 : expires;
             return parseInt(new Date().getTime() / 1000) + expires;
         };
 
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam) {
-            region = changeLocation(region);
+            region = OSSRegion.changeLocation(region);
             var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
             requestUrl += canonicalizedResource;

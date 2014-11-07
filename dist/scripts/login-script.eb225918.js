@@ -281,6 +281,7 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
     };
 } ]).factory("OSSRegion", [ "OSSConfig", function(OSSConfig) {
     var locations = OSSConfig.getLocations();
+    var currentLocation = OSS.invoke("getCurrentLocation");
     return {
         list: function() {
             return _.where(locations, {
@@ -288,9 +289,18 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
             });
         },
         getRegionByLocation: function(location) {
-            return _.findWhere(locations, {
-                location: location
+            return _.find(locations, function(item) {
+                return item.location.replace("-internal", "") == location.replace("-internal", "");
             });
+        },
+        changeLocation: function(location) {
+            if (location.indexOf("-internal") > 0) {
+                return location;
+            }
+            if (currentLocation && location + "-internal" == currentLocation) {
+                return location + "-internal";
+            }
+            return location;
         }
     };
 } ]).factory("OSSException", [ function() {
@@ -486,7 +496,7 @@ angular.module("OSSLogin", [ "ngAnimate", "ngCookies", "ngResource", "ngRoute", 
     $scope.step = location.hash ? location.hash.replace(/^#/, "") : "loginById";
     $scope.deviceCode = OSS.invoke("getDeviceEncoding");
     $scope.regionSelectTip = "选择区域";
-    $scope.login = function(accessKeyId, accessKeySecret, isCloudHost, region) {
+    $scope.login = function(accessKeyId, accessKeySecret, isCloudHost, location) {
         if (!accessKeyId || !accessKeyId.length) {
             alert("请输入 Access Key ID");
             return;
@@ -495,16 +505,29 @@ angular.module("OSSLogin", [ "ngAnimate", "ngCookies", "ngResource", "ngRoute", 
             alert("请输入 Access Key Secret");
             return;
         }
-        if (isCloudHost && !region) {
-            alert("请选择区域");
-            return;
+        if (!$scope.isCustomClient && isCloudHost) {
+            if (!location) {
+                alert("请选择区域");
+                return;
+            }
+            location += "-internal";
         }
-        OSS.invoke("loginByKey", {
+        if (OSSConfig.isGuiZhouClient()) {
+            if (!location) {
+                alert("请选择区域");
+                return;
+            }
+        }
+        var param = {
             keyid: accessKeyId,
-            keysecret: accessKeySecret,
-            ishost: isCloudHost,
-            location: region.location
-        }, function(res) {
+            keysecret: accessKeySecret
+        };
+        if (location) {
+            angular.extend(param, {
+                location: location
+            });
+        }
+        OSS.invoke("loginByKey", param, function(res) {
             if (!res.error) {
                 $scope.$apply(function() {
                     $scope.step = "setPassword";
@@ -544,10 +567,10 @@ angular.module("OSSLogin", [ "ngAnimate", "ngCookies", "ngResource", "ngRoute", 
         OSS.invoke("setClipboardData", deviceCode);
         alert("复制成功");
     };
-    $scope.import = function(isCloudHost, region) {
+    $scope.import = function(isCloudHost, location) {
         OSS.invoke("loginByFile", {
             ishost: isCloudHost ? 1 : 0,
-            location: region.location
+            location: location
         }, function(res) {
             $scope.$apply(function() {
                 if (!res.error) {

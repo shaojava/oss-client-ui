@@ -37,7 +37,7 @@
             </div>
             <div class="form-group">
                 <div class="btn-wrapper">
-                    <button class="btn btn-primary btn-login" ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region)" >登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+                    <button class="btn btn-primary btn-login" ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region.location)" >登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
                     <button class="btn btn-default" ng-click="step='importAuthorization'" ng-if="!isCustomClient">导入授权</button>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 <location-select select-location="importRegion" disable-select="!isImportCloudHost && !isCustomClient" place-holder="{{regionSelectTip}}" />
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" ng-click="import(isCloudHost,importRegion)">选择文件并导入</button>
+                <button class="btn btn-primary" ng-click="import(isCloudHost,importRegion.location)">选择文件并导入</button>
                 <button class="btn btn-default" ng-click="step='loginById'">返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
             </div>
         </section>

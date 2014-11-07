@@ -93,6 +93,7 @@ angular.module('OSSCommon', [])
      */
     .factory('OSSRegion', ['OSSConfig',function (OSSConfig) {
         var locations = OSSConfig.getLocations();
+        var currentLocation = OSS.invoke('getCurrentLocation');
         return {
             list: function () {
                 return _.where(locations,{
@@ -100,9 +101,18 @@ angular.module('OSSCommon', [])
                 });
             },
             getRegionByLocation:function(location){
-                return _.findWhere(locations,{
-                    location:location
+                return _.find(locations,function(item){
+                    return item.location.replace('-internal','') == location.replace('-internal','');
                 });
+            },
+            changeLocation:function(location){
+                if(location.indexOf('-internal') > 0){
+                    return location;
+                }
+                if (currentLocation && location + '-internal' == currentLocation) {
+                    return location + '-internal';
+                }
+                return location;
             }
         };
     }])

@@ -281,6 +281,7 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
     };
 } ]).factory("OSSRegion", [ "OSSConfig", function(OSSConfig) {
     var locations = OSSConfig.getLocations();
+    var currentLocation = OSS.invoke("getCurrentLocation");
     return {
         list: function() {
             return _.where(locations, {
@@ -288,9 +289,18 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
             });
         },
         getRegionByLocation: function(location) {
-            return _.findWhere(locations, {
-                location: location
+            return _.find(locations, function(item) {
+                return item.location.replace("-internal", "") == location.replace("-internal", "");
             });
+        },
+        changeLocation: function(location) {
+            if (location.indexOf("-internal") > 0) {
+                return location;
+            }
+            if (currentLocation && location + "-internal" == currentLocation) {
+                return location + "-internal";
+            }
+            return location;
         }
     };
 } ]).factory("OSSException", [ function() {
@@ -477,41 +487,18 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
 
 "use strict";
 
-angular.module("ExportAuthorization", [ "ngAnimate", "ngCookies", "ngResource", "ngRoute", "ngSanitize", "ngTouch", "ui.bootstrap", "angularSpinner", "OSSCommon" ]).controller("MainCtrl", [ "$scope", "OSSException", "OSSRegion", function($scope, OSSException, OSSRegion) {
-    var regions = [];
-    angular.forEach(OSSRegion.list(), function(val, key) {
-        regions.push({
-            name: val,
-            value: key
-        });
-    });
-    $scope.region = {
-        name: "选择区域",
-        value: ""
-    };
-    regions.unshift($scope.region);
-    $scope.regions = regions;
-    $scope.exportAuthorization = function(accessKeyId, accessKeySecret, deviceCode) {
-        if (!accessKeyId || !accessKeyId.length) {
-            alert("请输入 Access Key ID");
+angular.module("CustomDomain", [ "ngAnimate", "ngCookies", "ngResource", "ngRoute", "ngSanitize", "ngTouch", "ui.bootstrap", "angularSpinner", "OSSCommon" ]).controller("MainCtrl", [ "$scope", "OSSException", function($scope, OSSException) {
+    $scope.customDomain = function(host) {
+        if (!host || !host.length) {
+            alert("请输入服务器地址");
             return;
         }
-        if (!accessKeySecret || !accessKeySecret.length) {
-            alert("请输入 Access Key Secret");
-            return;
-        }
-        if (!deviceCode && !deviceCode.value) {
-            alert("请输入要授权的机器码");
-            return;
-        }
-        OSS.invoke("saveAuthorization", {
-            keyid: accessKeyId,
-            keysecret: accessKeySecret,
-            encoding: deviceCode
+        OSS.invoke("setServerLocation", {
+            location: host
         }, function(res) {
             if (!res.error) {
-                alert("导出成功");
-            } else if (res.error != 5) {
+                alert("设置成功");
+            } else {
                 alert(OSSException.getClientErrorMsg(res));
             }
         });
