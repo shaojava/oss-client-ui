@@ -9,7 +9,7 @@
             <label for="bucket_name" class="col-sm-3 control-label">Bucket名称：</label>
             <div class="col-sm-5">
                 <span ng-if="bucket">{{bucket.Name}}</span>
-                <input ng-if="!bucket" type="text" class="form-control" ng-model="cBucket.name" id="bucket_name" placeholder="" />
+                <input ng-if="!bucket" type="text" maxlength="63" class="form-control" ng-model="cBucket.name" id="bucket_name" placeholder="" />
             </div>
             <div class="tip text-muted" ng-if="!bucket">
                 <p>·只能包含小写字母、数字和横线</p>

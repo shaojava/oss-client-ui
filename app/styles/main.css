@@ -12348,6 +12348,9 @@ input:focus {
   padding: 0 20px;
   border-left: 3px solid transparent;
   text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\0000395}}
 .left-sidebar .bucket-list > li > a:hover, .left-sidebar .bucket-list > li > a:focus, .left-sidebar .bucket-list > li > a.selected {
@@ -12517,43 +12520,47 @@ input:focus {
 .main .file-browser .filename .file-icon-32 {
   margin-right: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003264}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003263}}
+.main .file-browser .upload-part-list .filename {
+  max-width: 35%;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003268}}
 .main .file-browser .new-file-item .filename {
   max-width: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003268}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003272}}
 .main .file-browser .filesize {
   width: 160px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003273}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003277}}
 .main .file-browser .file-create-time,
 .main .file-browser .init-time {
   width: 190px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003277}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003281}}
 .main .file-browser .upload-id {
   width: 330px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003281}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003285}}
 .main .file-browser .file-item {
   line-height: 40px;
   cursor: default;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003285}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003289}}
 .main .file-browser .file-item:nth-child(even) {
   background: #f7f7f7;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003293}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003297}}
 .main .file-browser .file-item.selected {
   background: #50acf3;
   color: #fff;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003298}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003302}}
 .main .file-browser .file-item .filename {
   font-size: 14px;
   font-family: "hiragino sans gb", "Helvetica Neue", "Helvetica", "Arial", "宋体", "simsun", "sans-serif";
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003305}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003309}}
 .main .file-browser .filelist-body {
   position: absolute;
   left: 0;
@@ -12563,22 +12570,22 @@ input:focus {
   overflow: auto;
   background: #fff;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003316}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003320}}
 .main .file-browser .filelist-body .new-file-item .btn {
   margin-left: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003320}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003324}}
 .main .file-browser .filelist-body .new-file-item .form-control {
   display: inline-block;
   width: 300px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003327}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003331}}
 .main .file-browser .filelist-body .loading-banner {
   height: 32px;
   line-height: 32px;
   text-align: center;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003335}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003339}}
 .main .trans-queue {
   position: absolute;
   bottom: -230px;
@@ -12589,37 +12596,37 @@ input:focus {
   background: #fff;
   transition: bottom 0.25s linear;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003345}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003349}}
 .main .trans-queue .total-speed-wrapper {
   position: absolute;
   right: 50px;
   line-height: 40px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003350}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003354}}
 .main .trans-queue .total-speed-wrapper span {
   margin: 0 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003354}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003358}}
 .main .trans-queue .total-speed-wrapper strong {
   font-weight: normal;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003359}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003363}}
 .main .trans-queue .slide_queue {
   position: absolute;
   right: 20px;
   top: 12px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003363}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003367}}
 .main .trans-queue .slide_queue .fa {
   color: #000;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003368}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003372}}
 .main .trans-queue .nav-tabs {
   background: #f2f2f2;
   padding-left: 10px;
   padding-top: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003374}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003378}}
 .main .trans-queue .tab-content {
   position: absolute;
   left: 0;
@@ -12627,21 +12634,21 @@ input:focus {
   bottom: 0;
   top: 39px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003381}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003385}}
 .main .trans-queue .tab-content .opt-bar {
   background: #fff;
   padding: 5px 10px;
   border-bottom: 1px solid #d8d8d8;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003386}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003390}}
 .main .trans-queue .tab-content .opt-bar .opt-list > .btn-group {
   margin-right: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003396}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003400}}
 .main .trans-queue .queue-list {
   overflow: auto;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003399}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003403}}
 .main .trans-queue .queue-list .queue-item {
   height: 34px;
   line-height: 34px;
@@ -12649,12 +12656,12 @@ input:focus {
   position: relative;
   overflow: hidden;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003405}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003409}}
 .main .trans-queue .queue-list .queue-item > div {
   position: relative;
   padding: 0 15px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003410}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003414}}
 .main .trans-queue .queue-list .queue-item > .queue-progress {
   position: absolute;
   top: 24px;
@@ -12664,29 +12671,29 @@ input:focus {
   height: 5px;
   padding: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003418}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003422}}
 .main .trans-queue .queue-list .queue-item > .queue-progress .progress {
   height: 100%;
   margin-bottom: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003424}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003428}}
 .main .trans-queue .queue-list .queue-item > .bg-success {
   background: rgba(68, 157, 68, 0.3);
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003428}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003432}}
 .main .trans-queue .queue-list .queue-item:nth-child(even) {
   background: #f7f7f7;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003432}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003436}}
 .main .trans-queue .queue-list .queue-item:hover {
   background: #e1e3e7;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003436}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003440}}
 .main .trans-queue .queue-list .queue-item.selected {
   background: #50acf3 !important;
   color: #fff;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003441}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003445}}
 .main .trans-queue .queue-list .queue-item .filesize {
   width: 140px;
   overflow: hidden;
@@ -12695,24 +12702,24 @@ input:focus {
   padding: 0 20px;
   text-align: center;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003448}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003452}}
 .main .trans-queue .queue-list .queue-item .filename {
   padding: 0 10px;
-  max-width: 70%;
+  max-width: 52%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003452}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003456}}
 .main .trans-queue .queue-list .queue-item .filename > i {
   margin-right: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003455}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003459}}
 .main .trans-queue .queue-list .queue-item .filename .name {
   position: relative;
   bottom: 4px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003462}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003466}}
 .main .trans-queue .queue-list .queue-item .remain-time {
   width: 140px;
   overflow: hidden;
@@ -12720,18 +12727,18 @@ input:focus {
   white-space: nowrap;
   text-align: center;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003468}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003472}}
 .main .trans-queue .queue-list .queue-item .opts {
   width: 100px;
   text-align: right;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003476}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003480}}
 .main .trans-queue .log-wrapper textarea {
   resize: none;
   border: 0;
   cursor: text;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003484}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003488}}
 .main .trans-queue .queue-list,
 .main .trans-queue .log-wrapper textarea {
   position: absolute;
@@ -12741,11 +12748,11 @@ input:focus {
   right: 0;
   overflow: auto;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003496}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003500}}
 .main.show-trans-queue .trans-queue {
   bottom: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003500}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/george\/project\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003504}}
 .main.show-trans-queue .file-browser {
   bottom: 270px;
 }

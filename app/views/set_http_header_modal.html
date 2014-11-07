@@ -2,8 +2,8 @@
     <button type="button" class="close" ng-click="cancel()">&times;</button>
     <h4>设置 <span ng-bind="object.filename"></span>HTTP头属性</h4>
 </div>
-<div class="modal-body">
-    <section>
+<div class="modal-body min-height-200">
+    <section ng-show="!loading">
         <tabset>
             <tab heading="HTTP头">
                 <ul class="scrollbar form-horizontal">
@@ -42,8 +42,12 @@
             </tab>
         </tabset>
     </section>
+    <span us-spinner="{radius:10, length: 0}"  spinner-key="loading-spinner"  spinner-start-active="1"></span>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" ng-click="setHttpHeader(headers,customHeaders)">确定</button>
+    <div class="spinner-wrapper" style="display: inline-block;vertical-align: middle">
+        <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"  spinner-key="set-http-spinner"  spinner-start-active="1"></span>
+    </div>
+    <button type="button" class="btn btn-primary" ng-disabled="saving" ng-click="setHttpHeader(headers,customHeaders)">确定</button>
     <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
 </div>

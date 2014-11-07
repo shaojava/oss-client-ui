@@ -144,7 +144,6 @@
                     }
                 ]
             });
-            console.log('re',re);
             return JSON.stringify({
                 source:'guizhou',
                 disable_location_select:1,

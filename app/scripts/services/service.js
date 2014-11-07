@@ -1058,7 +1058,7 @@ angular.module('ossClientUiApp')
                 return groupMenus;
             },
             getTopExcludeMenus: function () {
-                return ['paste'];
+                return [];
             }
         };
     }])
@@ -1171,11 +1171,11 @@ angular.module('ossClientUiApp')
  */
     .factory('OSSObject', ['$location', '$filter', 'OSSApi', '$q', 'OSSLocation', function ($location, $filter, OSSApi, $q, OSSLocation) {
         var fileSorts = {
-            'SORT_SPEC': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk', 'gknote'],
+            'SORT_SPEC': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk'],
             'SORT_MOVIE': ['mp4', 'mkv', 'rm', 'rmvb', 'avi', '3gp', 'flv', 'wmv', 'asf', 'mpeg', 'mpg', 'mov', 'ts', 'm4v'],
             'SORT_MUSIC': ['mp3', 'wma', 'wav', 'flac', 'ape', 'ogg', 'aac', 'm4a'],
             'SORT_IMAGE': ['jpg', 'png', 'jpeg', 'gif', 'psd', 'bmp', 'ai', 'cdr'],
-            'SORT_DOCUMENT': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'odt', 'rtf', 'ods', 'csv', 'odp', 'txt', 'gknote'],
+            'SORT_DOCUMENT': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'odt', 'rtf', 'ods', 'csv', 'odp', 'txt'],
             'SORT_CODE': ['js', 'c', 'cpp', 'h', 'cs', 'vb', 'vbs', 'java', 'sql', 'ruby', 'php', 'asp', 'aspx', 'html', 'htm', 'py', 'jsp', 'pl', 'rb', 'm', 'css', 'go', 'xml', 'erl', 'lua', 'md'],
             'SORT_ZIP': ['rar', 'zip', '7z', 'cab', 'tar', 'gz', 'iso'],
             'SORT_EXE': ['exe', 'bat', 'com']
@@ -1967,8 +1967,25 @@ angular.module('ossClientUiApp')
                             }
                         ];
 
+                        $scope.$watch('saving', function (newVal) {
+                            if (newVal) {
+                                usSpinnerService.spin('set-http-spinner');
+                            } else {
+                                usSpinnerService.stop('set-http-spinner');
+                            }
+                        });
 
+                        $scope.$watch('loading', function (newVal) {
+                            if (newVal) {
+                                usSpinnerService.spin('loading-spinner');
+                            } else {
+                                usSpinnerService.stop('loading-spinner');
+                            }
+                        });
+
+                        $scope.loading = true;
                         OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
+                            $scope.loading = false;
                             angular.forEach($scope.headers, function (header) {
                                 header.model = getHeader(header.name);
                             })
@@ -1981,8 +1998,10 @@ angular.module('ossClientUiApp')
                                 }
                             });
                         }).error(function (res,status) {
+                            $scope.loading = false;
                             $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                         });
+
 
                         $scope.setHttpHeader = function (headers, customHeaders) {
                             var ossHeaders = {}, canonicalizedOSSheaders = {};
@@ -1998,9 +2017,12 @@ angular.module('ossClientUiApp')
                                 }
                             });
 
+                            $scope.saving = true;
                             OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
+                                $scope.saving = false;
                                 $modalInstance.close();
                             }).error(function(res,status){
+                                $scope.saving = false;
                                 $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                             });
                         };

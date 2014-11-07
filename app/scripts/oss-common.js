@@ -53,7 +53,50 @@ angular.module('OSSCommon', [])
      */
     .factory('OSSConfig', [function () {
         var config  = OSS.invoke('configInfo');
-
+        if(!config){
+            config = {
+                source:"",
+                disable_location_select:0,
+                host:"aliyuncs.com",
+                locations:[
+                    {
+                        location:'oss-cn-guizhou-a',
+                        name:'互联网',
+                        enable:0
+                    },
+                    {
+                        location:'oss-cn-gzzwy-a',
+                        name:'政务外网',
+                        enable:0
+                    },
+                    {
+                        location:'oss-cn-hangzhou-a',
+                        name:'杭州',
+                        enable:1
+                    },
+                    {
+                        location:'oss-cn-qingdao-a',
+                        name:'青岛',
+                        enable:1
+                    },
+                    {
+                        location:'oss-cn-beijing-a',
+                        name:'北京',
+                        enable:1
+                    },
+                    {
+                        location:'oss-cn-hongkong-a',
+                        name:'香港',
+                        enable:1
+                    },
+                    {
+                        location:'oss-cn-shenzhen-a',
+                        name:'深圳',
+                        enable:1
+                    }
+                ]
+            };
+        }
         return {
             /**
              * 是否是定制客户端

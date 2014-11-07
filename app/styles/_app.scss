@@ -89,7 +89,7 @@
         padding: 0 20px;
         border-left: 3px solid transparent;
         text-decoration: none;
-
+        @include ellipsis;
         &:hover,
         &:focus,
         &.selected {
@@ -258,6 +258,10 @@
       .file-icon-32 {
         margin-right: 10px;
       }
+    }
+
+    .upload-part-list .filename{
+      max-width: 35%;
     }
 
 
@@ -447,7 +451,7 @@
 
         .filename{
           padding: 0 10px;
-          max-width: 70%;
+          max-width: 52%;
           @include ellipsis;
           > i{
             margin-right:5px;
