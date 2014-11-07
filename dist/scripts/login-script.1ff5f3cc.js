@@ -74,7 +74,81 @@
                 } ]
             });
         },
-        getDownload: function() {}
+        getDownload: function() {},
+        configInfo: function() {
+            var re = JSON.stringify({
+                source: "",
+                disable_location_select: 0,
+                host: "aliyuncs.com",
+                locations: [ {
+                    location: "oss-cn-guizhou-a",
+                    name: "互联网",
+                    enable: 0
+                }, {
+                    location: "oss-cn-gzzwy-a",
+                    name: "政务外网",
+                    enable: 0
+                }, {
+                    location: "oss-cn-hangzhou-a",
+                    name: "杭州",
+                    enable: 1
+                }, {
+                    location: "oss-cn-qingdao-a",
+                    name: "青岛",
+                    enable: 1
+                }, {
+                    location: "oss-cn-beijing-a",
+                    name: "北京",
+                    enable: 1
+                }, {
+                    location: "oss-cn-hongkong-a",
+                    name: "香港",
+                    enable: 1
+                }, {
+                    location: "oss-cn-shenzhen-a",
+                    name: "深圳",
+                    enable: 1
+                } ]
+            });
+            console.log("re", re);
+            return JSON.stringify({
+                source: "guizhou",
+                disable_location_select: 1,
+                host: "aliyuncs.com",
+                locations: [ {
+                    location: "oss-cn-guizhou-a",
+                    name: "互联网",
+                    enable: 1
+                }, {
+                    location: "oss-cn-gzzwy-a",
+                    name: "政务外网",
+                    enable: 1
+                }, {
+                    location: "oss-cn-hangzhou-a",
+                    name: "杭州",
+                    enable: 0
+                }, {
+                    location: "oss-cn-qingdao-a",
+                    name: "青岛",
+                    enable: 0
+                }, {
+                    location: "oss-cn-beijing-a",
+                    name: "北京",
+                    enable: 0
+                }, {
+                    location: "oss-cn-hongkong-a",
+                    name: "香港",
+                    enable: 0
+                }, {
+                    location: "oss-cn-shenzhen-a",
+                    name: "深圳",
+                    enable: 0
+                } ]
+            });
+        },
+        getCurrentLocation: function() {
+            return JSON.stringify("oss-cn-guizhou-a");
+        }
     };
     if (!isOSSClient()) {
         window.OSSClient = OSSClient;
@@ -85,7 +159,7 @@
 
 window.debug = true;
 
-var debugInterfaces = [ "getConfig", "getCurrentLocation" ];
+var debugInterfaces = [];
 
 var OSS = {
     invoke: function(name, param, callback, log) {
@@ -154,77 +228,6 @@ var OSS = {
     isOSSClient: function() {
         var sync = this.getUserAgent()[0] || "";
         return sync.toLowerCase() == "gk_sync";
-    },
-    getConfig: function() {
-        return JSON.stringify({
-            source: "guizhou",
-            disable_location_select: 1,
-            locations: [ {
-                location: "oss-cn-guizhou-a",
-                name: "贵州",
-                enable: 1
-            }, {
-                location: "oss-cn-gzzwy-a",
-                name: "政务网",
-                enable: 1
-            }, {
-                location: "oss-cn-hangzhou-a",
-                name: "杭州",
-                enable: 0
-            }, {
-                location: "oss-cn-qingdao-a",
-                name: "青岛",
-                enable: 0
-            }, {
-                location: "oss-cn-beijing-a",
-                name: "北京",
-                enable: 0
-            }, {
-                location: "oss-cn-hongkong-a",
-                name: "香港",
-                enable: 0
-            }, {
-                location: "oss-cn-shenzhen-a",
-                name: "深圳",
-                enable: 0
-            } ]
-        });
-        return JSON.stringify({
-            source: "",
-            disable_location_select: 0,
-            locations: [ {
-                location: "oss-cn-guizhou-a",
-                name: "贵州",
-                enable: 0
-            }, {
-                location: "oss-cn-gzzwy-a",
-                name: "政务网",
-                enable: 0
-            }, {
-                location: "oss-cn-hangzhou-a",
-                name: "杭州",
-                enable: 1
-            }, {
-                location: "oss-cn-qingdao-a",
-                name: "青岛",
-                enable: 1
-            }, {
-                location: "oss-cn-beijing-a",
-                name: "北京",
-                enable: 1
-            }, {
-                location: "oss-cn-hongkong-a",
-                name: "香港",
-                enable: 1
-            }, {
-                location: "oss-cn-shenzhen-a",
-                name: "深圳",
-                enable: 1
-            } ]
-        });
-    },
-    getCurrentLocation: function() {
-        return JSON.stringify("oss-cn-guizhou-a");
     }
 };
 
@@ -249,10 +252,16 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
             OSS.invoke("showWnd", angular.extend({}, defaultParam, {
                 url: UIPath + "/custom-domain.html"
             }));
+        },
+        setting: function() {
+            var UIPath = OSS.invoke("getUIPath");
+            OSS.invoke("showWnd", angular.extend({}, defaultParam, {
+                url: UIPath + "/setting.html"
+            }));
         }
     };
 } ]).factory("OSSConfig", [ function() {
-    var config = OSS.invoke("getConfig");
+    var config = OSS.invoke("configInfo");
     return {
         isCustomClient: function() {
             return config.source != "";
@@ -265,6 +274,9 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
         },
         getLocations: function() {
             return config.locations || [];
+        },
+        getHost: function() {
+            return config.host;
         }
     };
 } ]).factory("OSSRegion", [ "OSSConfig", function(OSSConfig) {

@@ -83,7 +83,7 @@ angular.module('ossClientUiApp')
 
         //打开导出授权的页面
         $scope.exportAuthorization = function () {
-            OSSDialog.exportAuthorization();
+            OSSModal.setting();
         };
 
         //展开,展开传输队列

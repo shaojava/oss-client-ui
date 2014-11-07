@@ -38,6 +38,12 @@ angular.module('OSSCommon', [])
                 OSS.invoke('showWnd', angular.extend({}, defaultParam, {
                     url: UIPath + '/custom-domain.html'
                 }));
+            },
+            setting:function(){
+                var UIPath = OSS.invoke('getUIPath');
+                OSS.invoke('showWnd', angular.extend({}, defaultParam, {
+                    url: UIPath + '/setting.html'
+                }));
             }
         };
     }])
@@ -46,7 +52,8 @@ angular.module('OSSCommon', [])
      *   客户端配置的相关信息（定制时用）
      */
     .factory('OSSConfig', [function () {
-        var config  = OSS.invoke('getConfig');
+        var config  = OSS.invoke('configInfo');
+
         return {
             /**
              * 是否是定制客户端
@@ -70,6 +77,13 @@ angular.module('OSSCommon', [])
             },
             getLocations:function(){
                 return  config.locations || [];
+            },
+            /**
+             * 获取主机
+             * @returns {*}
+             */
+            getHost:function(){
+                return  config.host;
             }
         };
     }])

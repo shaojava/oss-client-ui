@@ -74,7 +74,81 @@
                 } ]
             });
         },
-        getDownload: function() {}
+        getDownload: function() {},
+        configInfo: function() {
+            var re = JSON.stringify({
+                source: "",
+                disable_location_select: 0,
+                host: "aliyuncs.com",
+                locations: [ {
+                    location: "oss-cn-guizhou-a",
+                    name: "互联网",
+                    enable: 0
+                }, {
+                    location: "oss-cn-gzzwy-a",
+                    name: "政务外网",
+                    enable: 0
+                }, {
+                    location: "oss-cn-hangzhou-a",
+                    name: "杭州",
+                    enable: 1
+                }, {
+                    location: "oss-cn-qingdao-a",
+                    name: "青岛",
+                    enable: 1
+                }, {
+                    location: "oss-cn-beijing-a",
+                    name: "北京",
+                    enable: 1
+                }, {
+                    location: "oss-cn-hongkong-a",
+                    name: "香港",
+                    enable: 1
+                }, {
+                    location: "oss-cn-shenzhen-a",
+                    name: "深圳",
+                    enable: 1
+                } ]
+            });
+            console.log("re", re);
+            return JSON.stringify({
+                source: "guizhou",
+                disable_location_select: 1,
+                host: "aliyuncs.com",
+                locations: [ {
+                    location: "oss-cn-guizhou-a",
+                    name: "互联网",
+                    enable: 1
+                }, {
+                    location: "oss-cn-gzzwy-a",
+                    name: "政务外网",
+                    enable: 1
+                }, {
+                    location: "oss-cn-hangzhou-a",
+                    name: "杭州",
+                    enable: 0
+                }, {
+                    location: "oss-cn-qingdao-a",
+                    name: "青岛",
+                    enable: 0
+                }, {
+                    location: "oss-cn-beijing-a",
+                    name: "北京",
+                    enable: 0
+                }, {
+                    location: "oss-cn-hongkong-a",
+                    name: "香港",
+                    enable: 0
+                }, {
+                    location: "oss-cn-shenzhen-a",
+                    name: "深圳",
+                    enable: 0
+                } ]
+            });
+        },
+        getCurrentLocation: function() {
+            return JSON.stringify("oss-cn-guizhou-a");
+        }
     };
     if (!isOSSClient()) {
         window.OSSClient = OSSClient;
@@ -85,7 +159,7 @@
 
 window.debug = true;
 
-var debugInterfaces = [ "getConfig", "getCurrentLocation" ];
+var debugInterfaces = [];
 
 var OSS = {
     invoke: function(name, param, callback, log) {
@@ -154,77 +228,6 @@ var OSS = {
     isOSSClient: function() {
         var sync = this.getUserAgent()[0] || "";
         return sync.toLowerCase() == "gk_sync";
-    },
-    getConfig: function() {
-        return JSON.stringify({
-            source: "guizhou",
-            disable_location_select: 1,
-            locations: [ {
-                location: "oss-cn-guizhou-a",
-                name: "贵州",
-                enable: 1
-            }, {
-                location: "oss-cn-gzzwy-a",
-                name: "政务网",
-                enable: 1
-            }, {
-                location: "oss-cn-hangzhou-a",
-                name: "杭州",
-                enable: 0
-            }, {
-                location: "oss-cn-qingdao-a",
-                name: "青岛",
-                enable: 0
-            }, {
-                location: "oss-cn-beijing-a",
-                name: "北京",
-                enable: 0
-            }, {
-                location: "oss-cn-hongkong-a",
-                name: "香港",
-                enable: 0
-            }, {
-                location: "oss-cn-shenzhen-a",
-                name: "深圳",
-                enable: 0
-            } ]
-        });
-        return JSON.stringify({
-            source: "",
-            disable_location_select: 0,
-            locations: [ {
-                location: "oss-cn-guizhou-a",
-                name: "贵州",
-                enable: 0
-            }, {
-                location: "oss-cn-gzzwy-a",
-                name: "政务网",
-                enable: 0
-            }, {
-                location: "oss-cn-hangzhou-a",
-                name: "杭州",
-                enable: 1
-            }, {
-                location: "oss-cn-qingdao-a",
-                name: "青岛",
-                enable: 1
-            }, {
-                location: "oss-cn-beijing-a",
-                name: "北京",
-                enable: 1
-            }, {
-                location: "oss-cn-hongkong-a",
-                name: "香港",
-                enable: 1
-            }, {
-                location: "oss-cn-shenzhen-a",
-                name: "深圳",
-                enable: 1
-            } ]
-        });
-    },
-    getCurrentLocation: function() {
-        return JSON.stringify("oss-cn-guizhou-a");
     }
 };
 
@@ -249,10 +252,16 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
             OSS.invoke("showWnd", angular.extend({}, defaultParam, {
                 url: UIPath + "/custom-domain.html"
             }));
+        },
+        setting: function() {
+            var UIPath = OSS.invoke("getUIPath");
+            OSS.invoke("showWnd", angular.extend({}, defaultParam, {
+                url: UIPath + "/setting.html"
+            }));
         }
     };
 } ]).factory("OSSConfig", [ function() {
-    var config = OSS.invoke("getConfig");
+    var config = OSS.invoke("configInfo");
     return {
         isCustomClient: function() {
             return config.source != "";
@@ -265,6 +274,9 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
         },
         getLocations: function() {
             return config.locations || [];
+        },
+        getHost: function() {
+            return config.host;
         }
     };
 } ]).factory("OSSRegion", [ "OSSConfig", function(OSSConfig) {
@@ -549,7 +561,7 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
         }
     });
     $scope.exportAuthorization = function() {
-        OSSDialog.exportAuthorization();
+        OSSModal.setting();
     };
     $scope.$on("toggleTransQueue", function(event, isShow) {
         if (angular.isUndefined(isShow)) {
@@ -1764,7 +1776,8 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                     location: bucket["Location"],
                     bucket: bucket["Name"],
                     object: val.path,
-                    filesize: val.size
+                    filesize: val.size,
+                    etag: val.etag
                 };
             });
             OSS.invoke("saveFile", {
@@ -2059,7 +2072,8 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                 dir: isDir,
                 filename: filename,
                 lastModified: object.LastModified || "",
-                size: object.Size ? parseInt(object.Size) : 0
+                size: object.Size ? parseInt(object.Size) : 0,
+                etag: object.ETag || ""
             };
         },
         open: function(bucket, path, isDir) {
@@ -2216,19 +2230,28 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             });
         }
     };
-} ]).factory("OSSApi", [ "$http", "RequestXML", function($http, RequestXML) {
+} ]).factory("OSSApi", [ "$http", "RequestXML", "OSSConfig", function($http, RequestXML, OSSConfig) {
     var OSSAccessKeyId = OSS.invoke("getAccessID");
+    var currentLocation = OSS.invoke("getCurrentLocation");
+    var host = OSSConfig.getHost();
+    var changeLocation = function(location) {
+        if (location.indexOf("-internal") > 0) {
+            return location;
+        }
+        if (currentLocation && location && location == currentLocation) {
+            return location + "-internal";
+        }
+        return location;
+    };
     var getExpires = function(expires) {
         expires = angular.isUndefined(expires) ? 60 : expires;
         return parseInt(new Date().getTime() / 1e3) + expires;
     };
     var getRequestUrl = function(bucket, region, expires, signature, canonicalizedResource, extraParam) {
-        var host = "http://" + (bucket ? bucket + "." : "") + (region ? region + "." : "") + "aliyuncs.com";
-        if (bucket && region) {
-            host = "http://" + bucket + "." + OSS.invoke("changeHost", region);
-        }
+        region = changeLocation(region);
+        var requestUrl = "http://" + (bucket ? bucket + "." : "") + (region ? region + "." : "") + host;
         canonicalizedResource = canonicalizedResource.replace(new RegExp("^/" + bucket), "");
-        var requestUrl = host + canonicalizedResource;
+        requestUrl += canonicalizedResource;
         requestUrl += (requestUrl.indexOf("?") >= 0 ? "&" : "?") + $.param({
             OSSAccessKeyId: OSSAccessKeyId,
             Expires: expires,
@@ -2244,7 +2267,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
     return {
         getURI: function(bucket, objectName, expires) {
             if (expires) {
-                return "http://" + bucket.Name + "." + bucket.Location + "." + "aliyuncs.com/" + encodeURIComponent(objectName);
+                return "http://" + bucket.Name + "." + bucket.Location + "." + host + "/" + encodeURIComponent(objectName);
             } else {
                 expires = getExpires(expires);
                 var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectName);
@@ -2264,7 +2287,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                 expires: expires,
                 canonicalized_resource: canonicalizedResource
             });
-            var requestUrl = getRequestUrl("oss", "", expires, signature, canonicalizedResource);
+            var requestUrl = getRequestUrl("", currentLocation ? currentLocation : "oss", expires, signature, canonicalizedResource);
             return $http.get(requestUrl);
         },
         createBucket: function(bucketName, region, acl) {
@@ -2473,11 +2496,37 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             };
         }
     };
-} ]).factory("OSSModal", [ "$modal", "OSSConfig", "Bucket", "OSSApi", "OSSObject", "OSSException", "OSSRegion", "$rootScope", "usSpinnerService", function($modal, OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
+} ]).factory("OSSModal", [ "$modal", "OSSDialog", "OSSConfig", "Bucket", "OSSApi", "OSSObject", "OSSException", "OSSRegion", "$rootScope", "usSpinnerService", function($modal, OSSDialog, OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
     var defaultOption = {
         backdrop: "static"
     };
     return {
+        setting: function() {
+            var option = {
+                templateUrl: "views/setting_modal.html",
+                windowClass: "setting_modal",
+                controller: function($scope, $modalInstance) {
+                    $scope.min = 0;
+                    $scope.max = 10;
+                    $scope.isCustomClient = OSSConfig.isCustomClient();
+                    var setting = OSS.invoke("getTransInfo");
+                    $scope.setting = setting;
+                    $scope.saveSetting = function(setting) {
+                        OSS.invoke("setTransInfo", setting);
+                        alert("设置成功");
+                        $modalInstance.dismiss("cancel");
+                    };
+                    $scope.cancel = function() {
+                        $modalInstance.dismiss("cancel");
+                    };
+                    $scope.exportAuth = function() {
+                        OSSDialog.exportAuthorization();
+                    };
+                }
+            };
+            option = angular.extend({}, defaultOption, option);
+            return $modal.open(option);
+        },
         addBucket: function(bucket) {
             var _context = this;
             var option = {

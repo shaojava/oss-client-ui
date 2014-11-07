@@ -1,4 +1,7 @@
-
+html,
+body{
+  overflow: hidden;
+}
 
 #login-page {
   .section-wrapper{
@@ -14,4 +17,8 @@
       margin-right: 5px;
     }
   }
+}
+
+.custom-client.oss-dialog .form-group .btn-login{
+  width: 95%;
 }

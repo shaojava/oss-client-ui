@@ -4,7 +4,7 @@
 
 'use strict';
 window.debug = true;
-var debugInterfaces = ['getConfig','getCurrentLocation'];
+var debugInterfaces = [];
 var OSS = {
     /**
      * @description 请求客户端接getCurrentLocation口
@@ -119,101 +119,7 @@ var OSS = {
     isOSSClient: function () {
         var sync = this.getUserAgent()[0] || '';
         return sync.toLowerCase() == 'gk_sync';
-    },
-
-    getConfig:function(){
-
-
-        return JSON.stringify({
-            source:'guizhou',
-            disable_location_select:1,
-            locations:[
-                {
-                    location:'oss-cn-guizhou-a',
-                    name:'贵州',
-                    enable:1
-                },
-                {
-                    location:'oss-cn-gzzwy-a',
-                    name:'政务网',
-                    enable:1
-                },
-                {
-                    location:'oss-cn-hangzhou-a',
-                    name:'杭州',
-                    enable:0
-                },
-                {
-                    location:'oss-cn-qingdao-a',
-                    name:'青岛',
-                    enable:0
-                },
-                {
-                    location:'oss-cn-beijing-a',
-                    name:'北京',
-                    enable:0
-                },
-                {
-                    location:'oss-cn-hongkong-a',
-                    name:'香港',
-                    enable:0
-                },
-                {
-                    location:'oss-cn-shenzhen-a',
-                    name:'深圳',
-                    enable:0
-                }
-            ]
-        });
-
-
-        return JSON.stringify({
-            source:'',
-            disable_location_select:0,
-            locations:[
-                {
-                    location:'oss-cn-guizhou-a',
-                    name:'贵州',
-                    enable:0
-                },
-                {
-                    location:'oss-cn-gzzwy-a',
-                    name:'政务网',
-                    enable:0
-                },
-                {
-                    location:'oss-cn-hangzhou-a',
-                    name:'杭州',
-                    enable:1
-                },
-                {
-                    location:'oss-cn-qingdao-a',
-                    name:'青岛',
-                    enable:1
-                },
-                {
-                    location:'oss-cn-beijing-a',
-                    name:'北京',
-                    enable:1
-                },
-                {
-                    location:'oss-cn-hongkong-a',
-                    name:'香港',
-                    enable:1
-                },
-                {
-                    location:'oss-cn-shenzhen-a',
-                    name:'深圳',
-                    enable:1
-                }
-            ]
-        });
-
-
-
-    },
-    getCurrentLocation:function(){
-        //return 'oss-cn-gzzwy-a';
-        return JSON.stringify('oss-cn-guizhou-a');
     }
+
+
 };

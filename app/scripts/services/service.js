@@ -8,9 +8,9 @@
  * Factory in the ossClientUiApp.
  */
 angular.module('ossClientUiApp')
-    /**
-     * 信息提示框
-     */
+/**
+ * 信息提示框
+ */
     .factory('OSSAlert', ['$modal', function ($modal) {
 
         function openAlertModal(type, message, title, buttons) {
@@ -91,15 +91,15 @@ angular.module('ossClientUiApp')
         }
     }])
 
-    /**
-     * 上传队列
-     */
-    .factory('OSSUploadQueue', ['$rootScope','$timeout','OSSQueueItem','OSSLocation','$filter',function ($rootScope,$timeout,OSSQueueItem,OSSLocation,$filter) {
+/**
+ * 上传队列
+ */
+    .factory('OSSUploadQueue', ['$rootScope', '$timeout', 'OSSQueueItem', 'OSSLocation', '$filter', function ($rootScope, $timeout, OSSQueueItem, OSSLocation, $filter) {
         var size = 100;//每次加载多少条
-        var OSSUploadQueue =  {
+        var OSSUploadQueue = {
             items: [],
             totalCount: 0,
-            doneCount:0,
+            doneCount: 0,
             uploadSpeed: 0,
             downloadSpeed: 0,
             isStop: true,
@@ -107,17 +107,17 @@ angular.module('ossClientUiApp')
                 this.getQueueList(0);
                 return this;
             },
-            getQueueList:function(start){
-                var res = OSS.invoke('getUpload',{
-                    start:start,
-                    count:size
+            getQueueList: function (start) {
+                var res = OSS.invoke('getUpload', {
+                    start: start,
+                    count: size
                 });
-                OSS.log('OSSUploadQueue',res);
+                OSS.log('OSSUploadQueue', res);
                 var list = angular.isArray(res['list']) ? res['list'] : [];
-                if(start == 0){
+                if (start == 0) {
                     this.items = list;
-                }else{
-                    angular.forEach(list,function(item){
+                } else {
+                    angular.forEach(list, function (item) {
                         OSSUploadQueue.add(item);
                     });
                 }
@@ -153,11 +153,11 @@ angular.module('ossClientUiApp')
                                 _self.update(existItem, val);
                             } else {
                                 //不用增加，每次添加后重新去拿列表
-                               // _self.add(val);
+                                // _self.add(val);
                             }
                             //上传成功后如果是当前的object刷新文件列表
                             var upPath = $filter('isDir')(val.object) ? Util.String.dirName(Util.String.dirName(val.object)) : Util.String.dirName(val.object);
-                            if(OSSQueueItem.isDone(val) && OSSLocation.isCurrentObject(val.bucket,upPath)){
+                            if (OSSQueueItem.isDone(val) && OSSLocation.isCurrentObject(val.bucket, upPath)) {
                                 $rootScope.$broadcast('reloadFileList');
                             }
                         });
@@ -166,7 +166,7 @@ angular.module('ossClientUiApp')
                         _self.uploadSpeed = res['upload'];
                         _self.downloadSpeed = res['download'];
                     })
-                },false);
+                }, false);
                 this.isStop = false;
             },
             stop: function () {
@@ -180,9 +180,9 @@ angular.module('ossClientUiApp')
         return OSSUploadQueue;
     }])
 
-    /**
-     * 上传、下载队列单条
-     */
+/**
+ * 上传、下载队列单条
+ */
     .factory('OSSQueueItem', [function () {
         var STATUS_ERROR = 5,
             STATUS_PROGRESS = 1,
@@ -190,7 +190,7 @@ angular.module('ossClientUiApp')
             STATUS_WAITING = 2,
             STATUS_PASUED = 3;
         var OSSQueueItem = {
-            setStatus:function(item,status){
+            setStatus: function (item, status) {
                 item.status = status;
             },
             //是否出错
@@ -213,35 +213,35 @@ angular.module('ossClientUiApp')
             isPaused: function (item) {
                 return item.status == STATUS_PASUED;
             },
-            setError:function(item){
-                OSSQueueItem.setStatus(item,STATUS_ERROR);
+            setError: function (item) {
+                OSSQueueItem.setStatus(item, STATUS_ERROR);
             },
-            setProgress:function(item){
-                OSSQueueItem.setStatus(item,STATUS_PROGRESS);
+            setProgress: function (item) {
+                OSSQueueItem.setStatus(item, STATUS_PROGRESS);
             },
-            setDone:function(item){
-                OSSQueueItem.setStatus(item,STATUS_DONE);
+            setDone: function (item) {
+                OSSQueueItem.setStatus(item, STATUS_DONE);
             },
-            setWaiting:function(item){
-                OSSQueueItem.setStatus(item,STATUS_WAITING);
+            setWaiting: function (item) {
+                OSSQueueItem.setStatus(item, STATUS_WAITING);
             },
-            setPaused:function(item){
-                OSSQueueItem.setStatus(item,STATUS_PASUED);
+            setPaused: function (item) {
+                OSSQueueItem.setStatus(item, STATUS_PASUED);
             }
         };
 
         return OSSQueueItem;
     }])
 
-    /**
-     * 下载队列
-     */
-    .factory('OSSDownloadQueue', ['$rootScope','$timeout',function ($rootScope,$timeout) {
+/**
+ * 下载队列
+ */
+    .factory('OSSDownloadQueue', ['$rootScope', '$timeout', function ($rootScope, $timeout) {
         var size = 100; //每次加载多少条
         var OSSDownloadQueue = {
             items: [],
             totalCount: 0,
-            doneCount:0,
+            doneCount: 0,
             uploadSpeed: 0,
             downloadSpeed: 0,
             isStop: true,
@@ -249,16 +249,16 @@ angular.module('ossClientUiApp')
                 this.getQueueList(0);
                 return this;
             },
-            getQueueList:function(start){
-                var res = OSS.invoke('getDownload',{
-                    start:start,
-                    count:size
+            getQueueList: function (start) {
+                var res = OSS.invoke('getDownload', {
+                    start: start,
+                    count: size
                 });
                 var list = angular.isArray(res['list']) ? res['list'] : [];
-                if(start == 0){
+                if (start == 0) {
                     this.items = list;
-                }else{
-                    angular.forEach(list,function(item){
+                } else {
+                    angular.forEach(list, function (item) {
                         OSSDownloadQueue.add(item);
                     });
                 }
@@ -294,7 +294,7 @@ angular.module('ossClientUiApp')
                             if (existItem) {
                                 _self.update(existItem, val);
                             } else {
-                               // _self.add(val);
+                                // _self.add(val);
                             }
                         })
                         _self.totalCount = res['download_total_count'];
@@ -315,10 +315,10 @@ angular.module('ossClientUiApp')
         return OSSDownloadQueue;
     }])
 
-    /**
-     * 上传、下载队列的操作菜单
-     */
-    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout',function ($rootScope, OSSQueueItem,$timeout) {
+/**
+ * 上传、下载队列的操作菜单
+ */
+    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout', function ($rootScope, OSSQueueItem, $timeout) {
         /**
          * 检测参数的合法性
          * @param selectedItems
@@ -384,8 +384,8 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('startUpload', prepareUpladParam(selectedItems),function(){
-                        $timeout(function(){
+                    OSS.invoke('startUpload', prepareUpladParam(selectedItems), function () {
+                        $timeout(function () {
                             _.each(selectedItems, OSSQueueItem.setProgress);
                         });
                     });
@@ -415,8 +415,8 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('stopUpload', prepareUpladParam(selectedItems),function(){
-                        $timeout(function(){
+                    OSS.invoke('stopUpload', prepareUpladParam(selectedItems), function () {
+                        $timeout(function () {
                             _.each(selectedItems, OSSQueueItem.setPaused);
                         })
                     });
@@ -432,15 +432,15 @@ angular.module('ossClientUiApp')
                         var item = selectedItems[i];
                         if (OSSQueueItem.isPaused(item) || OSSQueueItem.isError(item) || OSSQueueItem.isDone(item)) {
                             hasUnValidItem = true;
-                            if(OSSQueueItem.isPaused(item)){
+                            if (OSSQueueItem.isPaused(item)) {
                                 count++;
                             }
                         }
                     }
                     if (hasUnValidItem) {
-                        if(count ==  selectedItems.length){
+                        if (count == selectedItems.length) {
                             return -1;
-                        }else{
+                        } else {
                             return 0;
                         }
                     }
@@ -457,8 +457,8 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems),function(){
-                        $timeout(function(){
+                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems), function () {
+                        $timeout(function () {
                             $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
                         })
                     });
@@ -469,17 +469,17 @@ angular.module('ossClientUiApp')
                     if (!len) {
                         return 0;
                     }
-                    var doneItemsList = _.filter(selectedItems,function(item){
+                    var doneItemsList = _.filter(selectedItems, function (item) {
                         return OSSQueueItem.isDone(item) || OSSQueueItem.isError(item);
                     });
 
-                    var progressList = _.filter(selectedItems,function(item){
-                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item)|| OSSQueueItem.isPaused(item);
+                    var progressList = _.filter(selectedItems, function (item) {
+                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item) || OSSQueueItem.isPaused(item);
                     });
 
-                    if(doneItemsList && doneItemsList.length == selectedItems.length){
+                    if (doneItemsList && doneItemsList.length == selectedItems.length) {
                         return -1;
-                    }else if(progressList && progressList.length == selectedItems.length){
+                    } else if (progressList && progressList.length == selectedItems.length) {
                         return 1
                     }
                     return 0;
@@ -492,8 +492,8 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems),function(){
-                        $timeout(function(){
+                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems), function () {
+                        $timeout(function () {
                             $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
                         });
                     });
@@ -503,11 +503,11 @@ angular.module('ossClientUiApp')
                     if (!len) {
                         return -1;
                     }
-                    var doneItemsList = _.filter(selectedItems,function(item){
+                    var doneItemsList = _.filter(selectedItems, function (item) {
                         return OSSQueueItem.isDone(item) || OSSQueueItem.isError(item);
                     });
 
-                    if(doneItemsList && doneItemsList.length == selectedItems.length){
+                    if (doneItemsList && doneItemsList.length == selectedItems.length) {
                         return 1;
                     }
                     return -1;
@@ -516,17 +516,17 @@ angular.module('ossClientUiApp')
             {
                 name: 'pauseAll',
                 text: '全部暂停',
-                execute: function (selectedItems,items) {
-                    OSS.invoke('stopUpload', prepareUpladParam(),function(){
-                        $timeout(function(){
-                            _.each(_.filter(items,function(item){
+                execute: function (selectedItems, items) {
+                    OSS.invoke('stopUpload', prepareUpladParam(), function () {
+                        $timeout(function () {
+                            _.each(_.filter(items, function (item) {
                                 return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
                             }), OSSQueueItem.setPaused);
                         })
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items,function(item){
+                    return _.find(items, function (item) {
                         return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
                     }) ? 1 : 0;
                 }
@@ -534,17 +534,17 @@ angular.module('ossClientUiApp')
             {
                 name: 'startAll',
                 text: '全部开始',
-                execute: function (selectedItems,items) {
-                    OSS.invoke('startUpload', prepareUpladParam(),function(){
-                        $timeout(function(){
-                            _.each(_.filter(items,function(item){
+                execute: function (selectedItems, items) {
+                    OSS.invoke('startUpload', prepareUpladParam(), function () {
+                        $timeout(function () {
+                            _.each(_.filter(items, function (item) {
                                 return OSSQueueItem.isPaused(item);
                             }), OSSQueueItem.setPaused);
                         });
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items,function(item){
+                    return _.find(items, function (item) {
                         return OSSQueueItem.isPaused(item);
                     }) ? 1 : 0;
                 }
@@ -554,18 +554,18 @@ angular.module('ossClientUiApp')
                 text: '清空已完成',
                 execute: function (selectItems, items) {
                     OSS.invoke('deleteUpload', {
-                        finish:1,
-                        all:1
-                    },function(){
-                        $timeout(function(){
-                            $rootScope.$broadcast('removeQueue', 'upload', _.filter(items,function(item){
+                        finish: 1,
+                        all: 1
+                    }, function () {
+                        $timeout(function () {
+                            $rootScope.$broadcast('removeQueue', 'upload', _.filter(items, function (item) {
                                 return OSSQueueItem.isDone(item);
                             }));
                         });
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items,function(item){
+                    return _.find(items, function (item) {
                         return OSSQueueItem.isDone(item);
                     }) ? 1 : 0;
                 }
@@ -584,9 +584,9 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('startDownload', prepareDownloadParam(selectedItems),function(){
-                        $timeout(function(){
-                            _.each(selectedItems,OSSQueueItem.setProgress);
+                    OSS.invoke('startDownload', prepareDownloadParam(selectedItems), function () {
+                        $timeout(function () {
+                            _.each(selectedItems, OSSQueueItem.setProgress);
                         })
                     });
                 },
@@ -615,9 +615,9 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('stopDownload', prepareDownloadParam(selectedItems),function(){
-                        $timeout(function(){
-                            _.each(selectedItems,OSSQueueItem.setPaused);
+                    OSS.invoke('stopDownload', prepareDownloadParam(selectedItems), function () {
+                        $timeout(function () {
+                            _.each(selectedItems, OSSQueueItem.setPaused);
                         })
                     });
 
@@ -633,15 +633,15 @@ angular.module('ossClientUiApp')
                         var item = selectedItems[i];
                         if (OSSQueueItem.isPaused(item) || OSSQueueItem.isError(item) || OSSQueueItem.isDone(item)) {
                             hasUnValidItem = true;
-                            if(OSSQueueItem.isPaused(item)){
+                            if (OSSQueueItem.isPaused(item)) {
                                 count++;
                             }
                         }
                     }
                     if (hasUnValidItem) {
-                        if(count == selectedItems.length){
+                        if (count == selectedItems.length) {
                             return -1;
-                        }else{
+                        } else {
                             return 0;
                         }
 
@@ -659,26 +659,26 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems),function(){
-                        $timeout(function(){
+                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems), function () {
+                        $timeout(function () {
                             $rootScope.$broadcast('removeQueue', 'download', selectedItems);
                         })
                     });
 
                 },
                 getState: function (selectedItems) {
-                    if(!selectedItems || !selectedItems.length) return 0;
-                    var doneItemsList = _.filter(selectedItems,function(item){
+                    if (!selectedItems || !selectedItems.length) return 0;
+                    var doneItemsList = _.filter(selectedItems, function (item) {
                         return OSSQueueItem.isDone(item) || OSSQueueItem.isError(item);
                     });
 
-                    var progressList = _.filter(selectedItems,function(item){
+                    var progressList = _.filter(selectedItems, function (item) {
                         return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item) || OSSQueueItem.isPaused(item);
                     });
 
-                    if(doneItemsList && doneItemsList.length == selectedItems.length){
+                    if (doneItemsList && doneItemsList.length == selectedItems.length) {
                         return -1;
-                    }else if(progressList && progressList.length == selectedItems.length){
+                    } else if (progressList && progressList.length == selectedItems.length) {
                         return 1
                     }
                     return 0;
@@ -691,8 +691,8 @@ angular.module('ossClientUiApp')
                     if (!checkArgValid(selectedItems)) {
                         return;
                     }
-                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems),function(){
-                        $timeout(function(){
+                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems), function () {
+                        $timeout(function () {
                             $rootScope.$broadcast('removeQueue', 'download', selectedItems);
                         });
                     });
@@ -703,11 +703,11 @@ angular.module('ossClientUiApp')
                     if (!len) {
                         return -1;
                     }
-                    var doneItemsList = _.filter(selectedItems,function(item){
+                    var doneItemsList = _.filter(selectedItems, function (item) {
                         return OSSQueueItem.isDone(item) || OSSQueueItem.isError(item);
                     });
 
-                    if(doneItemsList && doneItemsList.length == selectedItems.length){
+                    if (doneItemsList && doneItemsList.length == selectedItems.length) {
                         return 1;
                     }
                     return -1;
@@ -717,17 +717,17 @@ angular.module('ossClientUiApp')
                 name: 'pauseAll',
                 text: '全部暂停',
                 execute: function (selectItems, items) {
-                    OSS.invoke('stopDownload', prepareDownloadParam(),function(){
-                        $timeout(function(){
-                            _.each(_.filter(items,function(item){
+                    OSS.invoke('stopDownload', prepareDownloadParam(), function () {
+                        $timeout(function () {
+                            _.each(_.filter(items, function (item) {
                                 return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
-                            }),OSSQueueItem.setPaused);
+                            }), OSSQueueItem.setPaused);
                         });
                     });
 
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items,function(item){
+                    return _.find(items, function (item) {
                         return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
                     }) ? 1 : 0;
                 }
@@ -736,16 +736,16 @@ angular.module('ossClientUiApp')
                 name: 'startAll',
                 text: '全部开始',
                 execute: function (selectItems, items) {
-                    OSS.invoke('startDownload', prepareDownloadParam(),function(){
-                        _.each(_.filter(items,function(item){
+                    OSS.invoke('startDownload', prepareDownloadParam(), function () {
+                        _.each(_.filter(items, function (item) {
                             return OSSQueueItem.isPaused(item);
-                        }),OSSQueueItem.setProgress);
+                        }), OSSQueueItem.setProgress);
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items,function(item){
+                    return _.find(items, function (item) {
                         return OSSQueueItem.isPaused(item);
-                    }) ? 1 : 0 ;
+                    }) ? 1 : 0;
                 }
             },
             {
@@ -753,18 +753,18 @@ angular.module('ossClientUiApp')
                 text: '清空已完成',
                 execute: function (selectItems, items) {
                     OSS.invoke('deleteDownload', {
-                        finish:1,
-                        all:1
-                    },function(){
-                        $timeout(function(){
-                            $rootScope.$broadcast('removeQueue', 'download', _.filter(items,function(item){
+                        finish: 1,
+                        all: 1
+                    }, function () {
+                        $timeout(function () {
+                            $rootScope.$broadcast('removeQueue', 'download', _.filter(items, function (item) {
                                 return OSSQueueItem.isDone(item);
                             }));
                         });
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items,function(item){
+                    return _.find(items, function (item) {
                         return OSSQueueItem.isDone(item);
                     }) ? 1 : 0;
                 }
@@ -772,8 +772,8 @@ angular.module('ossClientUiApp')
         ];
 
         var groupMenu = [
-            ['start','pause','cancel','remove'],
-            ['startAll','pauseAll','removeAll']
+            ['start', 'pause', 'cancel', 'remove'],
+            ['startAll', 'pauseAll', 'removeAll']
         ];
 
         var OSSQueueMenu = {
@@ -793,7 +793,7 @@ angular.module('ossClientUiApp')
                     name: name
                 });
             },
-            groupBy:function(menus){
+            groupBy: function (menus) {
                 var groupMenus = [];
                 angular.forEach(groupMenu, function (val, key) {
                     if (!groupMenus[key]) {
@@ -811,9 +811,9 @@ angular.module('ossClientUiApp')
         return OSSQueueMenu;
     }])
 
-    /**
-     * object的操作菜单
-     */
+/**
+ * object的操作菜单
+ */
     .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard, OSSModal, $rootScope, OSSApi, OSSException) {
         var currentMenus = 'upload create paste'.split(' '),
             selectMenus = 'download copy del get_uri set_header'.split(' '),
@@ -888,7 +888,8 @@ angular.module('ossClientUiApp')
                             location: bucket['Location'],
                             bucket: bucket['Name'],
                             object: val.path,
-                            filesize: val.size
+                            filesize: val.size,
+                            etag:val.etag
                         }
                     });
 
@@ -1062,9 +1063,9 @@ angular.module('ossClientUiApp')
         };
     }])
 
-    /**
-     * 碎片的的操作菜单
-     */
+/**
+ * 碎片的的操作菜单
+ */
     .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', 'OSSModal', function (Bucket, OSSApi, $rootScope, OSSModal) {
         var allMenu = [
             {
@@ -1113,9 +1114,9 @@ angular.module('ossClientUiApp')
         };
     }])
 
-    /**
-     * 浏览的历史记录
-     */
+/**
+ * 浏览的历史记录
+ */
     .factory('OSSLocationHistory', ['$location', '$rootScope', function ($location, $rootScope) {
         var update = true,
             history = [],
@@ -1165,9 +1166,9 @@ angular.module('ossClientUiApp')
         };
     }])
 
-    /**
-     * object相关
-     */
+/**
+ * object相关
+ */
     .factory('OSSObject', ['$location', '$filter', 'OSSApi', '$q', 'OSSLocation', function ($location, $filter, OSSApi, $q, OSSLocation) {
         var fileSorts = {
             'SORT_SPEC': ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'ai', 'cdr', 'psd', 'dmg', 'iso', 'md', 'ipa', 'apk', 'gknote'],
@@ -1223,7 +1224,8 @@ angular.module('ossClientUiApp')
                     dir: isDir,
                     filename: filename,
                     lastModified: object.LastModified || '',
-                    size: object.Size ? parseInt(object.Size) : 0
+                    size: object.Size ? parseInt(object.Size) : 0,
+                    etag:object.ETag || ''
                 }
             },
             open: function (bucket, path, isDir) {
@@ -1266,24 +1268,24 @@ angular.module('ossClientUiApp')
         };
     }])
 
-    /**
-     * 浏览路径相关
-     */
-    .factory('OSSLocation', ['$routeParams',function ($routeParams) {
+/**
+ * 浏览路径相关
+ */
+    .factory('OSSLocation', ['$routeParams', function ($routeParams) {
         var OSSLocation = {
             /**
              * 传染的Bucket是否是当前正在浏览的bucket
              * @param bucketName
              */
-            isCurrentBucket:function(bucketName){
+            isCurrentBucket: function (bucketName) {
                 return bucketName == $routeParams.bucket;
             },
             /**
              * 传入的object是否是当前正在浏览的object
              * @param objectPath
              */
-            isCurrentObject:function(bucketName,objectPath){
-                if(objectPath && Util.String.lastChar(objectPath) != '/'){
+            isCurrentObject: function (bucketName, objectPath) {
+                if (objectPath && Util.String.lastChar(objectPath) != '/') {
                     objectPath += '/';
                 }
                 return OSSLocation.isCurrentBucket(bucketName) && objectPath == ($routeParams.object || '');
@@ -1309,9 +1311,9 @@ angular.module('ossClientUiApp')
         return OSSLocation;
     }])
 
-    /**
-     * 面包屑相关
-     */
+/**
+ * 面包屑相关
+ */
     .factory('Bread', ['OSSLocation', function (OSSLocation) {
         var getFilterName = function (filter) {
             var filterName = '';
@@ -1359,16 +1361,17 @@ angular.module('ossClientUiApp')
         };
     }])
 
-    /**
-     * 请求时生成xml文档
-     */
+/**
+ * 请求时生成xml文档
+ */
     .factory('RequestXML', function () {
         return {
             getXMLHeader: function () {
                 return '<?xml version="1.0" encoding="UTF-8"?>';
             },
             getCreateBucketXML: function (region) {
-                region.replace('-internal','');
+                //去掉”-internal“
+                region.replace('-internal', '');
                 return [
                     this.getXMLHeader(),
                     "<CreateBucketConfiguration >",
@@ -1381,9 +1384,9 @@ angular.module('ossClientUiApp')
         };
     })
 
-    /**
-     * bucket相关
-     */
+/**
+ * bucket相关
+ */
     .factory('Bucket', ['OSSApi', '$q', function (OSSApi, $q) {
         var buckets = null;
         var deferred = $q.defer();
@@ -1426,12 +1429,28 @@ angular.module('ossClientUiApp')
         };
     }])
 
-    /**
-     * api相关
-     */
-    .factory('OSSApi', ['$http', 'RequestXML', function ($http, RequestXML) {
+/**
+ * api相关
+ */
+    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', function ($http, RequestXML, OSSConfig) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
+
+        //获取当前的区域
+        var currentLocation = OSS.invoke('getCurrentLocation');
+
+        var host = OSSConfig.getHost();
+
+        //如果当前的bucket与当前的区域在同一个地方，就走内网
+        var changeLocation = function (location) {
+            if(location.indexOf('-internal') > 0){
+                return location;
+            }
+            if (currentLocation && location && location == currentLocation) {
+                return location + '-internal';
+            }
+            return location;
+        };
 
         var getExpires = function (expires) {
             expires = angular.isUndefined(expires) ? 60 : expires;
@@ -1439,15 +1458,10 @@ angular.module('ossClientUiApp')
         };
 
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam) {
-            var host = 'http://' + (bucket ? bucket + "." : "") + (region ? region + "." : "") + 'aliyuncs.com';
-            if(bucket && region){
-                //如果是云主机需要走内网
-                host = 'http://' +  bucket + "." + OSS.invoke('changeHost',region);
-            }
+            region = changeLocation(region);
+            var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
-
-            var requestUrl = host + canonicalizedResource;
-
+            requestUrl += canonicalizedResource;
             requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
                 OSSAccessKeyId: OSSAccessKeyId,
                 Expires: expires,
@@ -1455,7 +1469,6 @@ angular.module('ossClientUiApp')
             });
 
             requestUrl += (extraParam ? '&' + $.param(extraParam) : '');
-
             return requestUrl;
         };
 
@@ -1467,7 +1480,7 @@ angular.module('ossClientUiApp')
         return {
             getURI: function (bucket, objectName, expires) {
                 if (expires) {
-                    return 'http://' + bucket.Name + '.' + bucket.Location + '.' + 'aliyuncs.com/' + encodeURIComponent(objectName);
+                    return 'http://' + bucket.Name + '.' + bucket.Location + '.' + host + '/' + encodeURIComponent(objectName);
                 } else {
                     expires = getExpires(expires);
                     var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectName);
@@ -1487,9 +1500,7 @@ angular.module('ossClientUiApp')
                     expires: expires,
                     canonicalized_resource: canonicalizedResource
                 });
-                var requestUrl = getRequestUrl('oss', '', expires, signature, canonicalizedResource);
-                //var requestUrl = getRequestUrl('', 'oss-cn-guizhou-a', expires, signature, canonicalizedResource);
-                //var requestUrl = getRequestUrl('', 'oss-cn-gzzwy-a-internal', expires, signature, canonicalizedResource);
+                var requestUrl = getRequestUrl('', (currentLocation ? currentLocation : 'oss'), expires, signature, canonicalizedResource);
                 return $http.get(requestUrl);
 
             },
@@ -1660,9 +1671,9 @@ angular.module('ossClientUiApp')
         };
     }])
 
-    /**
-     * 碎片相关
-     */
+/**
+ * 碎片相关
+ */
     .factory('OSSUploadPart', ['OSSApi', '$filter', '$q', function (OSSApi, $filter, $q) {
         return {
             list: function (bucket, prefix, delimiter, lastKeyMaker, loadFileCount, lastUploadMaker) {
@@ -1711,14 +1722,47 @@ angular.module('ossClientUiApp')
         }
     }])
 
-    /**
-     * 所有对话框
-     */
-    .factory('OSSModal', ['$modal','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSConfig,Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
+/**
+ * 所有对话框
+ */
+    .factory('OSSModal', ['$modal', 'OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
         var defaultOption = {
             backdrop: 'static'
         };
         return {
+            setting:function(){
+                var option = {
+                    templateUrl: 'views/setting_modal.html',
+                    windowClass: 'setting_modal',
+                    controller: function ($scope, $modalInstance) {
+                        $scope.min = 0;
+
+                        $scope.max = 10;
+
+                        $scope.isCustomClient = OSSConfig.isCustomClient();
+
+                        var setting = OSS.invoke('getTransInfo');
+
+                        $scope.setting = setting;
+
+                        $scope.saveSetting = function(setting){
+                            OSS.invoke('setTransInfo',setting);
+                            alert('设置成功');
+                            $modalInstance.dismiss('cancel');
+                        };
+
+                        $scope.cancel = function(){
+                            $modalInstance.dismiss('cancel');
+                        };
+
+                        $scope.exportAuth = function(){
+                            OSSDialog.exportAuthorization();
+                        };
+                    }
+                };
+                option = angular.extend({}, defaultOption, option);
+                return $modal.open(option);
+            },
             /**
              * 新建或编辑bucket
              * @param bucket 如果传了bucket就是编辑
@@ -1775,17 +1819,17 @@ angular.module('ossClientUiApp')
                         //创建bucket时是否不允许选择区域
                         $scope.isDisableLocationSelect = OSSConfig.isDisableLocationSelect();
 
-                        if(!$scope.isDisableLocationSelect){
+                        if (!$scope.isDisableLocationSelect) {
                             //bucket区域
                             $scope.regions = OSSRegion.list();
                         }
 
                         if (!bucket) {
-                            if(!$scope.isDisableLocationSelect){
+                            if (!$scope.isDisableLocationSelect) {
                                 $scope.cBucket.region = $scope.regions[0];
-                            }else{
+                            } else {
                                 var currentLocation = OSS.invoke('getCurrentLocation');
-                                if(!currentLocation){
+                                if (!currentLocation) {
                                     return;
                                 }
                                 $scope.cBucket.region = OSSRegion.getRegionByLocation(currentLocation);

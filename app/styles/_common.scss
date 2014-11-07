@@ -87,17 +87,8 @@ input:focus {
   }
 }
 
-.dark-theme{
+.oss-dialog{
 
-  background: $darkThemeBg;
-  color: #fff;
-  select option{
-    background: $darkThemeBg;
-  }
-
-  .fa-info-circle {
-    color: #fc9701;
-  }
 
   h1 {
     text-align: center;
@@ -115,7 +106,7 @@ input:focus {
   }
 
   .form-group{
-    color:#bababa;
+
 
     .btn-wrapper{
       margin-left: -2%;
@@ -129,6 +120,54 @@ input:focus {
       padding-bottom: 6px;
       font-size: 14px;
     }
+
+
+
+  }
+
+
+  .form-control {
+    border-radius: 2px;
+    height: 34px;
+  }
+
+  .form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+  }
+
+  .input-group .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .form-control:focus {
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .form-control::-webkit-input-placeholder {
+    transition: color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  }
+
+}
+
+.dark-theme{
+
+  background: $darkThemeBg;
+  color: #fff;
+  select option{
+    background: $darkThemeBg;
+  }
+
+  .fa-info-circle {
+    color: #fc9701;
+  }
+
+  .form-group{
+    color:#bababa;
 
     .btn-default{
       background: #fff;
@@ -145,9 +184,7 @@ input:focus {
   .form-control {
     background-color: $darkThemeFormControlBg;
     border-color: transparent;
-    border-radius: 2px;
     color: #fff;
-    height: 34px;
   }
 
   .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
@@ -159,20 +196,9 @@ input:focus {
     border-color: transparent;
   }
 
-  .input-group .form-control {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
 
   .form-control:focus {
     border-color: transparent;
-    outline: 0;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .form-control::-webkit-input-placeholder {
-    transition: color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   }
 
   .form-control:focus::-webkit-input-placeholder {
@@ -236,3 +262,4 @@ input:focus {
   width: 30px;
   position: relative;
 }
+
