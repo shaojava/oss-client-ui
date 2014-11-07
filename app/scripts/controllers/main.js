@@ -417,7 +417,9 @@ angular.module('ossClientUiApp')
                 isAllFileLoaded = res.allLoaded;
                 usSpinnerService.stop('file-list-spinner');
 
-            }, function () {
+            }, function (res,status) {
+                //$scope.$emit('showError',OSSException.getError(res,status).msg);
+                $scope.$emit('showError','无法访问该Bucket');
                 $scope.loadingFile = false;
                 usSpinnerService.stop('file-list-spinner');
             });
@@ -589,7 +591,7 @@ angular.module('ossClientUiApp')
 /**
  * 上传碎片管理
  */
-    .controller('UploadListCtrl', ['$scope', '$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu', function ($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu) {
+    .controller('UploadListCtrl', ['$scope', '$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu','OSSException', function ($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu,OSSException) {
 
         //是否加载中
         $scope.loading = false;
@@ -620,8 +622,9 @@ angular.module('ossClientUiApp')
                 lastKeyMaker = res.keyMaker;
                 lastUploadMaker = res.uploadIdMaker;
                 isAllLoaded = res.allLoaded;
-            }, function () {
+            }, function (res,status) {
                 $scope.loadingFile = false;
+                $scope.$emit('showError',OSSException.getError(res,status).msg);
             });
         };
 

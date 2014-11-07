@@ -22,7 +22,7 @@ angular
         'angularSpinner',
         'ng-context-menu'
     ])
-    .config(['$routeProvider', '$httpProvider',function ($routeProvider, $httpProvider) {
+    .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
         $routeProvider
             .when('/file/:bucket?/?:object*?', {
                 templateUrl: 'views/filelist.html',

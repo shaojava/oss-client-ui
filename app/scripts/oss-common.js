@@ -155,19 +155,31 @@ angular.module('OSSCommon', [])
         };
         return {
             getError: function (res, status) {
-                var resError = res['Error'];
+                console.log('getError',arguments);
                 var error = {
                     status: status,
-                    code: resError.Code || '',
-                    msg: resError.Message || ''
+                    code:  '',
+                    msg:  ''
                 };
-                var message = resError.Message;
-                if(erroList[resError.Code]){
-                    message = erroList[resError.Code];
+                if(!res){
+                    angular.extend(error,{
+                        msg: '网络请求超时'
+                    });
+                }else{
+                    var resError = res['Error'];
+                    angular.extend(error,{
+                        code: resError.Code || '',
+                        msg: resError.Message || ''
+                    });
+
+                    var message = resError.Message;
+                    if(erroList[resError.Code]){
+                        message = erroList[resError.Code];
+                    }
+                    angular.extend(error,{
+                        msg: message
+                    });
                 }
-                angular.extend(error,{
-                    msg: message
-                });
                 return error;
             },
             getClientErrorMsg: function (res) {

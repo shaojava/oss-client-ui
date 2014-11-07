@@ -1066,7 +1066,7 @@ angular.module('ossClientUiApp')
 /**
  * 碎片的的操作菜单
  */
-    .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', 'OSSModal', function (Bucket, OSSApi, $rootScope, OSSModal) {
+    .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', 'OSSModal','OSSException',function (Bucket, OSSApi, OSSModal,OSSException) {
         var allMenu = [
             {
                 name: 'remove',
@@ -1085,8 +1085,8 @@ angular.module('ossClientUiApp')
                     angular.forEach(selectedUploads, function (upload) {
                         OSSApi.deleteUpload(Bucket.getCurrentBucket(), upload).success(function () {
                             $rootScope.$broadcast('removeUpload', upload);
-                        }).error(function () {
-
+                        }).error(function (res,status) {
+                            $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                         });
                     });
                 }
@@ -1210,8 +1210,8 @@ angular.module('ossClientUiApp')
                         allLoaded: res['ListBucketResult']['IsTruncated'] === 'false'
                     });
 
-                }).error(function () {
-
+                }).error(function (res,status) {
+                    defer.reject(res,status);
                 });
                 return defer.promise;
             },
@@ -1387,7 +1387,7 @@ angular.module('ossClientUiApp')
 /**
  * bucket相关
  */
-    .factory('Bucket', ['OSSApi', '$q', function (OSSApi, $q) {
+    .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope', function (OSSApi, $q,OSSException,$rootScope) {
         var buckets = null;
         var deferred = $q.defer();
         var listPromise;
@@ -1400,8 +1400,9 @@ angular.module('ossClientUiApp')
                         var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                         buckets = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
                         deferred.resolve(buckets);
-                    }).error(function () {
-                        deferred.reject();
+                    }).error(function (res,status) {
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                        deferred.reject(res,status);
                     });
                     return listPromise = deferred.promise;
                 }
@@ -1690,8 +1691,8 @@ angular.module('ossClientUiApp')
                         allLoaded: result['IsTruncated'] === 'false'
                     });
 
-                }).error(function () {
-
+                }).error(function (res,status) {
+                    defer.reject(res,status);
                 });
                 return defer.promise;
             },
@@ -1835,9 +1836,10 @@ angular.module('ossClientUiApp')
                                 $scope.loading = false;
                                 $scope.getingBucketInfo = false;
                                 $scope.selectAcl = Util.Array.getObjectByKeyValue($scope.acls, 'value', res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
-                            }).error(function () {
+                            }).error(function (res,status) {
                                 $scope.loading = false;
                                 $scope.getingBucketInfo = false;
+                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                             });
                         } else {
                             $scope.loading = true;
@@ -1955,8 +1957,8 @@ angular.module('ossClientUiApp')
                                     })
                                 }
                             });
-                        }).error(function () {
-
+                        }).error(function (res,status) {
+                            $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                         });
 
                         $scope.setHttpHeader = function (headers, customHeaders) {
@@ -1975,6 +1977,8 @@ angular.module('ossClientUiApp')
 
                             OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
                                 $modalInstance.close();
+                            }).error(function(res,status){
+                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                             });
                         };
 
@@ -2027,8 +2031,9 @@ angular.module('ossClientUiApp')
                                     $scope.uri = OSSApi.getURI(bucket, object.path);
                                 }
                             }
-                        }).error(function () {
+                        }).error(function (res,status) {
                             $scope.loading = false;
+                            $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                         });
 
                         //获取私有bucket的uri
@@ -2077,8 +2082,9 @@ angular.module('ossClientUiApp')
                                 allLoaded = result['IsTruncated'] === 'false';
                                 var parts = angular.isArray(result['Part']) ? result['Part'] : [result['Part']];
                                 $scope.parts = $scope.parts.concat(parts);
-                            }).error(function () {
+                            }).error(function (res,status) {
                                 $scope.loading = false;
+                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                             })
                         };
 
