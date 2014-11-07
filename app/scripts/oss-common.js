@@ -121,7 +121,38 @@ angular.module('OSSCommon', [])
      * 抛错处理
      */
     .factory('OSSException', [function () {
-        var erroList = {};
+        var erroList = {
+            'AccessDenied':'拒绝访问',
+            'BucketAlreadyExists':'Bucket已经存在',
+            'BucketNotEmpty':'Bucket不为空',
+            'EntityTooLarge':'实体过大',
+            'EntityTooSmall':'实体过小',
+            'FileGroupTooLarge':'文件组过大',
+            'FilePartNotExist':'文件Part不存在',
+            'FilePartStale':'文件Part过时',
+            'InvalidArgument':'参数格式错误',
+            'InvalidAccessKeyId':'Access Key ID不存在',
+            'InvalidBucketName':'无效的Bucket名字',
+            'InvalidDigest':'无效的摘要',
+            'InvalidObjectName':'无效的Object名字',
+            'InvalidPart':'无效的Part',
+            'InvalidPartOrder':'无效的part顺序',
+            'InvalidTargetBucketForLogging':'Logging操作中有无效的目标bucket',
+            'InternalError':'OSS内部发生错误',
+            'MalformedXML':'XML格式非法',
+            'MethodNotAllowed':'不支持的方法',
+            'MissingArgument':'缺少参数',
+            'MissingContentLength':'缺少内容长度',
+            'NoSuchBucket':'Bucket不存在',
+            'NoSuchKey':'文件不存在',
+            'NoSuchUpload':'Multipart Upload ID不存在',
+            'NotImplemented':'无法处理的方法',
+            'PreconditionFailed':'预处理错误',
+            'RequestTimeTooSkewed':'发起请求的时间和服务器时间超出15分钟',
+            'RequestTimeout':'请求超时',
+            'SignatureDoesNotMatch':'签名错误',
+            'TooManyBuckets':'Bucket数目超过限制'
+        };
         return {
             getError: function (res, status) {
                 var resError = res['Error'];
@@ -130,6 +161,13 @@ angular.module('OSSCommon', [])
                     code: resError.Code || '',
                     msg: resError.Message || ''
                 };
+                var message = resError.Message;
+                if(erroList[resError.Code]){
+                    message = erroList[resError.Code];
+                }
+                angular.extend(error,{
+                    msg: message
+                });
                 return error;
             },
             getClientErrorMsg: function (res) {
