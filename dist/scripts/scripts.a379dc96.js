@@ -110,7 +110,6 @@
                     enable: 1
                 } ]
             });
-            console.log("re", re);
             return JSON.stringify({
                 source: "guizhou",
                 disable_location_select: 1,
@@ -262,6 +261,42 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
     };
 } ]).factory("OSSConfig", [ function() {
     var config = OSS.invoke("configInfo");
+    if (!config) {
+        config = {
+            source: "",
+            disable_location_select: 0,
+            host: "aliyuncs.com",
+            locations: [ {
+                location: "oss-cn-guizhou-a",
+                name: "互联网",
+                enable: 0
+            }, {
+                location: "oss-cn-gzzwy-a",
+                name: "政务外网",
+                enable: 0
+            }, {
+                location: "oss-cn-hangzhou-a",
+                name: "杭州",
+                enable: 1
+            }, {
+                location: "oss-cn-qingdao-a",
+                name: "青岛",
+                enable: 1
+            }, {
+                location: "oss-cn-beijing-a",
+                name: "北京",
+                enable: 1
+            }, {
+                location: "oss-cn-hongkong-a",
+                name: "香港",
+                enable: 1
+            }, {
+                location: "oss-cn-shenzhen-a",
+                name: "深圳",
+                enable: 1
+            } ]
+        };
+    }
     return {
         isCustomClient: function() {
             return config.source != "";
@@ -304,15 +339,64 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
         }
     };
 } ]).factory("OSSException", [ function() {
-    var erroList = {};
+    var erroList = {
+        AccessDenied: "拒绝访问",
+        BucketAlreadyExists: "Bucket已经存在",
+        BucketNotEmpty: "Bucket不为空",
+        EntityTooLarge: "实体过大",
+        EntityTooSmall: "实体过小",
+        FileGroupTooLarge: "文件组过大",
+        FilePartNotExist: "文件Part不存在",
+        FilePartStale: "文件Part过时",
+        InvalidArgument: "参数格式错误",
+        InvalidAccessKeyId: "Access Key ID不存在",
+        InvalidBucketName: "无效的Bucket名字",
+        InvalidDigest: "无效的摘要",
+        InvalidObjectName: "无效的Object名字",
+        InvalidPart: "无效的Part",
+        InvalidPartOrder: "无效的part顺序",
+        InvalidTargetBucketForLogging: "Logging操作中有无效的目标bucket",
+        InternalError: "OSS内部发生错误",
+        MalformedXML: "XML格式非法",
+        MethodNotAllowed: "不支持的方法",
+        MissingArgument: "缺少参数",
+        MissingContentLength: "缺少内容长度",
+        NoSuchBucket: "Bucket不存在",
+        NoSuchKey: "文件不存在",
+        NoSuchUpload: "Multipart Upload ID不存在",
+        NotImplemented: "无法处理的方法",
+        PreconditionFailed: "预处理错误",
+        RequestTimeTooSkewed: "发起请求的时间和服务器时间超出15分钟",
+        RequestTimeout: "请求超时",
+        SignatureDoesNotMatch: "签名错误",
+        TooManyBuckets: "Bucket数目超过限制"
+    };
     return {
         getError: function(res, status) {
-            var resError = res["Error"];
+            console.log("getError", arguments);
             var error = {
                 status: status,
-                code: resError.Code || "",
-                msg: resError.Message || ""
+                code: "",
+                msg: ""
             };
+            if (!res) {
+                angular.extend(error, {
+                    msg: "网络请求超时"
+                });
+            } else {
+                var resError = res["Error"];
+                angular.extend(error, {
+                    code: resError.Code || "",
+                    msg: resError.Message || ""
+                });
+                var message = resError.Message;
+                if (erroList[resError.Code]) {
+                    message = erroList[resError.Code];
+                }
+                angular.extend(error, {
+                    msg: message
+                });
+            }
             return error;
         },
         getClientErrorMsg: function(res) {
@@ -807,7 +891,8 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
             lastLoadMaker = res.marker;
             isAllFileLoaded = res.allLoaded;
             usSpinnerService.stop("file-list-spinner");
-        }, function() {
+        }, function(res, status) {
+            $scope.$emit("showError", "无法访问该Bucket");
             $scope.loadingFile = false;
             usSpinnerService.stop("file-list-spinner");
         });
@@ -932,7 +1017,7 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
             }
         });
     };
-} ]).controller("UploadListCtrl", [ "$scope", "$routeParams", "OSSUploadPart", "Bucket", "OSSUploadMenu", function($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu) {
+} ]).controller("UploadListCtrl", [ "$scope", "$routeParams", "OSSUploadPart", "Bucket", "OSSUploadMenu", "OSSException", function($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu, OSSException) {
     $scope.loading = false;
     var isAllLoaded = false;
     var lastKeyMaker = "";
@@ -950,8 +1035,9 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
             lastKeyMaker = res.keyMaker;
             lastUploadMaker = res.uploadIdMaker;
             isAllLoaded = res.allLoaded;
-        }, function() {
+        }, function(res, status) {
             $scope.loadingFile = false;
+            $scope.$emit("showError", OSSException.getError(res, status).msg);
         });
     };
     $scope.uploads = [];
@@ -1947,10 +2033,10 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             return groupMenus;
         },
         getTopExcludeMenus: function() {
-            return [ "paste" ];
+            return [];
         }
     };
-} ]).factory("OSSUploadMenu", [ "Bucket", "OSSApi", "$rootScope", "OSSModal", function(Bucket, OSSApi, $rootScope, OSSModal) {
+} ]).factory("OSSUploadMenu", [ "Bucket", "OSSApi", "$rootScope", "OSSModal", "OSSException", function(Bucket, OSSApi, OSSModal, OSSException) {
     var allMenu = [ {
         name: "remove",
         text: "删除",
@@ -1968,7 +2054,9 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             angular.forEach(selectedUploads, function(upload) {
                 OSSApi.deleteUpload(Bucket.getCurrentBucket(), upload).success(function() {
                     $rootScope.$broadcast("removeUpload", upload);
-                }).error(function() {});
+                }).error(function(res, status) {
+                    $rootScope.$broadcast("showError", OSSException.getError(res, status).msg);
+                });
             });
         }
     }, {
@@ -2034,11 +2122,11 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
     };
 } ]).factory("OSSObject", [ "$location", "$filter", "OSSApi", "$q", "OSSLocation", function($location, $filter, OSSApi, $q, OSSLocation) {
     var fileSorts = {
-        SORT_SPEC: [ "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "ai", "cdr", "psd", "dmg", "iso", "md", "ipa", "apk", "gknote" ],
+        SORT_SPEC: [ "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "ai", "cdr", "psd", "dmg", "iso", "md", "ipa", "apk" ],
         SORT_MOVIE: [ "mp4", "mkv", "rm", "rmvb", "avi", "3gp", "flv", "wmv", "asf", "mpeg", "mpg", "mov", "ts", "m4v" ],
         SORT_MUSIC: [ "mp3", "wma", "wav", "flac", "ape", "ogg", "aac", "m4a" ],
         SORT_IMAGE: [ "jpg", "png", "jpeg", "gif", "psd", "bmp", "ai", "cdr" ],
-        SORT_DOCUMENT: [ "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "odt", "rtf", "ods", "csv", "odp", "txt", "gknote" ],
+        SORT_DOCUMENT: [ "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "odt", "rtf", "ods", "csv", "odp", "txt" ],
         SORT_CODE: [ "js", "c", "cpp", "h", "cs", "vb", "vbs", "java", "sql", "ruby", "php", "asp", "aspx", "html", "htm", "py", "jsp", "pl", "rb", "m", "css", "go", "xml", "erl", "lua", "md" ],
         SORT_ZIP: [ "rar", "zip", "7z", "cab", "tar", "gz", "iso" ],
         SORT_EXE: [ "exe", "bat", "com" ]
@@ -2070,7 +2158,9 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                     marker: res["ListBucketResult"]["NextMarker"],
                     allLoaded: res["ListBucketResult"]["IsTruncated"] === "false"
                 });
-            }).error(function() {});
+            }).error(function(res, status) {
+                defer.reject(res, status);
+            });
             return defer.promise;
         },
         format: function(object) {
@@ -2197,7 +2287,7 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             return [ this.getXMLHeader(), "<CreateBucketConfiguration >", "<LocationConstraint >", region, "</LocationConstraint >", "</CreateBucketConfiguration >" ].join("");
         }
     };
-}).factory("Bucket", [ "OSSApi", "$q", function(OSSApi, $q) {
+}).factory("Bucket", [ "OSSApi", "$q", "OSSException", "$rootScope", function(OSSApi, $q, OSSException, $rootScope) {
     var buckets = null;
     var deferred = $q.defer();
     var listPromise;
@@ -2210,8 +2300,9 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                     var resBuckets = res["ListAllMyBucketsResult"]["Buckets"]["Bucket"];
                     buckets = angular.isArray(resBuckets) ? resBuckets : [ resBuckets ];
                     deferred.resolve(buckets);
-                }).error(function() {
-                    deferred.reject();
+                }).error(function(res, status) {
+                    $rootScope.$broadcast("showError", OSSException.getError(res, status).msg);
+                    deferred.reject(res, status);
                 });
                 return listPromise = deferred.promise;
             }
@@ -2481,7 +2572,9 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                     uploadIdMaker: result["NextUploadIdMarker"],
                     allLoaded: result["IsTruncated"] === "false"
                 });
-            }).error(function() {});
+            }).error(function(res, status) {
+                defer.reject(res, status);
+            });
             return defer.promise;
         },
         format: function(upload) {
@@ -2507,12 +2600,33 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                 templateUrl: "views/setting_modal.html",
                 windowClass: "setting_modal",
                 controller: function($scope, $modalInstance) {
-                    $scope.min = 0;
+                    $scope.min = 1;
                     $scope.max = 10;
                     $scope.isCustomClient = OSSConfig.isCustomClient();
                     var setting = OSS.invoke("getTransInfo");
                     $scope.setting = setting;
+                    var checkSetting = function(setting) {
+                        var unValidMessage = "";
+                        for (var key in setting) {
+                            if (setting.hasOwnProperty(key)) {
+                                var val = setting[key];
+                                if (!/\d/.test(val)) {
+                                    unValidMessage = "请输入数字";
+                                    break;
+                                }
+                                if (val <= 0 || val > 10) {
+                                    unValidMessage = "设置的值必须大于0小于或等于10";
+                                    break;
+                                }
+                            }
+                        }
+                        if (unValidMessage) {
+                            alert(unValidMessage);
+                            return;
+                        }
+                    };
                     $scope.saveSetting = function(setting) {
+                        checkSetting(setting);
                         OSS.invoke("setTransInfo", setting);
                         alert("设置成功");
                         $modalInstance.dismiss("cancel");
@@ -2587,9 +2701,10 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                             $scope.loading = false;
                             $scope.getingBucketInfo = false;
                             $scope.selectAcl = Util.Array.getObjectByKeyValue($scope.acls, "value", res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
-                        }).error(function() {
+                        }).error(function(res, status) {
                             $scope.loading = false;
                             $scope.getingBucketInfo = false;
+                            $rootScope.$broadcast("showError", OSSException.getError(res, status).msg);
                         });
                     } else {
                         $scope.loading = true;
@@ -2674,7 +2789,23 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                         nameModel: "",
                         contentModel: ""
                     } ];
+                    $scope.$watch("saving", function(newVal) {
+                        if (newVal) {
+                            usSpinnerService.spin("set-http-spinner");
+                        } else {
+                            usSpinnerService.stop("set-http-spinner");
+                        }
+                    });
+                    $scope.$watch("loading", function(newVal) {
+                        if (newVal) {
+                            usSpinnerService.spin("loading-spinner");
+                        } else {
+                            usSpinnerService.stop("loading-spinner");
+                        }
+                    });
+                    $scope.loading = true;
                     OSSApi.getObjectMeta(bucket, object.path).success(function(data, status, getHeader) {
+                        $scope.loading = false;
                         angular.forEach($scope.headers, function(header) {
                             header.model = getHeader(header.name);
                         });
@@ -2686,7 +2817,10 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                                 });
                             }
                         });
-                    }).error(function() {});
+                    }).error(function(res, status) {
+                        $scope.loading = false;
+                        $rootScope.$broadcast("showError", OSSException.getError(res, status).msg);
+                    });
                     $scope.setHttpHeader = function(headers, customHeaders) {
                         var ossHeaders = {}, canonicalizedOSSheaders = {};
                         angular.forEach(headers, function(val) {
@@ -2699,8 +2833,13 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                                 canonicalizedOSSheaders["x-oss-meta-" + val.nameModel.toLowerCase()] = val.contentModel || "";
                             }
                         });
+                        $scope.saving = true;
                         OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function(res) {
+                            $scope.saving = false;
                             $modalInstance.close();
+                        }).error(function(res, status) {
+                            $scope.saving = false;
+                            $rootScope.$broadcast("showError", OSSException.getError(res, status).msg);
                         });
                     };
                     $scope.addCustomHeader = function() {
@@ -2744,8 +2883,9 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                                 $scope.uri = OSSApi.getURI(bucket, object.path);
                             }
                         }
-                    }).error(function() {
+                    }).error(function(res, status) {
                         $scope.loading = false;
+                        $rootScope.$broadcast("showError", OSSException.getError(res, status).msg);
                     });
                     $scope.getUri = function(expire) {
                         $scope.uri = OSSApi.getURI(bucket, object.path, expire);
@@ -2784,8 +2924,9 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                             allLoaded = result["IsTruncated"] === "false";
                             var parts = angular.isArray(result["Part"]) ? result["Part"] : [ result["Part"] ];
                             $scope.parts = $scope.parts.concat(parts);
-                        }).error(function() {
+                        }).error(function(res, status) {
                             $scope.loading = false;
+                            $rootScope.$broadcast("showError", OSSException.getError(res, status).msg);
                         });
                     };
                     loadPart();

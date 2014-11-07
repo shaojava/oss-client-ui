@@ -110,7 +110,6 @@
                     enable: 1
                 } ]
             });
-            console.log("re", re);
             return JSON.stringify({
                 source: "guizhou",
                 disable_location_select: 1,
@@ -262,6 +261,42 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
     };
 } ]).factory("OSSConfig", [ function() {
     var config = OSS.invoke("configInfo");
+    if (!config) {
+        config = {
+            source: "",
+            disable_location_select: 0,
+            host: "aliyuncs.com",
+            locations: [ {
+                location: "oss-cn-guizhou-a",
+                name: "互联网",
+                enable: 0
+            }, {
+                location: "oss-cn-gzzwy-a",
+                name: "政务外网",
+                enable: 0
+            }, {
+                location: "oss-cn-hangzhou-a",
+                name: "杭州",
+                enable: 1
+            }, {
+                location: "oss-cn-qingdao-a",
+                name: "青岛",
+                enable: 1
+            }, {
+                location: "oss-cn-beijing-a",
+                name: "北京",
+                enable: 1
+            }, {
+                location: "oss-cn-hongkong-a",
+                name: "香港",
+                enable: 1
+            }, {
+                location: "oss-cn-shenzhen-a",
+                name: "深圳",
+                enable: 1
+            } ]
+        };
+    }
     return {
         isCustomClient: function() {
             return config.source != "";
@@ -304,15 +339,64 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
         }
     };
 } ]).factory("OSSException", [ function() {
-    var erroList = {};
+    var erroList = {
+        AccessDenied: "拒绝访问",
+        BucketAlreadyExists: "Bucket已经存在",
+        BucketNotEmpty: "Bucket不为空",
+        EntityTooLarge: "实体过大",
+        EntityTooSmall: "实体过小",
+        FileGroupTooLarge: "文件组过大",
+        FilePartNotExist: "文件Part不存在",
+        FilePartStale: "文件Part过时",
+        InvalidArgument: "参数格式错误",
+        InvalidAccessKeyId: "Access Key ID不存在",
+        InvalidBucketName: "无效的Bucket名字",
+        InvalidDigest: "无效的摘要",
+        InvalidObjectName: "无效的Object名字",
+        InvalidPart: "无效的Part",
+        InvalidPartOrder: "无效的part顺序",
+        InvalidTargetBucketForLogging: "Logging操作中有无效的目标bucket",
+        InternalError: "OSS内部发生错误",
+        MalformedXML: "XML格式非法",
+        MethodNotAllowed: "不支持的方法",
+        MissingArgument: "缺少参数",
+        MissingContentLength: "缺少内容长度",
+        NoSuchBucket: "Bucket不存在",
+        NoSuchKey: "文件不存在",
+        NoSuchUpload: "Multipart Upload ID不存在",
+        NotImplemented: "无法处理的方法",
+        PreconditionFailed: "预处理错误",
+        RequestTimeTooSkewed: "发起请求的时间和服务器时间超出15分钟",
+        RequestTimeout: "请求超时",
+        SignatureDoesNotMatch: "签名错误",
+        TooManyBuckets: "Bucket数目超过限制"
+    };
     return {
         getError: function(res, status) {
-            var resError = res["Error"];
+            console.log("getError", arguments);
             var error = {
                 status: status,
-                code: resError.Code || "",
-                msg: resError.Message || ""
+                code: "",
+                msg: ""
             };
+            if (!res) {
+                angular.extend(error, {
+                    msg: "网络请求超时"
+                });
+            } else {
+                var resError = res["Error"];
+                angular.extend(error, {
+                    code: resError.Code || "",
+                    msg: resError.Message || ""
+                });
+                var message = resError.Message;
+                if (erroList[resError.Code]) {
+                    message = erroList[resError.Code];
+                }
+                angular.extend(error, {
+                    msg: message
+                });
+            }
             return error;
         },
         getClientErrorMsg: function(res) {
