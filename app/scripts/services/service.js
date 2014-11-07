@@ -1725,7 +1725,8 @@ angular.module('ossClientUiApp')
                     templateUrl: 'views/setting_modal.html',
                     windowClass: 'setting_modal',
                     controller: function ($scope, $modalInstance) {
-                        $scope.min = 0;
+
+                        $scope.min = 1;
 
                         $scope.max = 10;
 
@@ -1735,7 +1736,29 @@ angular.module('ossClientUiApp')
 
                         $scope.setting = setting;
 
+                        var checkSetting = function(setting){
+                            var unValidMessage = '';
+                            for(var key in setting){
+                                if(setting.hasOwnProperty(key)){
+                                    var val = setting[key];
+                                    if(!/\d/.test(val)){
+                                        unValidMessage = '请输入数字';
+                                        break;
+                                    }
+                                    if(val<=0 || val>10){
+                                        unValidMessage = '设置的值必须大于0小于或等于10';
+                                        break;
+                                    }
+                                }
+                            }
+                            if(unValidMessage){
+                                alert(unValidMessage);
+                                return;
+                            }
+                        };
+
                         $scope.saveSetting = function(setting){
+                            checkSetting(setting);
                             OSS.invoke('setTransInfo',setting);
                             alert('设置成功');
                             $modalInstance.dismiss('cancel');
