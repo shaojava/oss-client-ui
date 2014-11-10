@@ -629,7 +629,9 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
         OSSLocationHistory.forward();
     };
     Bucket.list().then(function(buckets) {
-        $scope.buckets = angular.isArray(buckets) ? buckets : [ buckets ];
+        if (buckets) {
+            $scope.buckets = angular.isArray(buckets) ? buckets : [ buckets ];
+        }
     });
     $scope.$on("$routeChangeSuccess", function(event, current, prev) {
         if (prev && prev.params) {
@@ -859,7 +861,7 @@ angular.module("ossClientUiApp").controller("MainCtrl", [ "$scope", "OSSApi", "O
         }
     };
 } ]).controller("FileListCtrl", [ "$scope", "$routeParams", "OSSApi", "buckets", "$rootScope", "OSSObject", "OSSMenu", "Bucket", "$route", "$location", "OSSLocation", "usSpinnerService", "$filter", "OSSException", "$timeout", function($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException, $timeout) {
-    var bucketName = $routeParams.bucket || "", keyword = $routeParams.keyword || "", prefix = "", delimiter = "/", isSearch = false, loadFileCount = 50, lastLoadMaker = "", isAllFileLoaded = false;
+    var bucketName = $routeParams.bucket || "", keyword = $routeParams.keyword || "", prefix = "", delimiter = "/", isSearch = false, loadFileCount = 500, lastLoadMaker = "", isAllFileLoaded = false;
     $scope.orderBy = "";
     if (buckets.length && !bucketName) {
         $location.path(OSSLocation.getUrl(buckets[0].Name));
@@ -2298,7 +2300,11 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
             } else {
                 OSSApi.getBuckets().success(function(res) {
                     var resBuckets = res["ListAllMyBucketsResult"]["Buckets"]["Bucket"];
-                    buckets = angular.isArray(resBuckets) ? resBuckets : [ resBuckets ];
+                    if (resBuckets) {
+                        buckets = angular.isArray(resBuckets) ? resBuckets : [ resBuckets ];
+                    } else {
+                        buckets = [];
+                    }
                     deferred.resolve(buckets);
                 }).error(function(res, status) {
                     $rootScope.$broadcast("showError", OSSException.getError(res, status).msg);
@@ -2628,7 +2634,6 @@ angular.module("ossClientUiApp").factory("OSSAlert", [ "$modal", function($modal
                     $scope.saveSetting = function(setting) {
                         checkSetting(setting);
                         OSS.invoke("setTransInfo", setting);
-                        alert("设置成功");
                         $modalInstance.dismiss("cancel");
                     };
                     $scope.cancel = function() {
