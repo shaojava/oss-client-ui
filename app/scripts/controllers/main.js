@@ -52,7 +52,9 @@ angular.module('ossClientUiApp')
 
 
         Bucket.list().then(function (buckets) {
-            $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
+            if(buckets){
+                $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
+            }
         });
 
         $scope.$on('$routeChangeSuccess', function (event, current, prev) {
@@ -374,7 +376,7 @@ angular.module('ossClientUiApp')
             prefix = '',
             delimiter = '/',
             isSearch = false,
-            loadFileCount = 50,
+            loadFileCount = 500,
             lastLoadMaker = '',
             isAllFileLoaded = false;
 

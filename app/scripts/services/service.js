@@ -1398,7 +1398,11 @@ angular.module('ossClientUiApp')
                 } else {
                     OSSApi.getBuckets().success(function (res) {
                         var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
-                        buckets = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                        if(resBuckets){
+                            buckets = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                        }else{
+                            buckets = [];
+                        }
                         deferred.resolve(buckets);
                     }).error(function (res,status) {
                         $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
@@ -1760,7 +1764,6 @@ angular.module('ossClientUiApp')
                         $scope.saveSetting = function(setting){
                             checkSetting(setting);
                             OSS.invoke('setTransInfo',setting);
-                            alert('设置成功');
                             $modalInstance.dismiss('cancel');
                         };
 
