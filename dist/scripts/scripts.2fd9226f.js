@@ -338,7 +338,7 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
             return location;
         }
     };
-} ]).factory("OSSException", [ function() {
+} ]).factory("OSSException", [ "OSSConfig", function(OSSConfig) {
     var erroList = {
         AccessDenied: "拒绝访问",
         BucketAlreadyExists: "Bucket已经存在",
@@ -380,8 +380,12 @@ angular.module("OSSCommon", []).factory("OSSDialog", [ function() {
                 msg: ""
             };
             if (!res) {
+                var msg = "网络请求超时";
+                if (OSSConfig.isGuiZhouClient()) {
+                    msg += '<p class="text-muted">（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）</p>';
+                }
                 angular.extend(error, {
-                    msg: "网络请求超时"
+                    msg: msg
                 });
             } else {
                 var resError = res["Error"];
