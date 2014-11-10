@@ -205,8 +205,12 @@ angular.module('OSSCommon', [])
                     msg:  ''
                 };
                 if(!res){
+                    var msg = '网络请求超时';
+                    if(1){
+
+                    }
                     angular.extend(error,{
-                        msg: '网络请求超时'
+                        msg: msg
                     });
                 }else{
                     var resError = res['Error'];
