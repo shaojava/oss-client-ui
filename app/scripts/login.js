@@ -12,7 +12,7 @@ angular
         'angularSpinner',
         'OSSCommon'
     ])
-    .controller('MainCtrl', ['$scope', 'OSSException', 'OSSRegion','OSSConfig', function ($scope, OSSException, OSSRegion,OSSConfig) {
+    .controller('MainCtrl', ['$scope', 'OSSException', 'OSSRegion','OSSConfig', '$timeout',function ($scope, OSSException, OSSRegion,OSSConfig,$timeout) {
 
         /**
          * 是否定制客户端
@@ -124,7 +124,7 @@ angular
                 ishost: isCloudHost ? 1 : 0,
                 location: location
             }, function (res) {
-                $scope.$apply(function () {
+                $timeout(function () {
                     if (!res.error) {
                         $scope.step = 'setPassword';
                     } else if (res.error != 5) {
