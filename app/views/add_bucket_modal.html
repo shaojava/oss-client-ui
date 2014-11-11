@@ -4,12 +4,13 @@
     <h4 ng-if="bucket"><span class="text-primary">{{ ::bucket.Name}}</span>的属性</h4>
 </div>
 <div class="modal-body min-height-100">
-    <form class="form-horizontal" role="form" ng-show="!getingBucketInfo">
+    <form class="form-horizontal" name="bucketForm" role="form" ng-show="!getingBucketInfo">
+       <span class="error-msg text-danger" ng-show="bucketForm.bucket_name.$error.pattern">Bucket名称格式错误</span>
         <div class="form-group">
             <label for="bucket_name" class="col-sm-3 control-label">Bucket名称：</label>
             <div class="col-sm-5">
-                <span ng-if="bucket">{{bucket.Name}}</span>
-                <input ng-if="!bucket" type="text" maxlength="63" class="form-control" ng-model="cBucket.name" id="bucket_name" placeholder="" />
+                <span ng-show="bucket">{{bucket.Name}}</span>
+                <input ng-pattern="/^[a-z0-9][a-z0-9_]{2,62}$/" ng-show="!bucket" type="text" class="form-control" ng-model="cBucket.name" name="bucket_name" id="bucket_name" placeholder="" />
             </div>
             <div class="tip text-muted" ng-if="!bucket">
                 <p>·只能包含小写字母、数字和横线</p>

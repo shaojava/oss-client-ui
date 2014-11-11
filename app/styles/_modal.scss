@@ -1,9 +1,20 @@
 .add_bucket_modal{
 
+  .error-msg{
+    position: absolute;
+    top: 6px;
+    left: 25%;
+    margin-left: 15px;
+  }
+
   .tip{
     position: absolute;
     right: 10px;
   }
+  .modal-body{
+    padding-top: 40px;
+  }
+
   .modal-body  span{
     line-height: 32px;
   }
@@ -13,6 +24,7 @@
       height: 32px;
     }
   }
+
 }
 
 .set_http_header_modal {

@@ -153,6 +153,7 @@ angular.module('OSSCommon', [
                 });
             },
             changeLocation:function(location){
+                location = location.replace('-a','');
                 if(location.indexOf('-internal') > 0){
                     return location;
                 }
