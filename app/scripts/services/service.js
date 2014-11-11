@@ -1405,7 +1405,10 @@ angular.module('ossClientUiApp')
                         }
                         //接口返回的bucket的location会带上-a，需要替换成不带-a的
                         angular.forEach(buckets,function(bucket){
-                            bucket.Location = OSSRegion.changeLocation(bucket.Location);
+                            var region  = OSSRegion.getRegionByLocation(bucket.Location);
+                            if(region){
+                                bucket.Location = region.location.replace('-internal','');
+                            }
                         });
                         deferred.resolve(buckets);
                     }).error(function (res,status) {
@@ -1678,7 +1681,6 @@ angular.module('ossClientUiApp')
                 var _self = this;
                 var defer = $q.defer();
                 OSSApi.listUploads(bucket, prefix, delimiter, lastKeyMaker, loadFileCount, lastUploadMaker).success(function (res) {
-                    OSS.log('listUploads:res', res);
                     var result = res['ListMultipartUploadsResult'];
                     var contents = result['Upload'];
                     contents = contents ? angular.isArray(contents) ? contents : [contents] : [];
