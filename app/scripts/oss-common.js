@@ -149,7 +149,7 @@ angular.module('OSSCommon', [
             },
             getRegionByLocation:function(location){
                 return _.find(locations,function(item){
-                    return item.location.replace('-internal','') == location.replace('-internal','');
+                    return location.indexOf(item.location.replace('-internal','')) === 0;
                 });
             },
             changeLocation:function(location){

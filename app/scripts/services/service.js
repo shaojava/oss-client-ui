@@ -1387,7 +1387,7 @@ angular.module('ossClientUiApp')
 /**
  * bucket相关
  */
-    .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope', function (OSSApi, $q,OSSException,$rootScope) {
+    .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope','OSSRegion', function (OSSApi, $q,OSSException,$rootScope,OSSRegion) {
         var buckets = null;
         var deferred = $q.defer();
         var listPromise;
@@ -1403,6 +1403,10 @@ angular.module('ossClientUiApp')
                         }else{
                             buckets = [];
                         }
+                        //接口返回的bucket的location会带上-a，需要替换成不带-a的
+                        angular.forEach(buckets,function(bucket){
+                            bucket.Location = OSSRegion.changeLocation(bucket.Location);
+                        });
                         deferred.resolve(buckets);
                     }).error(function (res,status) {
                         $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
