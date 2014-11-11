@@ -1791,8 +1791,6 @@ angular.module('ossClientUiApp')
                     windowClass: 'add_bucket_modal',
                     controller: function ($scope, $modalInstance) {
 
-
-
                         //是否在进行ajax请求
                         $scope.loading = false;
 
@@ -1861,7 +1859,7 @@ angular.module('ossClientUiApp')
                             OSSApi.getBucketAcl(bucket).success(function (res) {
                                 $scope.loading = false;
                                 $scope.getingBucketInfo = false;
-                                $scope.selectAcl = Util.Array.getObjectByKeyValue($scope.acls, 'value', res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
+                                $scope.acls.selected = Util.Array.getObjectByKeyValue($scope.acls, 'value', res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
                             }).error(function (res,status) {
                                 $scope.loading = false;
                                 $scope.getingBucketInfo = false;
