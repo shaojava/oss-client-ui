@@ -111,18 +111,26 @@ input:focus {
     .btn-wrapper{
       margin-left: -2%;
       margin-right: -3%;
+
+      .btn{
+        width: 45%;
+        margin: 0 2%;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        font-size: 14px;
+      }
+
+      .btn-default{
+        background: #fff;
+        border-color: #fff;
+      }
+
+      .btn-primary{
+        background:#50acf3;
+        border-color:#50acf3;
+      }
+
     }
-
-    .btn{
-      width: 45%;
-      margin: 0 2%;
-      padding-top: 6px;
-      padding-bottom: 6px;
-      font-size: 14px;
-    }
-
-
-
   }
 
 
@@ -169,15 +177,7 @@ input:focus {
   .form-group{
     color:#bababa;
 
-    .btn-default{
-      background: #fff;
-      border-color: #fff;
-    }
 
-    .btn-primary{
-      background:#50acf3;
-      border-color:#50acf3;
-    }
   }
 
 
@@ -263,3 +263,13 @@ input:focus {
   position: relative;
 }
 
+/*重写ui-select的样式有bug*/
+.ui-select-bootstrap .btn{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.ui-select-bootstrap .ui-select-choices-row>a{
+  padding-top: 0;
+  padding-bottom: 0;
+}

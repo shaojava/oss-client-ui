@@ -5,11 +5,7 @@
     <title>OSS</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- build:css(bower_components) styles/vendor.css -->
-    <!-- bower:css -->
     <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
@@ -28,8 +24,10 @@
                 <input type="text" ng-model="deviceCode" class="form-control" placeholder="机器码"/>
             </div>
             <div class="form-group">
+                <div class="btn-wrapper">
                <button class="btn btn-primary" ng-click="exportAuthorization(accessKeyId,accessKeySecret,deviceCode)">导出授权</button>
                 <button class="btn btn-default" ng-click="cancel()">关闭</button>
+                    </div>
             </div>
         </section>
     </div>

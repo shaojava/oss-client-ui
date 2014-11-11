@@ -10,7 +10,6 @@
  */
 angular
     .module('ossClientUiApp', [
-        'ngAnimate',
         'ngCookies',
         'ngResource',
         'ngRoute',
@@ -20,9 +19,13 @@ angular
         'angularSpinner',
         'OSSCommon',
         'angularSpinner',
-        'ng-context-menu'
+        'ng-context-menu',
+        'ui.select'
     ])
-    .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+    .config(['$routeProvider', '$httpProvider','uiSelectConfig', function ($routeProvider, $httpProvider,uiSelectConfig) {
+        //设置ui-select的默认样式
+        uiSelectConfig.theme = 'bootstrap';
+
         $routeProvider
             .when('/file/:bucket?/?:object*?', {
                 templateUrl: 'views/filelist.html',

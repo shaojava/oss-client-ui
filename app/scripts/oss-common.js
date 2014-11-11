@@ -8,8 +8,12 @@
  *
  * Main module of the application.
  */
-angular.module('OSSCommon', [])
-
+angular.module('OSSCommon', [
+    'ui.select'
+    ])
+    .config(['uiSelectConfig', function (uiSelectConfig) {
+        uiSelectConfig.theme = 'bootstrap';
+    }])
     /**
      * 本地对话框
      */
@@ -436,17 +440,17 @@ angular.module('OSSCommon', [])
                 selectLocation: '=',
                 disableSelect:'=',
                 name:'@',
-                placeHolder:'@'
+                placeHolder:'@',
+                searchDisabled:'='
             },
-            template:'<select ng-model="selectLocation" name="{{name}}" ng-disabled="disableSelect" class="form-control" ng-options="location.name for location in locations"></select>',
+            templateUrl:'views/location-select.html',
             link: function (scope) {
                 scope.locations = OSSRegion.list();
-                if(scope.placeHolder){
-                    var defaultOption = {
-                        name:scope.placeHolder
-                    };
-                    scope.locations.unshift(defaultOption);
-                    scope.selectLocation = defaultOption;
+                scope.$watch('locations.selected',function(val){
+                    scope.selectLocation = val;
+                });
+                if(!scope.placeHolder){
+                    scope.locations.selected =  scope.locations[0];
                 }
             }
         }

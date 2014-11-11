@@ -2,7 +2,6 @@
 
 angular
     .module('ExportAuthorization', [
-        'ngAnimate',
         'ngCookies',
         'ngResource',
         'ngRoute',

@@ -4,13 +4,22 @@ body{
 }
 
 #login-page {
+  padding-bottom: 30px;
+
+  .ui-select-choices.dropdown-menu{
+    max-height: 100px;
+    overflow-y:auto;
+  }
+
   .section-wrapper{
-    height: 250px;
-    overflow: hidden;
-    
-//    >section{
-//      display: none;
-//    }
+
+    > section{
+      display: none;
+    }
+
+  > section.current{
+    display: block;
+  }
   }
 
   .tip{

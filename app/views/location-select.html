@@ -1,0 +1,8 @@
+<div>
+    <ui-select ng-model="locations.selected" ng-disabled="disableSelect" search-enabled="!searchDisabled">
+        <ui-select-match placeholder="{{placeHolder}}">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="location in locations">
+            <span ng-bind="location.name | highlight: $select.search"></span>
+        </ui-select-choices>
+    </ui-select>
+</div>

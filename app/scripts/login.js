@@ -2,7 +2,6 @@
 
 angular
     .module('OSSLogin', [
-        'ngAnimate',
         'ngCookies',
         'ngResource',
         'ngRoute',
@@ -28,8 +27,16 @@ angular
             OSS.invoke('closeWnd');
         };
 
+
         $scope.step = location.hash ? location.hash.replace(/^#/, '') : 'loginById';
 
+        $scope.getSectionClass = function(sectionId){
+            return {
+                'current':sectionId == $scope.step
+            };
+        };
+
+        console.log('$scope.step',$scope.step);
         $scope.deviceCode = OSS.invoke('getDeviceEncoding');
 
         $scope.regionSelectTip = '选择区域';
@@ -71,14 +78,16 @@ angular
                     location: location
                 })
             }
+            $scope.loging = true;
             OSS.invoke('loginByKey', param, function (res) {
-                if (!res.error) {
-                    $scope.$apply(function () {
+                $scope.loging = false;
+                $scope.$apply(function () {
+                    if (!res.error) {
                         $scope.step = 'setPassword';
-                    })
-                } else {
-                    alert(OSSException.getClientErrorMsg(res));
-                }
+                    } else {
+                        alert(OSSException.getClientErrorMsg(res));
+                    }
+                });
             });
         };
 
@@ -97,15 +106,19 @@ angular
                 alert('两次输入的密码不一致');
                 return;
             }
-
+            $scope.setting = true;
             OSS.invoke('setPassword', {
                 password: password
             }, function (res) {
-                if (!res.error) {
-                    loginToLanchpad();
-                } else {
-                    alert(OSSException.getClientErrorMsg(res));
-                }
+                $scope.$apply(function(){
+                    $scope.setting = false;
+                    if (!res.error) {
+                        loginToLanchpad();
+                    } else {
+                        alert(OSSException.getClientErrorMsg(res));
+                    }
+                });
+
             });
 
         };
@@ -119,12 +132,15 @@ angular
             alert('复制成功');
         };
 
+
         $scope.import = function (isCloudHost, location) {
+            $scope.loging = true;
             OSS.invoke('loginByFile', {
                 ishost: isCloudHost ? 1 : 0,
                 location: location
             }, function (res) {
                 $timeout(function () {
+                    $scope.loging = false;
                     if (!res.error) {
                         $scope.step = 'setPassword';
                     } else if (res.error != 5) {
@@ -135,15 +151,18 @@ angular
         };
 
         //通过安全密码登录
+
         $scope.loginByPassword = function (password) {
             if (!password || !password.length) {
                 alert('请输入安全密码');
                 return;
             }
+            $scope.loging = true;
             OSS.invoke('loginPassword', {
                 password: password
             }, function (res) {
                 $scope.$apply(function () {
+                    $scope.loging = false;
                     if (!res.error) {
                         loginToLanchpad();
                     } else {

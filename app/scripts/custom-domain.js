@@ -2,7 +2,6 @@
 
 angular
     .module('CustomDomain', [
-        'ngAnimate',
         'ngCookies',
         'ngResource',
         'ngRoute',

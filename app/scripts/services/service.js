@@ -1813,7 +1813,7 @@ angular.module('ossClientUiApp')
                         });
                         $scope.acls = acls;
                         if (!bucket) {
-                            $scope.selectAcl = $scope.acls[0];
+                            $scope.acls.selected = $scope.acls[0];
                         }
 
                         $scope.$watch('loading', function (newVal) {
