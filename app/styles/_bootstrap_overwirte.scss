@@ -104,6 +104,14 @@ button{
 .modal-body{
   padding: 30px 20px;
 }
+.modal-header > h4 >span{
+  max-width: 70%;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: text-top;
+}
 
 
 label{

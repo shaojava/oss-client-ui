@@ -9,6 +9,7 @@
             <div class="pull-right last-modify-cell">上传时间</div>
             <div class="pull-right size-cell">大小</div>
         </div>
+        <div class="empty" ng-show="!parts.length" style="padding: 30px 0;">没有数据</div>
         <ul class="upload-part-list" scroll-load="loadMore()" disable-scroll="loading">
             <li ng-repeat="part in parts" class="clearfix">
                 <div class="pull-left  number-cell" ng-bind="part.PartNumber"></div>

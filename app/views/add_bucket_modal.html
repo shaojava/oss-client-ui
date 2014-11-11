@@ -9,12 +9,14 @@
         <div class="form-group">
             <label for="bucket_name" class="col-sm-3 control-label">Bucket名称：</label>
             <div class="col-sm-5">
-                <span ng-show="bucket">{{bucket.Name}}</span>
-                <input ng-pattern="/^[a-z0-9][a-z0-9_]{2,62}$/" ng-show="!bucket" type="text" class="form-control" ng-model="cBucket.name" name="bucket_name" id="bucket_name" placeholder="" />
+                <div class="bucket-name">
+                    <span ng-show="bucket" title="{{bucket.Name}}">{{bucket.Name}}</span>
+                </div>
+                <input ng-pattern="/^[a-z0-9][a-z0-9_]{1,61}[a-z0-9]$/" ng-show="!bucket" type="text" class="form-control" ng-model="cBucket.name" name="bucket_name" id="bucket_name" placeholder="" />
             </div>
             <div class="tip text-muted" ng-if="!bucket">
                 <p>·只能包含小写字母、数字和横线</p>
-                <p>·必须以小写字母和数字开头和</p>
+                <p>·必须以小写字母和数字开头和结尾</p>
                 <p>·长度限制在3-63之间</p>
             </div>
         </div>

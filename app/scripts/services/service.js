@@ -858,17 +858,31 @@ angular.module('ossClientUiApp')
                 execute: function (bucket, currentObject) {
                     $rootScope.$broadcast('createObject', function (filename, callback) {
                         var objectPath = currentObject ? currentObject + filename + '/' : filename + '/';
-                        OSSApi.putObject(bucket, objectPath, {
-                            'Content-Type': ''
-                        }, '').success(function () {
-                            $.isFunction(callback) && callback(true);
-                            $rootScope.$broadcast('addObject', {
-                                Prefix: objectPath
-                            }, true);
-                        }).error(function (res, status) {
+
+                        //新建之前先去检测是否有同名的文件夹
+                        OSSApi.getObjectMeta(bucket,objectPath).success(function(){
+                            $rootScope.$broadcast('showError','已存在相同名称的文件夹');
                             $.isFunction(callback) && callback(false);
-                            $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                        }).error(function(response, statusCode){
+                            var error = OSSException.getError(response, statusCode);
+                            if(error.status != 404){
+                                $rootScope.$broadcast('showError', error.msg);
+                                $.isFunction(callback) && callback(false);
+                                return;
+                            }
+                            OSSApi.putObject(bucket, objectPath, {
+                                'Content-Type': ''
+                            }, '').success(function () {
+                                $.isFunction(callback) && callback(true);
+                                $rootScope.$broadcast('addObject', {
+                                    Prefix: objectPath
+                                }, true);
+                            }).error(function (res, status) {
+                                $.isFunction(callback) && callback(false);
+                                $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                            });
                         });
+
                     })
                 }
             },
@@ -1066,7 +1080,7 @@ angular.module('ossClientUiApp')
 /**
  * 碎片的的操作菜单
  */
-    .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', 'OSSModal','OSSException',function (Bucket, OSSApi, OSSModal,OSSException) {
+    .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', 'OSSModal','OSSException',function (Bucket, OSSApi,$rootScope, OSSModal,OSSException) {
         var allMenu = [
             {
                 name: 'remove',
@@ -1480,7 +1494,7 @@ angular.module('ossClientUiApp')
 
         return {
             getURI: function (bucket, objectName, expires) {
-                if (expires) {
+                if (!expires) {
                     return 'http://' + bucket.Name + '.' + bucket.Location + '.' + host + '/' + encodeURIComponent(objectName);
                 } else {
                     expires = getExpires(expires);
@@ -1762,13 +1776,16 @@ angular.module('ossClientUiApp')
                                 }
                             }
                             if(unValidMessage){
-                                alert(unValidMessage);
-                                return;
+                                $rootScope.$broadcast('showError',unValidMessage);
+                                return false;
                             }
+                            return true;
                         };
 
                         $scope.saveSetting = function(setting){
-                            checkSetting(setting);
+                            if(!checkSetting(setting)){
+                                return;
+                            }
                             OSS.invoke('setTransInfo',setting);
                             $modalInstance.dismiss('cancel');
                         };
@@ -1884,7 +1901,11 @@ angular.module('ossClientUiApp')
                         $scope.loading = false;
                         $scope.createBucket = function (bucketName, region, acl) {
                             if (!bucketName || !bucketName.length) {
-                                alert('Bucket的名称不能为空');
+                                $rootScope.$broadcast('showError','Bucket的名称不能为空');
+                                return;
+                            }
+                            if(Bucket.getBucket(bucketName)){
+                                $rootScope.$broadcast('showError','已存在相同名称的Bucket');
                                 return;
                             }
                             $scope.loading = true;
@@ -2079,8 +2100,10 @@ angular.module('ossClientUiApp')
                             $scope.loading = false;
                             if (res && res["AccessControlPolicy"] && res["AccessControlPolicy"]["AccessControlList"] && res["AccessControlPolicy"]["AccessControlList"]["Grant"]) {
                                 var acl = res["AccessControlPolicy"]["AccessControlList"]["Grant"];
+                                console.log('acl',acl);
                                 if (acl != 'private') {
                                     $scope.uri = OSSApi.getURI(bucket, object.path);
+                                    console.log('$scope.uri',$scope.uri)
                                 }
                             }
                         }).error(function (res,status) {
@@ -2132,7 +2155,10 @@ angular.module('ossClientUiApp')
                                 var result = res['ListPartsResult'];
                                 lastMaker = result['NextPartNumberMarker'];
                                 allLoaded = result['IsTruncated'] === 'false';
-                                var parts = angular.isArray(result['Part']) ? result['Part'] : [result['Part']];
+                                var parts = [];
+                                if(result['Part']){
+                                    parts = angular.isArray(result['Part']) ? result['Part'] : [result['Part']];
+                                }
                                 $scope.parts = $scope.parts.concat(parts);
                             }).error(function (res,status) {
                                 $scope.loading = false;

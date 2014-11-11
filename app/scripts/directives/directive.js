@@ -31,6 +31,17 @@ angular.module('ossClientUiApp')
                         $okBtn.click(function () {
                             scope.$apply(function () {
                                 var filename = $.trim($input.val());
+                                if(!/^[a-zA-Z0-9\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5_\-.]{0,253}$/.test(filename)){
+                                    var msg  = '文件夹名称格式错误';
+                                    msg += '<p class="text-muted">';
+                                    msg += '1. 只能包含字母，数字，中文，下划线（_）和短横线（-）,小数点（.）<br/>';
+                                    msg += '2. 只能以字母、数字或者中文开头<br/>';
+                                    msg += '3. 文件夹的长度限制在1-254之间<br/>';
+                                    msg += '4. Object总长度必须在1-1023之间<br/>';
+                                    msg += '</p>';
+                                    scope.$emit('showError',msg);
+                                    return;
+                                }
                                 createFileItem.find('button').prop('disabled', true);
                                 $.isFunction(fn) && fn(scope, {
                                     filename: filename,
