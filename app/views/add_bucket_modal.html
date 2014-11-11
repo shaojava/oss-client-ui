@@ -50,7 +50,7 @@
 <div class="modal-footer">
     <button type="button" class="btn btn-danger pull-left" ng-show="bucket" ng-click="delBucket(bucket)">删除Bucket</button>
     <button type="button" class="btn btn-default pull-right" ng-click="cancel()">取消</button>
-    <button type="button" class="btn btn-primary pull-right"  ng-show="!bucket" ng-disabled="loading" ng-click="createBucket(cBucket.name,cBucket.region,acls.selected)">确定</button>
+    <button type="button" class="btn btn-primary pull-right"  ng-show="!bucket" ng-disabled="loading || !bucketForm.$valid" ng-click="createBucket(cBucket.name,cBucket.region,acls.selected)">确定</button>
     <button type="button" class="btn btn-primary pull-right"  ng-show="bucket" ng-disabled="loading" ng-click="editBucket(acls.selected)" ng-disabled="loading">确定</button>
     <div class="pull-right spinner-wrapper">
         <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"  spinner-key="add-bucket-spinner"  spinner-start-active="1"></span>
