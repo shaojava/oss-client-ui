@@ -33,6 +33,11 @@ angular.module('ossClientUiApp')
             });
         };
 
+        $scope.manageBucketPartition = function(activeBucket){
+            var url = OSSLocation.getUrl(activeBucket.Name, '', 'upload');
+            $location.url(url);
+        };
+
         $scope.onConextMenuShow = function (bucket) {
             $scope.activeBucket = bucket;
         }
@@ -56,6 +61,10 @@ angular.module('ossClientUiApp')
                 $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
             }
         });
+
+        $scope.breadFilter = function(value){
+            return !value.hide;
+        };
 
         $scope.$on('$routeChangeSuccess', function (event, current, prev) {
             if (prev && prev.params) {

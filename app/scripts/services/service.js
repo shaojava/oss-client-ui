@@ -817,7 +817,7 @@ angular.module('ossClientUiApp')
     .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard, OSSModal, $rootScope, OSSApi, OSSException) {
         var currentMenus = 'upload create paste'.split(' '),
             selectMenus = 'download copy del get_uri set_header'.split(' '),
-            groupMenu = ['upload create paste'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ')];
+            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
         var allMenu = [
             {
                 name: 'upload',
@@ -1304,7 +1304,7 @@ angular.module('ossClientUiApp')
                 }
                 return OSSLocation.isCurrentBucket(bucketName) && objectPath == ($routeParams.object || '');
             },
-            getUrl: function (bucketName, prefix, filter) {
+            getUrl: function (bucketName, prefix, filter,searchParam) {
 
                 filter = angular.isUndefined(filter) ? 'file' : filter;
                 prefix = angular.isUndefined(prefix) ? '' : prefix;
@@ -1318,7 +1318,9 @@ angular.module('ossClientUiApp')
                 if (prefix) {
                     url += '/' + prefix;
                 }
-
+                if(searchParam){
+                    url += '?' + $.param(searchParam);
+                }
                 return url;
             }
         };

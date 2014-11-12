@@ -34,16 +34,14 @@
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="javascript:;" ng-click="editBucket(bucket)">属性管理</a></li>
-                    <li><a href="#{{bucket.Name|getLocation:'':'upload'}}"
-                           ng-click="manageBucketPartition(bucket)">碎片管理</a></li>
+                    <li><a href="javascript:;" ng-click="manageBucketPartition(bucket)">碎片管理</a></li>
                 </ul>
             </li>
         </ul>
         <div class="dropdown position-fixed" id="bucket-menu">
             <ul class="dropdown-menu" role="menu">
                 <li><a href="javascript:;" ng-click="editBucket(activeBucket)">属性管理</a></li>
-                <li><a href="#{{activeBucket.Name|getLocation:'':'upload'}}"
-                       ng-click="manageBucketPartition(activeBucket)">碎片管理</a></li>
+                <li><a href="javascript:;" ng-click="manageBucketPartition(activeBucket)">碎片管理</a></li>
             </ul>
         </div>
     </div>
@@ -61,8 +59,8 @@
                     <i class="fa fa-angle-right"></i>
                 </button>
             </div>
-            <ul class="bread-list">
-                <li ng-repeat="bread in breads">
+            <ul class="bread-list" >
+                <li ng-repeat="bread in breads" class="bread-item">
                     <a ng-bind="bread.name" href="#{{bread.url}}"></a>
                 </li>
             </ul>

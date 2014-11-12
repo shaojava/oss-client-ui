@@ -69,32 +69,32 @@ angular.module('OSSCommon', [
                         enable:0
                     },
                     {
-                        location:'oss-cn-gzzwy-a',
+                        location:'oss-cn-gzzwy-a-internal',
                         name:'政务外网',
                         enable:0
                     },
                     {
-                        location:'oss-cn-hangzhou-a',
+                        location:'oss-cn-hangzhou',
                         name:'杭州',
                         enable:1
                     },
                     {
-                        location:'oss-cn-qingdao-a',
+                        location:'oss-cn-qingdao',
                         name:'青岛',
                         enable:1
                     },
                     {
-                        location:'oss-cn-beijing-a',
+                        location:'oss-cn-beijing',
                         name:'北京',
                         enable:1
                     },
                     {
-                        location:'oss-cn-hongkong-a',
+                        location:'oss-cn-hongkong',
                         name:'香港',
                         enable:1
                     },
                     {
-                        location:'oss-cn-shenzhen-a',
+                        location:'oss-cn-shenzhen',
                         name:'深圳',
                         enable:1
                     }

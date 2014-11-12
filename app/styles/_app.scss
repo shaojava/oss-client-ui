@@ -196,9 +196,11 @@
     > .bread-list {
       float: left;
       margin-left: 15px;
+      max-width:470px;
       > li {
         display: inline-block;
-
+        max-width: 400px;
+        @include ellipsis;
         a {
           color: $baseFontColor;
           text-decoration: none;

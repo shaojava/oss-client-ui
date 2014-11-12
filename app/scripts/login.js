@@ -96,7 +96,10 @@ angular
                 alert('请输入安全密码');
                 return;
             }
-
+            if(password.length < 6){
+                alert('密码长度最少6位');
+                return;
+            }
             if (!rePassword || !rePassword.length) {
                 alert('请确认安全密码');
                 return;

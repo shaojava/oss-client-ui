@@ -77,24 +77,29 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .directive('smartSearch', ['$location', '$rootScope', '$filter', 'OSSObject', 'Bucket', function ($location, $rootScope, $filter, OSSObject, Bucket) {
+    .directive('smartSearch', ['$location', '$rootScope', '$filter', 'OSSObject', 'Bucket','OSSLocation', function ($location, $rootScope, $filter, OSSObject, Bucket,OSSLocation) {
         return {
             restrict: 'A',
             require: 'ngModel',
             link: function postLink(scope, element, attrs, ngModel) {
                 var bread = element.parent().next();
+
                 element.on('keydown', function (e) {
                     var keyword = e.keyCode;
                     if (keyword != 13) {
                         return;
                     }
+                    var currentObj = OSSObject.getCurrentObject();
+                    var currentBucket = Bucket.getCurrentBucket();
                     scope.$apply(function () {
-                        $location.search({
+                        var url = OSSLocation.getUrl(currentBucket.Name,currentObj.path,'file',{
                             keyword: ngModel.$modelValue,
                             scope: ''
                         });
+                        $location.url(url);
                     })
-                })
+                });
+
                 var $breadList = bread.find('.bread-list');
                 var $searchWrapper = element.parent();
 
@@ -104,6 +109,10 @@ angular.module('ossClientUiApp')
                     $breadList.show();
                     element.next('.fa').show();
                     scope[attrs.ngModel] = '';
+                    var search = $location.search();
+                    if(search.keyword){
+                        $location.url($location.path());
+                    }
                 };
 
                 var showSearch = function () {
@@ -129,7 +138,6 @@ angular.module('ossClientUiApp')
                     element.focus();
                 };
 
-
                 element.on('mousedown', function () {
                     showSearch();
                 });
@@ -143,6 +151,65 @@ angular.module('ossClientUiApp')
                     if(!param || !param.keyword){
                         hideSearch();
                     }
+                });
+            }
+        };
+    }])
+    .directive('smartBread', ['$timeout',function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function postLink(scope, element, attrs) {
+
+                var fontSize = 12,
+                    marginWidth = 10,
+                    borderWidth = 8,
+                    offsetParent = element.offsetParent(),
+                    lastMaxWidth = 0;
+
+                if(element.css('maxWidth').indexOf('%')>=0){
+                    lastMaxWidth =  offsetParent.width() * (parseFloat(element.css('maxWidth'))/100);
+                }else{
+                    lastMaxWidth = parseInt(element.css('maxWidth'));
+                }
+
+                var getBreadItemWidth = function(breadItem){
+                    return breadItem.outerWidth(true);
+                    //return breadText.length * fontSize + marginWidth + borderWidth;
+                };
+
+                var getTotalBreadWidth = function(breads){
+                    console.log('breads',breads);
+                    var totalWidth = 0;
+                    breads.each(function(){
+                        totalWidth += getBreadItemWidth($(this));
+                    })
+                    //totalWidth -= borderWidth;
+                    return totalWidth;
+                };
+
+                var setBreadUI = function(){
+                    var realWidth = element.width();
+                    var totalWidth = getTotalBreadWidth(element.find('.bread-item'));
+                    if(totalWidth > lastMaxWidth){
+                        console.log('totalWidth',totalWidth);
+                        console.log('lastMaxWidth',lastMaxWidth);
+                        if(totalWidth > lastMaxWidth){
+                            scope.breads.shift();
+                        }
+                    }
+                };
+
+                scope.$watch('breads',function(val){
+                    if(!val || !val.length){
+                        return;
+                    }
+                    $timeout(function(){
+                        setBreadUI();
+                    });
+                });
+
+                $(window).on('resize',function(){
+                    lastMaxWidth =  offsetParent().width() * maxWidthSet;
                 });
             }
         };
