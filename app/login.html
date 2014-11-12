@@ -102,11 +102,11 @@
             </div>
         </div>
         <div class="form-group">
-            <input type="password" ng-model="secretPassword" class="form-control" placeholder="安全密码"/>
+            <input type="password" ng-model="secretPasswordSet" class="form-control" placeholder="安全密码"/>
         </div>
         <div class="form-group">
             <div class="btn-wrapper">
-            <button class="btn btn-primary" ng-disabled="loging" ng-click="loginByPassword(secretPassword)">进&nbsp;&nbsp;&nbsp;&nbsp;入
+            <button class="btn btn-primary" ng-disabled="loging" ng-click="loginByPassword(secretPasswordSet)">进&nbsp;&nbsp;&nbsp;&nbsp;入
             </button>
             <button class="btn btn-default"  ng-click="clearPassword()">清除安全密码</button>
             </div>

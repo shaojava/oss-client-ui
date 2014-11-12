@@ -404,7 +404,6 @@ angular.module('ossClientUiApp')
             path: $scope.objectPrefix,
             dir: 1
         });
-
         if (keyword.length) {
             prefix = keyword;
             isSearch = true;
@@ -596,6 +595,15 @@ angular.module('ossClientUiApp')
                     $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                 }
             });
+        };
+
+        //点击空白处取消选中
+        $scope.handleFileListClick = function($event){
+            console.log(123);
+            if($($event.target).closest('.file-item').size()){
+                return;
+            }
+            $scope.unSelectAll();
         };
 
     }])

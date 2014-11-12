@@ -30,6 +30,8 @@
      context-menu=""
      data-target="menu-current-file"
      on-drop="handleSysDrop()"
+     ng-click="handleFileListClick($event)"
+     ng-right-click="handleFileListClick($event)"
         >
     <div class="empty" ng-if="!files.length && !loadingFile">没有文件</div>
     <div class="clearfix file-item" ng-repeat="file in files" ng-dblclick="openFile(file,file.dir)" ng-class="{'selected':file.selected}" ng-click="handleClick($event,file,$index)"  context-menu="onContextMenuShow(file)" data-target="menu-select-file">

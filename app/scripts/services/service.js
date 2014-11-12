@@ -549,9 +549,7 @@ angular.module('ossClientUiApp')
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items, function (item) {
-                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
-                    }) ? 1 : 0;
+                    return !items || !items.length ? 0 : 1;
                 }
             },
             {
@@ -567,9 +565,7 @@ angular.module('ossClientUiApp')
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items, function (item) {
-                        return OSSQueueItem.isPaused(item);
-                    }) ? 1 : 0;
+                    return !items || !items.length ? 0 : 1;
                 }
             },
             {
@@ -591,9 +587,7 @@ angular.module('ossClientUiApp')
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items, function (item) {
-                        return OSSQueueItem.isDone(item);
-                    }) ? 1 : 0;
+                    return !items || !items.length ? 0 : 1;
                 }
             }
         ];
@@ -751,8 +745,8 @@ angular.module('ossClientUiApp')
                     });
 
                 },
-                getState: function () {
-                    return OSSDownloadQueue.totalCount > OSSDownloadQueue.doneCount ? 1 : 0;
+                getState: function (selectItems, items,doneCount,totalCount) {
+                    return !items || !items.length ? 0 : 1;
                 }
             },
             {
@@ -766,9 +760,7 @@ angular.module('ossClientUiApp')
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items, function (item) {
-                        return OSSQueueItem.isPaused(item);
-                    }) ? 1 : 0;
+                    return !items || !items.length ? 0 : 1;
                 }
             },
             {
@@ -789,9 +781,7 @@ angular.module('ossClientUiApp')
                     });
                 },
                 getState: function (selectItems, items) {
-                    return _.find(items, function (item) {
-                        return OSSQueueItem.isDone(item);
-                    }) ? 1 : 0;
+                    return !items || !items.length ? 0 : 1;
                 }
             }
         ];
@@ -841,7 +831,7 @@ angular.module('ossClientUiApp')
  */
     .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException) {
         var currentMenus = 'upload create paste'.split(' '),
-            selectMenus = 'download copy del get_uri set_header'.split(' '),
+            selectMenus = 'download copy del get_uri set_header paste'.split(' '),
             groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
         var allMenu = [
             {
@@ -895,9 +885,13 @@ angular.module('ossClientUiApp')
                             $.isFunction(callback) && callback(false);
                             return;
                         }
-
+                        if(Util.String.mbLen(filename) > 254){
+                            $rootScope.$broadcast('showError',msg);
+                            $.isFunction(callback) && callback(false);
+                            return;
+                        }
                         var objectPath = currentObject ? currentObject + filename + '/' : filename + '/';
-                        if(objectPath.length > 1023){
+                        if(Util.String.mbLen(objectPath) > 1023){
                             $rootScope.$broadcast('showError',msg);
                             return;
                         }
@@ -1002,16 +996,19 @@ angular.module('ossClientUiApp')
                             $rootScope.$broadcast('showError','不同区域的Bucket之间不能复制');
                             return;
                         }
+                        var copyToCurrent = selectedFiles.length == 1 && selectedFiles[0].dir ? false : true;
                         OSS.invoke('copyObject', {
                             dstbucket: bucket['Name'],
-                            dstobject: selectedFiles.length == 1 && selectedFiles[0].dir ? selectedFiles[0].path : currentObject,
+                            dstobject: !copyToCurrent ? selectedFiles[0].path : currentObject,
                             dstlocation: bucket['Location'],
                             bucket: targetBucket['Name'],
                             location: targetBucket['Location'],
                             list: list
                         }, function (res) {
                             if (!res.error) {
-                                $rootScope.$broadcast('reloadFileList');
+                                if(copyToCurrent){
+                                    $rootScope.$broadcast('reloadFileList');
+                                }
                             } else {
                                 $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
                             }
@@ -1801,25 +1798,23 @@ angular.module('ossClientUiApp')
 
                         $scope.isCustomClient = OSSConfig.isCustomClient();
 
-                        var setting = OSS.invoke('getTransInfo');
-
-                        $scope.setting = setting;
+                        $scope.setting = OSS.invoke('getTransInfo');
 
                         var checkSetting = function(setting){
                             var unValidMessage = '';
-                            for(var key in setting){
-                                if(setting.hasOwnProperty(key)){
-                                    var val = setting[key];
-                                    if(!/\d/.test(val)){
-                                        unValidMessage = '请输入数字';
-                                        break;
+                            angular.forEach(setting,function(val){
+                                    console.log('val',val);
+                                    console.log('d',!/^[1-9]{1}[0-9]*$/.test(val));
+                                    if(!/^[1-9]{1}[0-9]*$/.test(val)){
+                                        unValidMessage = '设置的值必须大于0小于或等于10的整数';
+                                        return false;
                                     }
                                     if(val<=0 || val>10){
-                                        unValidMessage = '设置的值必须大于0小于或等于10';
-                                        break;
+                                        unValidMessage = '设置的值必须大于0小于或等于10的整数';
+                                        return false;
                                     }
-                                }
-                            }
+                            });
+
                             if(unValidMessage){
                                 $rootScope.$broadcast('showError',unValidMessage);
                                 return false;
@@ -2080,23 +2075,61 @@ angular.module('ossClientUiApp')
 
                         $scope.setHttpHeader = function (headers, customHeaders) {
                             var ossHeaders = {}, canonicalizedOSSheaders = {};
+                            var unValidFieldValue = false;
+                            var fieldValueReg = /^[a-zA-Z0-9\-_/.]+$/;
+
+                            var checkFieldValueIsValid = function(value){
+                              return /^[a-zA-Z0-9\-_/.]+$/.test(value);
+                            };
+
                             angular.forEach(headers, function (val) {
                                 if (val.model) {
+                                    if(!checkFieldValueIsValid(val.model)){
+                                        unValidFieldValue = true;
+                                        return false;
+                                    }
                                     ossHeaders[val.name] = val.model;
                                 }
                             });
 
+                            var unValidField = false;
                             angular.forEach(customHeaders, function (val) {
                                 if (val.nameModel) {
-                                    canonicalizedOSSheaders['x-oss-meta-' + val.nameModel.toLowerCase()] = val.contentModel || '';
+                                    if(!/^[a-zA-Z0-9\-]+$/.test(val.nameModel)){
+                                        unValidField = true;
+                                        return false;
+                                    }
+                                    if(val.contentModel){
+                                        if(!checkFieldValueIsValid(val.contentModel)){
+                                            unValidFieldValue = true;
+                                            return false;
+                                        }
+                                        canonicalizedOSSheaders['x-oss-meta-' + val.nameModel.toLowerCase()] = val.contentModel || '';
+                                    }
                                 }
                             });
+
+                            if(unValidFieldValue){
+                                var msg  = 'HTTP属性值格式错误';
+                                msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点</p>'
+                                $rootScope.$broadcast('showError',msg);
+                                return;
+                            }
+
+                            if(unValidField){
+                                var msg  = '属性名称格式错误';
+                                msg += '<p class="text-muted">属性名称只能包含英文、数子或横线</p>'
+                                $rootScope.$broadcast('showError',msg);
+                                return;
+                            }
 
                             $scope.saving = true;
                             OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
                                 $scope.saving = false;
                                 $modalInstance.close();
                             }).error(function(res,status){
+                                console.log('arg',arguments);
+                                return;
                                 $scope.saving = false;
                                 $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                             });

@@ -87,7 +87,7 @@
                             <div class="opt-bar">
                                 <div class="clearfix opt-list">
                                     <div class="btn-group" ng-repeat="menuGroup in uploadMenuGroup">
-                                        <menu name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('upload'),uploadList)>=0" ng-repeat="menu in menuGroup" state=" menu.getState(getSelectedList('upload'),uploadList)" execute="menu.execute(getSelectedList('upload'),uploadList)">{{menu.text}}
+                                        <menu name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('upload'),uploadList,OSSUploadQueue.doneCount,OSSUploadQueue.totalCount)>=0" ng-repeat="menu in menuGroup" state=" menu.getState(getSelectedList('upload'),uploadList,OSSUploadQueue.doneCount,OSSUploadQueue.totalCount)" execute="menu.execute(getSelectedList('upload'),uploadList)">{{menu.text}}
                                         </menu>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                             <div class="opt-bar">
                                 <div class="clearfix opt-list">
                                    <div class="btn-group" ng-repeat="menuGroup in downloadMenuGroup">
-                                        <menu ng-repeat="menu in menuGroup" type="download" name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('download'),downloadList)>=0" state="menu.getState(getSelectedList('download'),downloadList)"
+                                        <menu ng-repeat="menu in menuGroup" type="download" name="{{menu.name}}" ng-if="!isExcludeTopMenu(menu) && menu.getState(getSelectedList('download'),downloadList,OSSDownloadQueue.doneCount,OSSDownloadQueue.totalCount)>=0" state="menu.getState(getSelectedList('download'),downloadList,OSSDownloadQueue.doneCount,OSSDownloadQueue.totalCount)"
                                               execute="menu.execute(getSelectedList('download'),downloadList)"><span ng-bind="menu.text"></span>
                                         </menu>
                                    </div>

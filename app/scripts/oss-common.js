@@ -208,9 +208,14 @@ angular.module('OSSCommon', [
                     msg:  ''
                 };
                 if(!res){
-                    var msg = '网络请求超时';
-                    if(OSSConfig.isGuiZhouClient()){
-                        msg += '<p class="text-muted">（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）</p>';
+                    var msg ='';
+                    if(status == 403){
+                        msg = erroList['AccessDenied'];
+                    }else{
+                        msg = '网络请求错误';
+                        if(OSSConfig.isGuiZhouClient()){
+                            msg += '<p class="text-muted">（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）</p>';
+                        }
                     }
                     angular.extend(error,{
                         msg: msg
@@ -282,7 +287,17 @@ angular.module('OSSCommon', [
             return lastStr === '/' || lastStr === '\\' ? 1 : 0;
         };
     })
-
+    .directive('ngRightClick', ['$parse', function ($parse) {
+        return function ($scope, $element, $attrs) {
+            var fn = $parse($attrs.ngRightClick);
+            $element.bind('contextmenu', function (event) {
+                $scope.$apply(function () {
+                    event.preventDefault();
+                    fn($scope, {$event: event});
+                });
+            });
+        };
+    }])
     /**
      * 滚到加载
      */
