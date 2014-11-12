@@ -12912,35 +12912,34 @@ input:focus {
   vertical-align: middle;
   padding: 0 10px;
 }
-/* line 133, ../../app/styles/_modal.scss */
+/* line 132, ../../app/styles/_modal.scss */
+.alert-modal .modal-body {
+  padding: 20px;
+}
+/* line 137, ../../app/styles/_modal.scss */
 .alert-modal.success-alert-modal .modal-body {
   color: #f35050;
 }
-/* line 140, ../../app/styles/_modal.scss */
+/* line 144, ../../app/styles/_modal.scss */
 .alert-modal.error-alert-modal .modal-body {
   color: #f35050;
 }
-/* line 147, ../../app/styles/_modal.scss */
-.alert-modal.warn-alert-modal .modal-body {
+/* line 151, ../../app/styles/_modal.scss */
+.alert-modal.warning-alert-modal .modal-body {
   color: #ff9900;
 }
-/* line 154, ../../app/styles/_modal.scss */
+/* line 158, ../../app/styles/_modal.scss */
 .alert-modal.info-alert-modal .modal-body {
   color: #333333;
 }
 
-/* line 161, ../../app/styles/_modal.scss */
-.del_bucket_confirm_modal .modal-dialog {
-  width: 500px;
-}
-
-/* line 165, ../../app/styles/_modal.scss */
+/* line 169, ../../app/styles/_modal.scss */
 .get_object_uri_modal .input-wrapper {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 168, ../../app/styles/_modal.scss */
+/* line 172, ../../app/styles/_modal.scss */
 .get_object_uri_modal .error-msg {
   position: absolute;
   bottom: 50px;
@@ -12948,7 +12947,7 @@ input:focus {
   margin-left: 15px;
 }
 
-/* line 175, ../../app/styles/_modal.scss */
+/* line 179, ../../app/styles/_modal.scss */
 .get_object_uri_modal .modal-body span {
   line-height: 32px;
 }

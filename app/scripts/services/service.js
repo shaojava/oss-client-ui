@@ -28,14 +28,16 @@ angular.module('ossClientUiApp')
                     $scope.buttons = buttons;
 
                     $scope.buttonClick = function (button) {
-                        angular.isFunction(button.callback) && button.callback();
-                        $modalInstance.close();
-                    }
+                        if(angular.isFunction(button.callback)){
+                            button.callback($modalInstance)
+                        }else{
+                            $modalInstance.close();
+                        }
+                    };
 
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
-
                 }
             };
 
@@ -44,6 +46,26 @@ angular.module('ossClientUiApp')
 
 
         return {
+            confirm:function(message,title){
+                title = angular.isUndefined(title) ? '请确认' : title;
+                var buttons = [
+                    {
+                        text: '确定',
+                        classes: 'btn btn-primary',
+                        callback:function($modalInstance){
+                            $modalInstance.close();
+                        }
+                    },
+                    {
+                        text: '取消',
+                        classes: 'btn btn-default',
+                        callback:function($modalInstance){
+                            $modalInstance.dismiss('cancel');
+                        }
+                    }
+                ];
+                return openAlertModal('warning', message, title, buttons);
+            },
             info: function (message, title, buttons) {
                 title = angular.isUndefined(title) ? '信息' : title;
                 buttons = angular.isUndefined(buttons) ? [
@@ -318,7 +340,7 @@ angular.module('ossClientUiApp')
 /**
  * 上传、下载队列的操作菜单
  */
-    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout', function ($rootScope, OSSQueueItem, $timeout) {
+    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout','OSSAlert', function ($rootScope, OSSQueueItem, $timeout,OSSAlert) {
         /**
          * 检测参数的合法性
          * @param selectedItems
@@ -451,18 +473,19 @@ angular.module('ossClientUiApp')
                 name: 'cancel',
                 text: '取消',
                 execute: function (selectedItems) {
-                    if (!confirm('你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的上传？')) {
+                    var msg = '你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的上传？';
+                    OSSAlert.confirm(msg).result.then(function(){
+                        if (!checkArgValid(selectedItems)) {
+                            return;
+                        }
+                        OSS.invoke('deleteUpload', prepareUpladParam(selectedItems), function () {
+                            $timeout(function () {
+                                $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
+                            })
+                        });
+                    },function(){
                         return;
-                    }
-                    if (!checkArgValid(selectedItems)) {
-                        return;
-                    }
-                    OSS.invoke('deleteUpload', prepareUpladParam(selectedItems), function () {
-                        $timeout(function () {
-                            $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
-                        })
-                    });
-
+                    })
                 },
                 getState: function (selectedItems) {
                     var len = selectedItems.length;
@@ -653,18 +676,17 @@ angular.module('ossClientUiApp')
                 name: 'cancel',
                 text: '取消',
                 execute: function (selectedItems) {
-                    if (!confirm('你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的下载？')) {
-                        return;
-                    }
-                    if (!checkArgValid(selectedItems)) {
-                        return;
-                    }
-                    OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems), function () {
-                        $timeout(function () {
-                            $rootScope.$broadcast('removeQueue', 'download', selectedItems);
-                        })
+                    var msg = '你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的下载？';
+                    OSSAlert.confirm(msg).result.then(function(){
+                        if (!checkArgValid(selectedItems)) {
+                            return;
+                        }
+                        OSS.invoke('deleteDownload', prepareDownloadParam(selectedItems), function () {
+                            $timeout(function () {
+                                $rootScope.$broadcast('removeQueue', 'download', selectedItems);
+                            })
+                        });
                     });
-
                 },
                 getState: function (selectedItems) {
                     if (!selectedItems || !selectedItems.length) return 0;
@@ -814,7 +836,7 @@ angular.module('ossClientUiApp')
 /**
  * object的操作菜单
  */
-    .factory('OSSMenu', ['Clipboard', 'OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard, OSSModal, $rootScope, OSSApi, OSSException) {
+    .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException) {
         var currentMenus = 'upload create paste'.split(' '),
             selectMenus = 'download copy del get_uri set_header'.split(' '),
             groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
@@ -857,8 +879,25 @@ angular.module('ossClientUiApp')
                 },
                 execute: function (bucket, currentObject) {
                     $rootScope.$broadcast('createObject', function (filename, callback) {
-                        var objectPath = currentObject ? currentObject + filename + '/' : filename + '/';
+                        var msg  = '文件夹名称格式错误';
+                        msg += '<p class="text-muted">';
+                        msg += '1. 只能包含字母，数字，中文，下划线（_）和短横线（-）,小数点（.）<br/>';
+                        msg += '2. 只能以字母、数字或者中文开头<br/>';
+                        msg += '3. 文件夹的长度限制在1-254之间<br/>';
+                        msg += '4. Object总长度必须在1-1023之间<br/>';
+                        msg += '</p>';
 
+                        if(!/^[a-zA-Z0-9\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5_\-.]{0,253}$/.test(filename)){
+                            $rootScope.$broadcast('showError',msg);
+                            $.isFunction(callback) && callback(false);
+                            return;
+                        }
+
+                        var objectPath = currentObject ? currentObject + filename + '/' : filename + '/';
+                        if(objectPath.length > 1023){
+                            $rootScope.$broadcast('showError',msg);
+                            return;
+                        }
                         //新建之前先去检测是否有同名的文件夹
                         OSSApi.getObjectMeta(bucket,objectPath).success(function(){
                             $rootScope.$broadcast('showError','已存在相同名称的文件夹');
@@ -984,26 +1023,25 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
-                    if (!confirm('确定要删除？')) {
-                        return;
-                    }
-                    var list = _.map(selectedFiles, function (object) {
-                        return {
-                            object: object.path
-                        }
-                    });
+                    OSSAlert.confirm('确定要删除？').result.then(function(){
+                        var list = _.map(selectedFiles, function (object) {
+                            return {
+                                object: object.path
+                            }
+                        });
 
-                    OSS.invoke('deleteObject', {
-                        bucket: bucket['Name'],
-                        location: bucket['Location'],
-                        list: list
-                    }, function (res) {
-                        if (!res.error) {
-                            $rootScope.$broadcast('removeObject', selectedFiles);
-                        } else {
-                            $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
-                        }
-                    })
+                        OSS.invoke('deleteObject', {
+                            bucket: bucket['Name'],
+                            location: bucket['Location'],
+                            list: list
+                        }, function (res) {
+                            if (!res.error) {
+                                $rootScope.$broadcast('removeObject', selectedFiles);
+                            } else {
+                                $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                            }
+                        })
+                    });
                 }
             },
             {
@@ -1080,7 +1118,7 @@ angular.module('ossClientUiApp')
 /**
  * 碎片的的操作菜单
  */
-    .factory('OSSUploadMenu', ['Bucket', 'OSSApi', '$rootScope', 'OSSModal','OSSException',function (Bucket, OSSApi,$rootScope, OSSModal,OSSException) {
+    .factory('OSSUploadMenu', ['Bucket','OSSAlert', 'OSSApi', '$rootScope', 'OSSModal','OSSException',function (Bucket, OSSAlert,OSSApi,$rootScope, OSSModal,OSSException) {
         var allMenu = [
             {
                 name: 'remove',
@@ -1093,14 +1131,13 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (selectedUploads) {
-                    if (!confirm('确定要删除选择的碎片？')) {
-                        return;
-                    }
-                    angular.forEach(selectedUploads, function (upload) {
-                        OSSApi.deleteUpload(Bucket.getCurrentBucket(), upload).success(function () {
-                            $rootScope.$broadcast('removeUpload', upload);
-                        }).error(function (res,status) {
-                            $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    OSSAlert.confirm('确定要删除选择的碎片？').result.then(function(){
+                        angular.forEach(selectedUploads, function (upload) {
+                            OSSApi.deleteUpload(Bucket.getCurrentBucket(), upload).success(function () {
+                                $rootScope.$broadcast('removeUpload', upload);
+                            }).error(function (res,status) {
+                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                            });
                         });
                     });
                 }
@@ -1740,7 +1777,7 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
+    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -1989,7 +2026,7 @@ angular.module('ossClientUiApp')
                                 name: val,
                                 text: val
                             })
-                        })
+                        });
 
                         $scope.customHeaders = [
                             {
@@ -2196,21 +2233,21 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.delConfirm = function (accessKey, accessSecret) {
-                            if (!confirm('确定要删除Bucket “' + bucket.Name + '“吗？删除后数据将无法恢复')) {
-                                return;
-                            }
                             if (!accessKey) {
-                                alert('请输入 Access Key ID');
+                                $rootScope.$broadcast('showError','请输入 Access Key ID');
                                 return;
                             }
                             if (!accessSecret) {
-                                alert('请输入 Access Key Secret');
+                                $rootScope.$broadcast('showError','请输入 Access Key Secret');
                                 return;
                             }
-                            $modalInstance.close({
-                                accessKey: accessKey,
-                                accessSecret: accessSecret
-                            });
+
+                            OSSAlert.confirm('确定要删除Bucket “' + bucket.Name + '“吗？删除后数据将无法恢复').result.then(function(){
+                                $modalInstance.close({
+                                    accessKey: accessKey,
+                                    accessSecret: accessSecret
+                                });
+                            })
                         };
 
                     }

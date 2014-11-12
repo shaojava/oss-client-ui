@@ -129,6 +129,10 @@
     }
   }
 
+  .modal-body{
+    padding: 20px;
+  }
+
   &.success-alert-modal {
     .modal-body{
       color: $state-success-text;
@@ -143,7 +147,7 @@
 
   }
 
-  &.warn-alert-modal {
+  &.warning-alert-modal {
     .modal-body{
       color: $state-warning-text;
     }
@@ -159,7 +163,7 @@
 }
 
 .del_bucket_confirm_modal .modal-dialog{
-  width: 500px;
+//  width: 500px;
 }
 .get_object_uri_modal{
   .input-wrapper{
