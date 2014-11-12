@@ -282,9 +282,9 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                mangle: false, //不混淆变量名
-                compress:false,
-                beautify:true
+                mangle: false//不混淆变量名
+                //compress:false,
+                //beautify:true
             },
             dist: {
                 files: {
