@@ -1434,7 +1434,6 @@ angular.module('ossClientUiApp')
                     return listPromise = deferred.promise;
                 }
             },
-
             getAcls: function () {
                 return {
                     "public-read-write": "公共读写",
