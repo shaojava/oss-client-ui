@@ -36,7 +36,6 @@ angular
             };
         };
 
-        console.log('$scope.step',$scope.step);
         $scope.deviceCode = OSS.invoke('getDeviceEncoding');
 
         $scope.regionSelectTip = '选择区域';

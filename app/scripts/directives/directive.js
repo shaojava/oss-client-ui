@@ -178,7 +178,6 @@ angular.module('ossClientUiApp')
                 };
 
                 var getTotalBreadWidth = function(breads){
-                    console.log('breads',breads);
                     var totalWidth = 0;
                     breads.each(function(){
                         totalWidth += getBreadItemWidth($(this));
@@ -191,8 +190,6 @@ angular.module('ossClientUiApp')
                     var realWidth = element.width();
                     var totalWidth = getTotalBreadWidth(element.find('.bread-item'));
                     if(totalWidth > lastMaxWidth){
-                        console.log('totalWidth',totalWidth);
-                        console.log('lastMaxWidth',lastMaxWidth);
                         if(totalWidth > lastMaxWidth){
                             scope.breads.shift();
                         }

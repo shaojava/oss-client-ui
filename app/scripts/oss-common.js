@@ -202,7 +202,6 @@ angular.module('OSSCommon', [
         };
         return {
             getError: function (res, status) {
-                console.log('getError',arguments);
                 var error = {
                     status: status,
                     code:  '',

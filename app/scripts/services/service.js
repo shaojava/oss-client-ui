@@ -2103,10 +2103,8 @@ angular.module('ossClientUiApp')
                             $scope.loading = false;
                             if (res && res["AccessControlPolicy"] && res["AccessControlPolicy"]["AccessControlList"] && res["AccessControlPolicy"]["AccessControlList"]["Grant"]) {
                                 var acl = res["AccessControlPolicy"]["AccessControlList"]["Grant"];
-                                console.log('acl',acl);
                                 if (acl != 'private') {
                                     $scope.uri = OSSApi.getURI(bucket, object.path);
-                                    console.log('$scope.uri',$scope.uri)
                                 }
                             }
                         }).error(function (res,status) {
