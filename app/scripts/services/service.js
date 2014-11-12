@@ -583,7 +583,10 @@ angular.module('ossClientUiApp')
                         $timeout(function () {
                             $rootScope.$broadcast('removeQueue', 'upload', _.filter(items, function (item) {
                                 return OSSQueueItem.isDone(item);
-                            }));
+                            }),function(){
+                                $rootScope.$broadcast('reloadUploadQueue');
+                            });
+
                         });
                     });
                 },
@@ -781,7 +784,9 @@ angular.module('ossClientUiApp')
                         $timeout(function () {
                             $rootScope.$broadcast('removeQueue', 'download', _.filter(items, function (item) {
                                 return OSSQueueItem.isDone(item);
-                            }));
+                            }),function(){
+                                $rootScope.$broadcast('reloadDownloadQueue');
+                            });
                         });
                     });
                 },

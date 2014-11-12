@@ -205,8 +205,7 @@ angular.module('ossClientUiApp')
         };
 
         //监听删除队列
-        $scope.$on('removeQueue', function (event, type, items) {
-            OSS.log('removeQueue', arguments);
+        $scope.$on('removeQueue', function (event, type, items,callback) {
             if (type === 'upload') {
                 angular.forEach(items, function (item) {
                     OSSUploadQueue.remove(item);
@@ -216,6 +215,7 @@ angular.module('ossClientUiApp')
                     OSSDownloadQueue.remove(item);
                 });
             }
+            angular.isFunction(callback) && callback();
         });
 
         $scope.OSSUploadQueue = OSSUploadQueue.init();
