@@ -1956,6 +1956,8 @@ angular.module('ossClientUiApp')
                                 }, function (res) {
                                     if (!res.error) {
                                         $rootScope.$broadcast('removeBucket', bucket);
+                                        $rootScope.$broadcast('reloadUploadQueue');
+                                        $rootScope.$broadcast('reloadDownloadQueue');
                                         $modalInstance.close();
                                     } else {
                                         alert(OSSException.getClientErrorMsg(res));
