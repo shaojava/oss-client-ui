@@ -22,6 +22,7 @@
      un-select="unSelect(item)"
      get-selected-list="getSelectedList()"
         >
+    <div class="empty" ng-if="!uploads.length && !loading">没有碎片</div>
     <div class="clearfix file-item" ng-repeat="upload in uploads | orderBy:'-dir'" ng-click="handleClick($event,upload,$index)" ng-class="{'selected':upload.selected}" context-menu="onContextMenuShow(upload)" data-target="menu-select-upload">
         <div class="pull-left filename">
             <file-icon dir="{{upload.dir}}" size="32" filename="{{upload.filename}}"></file-icon>
@@ -30,6 +31,7 @@
         <div class="pull-right init-time" ng-bind="upload.initTime | formatTime"></div>
         <div class="pull-right upload-id" ng-bind="upload.id"></div>
     </div>
+    <span us-spinner="{radius:10, length: 0}"  spinner-key="upload-list-spinner"  spinner-start-active="1"></span>
 </div>
 
 

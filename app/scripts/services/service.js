@@ -995,6 +995,10 @@ angular.module('ossClientUiApp')
                                 filesize: object.filesize
                             }
                         });
+                        if(bucket['Location'] != targetBucket['Location']){
+                            $rootScope.$broadcast('showError','不同区域的Bucket之间不能复制');
+                            return;
+                        }
                         OSS.invoke('copyObject', {
                             dstbucket: bucket['Name'],
                             dstobject: selectedFiles.length == 1 && selectedFiles[0].dir ? selectedFiles[0].path : currentObject,
@@ -1542,7 +1546,7 @@ angular.module('ossClientUiApp')
                         expires: expires,
                         canonicalized_resource: canonicalizedResource
                     });
-                    return getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                    return getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(objectName)));
                 }
             },
             getBuckets: function () {
@@ -1656,7 +1660,7 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
 
-                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(object)));
                 return $http.head(requestUrl);
             },
             putObject: function (bucket, objectPath, headers, canonicalizedOSSheaders) {
@@ -1670,7 +1674,7 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
 
-                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(objectPath)));
                 return $http.put(requestUrl, '', {
                     headers: angular.extend({}, headers, canonicalizedOSSheaders)
                 });
@@ -1703,7 +1707,7 @@ angular.module('ossClientUiApp')
                     expires: expires,
                     canonicalized_resource: canonicalizedResource
                 });
-                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(upload.path), {'uploadId': upload.id}));
                 return $http.delete(requestUrl);
             },
             listUploadPart: function (bucket, upload, partNumberMaker, maxParts) {
@@ -1718,7 +1722,7 @@ angular.module('ossClientUiApp')
                     expires: expires,
                     canonicalized_resource: canonicalizedResource
                 });
-                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(upload.path), {uploadId: upload.id}), param);
                 return $http.get(requestUrl);
             }
         };

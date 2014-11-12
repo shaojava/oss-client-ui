@@ -41,7 +41,7 @@ angular
                 return;
             }
 
-            if (!deviceCode && !deviceCode.value) {
+            if (!deviceCode) {
                 alert('请输入要授权的机器码');
                 return;
             }

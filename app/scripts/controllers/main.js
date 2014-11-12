@@ -602,7 +602,7 @@ angular.module('ossClientUiApp')
 /**
  * 上传碎片管理
  */
-    .controller('UploadListCtrl', ['$scope', '$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu','OSSException', function ($scope, $routeParams, OSSUploadPart, Bucket, OSSUploadMenu,OSSException) {
+    .controller('UploadListCtrl', ['$scope', 'usSpinnerService','$routeParams', 'OSSUploadPart', 'Bucket', 'OSSUploadMenu','OSSException', function ($scope, usSpinnerService,$routeParams, OSSUploadPart, Bucket, OSSUploadMenu,OSSException) {
 
         //是否加载中
         $scope.loading = false;
@@ -627,14 +627,17 @@ angular.module('ossClientUiApp')
                 return;
             }
             $scope.loading = true;
+            usSpinnerService.spin('upload-list-spinner');
             OSSUploadPart.list(Bucket.getBucket(bucketName), '', '', lastKeyMaker, loadCount, lastUploadMaker).then(function (res) {
                 $scope.loading = false;
+                usSpinnerService.stop('upload-list-spinner');
                 $scope.uploads = $scope.uploads.concat(res.uploads);
                 lastKeyMaker = res.keyMaker;
                 lastUploadMaker = res.uploadIdMaker;
                 isAllLoaded = res.allLoaded;
             }, function (res,status) {
-                $scope.loadingFile = false;
+                $scope.loading = false;
+                usSpinnerService.stop('upload-list-spinner');
                 $scope.$emit('showError',OSSException.getError(res,status).msg);
             });
         };
@@ -665,7 +668,7 @@ angular.module('ossClientUiApp')
         //选中
         $scope.select = function (item) {
             item.selected = true;
-            $scope.scrollToIndex = _.indexOf($scope.uploads, item);
+            //$scope.scrollToIndex = _.indexOf($scope.uploads, item);
         };
 
         //取消选中
