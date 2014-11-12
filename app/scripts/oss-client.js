@@ -12,7 +12,7 @@
 
     function isOSSClient() {
         var sync = navigator.userAgent.split(';')[0] || '';
-        return sync.toLowerCase() == 'gk_sync';
+        return sync.toLowerCase() =='oss';
     };
 
     function getCanonicalizedOssHeaders(headers) {

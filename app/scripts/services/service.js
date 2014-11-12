@@ -340,7 +340,7 @@ angular.module('ossClientUiApp')
 /**
  * 上传、下载队列的操作菜单
  */
-    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout','OSSAlert', function ($rootScope, OSSQueueItem, $timeout,OSSAlert) {
+    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout','OSSAlert', 'OSSDownloadQueue','OSSUploadQueue',function ($rootScope, OSSQueueItem, $timeout,OSSAlert,OSSDownloadQueue,OSSUploadQueue) {
         /**
          * 检测参数的合法性
          * @param selectedItems
@@ -751,10 +751,8 @@ angular.module('ossClientUiApp')
                     });
 
                 },
-                getState: function (selectItems, items) {
-                    return _.find(items, function (item) {
-                        return OSSQueueItem.isWaiting(item) || OSSQueueItem.isInProgress(item);
-                    }) ? 1 : 0;
+                getState: function () {
+                    return OSSDownloadQueue.totalCount > OSSDownloadQueue.doneCount ? 1 : 0;
                 }
             },
             {
