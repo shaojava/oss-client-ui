@@ -893,6 +893,7 @@ angular.module('ossClientUiApp')
                         var objectPath = currentObject ? currentObject + filename + '/' : filename + '/';
                         if(Util.String.mbLen(objectPath) > 1023){
                             $rootScope.$broadcast('showError',msg);
+                            $.isFunction(callback) && callback(false);
                             return;
                         }
                         //新建之前先去检测是否有同名的文件夹
@@ -2079,7 +2080,7 @@ angular.module('ossClientUiApp')
                             var fieldValueReg = /^[a-zA-Z0-9\-_/.]+$/;
 
                             var checkFieldValueIsValid = function(value){
-                              return /^[a-zA-Z0-9\-_/.]+$/.test(value);
+                              return /^[a-zA-Z0-9\-_/.;,:]+$/.test(value);
                             };
 
                             angular.forEach(headers, function (val) {
@@ -2111,7 +2112,7 @@ angular.module('ossClientUiApp')
 
                             if(unValidFieldValue){
                                 var msg  = 'HTTP属性值格式错误';
-                                msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点</p>'
+                                msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号</p>'
                                 $rootScope.$broadcast('showError',msg);
                                 return;
                             }
