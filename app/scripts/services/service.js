@@ -358,10 +358,15 @@ angular.module('ossClientUiApp')
          * @param selectedItems
          * @returns {{all: number, list: Array}}
          */
-        var prepareUpladParam = function (selectedItems) {
+        var prepareUpladParam = function (selectedItems,finish) {
             var param = {
                 all: selectedItems && selectedItems.length ? 0 : 1
             };
+            if(typeof finish !== 'undefined'){
+                angular.extend(param,{
+                    finish:finish
+                })
+            }
             if (selectedItems) {
                 param.list = [];
                 angular.forEach(selectedItems, function (item) {
@@ -379,10 +384,15 @@ angular.module('ossClientUiApp')
          * @param selectedItems
          * @returns {{all: number, list: Array}}
          */
-        var prepareDownloadParam = function (selectedItems) {
+        var prepareDownloadParam = function (selectedItems,finish) {
             var param = {
                 all: selectedItems && selectedItems.length ? 0 : 1
             };
+            if(typeof finish !== 'undefined'){
+                angular.extend(param,{
+                    finish:finish
+                })
+            }
             if (selectedItems) {
                 param.list = [];
                 angular.forEach(selectedItems, function (item) {
@@ -561,6 +571,24 @@ angular.module('ossClientUiApp')
                             _.each(_.filter(items, function (item) {
                                 return OSSQueueItem.isPaused(item);
                             }), OSSQueueItem.setPaused);
+                        });
+                    });
+                },
+                getState: function (selectItems, items) {
+                    return !items || !items.length ? 0 : 1;
+                }
+            },
+            {
+                name: 'stopAll',
+                text: '全部取消',
+                execute: function (selectedItems, items) {
+                    var msg = '你确定要取消所有上传？';
+                    console.log('items',items)
+                    OSSAlert.confirm(msg).result.then(function(){
+                        OSS.invoke('deleteUpload', prepareUpladParam(false,0), function () {
+                            $timeout(function () {
+                                $rootScope.$broadcast('reloadUploadQueue');
+                            })
                         });
                     });
                 },
@@ -764,6 +792,23 @@ angular.module('ossClientUiApp')
                 }
             },
             {
+                name: 'stopAll',
+                text: '全部取消',
+                execute: function (selectedItems, items) {
+                    var msg = '你确定要取消所有下载？';
+                    OSSAlert.confirm(msg).result.then(function(){
+                        OSS.invoke('deleteDownload', prepareDownloadParam(false,0), function () {
+                            $timeout(function () {
+                                $rootScope.$broadcast('reloadDownloadQueue');
+                            })
+                        });
+                    });
+                },
+                getState: function (selectItems, items) {
+                    return !items || !items.length ? 0 : 1;
+                }
+            },
+            {
                 name: 'removeAll',
                 text: '清空已完成',
                 execute: function (selectItems, items) {
@@ -788,7 +833,7 @@ angular.module('ossClientUiApp')
 
         var groupMenu = [
             ['start', 'pause', 'cancel', 'remove'],
-            ['startAll', 'pauseAll', 'removeAll']
+            ['startAll', 'pauseAll','stopAll', 'removeAll']
         ];
 
         var OSSQueueMenu = {

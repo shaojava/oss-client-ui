@@ -429,6 +429,10 @@
           }
         }
 
+        &.done > .queue-progress{
+          display: none;
+        }
+
         > .bg-success{
           background: rgba(68,157,68,.3);
         }
@@ -466,6 +470,9 @@
           }
         }
 
+        &.done .filename .name{
+          bottom: -1px;
+        }
 
         .remain-time {
           width: $queueItemRemainTimeCellWidth;

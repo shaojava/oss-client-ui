@@ -1,4 +1,4 @@
-<li class="clearfix queue-item" ng-class="{'selected':item.selected}" >
+<li class="clearfix queue-item" ng-class="{'selected':item.selected,'done':isDone(item)}" >
     <div class="queue-progress">
         <progressbar value="item.filesize<=0||isError(item)?1:item.offset" max="item.filesize<=0||isError(item)?1:item.filesize"></progressbar>
     </div>
@@ -12,6 +12,6 @@
         <button ng-show="!isDone(item) && !isError(item)" ng-click="handleCmdClick('cancel',item)" title="取消"><i class="fa fa-remove"></i></button>
         <button ng-show="isDone(item) || isError(item)" ng-click="handleCmdClick('remove',item)" title="移除"><i class="fa fa-remove"></i></button>
     </div>
-    <div class="pull-right remain-time" ng-class="{'text-danger':isError(item)}" title="{{isError(item)?item.errormsg:''}}" ng-bind="type | getQueueState:item.status:item.speed:item.filesize:item.offset:isError(item)?item.errormsg:''"></div>
+    <div class="pull-right remain-time" ng-class="{'text-danger':isError(item),'text-success':isDone(item)}" title="{{isError(item)?item.errormsg:''}}" ng-bind="type | getQueueState:item.status:item.speed:item.filesize:item.offset:isError(item)?item.errormsg:''"></div>
     <div class="pull-right filesize" ng-bind="item.filesize | bitSize"></div>
 </li>

@@ -75,15 +75,19 @@ angular.module('ossClientUiApp')
                 var bread = element.parent().next();
 
                 element.on('keydown', function (e) {
-                    var keyword = e.keyCode;
-                    if (keyword != 13) {
+                    var keycode = e.keyCode;
+                    if (keycode != 13) {
+                        return;
+                    }
+                    var keyword = ngModel.$modelValue;
+                    if(!keyword){
                         return;
                     }
                     var currentObj = OSSObject.getCurrentObject();
                     var currentBucket = Bucket.getCurrentBucket();
                     scope.$apply(function () {
                         var url = OSSLocation.getUrl(currentBucket.Name,currentObj.path,'file',{
-                            keyword: ngModel.$modelValue,
+                            keyword: keyword,
                             scope: ''
                         });
                         $location.url(url);
