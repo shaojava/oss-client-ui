@@ -583,7 +583,6 @@ angular.module('ossClientUiApp')
                 text: '全部取消',
                 execute: function (selectedItems, items) {
                     var msg = '你确定要取消所有上传？';
-                    console.log('items',items)
                     OSSAlert.confirm(msg).result.then(function(){
                         OSS.invoke('deleteUpload', prepareUpladParam(false,0), function () {
                             $timeout(function () {
@@ -1849,8 +1848,6 @@ angular.module('ossClientUiApp')
                         var checkSetting = function(setting){
                             var unValidMessage = '';
                             angular.forEach(setting,function(val){
-                                    console.log('val',val);
-                                    console.log('d',!/^[1-9]{1}[0-9]*$/.test(val));
                                     if(!/^[1-9]{1}[0-9]*$/.test(val)){
                                         unValidMessage = '设置的值必须大于0小于或等于10的整数';
                                         return false;
@@ -2174,8 +2171,6 @@ angular.module('ossClientUiApp')
                                 $scope.saving = false;
                                 $modalInstance.close();
                             }).error(function(res,status){
-                                console.log('arg',arguments);
-                                return;
                                 $scope.saving = false;
                                 $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                             });

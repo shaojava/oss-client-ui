@@ -599,7 +599,6 @@ angular.module('ossClientUiApp')
 
         //点击空白处取消选中
         $scope.handleFileListClick = function($event){
-            console.log(123);
             if($($event.target).closest('.file-item').size()){
                 return;
             }
