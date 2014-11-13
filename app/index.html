@@ -18,7 +18,7 @@
 </head>
 <body ng-controller="MainCtrl">
 <div class="wrapper">
-    <div class="left-sidebar">
+    <div class="left-sidebar" ng-class="{'has-current-locaiton':currentLocation}">
         <div class="left-header">
             <h1><img src="images/oss_logo_small.png" alt=""/></h1>
             <button title="创建Bucket" class="fa fa-plus add-bucket" ng-click="showAddBucketModal()"></button>
@@ -38,6 +38,10 @@
                 </ul>
             </li>
         </ul>
+        <div class="left-footer" ng-if="currentLocation">
+            <span>当前区域：</span>
+            <span ng-bind="currentLocation | getLocationName" class="text-primary"></span>
+        </div>
         <div class="dropdown position-fixed" id="bucket-menu">
             <ul class="dropdown-menu" role="menu">
                 <li><a href="javascript:;" ng-click="editBucket(activeBucket)">属性管理</a></li>

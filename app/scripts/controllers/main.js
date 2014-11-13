@@ -120,6 +120,8 @@ angular.module('ossClientUiApp')
             Util.Array.removeByValue($scope.buckets, bucket);
         });
 
+        //当前区域
+        $scope.currentLocation = OSS.invoke('getCurrentLocation');
     }])
 /**
  * 传输队列

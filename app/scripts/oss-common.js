@@ -10,13 +10,13 @@
  */
 angular.module('OSSCommon', [
     'ui.select'
-    ])
+])
     .config(['uiSelectConfig', function (uiSelectConfig) {
         uiSelectConfig.theme = 'bootstrap';
     }])
-    /**
-     * 本地对话框
-     */
+/**
+ * 本地对话框
+ */
     .factory('OSSDialog', [function () {
         var defaultParam = {
             type: 'normal',
@@ -43,7 +43,7 @@ angular.module('OSSCommon', [
                     url: UIPath + '/custom-domain.html'
                 }));
             },
-            setting:function(){
+            setting: function () {
                 var UIPath = OSS.invoke('getUIPath');
                 OSS.invoke('showWnd', angular.extend({}, defaultParam, {
                     url: UIPath + '/setting.html'
@@ -52,51 +52,51 @@ angular.module('OSSCommon', [
         };
     }])
 
-    /**
-     *   客户端配置的相关信息（定制时用）
-     */
+/**
+ *   客户端配置的相关信息（定制时用）
+ */
     .factory('OSSConfig', [function () {
-        var config  = OSS.invoke('configInfo');
-        if(!config){
+        var config = OSS.invoke('configInfo');
+        if (!config) {
             config = {
-                source:"",
-                disable_location_select:0,
-                host:"aliyuncs.com",
-                locations:[
+                source: "",
+                disable_location_select: 0,
+                host: "aliyuncs.com",
+                locations: [
                     {
-                        location:'oss-cn-guizhou-a',
-                        name:'互联网',
-                        enable:0
+                        location: 'oss-cn-guizhou-a',
+                        name: '互联网',
+                        enable: 0
                     },
                     {
-                        location:'oss-cn-gzzwy-a-internal',
-                        name:'政务外网',
-                        enable:0
+                        location: 'oss-cn-gzzwy-a-internal',
+                        name: '政务外网',
+                        enable: 0
                     },
                     {
-                        location:'oss-cn-hangzhou',
-                        name:'杭州',
-                        enable:1
+                        location: 'oss-cn-hangzhou',
+                        name: '杭州',
+                        enable: 1
                     },
                     {
-                        location:'oss-cn-qingdao',
-                        name:'青岛',
-                        enable:1
+                        location: 'oss-cn-qingdao',
+                        name: '青岛',
+                        enable: 1
                     },
                     {
-                        location:'oss-cn-beijing',
-                        name:'北京',
-                        enable:1
+                        location: 'oss-cn-beijing',
+                        name: '北京',
+                        enable: 1
                     },
                     {
-                        location:'oss-cn-hongkong',
-                        name:'香港',
-                        enable:1
+                        location: 'oss-cn-hongkong',
+                        name: '香港',
+                        enable: 1
                     },
                     {
-                        location:'oss-cn-shenzhen',
-                        name:'深圳',
-                        enable:1
+                        location: 'oss-cn-shenzhen',
+                        name: '深圳',
+                        enable: 1
                     }
                 ]
             };
@@ -106,54 +106,54 @@ angular.module('OSSCommon', [
              * 是否是定制客户端
              * @returns {boolean}
              */
-            isCustomClient:function(){
+            isCustomClient: function () {
                 return config.source != '';
             },
             /**
              * 是否是贵州的定制客户端
              * @returns {boolean}
              */
-            isGuiZhouClient:function(){
-                return  config.source == 'guizhou';
+            isGuiZhouClient: function () {
+                return config.source == 'guizhou';
             },
             /**
              * 创建bucket是否不允许选择区域
              */
-            isDisableLocationSelect:function(){
+            isDisableLocationSelect: function () {
                 return config.disable_location_select == 1;
             },
-            getLocations:function(){
-                return  config.locations || [];
+            getLocations: function () {
+                return config.locations || [];
             },
             /**
              * 获取主机
              * @returns {*}
              */
-            getHost:function(){
-                return  config.host;
+            getHost: function () {
+                return config.host;
             }
         };
     }])
 
-    /**
-     * bucket区域
-     */
-    .factory('OSSRegion', ['OSSConfig',function (OSSConfig) {
+/**
+ * bucket区域
+ */
+    .factory('OSSRegion', ['OSSConfig', function (OSSConfig) {
         var locations = OSSConfig.getLocations();
         var currentLocation = OSS.invoke('getCurrentLocation');
         return {
             list: function () {
-                return _.where(locations,{
-                    enable:1
+                return _.where(locations, {
+                    enable: 1
                 });
             },
-            getRegionByLocation:function(location){
-                return _.find(locations,function(item){
-                    return location.indexOf(item.location.replace('-internal','')) === 0;
+            getRegionByLocation: function (location) {
+                return _.find(locations, function (item) {
+                    return location.indexOf(item.location.replace('-internal', '')) === 0;
                 });
             },
-            changeLocation:function(location){
-                if(location.indexOf('-internal') > 0){
+            changeLocation: function (location) {
+                if (location.indexOf('-internal') > 0) {
                     return location;
                 }
                 if (currentLocation && location + '-internal' == currentLocation) {
@@ -164,74 +164,74 @@ angular.module('OSSCommon', [
         };
     }])
 
-    /**
-     * 抛错处理
-     */
-    .factory('OSSException', ['OSSConfig',function (OSSConfig) {
+/**
+ * 抛错处理
+ */
+    .factory('OSSException', ['OSSConfig', function (OSSConfig) {
         var erroList = {
-            'AccessDenied':'拒绝访问',
-            'BucketAlreadyExists':'Bucket已经存在',
-            'BucketNotEmpty':'Bucket不为空',
-            'EntityTooLarge':'实体过大',
-            'EntityTooSmall':'实体过小',
-            'FileGroupTooLarge':'文件组过大',
-            'FilePartNotExist':'文件Part不存在',
-            'FilePartStale':'文件Part过时',
-            'InvalidArgument':'参数格式错误',
-            'InvalidAccessKeyId':'Access Key ID不存在',
-            'InvalidBucketName':'无效的Bucket名字',
-            'InvalidDigest':'无效的摘要',
-            'InvalidObjectName':'无效的Object名字',
-            'InvalidPart':'无效的Part',
-            'InvalidPartOrder':'无效的part顺序',
-            'InvalidTargetBucketForLogging':'Logging操作中有无效的目标bucket',
-            'InternalError':'OSS内部发生错误',
-            'MalformedXML':'XML格式非法',
-            'MethodNotAllowed':'不支持的方法',
-            'MissingArgument':'缺少参数',
-            'MissingContentLength':'缺少内容长度',
-            'NoSuchBucket':'Bucket不存在',
-            'NoSuchKey':'文件不存在',
-            'NoSuchUpload':'Multipart Upload ID不存在',
-            'NotImplemented':'无法处理的方法',
-            'PreconditionFailed':'预处理错误',
-            'RequestTimeTooSkewed':'发起请求的时间和服务器时间超出15分钟',
-            'RequestTimeout':'请求超时',
-            'SignatureDoesNotMatch':'签名错误',
-            'TooManyBuckets':'Bucket数目超过限制'
+            'AccessDenied': '拒绝访问',
+            'BucketAlreadyExists': 'Bucket已经存在',
+            'BucketNotEmpty': 'Bucket不为空',
+            'EntityTooLarge': '实体过大',
+            'EntityTooSmall': '实体过小',
+            'FileGroupTooLarge': '文件组过大',
+            'FilePartNotExist': '文件Part不存在',
+            'FilePartStale': '文件Part过时',
+            'InvalidArgument': '参数格式错误',
+            'InvalidAccessKeyId': 'Access Key ID不存在',
+            'InvalidBucketName': '无效的Bucket名字',
+            'InvalidDigest': '无效的摘要',
+            'InvalidObjectName': '无效的Object名字',
+            'InvalidPart': '无效的Part',
+            'InvalidPartOrder': '无效的part顺序',
+            'InvalidTargetBucketForLogging': 'Logging操作中有无效的目标bucket',
+            'InternalError': 'OSS内部发生错误',
+            'MalformedXML': 'XML格式非法',
+            'MethodNotAllowed': '不支持的方法',
+            'MissingArgument': '缺少参数',
+            'MissingContentLength': '缺少内容长度',
+            'NoSuchBucket': 'Bucket不存在',
+            'NoSuchKey': '文件不存在',
+            'NoSuchUpload': 'Multipart Upload ID不存在',
+            'NotImplemented': '无法处理的方法',
+            'PreconditionFailed': '预处理错误',
+            'RequestTimeTooSkewed': '发起请求的时间和服务器时间超出15分钟',
+            'RequestTimeout': '请求超时',
+            'SignatureDoesNotMatch': '签名错误',
+            'TooManyBuckets': 'Bucket数目超过限制'
         };
         return {
             getError: function (res, status) {
                 var error = {
                     status: status,
-                    code:  '',
-                    msg:  ''
+                    code: '',
+                    msg: ''
                 };
-                if(!res){
-                    var msg ='';
-                    if(status == 403){
+                if (!res) {
+                    var msg = '';
+                    if (status == 403) {
                         msg = erroList['AccessDenied'];
-                    }else{
+                    } else {
                         msg = '网络请求错误';
-                        if(OSSConfig.isGuiZhouClient()){
+                        if (OSSConfig.isGuiZhouClient()) {
                             msg += '<p class="text-muted">（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）</p>';
                         }
                     }
-                    angular.extend(error,{
+                    angular.extend(error, {
                         msg: msg
                     });
-                }else{
+                } else {
                     var resError = res['Error'];
-                    angular.extend(error,{
+                    angular.extend(error, {
                         code: resError.Code || '',
                         msg: resError.Message || ''
                     });
 
                     var message = resError.Message;
-                    if(erroList[resError.Code]){
+                    if (erroList[resError.Code]) {
                         message = erroList[resError.Code];
                     }
-                    angular.extend(error,{
+                    angular.extend(error, {
                         msg: message
                     });
                 }
@@ -243,9 +243,9 @@ angular.module('OSSCommon', [
         };
     }])
 
-    /**
-     * 剪切板
-     */
+/**
+ * 剪切板
+ */
     .factory('Clipboard', function () {
         var maxLen = 1,
             container = [];
@@ -271,22 +271,35 @@ angular.module('OSSCommon', [
         };
     })
 
-    /**
-     * 显示传入路径的文件名
-     */
+/**
+ * 显示传入路径的文件名
+ */
     .filter('baseName', function () {
         return Util.String.baseName;
     })
 
-    /**
-     * 判断传入的路径是否文件夹
-     */
+/**
+ * 判断传入的路径是否文件夹
+ */
     .filter('isDir', function () {
-        return function(path){
+        return function (path) {
             var lastStr = Util.String.lastChar(path);
             return lastStr === '/' || lastStr === '\\' ? 1 : 0;
         };
     })
+    .filter('getLocationName', ['OSSRegion', function (OSSRegion) {
+        return function (location) {
+            if (!location) {
+                return '';
+            }
+            ;
+            var region = OSSRegion.getRegionByLocation(location);
+            if (!region) {
+                return '';
+            }
+            return region.name;
+        };
+    }])
     .directive('ngRightClick', ['$parse', function ($parse) {
         return function ($scope, $element, $attrs) {
             var fn = $parse($attrs.ngRightClick);
@@ -298,9 +311,9 @@ angular.module('OSSCommon', [
             });
         };
     }])
-    /**
-     * 滚到加载
-     */
+/**
+ * 滚到加载
+ */
     .directive('scrollLoad', ['$rootScope', '$parse', function ($rootScope, $parse) {
         return {
             restrict: 'A',
@@ -354,24 +367,24 @@ angular.module('OSSCommon', [
         }
     }])
 
-    /**
-     * 滚到指定的item
-     */
-    .directive('scrollToItem', ['$timeout',function ($timeout) {
+/**
+ * 滚到指定的item
+ */
+    .directive('scrollToItem', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                attrs.$observe('scrollToItem',function(newVal){
-                    $timeout(function(){
+                attrs.$observe('scrollToItem', function (newVal) {
+                    $timeout(function () {
                         var index = newVal;
                         if (index < 0) return;
                         var $fileItem = element.find(attrs.itemSelector + ':eq(' + index + ')');
                         if (!$fileItem.size()) return;
                         var top = $fileItem.position().top;
-                        var grep = top + $fileItem.height() - element.height() ;
-                        if(top < 0){
+                        var grep = top + $fileItem.height() - element.height();
+                        if (top < 0) {
                             element.scrollTop(element.scrollTop() + top);
-                        }else if(grep > 0){
+                        } else if (grep > 0) {
                             element.scrollTop(element.scrollTop() + grep);
                         }
                     })
@@ -381,11 +394,11 @@ angular.module('OSSCommon', [
         }
     }])
 
-    /**
-     * 拖拽
-     */
+/**
+ * 拖拽
+ */
     .directive('onDrop', ['$parse', function ($parse) {
-        return function (scope,element, attrs) {
+        return function (scope, element, attrs) {
             var fn = $parse(attrs.onDrop);
             element.on('drop', function (event) {
                 scope.$apply(function () {
@@ -395,9 +408,9 @@ angular.module('OSSCommon', [
         };
     }])
 
-    /**
-     * 阻止默认的拖拽时间
-     */
+/**
+ * 阻止默认的拖拽时间
+ */
     .directive('preventDragDrop', [function () {
         return {
             restrict: 'A',
@@ -421,20 +434,20 @@ angular.module('OSSCommon', [
         }
     }])
 
-    /**
-     *  input默认选中
-     */
+/**
+ *  input默认选中
+ */
     .directive('autoSelect', [function () {
         return {
             restrict: 'A',
-            link: function (scope, element,attrs) {
+            link: function (scope, element, attrs) {
                 var isAutoSelect = false;
-                attrs.$observe('autoSelect',function(isAuto){
+                attrs.$observe('autoSelect', function (isAuto) {
                     isAutoSelect = isAuto;
                 });
 
-                element.on('click.autoSelect',function(){
-                    if(isAutoSelect){
+                element.on('click.autoSelect', function () {
+                    if (isAutoSelect) {
                         element.select();
                     }
                 });
@@ -443,28 +456,28 @@ angular.module('OSSCommon', [
         }
     }])
 
-    /**
-     * bucket区域选择下拉框
-     */
-    .directive('locationSelect', ['OSSRegion',function (OSSRegion) {
+/**
+ * bucket区域选择下拉框
+ */
+    .directive('locationSelect', ['OSSRegion', function (OSSRegion) {
         return {
             restrict: 'E',
-            replace:true,
-            scope:{
+            replace: true,
+            scope: {
                 selectLocation: '=',
-                disableSelect:'=',
-                name:'@',
-                placeHolder:'@',
-                searchDisabled:'='
+                disableSelect: '=',
+                name: '@',
+                placeHolder: '@',
+                searchDisabled: '='
             },
-            templateUrl:'views/location-select.html',
+            templateUrl: 'views/location-select.html',
             link: function (scope) {
                 scope.locations = OSSRegion.list();
-                scope.$watch('locations.selected',function(val){
+                scope.$watch('locations.selected', function (val) {
                     scope.selectLocation = val;
                 });
-                if(!scope.placeHolder){
-                    scope.locations.selected =  scope.locations[0];
+                if (!scope.placeHolder) {
+                    scope.locations.selected = scope.locations[0];
                 }
             }
         }
