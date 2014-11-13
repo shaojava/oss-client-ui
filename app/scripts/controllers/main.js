@@ -405,7 +405,7 @@ angular.module('ossClientUiApp')
             dir: 1
         });
         if (keyword.length) {
-            prefix = keyword;
+            prefix = $scope.objectPrefix + keyword;
             isSearch = true;
         } else {
             prefix = $scope.objectPrefix;
