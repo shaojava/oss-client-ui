@@ -405,7 +405,7 @@ angular.module('ossClientUiApp')
 
         $scope.showTip = localStorageService.get('hide-tip') == 1 ?  false: true;
         console.log('$scope.showTip',localStorageService.get('hide-tip'));
-        $scope.tipContent = '<i class="fa fa-info-circle"></i> <span>小技巧：使用Shift和Ctrl（Mac的Commond）键可以实现多选操作，同时也支持右键。</span>';
+        $scope.tipContent = '<i class="fa fa-info-circle"></i> <span>小技巧：使用Shift和Ctrl(Mac的Command)键可以实现多选操作。</span>';
         $scope.disableTip = function(){
             $scope.showTip = false;
             localStorageService.set('hide-tip',1);
