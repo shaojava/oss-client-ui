@@ -205,7 +205,7 @@ angular
             var host = OSSConfig.getHost();
             var requestUrl = 'http://'+region.location + '.' + host;
             $http.get(requestUrl,{
-                timeout:5000
+                timeout:3000
             }).error(function(req,status){
                 if(!req && !status){
                     callback('oss-cn-guizhou-a');
