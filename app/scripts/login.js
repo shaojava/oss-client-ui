@@ -9,9 +9,13 @@ angular
         'ngTouch',
         'ui.bootstrap',
         'angularSpinner',
-        'OSSCommon'
+        'OSSCommon',
+        'LocalStorageModule'
     ])
-    .controller('MainCtrl', ['$scope', 'OSSException', 'OSSRegion','OSSConfig', '$timeout',function ($scope, OSSException, OSSRegion,OSSConfig,$timeout) {
+    .config([function(){
+        //localStorageServiceProvider.setPrefix('OSSClient');
+    }])
+    .controller('MainCtrl', ['$scope','localStorageService','usSpinnerService', '$http','OSSException', 'OSSRegion','OSSConfig', '$timeout',function ($scope,localStorageService,usSpinnerService, $http,OSSException, OSSRegion,OSSConfig,$timeout) {
 
         /**
          * 是否定制客户端
@@ -41,6 +45,7 @@ angular
         $scope.regionSelectTip = '选择区域';
 
         //提交登录
+
         $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, location) {
             if (!accessKeyId || !accessKeyId.length) {
                 alert('请输入 Access Key ID');
@@ -153,7 +158,8 @@ angular
         };
 
         //通过安全密码登录
-
+        var allowErrorCount = 5;
+        var loginErrorCount = localStorageService.get('login-error-count') ? parseInt(localStorageService.get('login-error-count')) : 0;
         $scope.loginByPassword = function (password) {
             if (!password || !password.length) {
                 alert('请输入安全密码');
@@ -166,9 +172,19 @@ angular
                 $scope.$apply(function () {
                     $scope.loging = false;
                     if (!res.error) {
+                        loginErrorCount = 0;
+                        localStorageService.set('login-error-count',loginErrorCount);
                         loginToLanchpad();
                     } else {
-                        alert(OSSException.getClientErrorMsg(res));
+                        loginErrorCount++;
+                        localStorageService.set('login-error-count',loginErrorCount);
+                        if(loginErrorCount>allowErrorCount){
+                            alert('你连续密码输入错误已超过' + allowErrorCount + '次,请重新使用Access Key ID 和 Access Key Secret登录');
+                            OSS.invoke('clearPassword');
+                            $scope.step = 'loginById';
+                        }else{
+                            alert(OSSException.getClientErrorMsg(res));
+                        }
                     }
                 });
 
@@ -183,5 +199,34 @@ angular
             OSS.invoke('clearPassword');
             $scope.step = 'loginById';
         };
+
+        var checkCurrentLocation = function(callback){
+            var region = OSSRegion.getRegionByLocation('oss-cn-gzzwy-a');
+            var host = OSSConfig.getHost();
+            var requestUrl = 'http://'+region.location + '.' + host;
+            $http.get(requestUrl,{
+                timeout:5000
+            }).error(function(req,status){
+                if(!req && !status){
+                    callback('oss-cn-guizhou-a');
+                }else{
+                    callback('oss-cn-gzzwy-a');
+                }
+            });
+        };
+
+        //
+        $scope.checkingLocation = false;
+        $scope.predictionLocation = '';
+        if(OSSConfig.isGuiZhouClient()){
+            $scope.checkingLocation = true;
+            //usSpinnerService.spin('checking-locaiton-spinner');
+            checkCurrentLocation(function(predictionLocation){
+                $scope.checkingLocation = false;
+                //usSpinnerService.stop('checking-locaiton-spinner');
+                $scope.defaultLocation = predictionLocation;
+                console.log('$scope.region',$scope.region);
+            });
+        }
 
     }]);

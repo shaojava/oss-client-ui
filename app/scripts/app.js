@@ -20,7 +20,8 @@ angular
         'OSSCommon',
         'angularSpinner',
         'ng-context-menu',
-        'ui.select'
+        'ui.select',
+        'LocalStorageModule'
     ])
     .config(['$routeProvider', '$httpProvider','uiSelectConfig', function ($routeProvider, $httpProvider,uiSelectConfig) {
         //设置ui-select的默认样式

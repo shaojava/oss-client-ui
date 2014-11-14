@@ -3,7 +3,7 @@
  */
 
 'use strict';
-window.debug = false;
+window.debug = true;
 var debugInterfaces = [];
 var OSS = {
     /**

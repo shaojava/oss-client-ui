@@ -1,10 +1,13 @@
+#index-page{
+  background: $backgrundColor;
+}
+
 .wrapper {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background: $backgrundColor;
 }
 
 .left-sidebar {
@@ -88,6 +91,7 @@
     position: absolute;
     top:50px;
     bottom: 0;
+    padding-bottom: 60px;
     overflow: auto;
     width: 100%;
     > li {
@@ -265,6 +269,14 @@
     bottom:$initTransQueueHeigth;
     transition: bottom 0.25s linear;
 
+    .oss-tip{
+      margin: 0;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 15px;
+      border-top: 1px solid $baseBorderColor;
+    }
+
     .filelist-header {
       border-top: 1px solid $baseBorderColor;
       height: $fileListHeaderHeight;
@@ -354,6 +366,10 @@
         line-height: 32px;
         text-align: center;
       }
+    }
+
+    .filelist-body.tip-shown{
+      top: $fileListHeaderHeight + $toolbarHeight + 30;
     }
   }
 

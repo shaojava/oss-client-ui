@@ -16,16 +16,16 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 </head>
-<body ng-controller="MainCtrl">
-<div class="wrapper">
+<body ng-controller="MainCtrl" id="index-page">
+<div class="wrapper" ng-show="bucketsLoaded">
     <div class="left-sidebar" ng-class="{'has-current-locaiton':currentLocation}">
         <div class="left-header">
             <h1><img src="images/oss_logo_small.png" alt=""/></h1>
             <button title="创建Bucket" class="fa fa-plus add-bucket" ng-click="showAddBucketModal()"></button>
             <button class="fa fa-cog fa-lg export-auth" ng-click="exportAuthorization()" title="设置"></button>
         </div>
-        <ul class="scrollbar dark bucket-list">
-            <li ng-repeat="bucket in buckets" dropdown title="{{bucket.Name}}" context-menu="onConextMenuShow(bucket)" data-target="bucket-menu">
+        <ul class="scrollbar dark bucket-list" scroll-to-item="{{scrollToIndex}}" item-selector=".bucket-item">
+            <li class="bucket-item" ng-repeat="bucket in buckets" dropdown title="{{bucket.Name}}" context-menu="onConextMenuShow(bucket)" data-target="bucket-menu">
                 <a href="#{{bucket.Name|getLocation}}" ng-class="{'selected':bucket.selected}">
                     <span ng-bind="bucket.Name"></span>
                     <span class="show-menu" dropdown-toggle>
@@ -162,7 +162,7 @@
         </div>
     </div>
 </div>
-
+<span us-spinner="{radius:10, length: 0}"  spinner-key="body-spinner"  spinner-start-active="1"></span>
 <!-- build:js(bower_components) scripts/vendor.js -->
 <!-- bower:js -->
 <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -201,6 +201,7 @@
 <script src="../bower_components/underscore/underscore.js"></script>
 <script src="../bower_components/ng-context-menu/dist/ng-context-menu.js"></script>
 <script src="../bower_components/angular-ui-select/dist/select.js"></script>
+<script src="../bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

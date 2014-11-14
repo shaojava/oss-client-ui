@@ -2,23 +2,24 @@
     <button type="button" class="close" ng-click="cancel()">&times;</button>
     <h4>碎片详细</h4>
 </div>
-<div class="modal-body">
-    <div class="part-list-wrapper">
+<div class="modal-body min-height-200">
+    <div class="part-list-wrapper" ng-show="!firstLoading">
         <div class="clearfix part-list-header">
             <div class="pull-left  number-cell">编号</div>
             <div class="pull-right last-modify-cell">上传时间</div>
             <div class="pull-right size-cell">大小</div>
         </div>
-        <div class="empty" ng-show="!parts.length" style="padding: 30px 0;">没有数据</div>
-        <ul class="upload-part-list" scroll-load="loadMore()" disable-scroll="loading">
+        <div class="empty" ng-show="!parts.length && !firstLoading" style="padding: 30px 0;">没有数据</div>
+        <ul class="upload-part-list"  scroll-load="loadMore()" disable-scroll="loading">
             <li ng-repeat="part in parts" class="clearfix">
                 <div class="pull-left  number-cell" ng-bind="part.PartNumber"></div>
                 <div class="pull-right last-modify-cell" ng-bind="part.LastModified | formatTime"></div>
                 <div class="pull-right size-cell" ng-bind="part.Size | bitSize"></div>
             </li>
         </ul>
-    </div>
 
+    </div>
+    <span us-spinner="{radius:10, length: 0}"  spinner-key="load-upload-detail-spinner"  spinner-start-active="1"></span>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-primary" ng-click="cancel()">确定</button>

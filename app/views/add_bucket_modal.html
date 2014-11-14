@@ -5,14 +5,14 @@
 </div>
 <div class="modal-body min-height-100">
     <form class="form-horizontal" name="bucketForm" role="form" ng-show="!getingBucketInfo">
-       <span class="error-msg text-danger" ng-show="bucketForm.bucket_name.$error.pattern">Bucket名称格式错误</span>
+       <!--<span class="error-msg text-danger" ng-show="bucketForm.bucket_name.$error.pattern">Bucket名称格式错误</span>-->
         <div class="form-group">
             <label for="bucket_name" class="col-sm-3 control-label">Bucket名称：</label>
             <div class="col-sm-5">
                 <div class="bucket-name">
                     <span ng-show="bucket" title="{{bucket.Name}}">{{bucket.Name}}</span>
                 </div>
-                <input ng-pattern="/^[a-z0-9][a-z0-9\-]{1,61}[a-z0-9]$/" ng-show="!bucket" type="text" class="form-control" ng-model="cBucket.name" name="bucket_name" id="bucket_name" placeholder="" />
+                <input ng-show="!bucket" type="text" class="form-control" ng-model="cBucket.name" name="bucket_name" id="bucket_name" placeholder="" />
             </div>
             <div class="tip text-muted" ng-if="!bucket">
                 <p>·只能包含小写字母、数字和横线</p>
@@ -52,7 +52,7 @@
 <div class="modal-footer">
     <button type="button" class="btn btn-danger pull-left" ng-show="bucket" ng-click="delBucket(bucket)">删除Bucket</button>
     <button type="button" class="btn btn-default pull-right" ng-click="cancel()">取消</button>
-    <button type="button" class="btn btn-primary pull-right"  ng-show="!bucket" ng-disabled="loading || !bucketForm.$valid" ng-click="createBucket(cBucket.name,cBucket.region,acls.selected)">确定</button>
+    <button type="button" class="btn btn-primary pull-right"  ng-show="!bucket" ng-disabled="loading" ng-click="createBucket(cBucket.name,cBucket.region,acls.selected)">确定</button>
     <button type="button" class="btn btn-primary pull-right"  ng-show="bucket" ng-disabled="loading" ng-click="editBucket(acls.selected)" ng-disabled="loading">确定</button>
     <div class="pull-right spinner-wrapper">
         <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"  spinner-key="add-bucket-spinner"  spinner-start-active="1"></span>

@@ -1402,7 +1402,7 @@ angular.module('ossClientUiApp')
                 url += '/' + bucketName;
 
                 if (prefix) {
-                    url += '/' + prefix;
+                    url += '/' + encodeURIComponent(prefix);
                 }
                 if(searchParam){
                     url += '?' + $.param(searchParam);
@@ -1499,6 +1499,7 @@ angular.module('ossClientUiApp')
                     return listPromise;
                 } else {
                     OSSApi.getBuckets().success(function (res) {
+                        $rootScope.$broadcast('bucketsLoaded');
                         var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                         if(resBuckets){
                             buckets = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
@@ -1514,6 +1515,7 @@ angular.module('ossClientUiApp')
                         });
                         deferred.resolve(buckets);
                     }).error(function (res,status) {
+                        $rootScope.$broadcast('bucketsLoaded');
                         $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                         deferred.reject(res,status);
                     });
@@ -1555,7 +1557,7 @@ angular.module('ossClientUiApp')
         var host = OSSConfig.getHost();
 
         var getExpires = function (expires) {
-            expires = angular.isUndefined(expires) ? 60 : expires;
+            expires = angular.isUndefined(expires) ? 30 : expires;
             return parseInt(new Date().getTime() / 1000) + expires;
         };
 
@@ -1849,11 +1851,11 @@ angular.module('ossClientUiApp')
                             var unValidMessage = '';
                             angular.forEach(setting,function(val){
                                     if(!/^[1-9]{1}[0-9]*$/.test(val)){
-                                        unValidMessage = '设置的值必须大于0小于或等于10的整数';
+                                        unValidMessage = '设置的值必须是大于0小于或等于10的整数';
                                         return false;
                                     }
                                     if(val<=0 || val>10){
-                                        unValidMessage = '设置的值必须大于0小于或等于10的整数';
+                                        unValidMessage = '设置的值必须是大于0小于或等于10的整数';
                                         return false;
                                     }
                             });
@@ -1985,6 +1987,10 @@ angular.module('ossClientUiApp')
                         $scope.createBucket = function (bucketName, region, acl) {
                             if (!bucketName || !bucketName.length) {
                                 $rootScope.$broadcast('showError','Bucket的名称不能为空');
+                                return;
+                            }
+                            if(!/^[a-z0-9][a-z0-9\-]{1,61}[a-z0-9]$/.test(bucketName)){
+                                $rootScope.$broadcast('showError','Bucket的名称格式错误');
                                 return;
                             }
                             if(Bucket.getBucket(bucketName)){
@@ -2122,6 +2128,8 @@ angular.module('ossClientUiApp')
                             var fieldValueReg = /^[a-zA-Z0-9\-_/.]+$/;
 
                             var checkFieldValueIsValid = function(value){
+                              //不检查
+                              return true;
                               return /^[a-zA-Z0-9\-_/.;,:]+$/.test(value);
                             };
 
@@ -2166,14 +2174,28 @@ angular.module('ossClientUiApp')
                                 return;
                             }
 
+                            var headers = $.extend({},ossHeaders,canonicalizedOSSheaders);
                             $scope.saving = true;
-                            OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
+                            OSS.invoke('setMetaObject',{
+                                bucket:bucket.Name,
+                                object:object.path,
+                                location:bucket.Location,
+                                canonicalized_oss_headers:headers
+                            },function(res){
                                 $scope.saving = false;
-                                $modalInstance.close();
-                            }).error(function(res,status){
-                                $scope.saving = false;
-                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                                if(!res.error){
+                                    $modalInstance.close();
+                                }else{
+                                    $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                                }
                             });
+                            //OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
+                            //    $scope.saving = false;
+                            //    $modalInstance.close();
+                            //}).error(function(res,status){
+                            //    $scope.saving = false;
+                            //    $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                            //});
                         };
 
                         $scope.addCustomHeader = function () {
@@ -2269,8 +2291,12 @@ angular.module('ossClientUiApp')
                                 return;
                             }
                             $scope.loading = true;
+                            $scope.firstLoading = true;
                             OSSApi.listUploadPart(bucket, upload, lastMaker, size).success(function (res) {
                                 $scope.loading = false;
+                                if(!$scope.parts || !$scope.parts.length){
+                                    $scope.firstLoading = false;
+                                }
                                 var result = res['ListPartsResult'];
                                 lastMaker = result['NextPartNumberMarker'];
                                 allLoaded = result['IsTruncated'] === 'false';
@@ -2286,6 +2312,14 @@ angular.module('ossClientUiApp')
                         };
 
                         loadPart();
+
+                        $scope.$watch('firstLoading',function(newVal){
+                            if (newVal) {
+                                usSpinnerService.spin('load-upload-detail-spinner');
+                            } else {
+                                usSpinnerService.stop('load-upload-detail-spinner');
+                            }
+                        });
 
                         $scope.loadMore = function () {
                             if (allLoaded) {

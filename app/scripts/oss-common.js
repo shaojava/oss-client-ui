@@ -375,6 +375,7 @@ angular.module('OSSCommon', [
             restrict: 'A',
             link: function (scope, element, attrs) {
                 attrs.$observe('scrollToItem', function (newVal) {
+                    if(typeof newVal === 'undefiend') return;
                     $timeout(function () {
                         var index = newVal;
                         if (index < 0) return;
@@ -468,7 +469,8 @@ angular.module('OSSCommon', [
                 disableSelect: '=',
                 name: '@',
                 placeHolder: '@',
-                searchDisabled: '='
+                searchDisabled: '=',
+                defaultLocation:'@'
             },
             templateUrl: 'views/location-select.html',
             link: function (scope) {
@@ -479,6 +481,14 @@ angular.module('OSSCommon', [
                 if (!scope.placeHolder) {
                     scope.locations.selected = scope.locations[0];
                 }
+                scope.$watch('defaultLocation',function(newVal){
+                    console.log('newVal',newVal);
+                    if(!newVal) return;
+                    scope.locations.selected = _.find(scope.locations,function(region){
+                        return region.location.indexOf(newVal) == 0;
+                    });
+                });
+
             }
         }
     }])

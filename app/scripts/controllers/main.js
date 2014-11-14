@@ -8,7 +8,16 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location', function ($scope, OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location) {
+    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location) {
+
+        //
+        $scope.bucketsLoaded = false;
+        usSpinnerService.spin('body-spinner');
+
+        $scope.$on('bucketsLoaded',function(){
+            $scope.bucketsLoaded = true;
+            usSpinnerService.stop('body-spinner');
+        });
 
         //获取所有bucket列表
         $scope.buckets = [];
@@ -16,8 +25,10 @@ angular.module('ossClientUiApp')
         //新建bucket对话框
         $scope.showAddBucketModal = function () {
             OSSModal.addBucket().result.then(function (param) {
-                if (param.act == 'add') {
+                if (param && param.act == 'add') {
                     $scope.buckets.push(param.bucket);
+                    $scope.scrollToIndex = $scope.buckets.length - 1;
+                    console.log('$scope.scrollToIndex',$scope.scrollToIndex);
                     $location.path(OSSLocation.getUrl(param.bucket.Name));
                 }
 
@@ -27,7 +38,7 @@ angular.module('ossClientUiApp')
         //bucket设置
         $scope.editBucket = function (bucket) {
             OSSModal.addBucket(bucket).result.then(function (param) {
-                if (param.act == 'del') {
+                if (param && param.act == 'del') {
                     Util.Array.removeByValue($scope.buckets, param.bucket);
                 }
             });
@@ -114,10 +125,10 @@ angular.module('ossClientUiApp')
         });
 
         $scope.$on('removeBucket', function (event, bucket) {
+            Util.Array.removeByValue($scope.buckets, bucket);
             if (bucket.selected && $scope.buckets.length) {
                 $location.path(OSSLocation.getUrl($scope.buckets[0].Name));
             }
-            Util.Array.removeByValue($scope.buckets, bucket);
         });
 
         //当前区域
@@ -381,7 +392,7 @@ angular.module('ossClientUiApp')
 /**
  * 文件列表
  */
-    .controller('FileListCtrl', ['$scope', '$routeParams', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException','$timeout', function ($scope, $routeParams, OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException,$timeout) {
+    .controller('FileListCtrl', ['$scope', '$routeParams','localStorageService', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException','$timeout', function ($scope, $routeParams, localStorageService,OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException,$timeout) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -390,6 +401,15 @@ angular.module('ossClientUiApp')
             loadFileCount = 500,
             lastLoadMaker = '',
             isAllFileLoaded = false;
+
+
+        $scope.showTip = localStorageService.get('hide-tip') == 1 ?  false: true;
+        console.log('$scope.showTip',localStorageService.get('hide-tip'));
+        $scope.tipContent = '<i class="fa fa-info-circle"></i> <span>小技巧：使用Shift和Ctrl（Mac的Commond）键可以实现多选操作，同时也支持右键。</span>';
+        $scope.disableTip = function(){
+            $scope.showTip = false;
+            localStorageService.set('hide-tip',1);
+        };
 
         //默认排序
         $scope.orderBy = '';

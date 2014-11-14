@@ -8,13 +8,17 @@
         <!--<menu ng-repeat="menu in selectFileMenuList" name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>-->
     </ul>
 </div>
+<p class="oss-tip bg-warning" ng-show="showTip">
+    <span ng-bind-html="tipContent" class="text-warning"></span>
+    <a href="javascript:void(0);" ng-click="disableTip()">不再提示</a>
+</p>
 <div class="clearfix filelist-header">
     <div class="pull-left filename">文件名</div>
     <div class="pull-right  file-create-time">创建时间</div>
     <div class="pull-right filesize">大小</div>
-
 </div>
 <div class="scrollbar filelist-body"
+     ng-class="{'tip-shown':showTip}"
      scroll-load="loadMoreFile()"
      disable-scroll="loadingFile"
      create-file="showCreateFile"
