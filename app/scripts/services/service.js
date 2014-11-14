@@ -2129,7 +2129,7 @@ angular.module('ossClientUiApp')
 
                             var checkFieldValueIsValid = function(value){
                               //不检查
-                              return true;
+                              //return true;
                               return /^[a-zA-Z0-9\-_/.;,:]+$/.test(value);
                             };
 
@@ -2174,28 +2174,34 @@ angular.module('ossClientUiApp')
                                 return;
                             }
 
-                            var headers = $.extend({},ossHeaders,canonicalizedOSSheaders);
+
                             $scope.saving = true;
-                            OSS.invoke('setMetaObject',{
-                                bucket:bucket.Name,
-                                object:object.path,
-                                location:bucket.Location,
-                                canonicalized_oss_headers:headers
-                            },function(res){
-                                $scope.saving = false;
-                                if(!res.error){
-                                    $modalInstance.close();
-                                }else{
-                                    $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
-                                }
-                            });
-                            //OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
+
+                            //var headers = $.extend({},ossHeaders,canonicalizedOSSheaders);
+                            //OSS.invoke('setMetaObject',{
+                            //    bucket:bucket.Name,
+                            //    object:object.path,
+                            //    location:bucket.Location,
+                            //    canonicalized_oss_headers:headers
+                            //},function(res){
                             //    $scope.saving = false;
-                            //    $modalInstance.close();
-                            //}).error(function(res,status){
-                            //    $scope.saving = false;
-                            //    $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                            //    if(!res.error){
+                            //        $modalInstance.close();
+                            //    }else{
+                            //        $rootScope.$broadcast('showError',OSSException.getClientErrorMsg(res));
+                            //    }
                             //});
+
+                            angular.extend(canonicalizedOSSheaders,{
+                                'x-oss-copy-source': '/' + bucket.Name + '/' + encodeURIComponent(object.path)
+                            });
+                            OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
+                                $scope.saving = false;
+                                $modalInstance.close();
+                            }).error(function(res,status){
+                                $scope.saving = false;
+                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                            });
                         };
 
                         $scope.addCustomHeader = function () {

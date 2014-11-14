@@ -225,7 +225,6 @@ angular
                 $scope.checkingLocation = false;
                 //usSpinnerService.stop('checking-locaiton-spinner');
                 $scope.defaultLocation = predictionLocation;
-                console.log('$scope.region',$scope.region);
             });
         }
 

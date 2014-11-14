@@ -10191,119 +10191,125 @@ input:focus {
   overflow: auto;
 }
 /* line 44, ../../app/styles/_modal.scss */
+.set_http_header_modal .btn-remove-wrapper {
+  padding: 0 40px;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+/* line 50, ../../app/styles/_modal.scss */
 .set_http_header_modal .form-horizontal .control-label {
   width: 35%;
   padding-right: 15px;
 }
-/* line 48, ../../app/styles/_modal.scss */
+/* line 54, ../../app/styles/_modal.scss */
 .set_http_header_modal .form-horizontal .input-wrapper {
   width: 65%;
   padding-right: 25px;
 }
-/* line 53, ../../app/styles/_modal.scss */
+/* line 59, ../../app/styles/_modal.scss */
 .set_http_header_modal .custom-header-list .form-group:nth-child(1) {
   width: 35%;
 }
-/* line 57, ../../app/styles/_modal.scss */
+/* line 63, ../../app/styles/_modal.scss */
 .set_http_header_modal .custom-header-list .form-group:nth-child(2) {
   width: 45%;
 }
-/* line 61, ../../app/styles/_modal.scss */
+/* line 67, ../../app/styles/_modal.scss */
 .set_http_header_modal .custom-header-list .form-group:nth-child(3) {
   width: 20%;
   padding-left: 5px;
 }
-/* line 66, ../../app/styles/_modal.scss */
+/* line 72, ../../app/styles/_modal.scss */
 .set_http_header_modal .custom-header-list .form-group .btn {
   margin-top: 23px;
 }
 
-/* line 73, ../../app/styles/_modal.scss */
+/* line 79, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper {
   border: 1px solid #d8d8d8;
   text-align: center;
 }
-/* line 77, ../../app/styles/_modal.scss */
+/* line 83, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper .part-list-header {
   height: 32px;
   line-height: 32px;
   background: #f2f2f2;
   border-bottom: 1px solid #d8d8d8;
 }
-/* line 83, ../../app/styles/_modal.scss */
+/* line 89, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper .number-cell {
   padding: 0 10px;
   width: 20%;
 }
-/* line 88, ../../app/styles/_modal.scss */
+/* line 94, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper .last-modify-cell {
   padding: 0 10px;
   width: 40%;
 }
-/* line 93, ../../app/styles/_modal.scss */
+/* line 99, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper .size-cell {
   padding: 0 10px;
   width: 40%;
 }
-/* line 98, ../../app/styles/_modal.scss */
+/* line 104, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper .upload-part-list {
   max-height: 300px;
   overflow: auto;
 }
-/* line 102, ../../app/styles/_modal.scss */
+/* line 108, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper .upload-part-list > li {
   height: 28px;
   line-height: 28px;
   cursor: default;
 }
-/* line 107, ../../app/styles/_modal.scss */
+/* line 113, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper .upload-part-list > li:nth-child(even) {
   background: #f7f7f7;
 }
-/* line 111, ../../app/styles/_modal.scss */
+/* line 117, ../../app/styles/_modal.scss */
 .upload_detail_modal .part-list-wrapper .upload-part-list > li:hover {
   background: #e1e3e7;
 }
 
-/* line 122, ../../app/styles/_modal.scss */
+/* line 128, ../../app/styles/_modal.scss */
 .alert-modal section {
   display: table;
   padding: 35px;
 }
-/* line 125, ../../app/styles/_modal.scss */
+/* line 131, ../../app/styles/_modal.scss */
 .alert-modal section > div {
   display: table-cell;
   vertical-align: middle;
   padding: 0 10px;
 }
-/* line 132, ../../app/styles/_modal.scss */
+/* line 138, ../../app/styles/_modal.scss */
 .alert-modal .modal-body {
   padding: 20px;
 }
-/* line 137, ../../app/styles/_modal.scss */
+/* line 143, ../../app/styles/_modal.scss */
 .alert-modal.success-alert-modal .modal-body {
   color: #5cb85c;
 }
-/* line 144, ../../app/styles/_modal.scss */
+/* line 150, ../../app/styles/_modal.scss */
 .alert-modal.error-alert-modal .modal-body {
   color: #f35050;
 }
-/* line 151, ../../app/styles/_modal.scss */
+/* line 157, ../../app/styles/_modal.scss */
 .alert-modal.warning-alert-modal .modal-body {
   color: #ff9900;
 }
-/* line 158, ../../app/styles/_modal.scss */
+/* line 164, ../../app/styles/_modal.scss */
 .alert-modal.info-alert-modal .modal-body {
   color: #333333;
 }
 
-/* line 169, ../../app/styles/_modal.scss */
+/* line 175, ../../app/styles/_modal.scss */
 .get_object_uri_modal .input-wrapper {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 172, ../../app/styles/_modal.scss */
+/* line 178, ../../app/styles/_modal.scss */
 .get_object_uri_modal .error-msg {
   position: absolute;
   bottom: 50px;
@@ -10311,7 +10317,7 @@ input:focus {
   margin-left: 15px;
 }
 
-/* line 179, ../../app/styles/_modal.scss */
+/* line 185, ../../app/styles/_modal.scss */
 .get_object_uri_modal .modal-body span {
   line-height: 32px;
 }

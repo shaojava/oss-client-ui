@@ -482,7 +482,6 @@ angular.module('OSSCommon', [
                     scope.locations.selected = scope.locations[0];
                 }
                 scope.$watch('defaultLocation',function(newVal){
-                    console.log('newVal',newVal);
                     if(!newVal) return;
                     scope.locations.selected = _.find(scope.locations,function(region){
                         return region.location.indexOf(newVal) == 0;

@@ -34,9 +34,11 @@
                             </div>
                         </div>
                         <div class="pull-left form-group">
-                            <button class="btn btn-default add-header" ng-if="$index == 0" ng-click="addCustomHeader()">添加</button>
                             <button class="btn btn-default remove-header" ng-if="$index != 0" ng-click="removeCustomHeader(customHeader)">删除</button>
                         </div>
+                    </li>
+                    <li>
+                        <button class="btn btn-default add-header" ng-click="addCustomHeader()">添加输入框</button>
                     </li>
                 </ul>
             </tab>
