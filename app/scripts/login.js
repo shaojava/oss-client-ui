@@ -220,10 +220,10 @@ angular
         $scope.predictionLocation = '';
         if(OSSConfig.isGuiZhouClient()){
             $scope.checkingLocation = true;
-            //usSpinnerService.spin('checking-locaiton-spinner');
+            usSpinnerService.spin('checking-locaiton-spinner');
             checkCurrentLocation(function(predictionLocation){
                 $scope.checkingLocation = false;
-                //usSpinnerService.stop('checking-locaiton-spinner');
+                usSpinnerService.stop('checking-locaiton-spinner');
                 $scope.defaultLocation = predictionLocation;
             });
         }
