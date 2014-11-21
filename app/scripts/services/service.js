@@ -1841,27 +1841,44 @@ angular.module('ossClientUiApp')
 
                         $scope.min = 1;
 
+                        //线程数最大限制
                         $scope.max = 10;
+
+                        //任务数最大限制
+                        $scope.maxTaskLimit = 99;
 
                         $scope.isCustomClient = OSSConfig.isCustomClient();
 
                         $scope.setting = OSS.invoke('getTransInfo');
 
                         var checkSetting = function(setting){
-                            var unValidMessage = '';
-                            angular.forEach(setting,function(val){
+                            var unValidMsg = '';
+                            angular.forEach(setting,function(val,key){
                                     if(!/^[1-9]{1}[0-9]*$/.test(val)){
-                                        unValidMessage = '设置的值必须是大于0小于或等于10的整数';
+                                        unValidMsg = '设置的值必须是正整数';
+                                        if(_.indexOf(['upload_peer_max','download_peer_max'],key) >= 0){
+                                            unValidMsg = '单任务线程数必须是大于' +  $scope.min + '小于等于'+$scope.max+'的整数';
+                                        }else{
+                                            unValidMsg = '同时任务数必须是大于' +  $scope.min + '小于等于'+$scope.maxTaskLimit+'的整数';
+                                        }
                                         return false;
                                     }
-                                    if(val<=0 || val>10){
-                                        unValidMessage = '设置的值必须是大于0小于或等于10的整数';
-                                        return false;
-                                    }
+                                    //if(val <= $scope.min){
+                                    //    unValidMsg = '设置的值必须大于0';
+                                    //    return false;
+                                    //}
+                                    //if(_.indexOf(['upload_peer_max','download_peer_max'],key) >= 0 && val > $scope.max){
+                                    //    unValidMsg = '最大线程数不能超过' + $scope.max;
+                                    //    return false;
+                                    //}
+                                    //if(_.indexOf(['upload_task_max','download_task_max'],key) >= 0 && val > $scope.maxTaskLimit){
+                                    //    unValidMsg = '最大任务数不能超过' + $scope.maxTaskLimit;
+                                    //    return false;
+                                    //}
                             });
 
-                            if(unValidMessage){
-                                $rootScope.$broadcast('showError',unValidMessage);
+                            if(unValidMsg){
+                                $rootScope.$broadcast('showError',unValidMsg);
                                 return false;
                             }
                             return true;
