@@ -22,7 +22,7 @@
         <div class="left-header">
             <h1><img src="images/oss_logo_small.png" alt=""/></h1>
             <button title="创建Bucket" class="fa fa-plus add-bucket" ng-click="showAddBucketModal()"></button>
-            <button class="fa fa-cog fa-lg export-auth" ng-click="exportAuthorization()" title="设置"></button>
+            <button class="fa fa-cog fa-lg export-auth" style="margin-top: -1px;vertical-align: middle;" ng-click="exportAuthorization()" title="设置"></button>
         </div>
         <ul class="scrollbar dark bucket-list" scroll-to-item="{{scrollToIndex}}" item-selector=".bucket-item">
             <li class="bucket-item" ng-repeat="bucket in buckets" dropdown title="{{bucket.Name}}" context-menu="onConextMenuShow(bucket)" data-target="bucket-menu">
