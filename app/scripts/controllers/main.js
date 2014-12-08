@@ -49,6 +49,10 @@ angular.module('ossClientUiApp')
             $location.url(url);
         };
 
+        //refer设置
+        $scope.setRefer = function (bucket) {
+          OSSModal.setRefer(bucket);
+        }
         $scope.onConextMenuShow = function (bucket) {
             $scope.activeBucket = bucket;
         }

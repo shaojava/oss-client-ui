@@ -185,3 +185,10 @@
 .get_object_uri_modal .modal-body span{
   line-height: 32px;
 }
+
+.set_refer_modal{
+  .input-wrapper{
+    @include ellipsis;
+  }
+
+}

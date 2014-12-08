@@ -874,10 +874,20 @@ angular.module('ossClientUiApp')
  * object的操作菜单
  */
     .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException) {
-        var currentMenus = 'upload create paste'.split(' '),
+        var currentMenus = 'refer upload create paste'.split(' '),
             selectMenus = 'download copy del get_uri set_header paste'.split(' '),
-            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
+            groupMenu = ['upload create refer'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
         var allMenu = [
+            {
+              name: 'refer',
+              text: 'Refer设置',
+              getState: function () {
+                return 1;
+              },
+              execute: function (bucket) {
+                OSSModal.setRefer(bucket);
+              }
+            },
             {
                 name: 'upload',
                 text: '上传',
@@ -1605,8 +1615,21 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl('', (currentLocation ? currentLocation : 'oss'), expires, signature, canonicalizedResource);
-                return $http.get(requestUrl);
+              console.log("getBucket:::",requestUrl)
+              return $http.get(requestUrl);
 
+            },
+            getBucketsRefer: function () {
+              var expires = getExpires();
+              var canonicalizedResource = getCanonicalizedResource();
+              var signature = OSS.invoke('getSignature', {
+                verb: 'GET',
+                expires: expires,
+                canonicalized_resource: canonicalizedResource
+              });
+              var requestUrl = getRequestUrl('bucket005', (currentLocation ? currentLocation : 'oss'), expires, signature, canonicalizedResource);
+              console.log("getBucketsRefer:::",requestUrl);
+              return $http.get(requestUrl);
             },
             createBucket: function (bucketName, region, acl) {
                 var expires = getExpires();
@@ -2240,6 +2263,20 @@ angular.module('ossClientUiApp')
                 };
                 option = angular.extend({}, defaultOption, option);
                 return $modal.open(option);
+            },
+            setRefer: function (bucket){
+              var option = {
+                templateUrl: 'views/set_refer_modal.html',
+                windowClass: 'set_refer_modal',
+                controller: function ($scope, $modalInstance) {
+                  OSSApi.getBucketsRefer();
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
             },
             getObjectURI: function (bucket, object) {
                 var option = {

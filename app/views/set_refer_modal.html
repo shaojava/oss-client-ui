@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4>Refer设置</h4>
+</div>
+<div class="modal-body min-height-200">
+  <div>
+    <div class="col-sm-3 text-right">Refer设置：</div>
+    <div class="col-sm-9">
+      <textarea rows="3" class="form-control" placeholder="请输入要设置的refer"/>
+    </div>
+  </div>
+
+  <div>
+    <div class="col-sm-3 text-right" style="margin-top:10px;">空Refer：</div>
+    <div class="col-sm-9">
+      <div class="radio">
+        <label style="display: inline-block;line-height:24px">
+          <input type="radio" name="referBlank" id="referBlank1" checked value="true"> 允许为空
+        </label>
+      </div>
+      <div class="radio">
+        <label style="display: inline-block;line-height:24px">
+          <input type="radio" name="referBlank" id="referBlank2" value="false"> 不允许为空
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="cancel()">确定</button>
+  <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+</div>
