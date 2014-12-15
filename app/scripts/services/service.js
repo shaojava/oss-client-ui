@@ -885,6 +885,7 @@ angular.module('ossClientUiApp')
                 return 1;
               },
               execute: function (bucket) {
+                console.log("refer setting",bucket)
                 OSSModal.setRefer(bucket);
               }
             },
@@ -1492,6 +1493,24 @@ angular.module('ossClientUiApp')
                     "</LocationConstraint >",
                     "</CreateBucketConfiguration >"
                 ].join('');
+            },
+            getSetBucketReferXML: function (refer) {
+              var referers = refer.content.split(";")
+              var _referContent = ""
+              for(var i=0;i<referers.length;i++){
+                _referContent +="<Referer>" + referers[i] + "</Referer>"
+              }
+              return [
+                this.getXMLHeader(),
+                "<RefererConfiguration>",
+                "<AllowEmptyReferer>",
+                refer.allowEmpty,
+                "</AllowEmptyReferer>",
+                "<RefererList>",
+                _referContent,
+                "</RefererList>",
+                "</RefererConfiguration>"
+              ].join('')
             }
         };
     })
@@ -1615,21 +1634,38 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl('', (currentLocation ? currentLocation : 'oss'), expires, signature, canonicalizedResource);
-              console.log("getBucket:::",requestUrl)
-              return $http.get(requestUrl);
-
+                return $http.get(requestUrl);
             },
-            getBucketsRefer: function () {
+            getBucketRefer: function (bucket) {
               var expires = getExpires();
-              var canonicalizedResource = getCanonicalizedResource();
+              var canonicalizedResource = getCanonicalizedResource(bucket.Name, '',{referer: undefined});
               var signature = OSS.invoke('getSignature', {
                 verb: 'GET',
                 expires: expires,
                 canonicalized_resource: canonicalizedResource
               });
-              var requestUrl = getRequestUrl('bucket005', (currentLocation ? currentLocation : 'oss'), expires, signature, canonicalizedResource);
-              console.log("getBucketsRefer:::",requestUrl);
+              var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
               return $http.get(requestUrl);
+            },
+            setBucketRefer: function (bucket,refer) {
+              var expires = getExpires();
+              var canonicalizedResource = getCanonicalizedResource(bucket.Name, '',{referer: undefined});
+              var contentType = 'application/xml';
+              var signature = OSS.invoke('getSignature', {
+                verb: 'PUT',
+                content_type: contentType,
+                expires: expires,
+                canonicalized_resource: canonicalizedResource
+              });
+              var headers = angular.extend({}, {}, {
+                'Accept': contentType,
+                'Content-Type': contentType
+              });
+              var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+              console.log("============",RequestXML.getSetBucketReferXML(refer))
+              return $http.put(requestUrl,RequestXML.getSetBucketReferXML(refer),{
+                headers: headers
+              });
             },
             createBucket: function (bucketName, region, acl) {
                 var expires = getExpires();
@@ -2269,7 +2305,52 @@ angular.module('ossClientUiApp')
                 templateUrl: 'views/set_refer_modal.html',
                 windowClass: 'set_refer_modal',
                 controller: function ($scope, $modalInstance) {
-                  OSSApi.getBucketsRefer();
+                  $scope.loading = true;
+                  $scope.refer = {
+                    content:'',
+                    allowEmpty:true
+                  }
+
+                  OSSApi.getBucketRefer(bucket).success(function (res) {
+                    $scope.loading = false;
+                    var _referContent = ""
+                    if(res.RefererConfiguration && res.RefererConfiguration.RefererList && res.RefererConfiguration.RefererList.Referer) {
+                      for (var i = 0; i < res.RefererConfiguration.RefererList.Referer.length; i++) {
+                        _referContent += res.RefererConfiguration.RefererList.Referer[i] + ";"
+                      }
+                    }
+                    console.log(res.RefererConfiguration.AllowEmptyReferer)
+                    $scope.refer.content = _referContent.replace(/;/g,"\r")
+                    $scope.refer.allowEmpty = Boolean(res.RefererConfiguration.AllowEmptyReferer == 'true');
+
+                  }).error(function(res,status){
+                    $scope.loading = false;
+                    $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                  });
+
+                  $scope.disabledSave = function () {
+                    if (!$scope.refer.allowEmpty && (!$scope.refer.content || $scope.refer.content.length == 0)) {
+                      return true
+                    }else if($scope.saving){
+                      return true
+                    }
+                    return false
+                  }
+
+                  $scope.setReferer = function () {
+                    $scope.saving = true;
+                    var _refer = $scope.refer.content.replace(/\r|\n/ig,";");
+                    var params = {
+                      content:_refer,
+                      allowEmpty:$scope.refer.allowEmpty
+                    }
+                    OSSApi.setBucketRefer(bucket,params).success(function (res) {
+                      $scope.saving = false
+                      $modalInstance.dismiss('cancel');
+                    }).error(function(res,status){
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                   };
