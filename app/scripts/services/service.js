@@ -873,22 +873,11 @@ angular.module('ossClientUiApp')
 /**
  * object的操作菜单
  */
-    .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException) {
-        var currentMenus = 'refer upload create paste'.split(' '),
+    .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException','OSSConfig', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException,OSSConfig) {
+        var currentMenus = 'upload create paste'.split(' '),
             selectMenus = 'download copy del get_uri set_header paste'.split(' '),
-            groupMenu = ['upload create refer'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
+            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
         var allMenu = [
-            {
-              name: 'refer',
-              text: 'Refer设置',
-              getState: function () {
-                return 1;
-              },
-              execute: function (bucket) {
-                console.log("refer setting",bucket)
-                OSSModal.setRefer(bucket);
-              }
-            },
             {
                 name: 'upload',
                 text: '上传',
@@ -1136,6 +1125,22 @@ angular.module('ossClientUiApp')
             }
 
         ];
+        if(OSSConfig.showRefer()){
+          var referSetting = {
+              name: 'refer',
+              text: 'Refer设置',
+              getState: function () {
+                return 1;
+              },
+              execute: function (bucket) {
+                OSSModal.setRefer(bucket);
+              }
+          }
+
+          allMenu.splice(0,0,referSetting);
+          currentMenus = currentMenus.concat(['refer']);
+          groupMenu[0].push('refer');
+        }
         return {
             getAllMenu: function () {
                 return allMenu;
@@ -2315,11 +2320,14 @@ angular.module('ossClientUiApp')
                     $scope.loading = false;
                     var _referContent = ""
                     if(res.RefererConfiguration && res.RefererConfiguration.RefererList && res.RefererConfiguration.RefererList.Referer) {
-                      for (var i = 0; i < res.RefererConfiguration.RefererList.Referer.length; i++) {
-                        _referContent += res.RefererConfiguration.RefererList.Referer[i] + ";"
+                      if(angular.isArray(res.RefererConfiguration.RefererList.Referer)) {
+                        for (var i = 0; i < res.RefererConfiguration.RefererList.Referer.length; i++) {
+                          _referContent += res.RefererConfiguration.RefererList.Referer[i] + ";"
+                        }
+                      }else{
+                        _referContent += res.RefererConfiguration.RefererList.Referer + ";"
                       }
                     }
-                    console.log(res.RefererConfiguration.AllowEmptyReferer)
                     $scope.refer.content = _referContent.replace(/;/g,"\r")
                     $scope.refer.allowEmpty = Boolean(res.RefererConfiguration.AllowEmptyReferer == 'true');
 

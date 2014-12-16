@@ -116,9 +116,9 @@ angular.module('OSSCommon', [
             isGuiZhouClient: function () {
                 return config.source == 'guizhou';
             },
-            
+
             showRefer: function () {
-              console.log(config)
+              return !!config.showrefer
             },
             /**
              * 创建bucket是否不允许选择区域
