@@ -32,7 +32,7 @@ angular.module('ossClientUiApp')
             }
             var time = (filesize - offset) / speed * 1000;
             //console.log('time',time);
-            return time ? $filter('date')(time, '00:mm:ss') : '--:--:--';
+            return time ? $filter('date')(time, 'HH:mm:ss') : '--:--:--';
         }
     })
     .filter('getQueueState', function ($filter) {
