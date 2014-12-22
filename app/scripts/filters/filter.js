@@ -30,9 +30,33 @@ angular.module('ossClientUiApp')
             if (!speed) {
                 return '--:--:--';
             }
-            var time = (filesize - offset) / speed * 1000;
+            //var time = (filesize - offset) / speed * 1000;
             //console.log('time',time);
-            return time ? $filter('date')(time, 'HH:mm:ss') : '--:--:--';
+            //return time ? $filter('date')(time, '00:mm:ss') : '--:--:--';
+            var second = (filesize - offset) / speed
+            if (second < 0 ){
+              second = 0;
+              return '--:--:--';
+            }
+            var d = parseInt(second/3600/24);
+            var h = parseInt((second/3600) % 24);
+            var m = parseInt((second/60) % 24);
+            var s = parseInt(second % 60)
+            if(d>0){
+              return '大于' + d +"天"
+            }else {
+              if (h < 10) {
+                h = '0' + h
+              }
+              if (m < 10) {
+                m = '0' + m
+              }
+              if (s < 10) {
+                s = '0' + s
+              }
+              return h + ":" + m + ":" + s
+            }
+
         }
     })
     .filter('getQueueState', function ($filter) {
