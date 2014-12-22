@@ -1906,7 +1906,7 @@ angular.module('ossClientUiApp')
                         $scope.min = 1;
 
                         //线程数最大限制
-                        $scope.max = 10;
+                        $scope.max = 99;
 
                         //任务数最大限制
                         $scope.maxTaskLimit = 99;
