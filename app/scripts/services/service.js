@@ -1618,7 +1618,9 @@ angular.module('ossClientUiApp')
         return {
             getURI: function (bucket, objectName, expires) {
                 if (!expires) {
-                    return 'http://' + bucket.Name + '.' + bucket.Location + '.' + host + '/' + encodeURIComponent(objectName);
+                    var _location = OSSRegion.changeLocation(bucket.Location);
+                    return 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
+                    //return 'http://' + bucket.Name + '.' + bucket.Location + '.' + host + '/' + encodeURIComponent(objectName);
                 } else {
                     expires = getExpires(expires);
                     var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectName);
@@ -1667,7 +1669,6 @@ angular.module('ossClientUiApp')
                 'Content-Type': contentType
               });
               var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
-              console.log("============",RequestXML.getSetBucketReferXML(refer))
               return $http.put(requestUrl,RequestXML.getSetBucketReferXML(refer),{
                 headers: headers
               });
