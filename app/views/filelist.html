@@ -3,10 +3,13 @@
         <div class="btn-group" ng-repeat="menuGroup in menuGroups">
             <menu ng-repeat="menu in menuGroup" ng-if="!isExclude(menu)" name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>
         </div>
-
+        <div class="bucket-region">
+          当前Bucket所在区域：{{bucket.Location | getLocationName}}
+        </div>
 
         <!--<menu ng-repeat="menu in selectFileMenuList" name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>-->
     </ul>
+
 </div>
 <p class="oss-tip bg-warning" ng-show="showTip">
     <span ng-bind-html="tipContent" class="text-warning"></span>

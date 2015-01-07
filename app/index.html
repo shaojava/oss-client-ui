@@ -36,6 +36,7 @@
                     <li><a href="javascript:;" ng-click="editBucket(bucket)">属性管理</a></li>
                     <li><a href="javascript:;" ng-click="manageBucketPartition(bucket)">碎片管理</a></li>
                     <li><a href="javascript:;" ng-if="showRefer" ng-click="setRefer(bucket)">Refer设置</a></li>
+                    <li><a href="javascript:;" ng-click="downloadBucket(bucket)">Bucket下载</a></li>
                 </ul>
             </li>
         </ul>
@@ -48,6 +49,7 @@
                 <li><a href="javascript:;" ng-click="editBucket(activeBucket)">属性管理</a></li>
                 <li><a href="javascript:;" ng-click="manageBucketPartition(activeBucket)">碎片管理</a></li>
                 <li><a href="javascript:;" ng-if="showRefer" ng-click="setRefer(activeBucket)">Refer设置</a></li>
+                <li><a href="javascript:;" ng-click="downloadBucket(bucket)">Bucket下载</a></li>
             </ul>
         </div>
     </div>
@@ -58,10 +60,10 @@
         </div>
         <div class="bread">
             <div class="history">
-                <button class="backward" ng-disabled="!historyCanBackward" ng-click="backward()">
+                <button class="backward" ng-disabled="!historyCanBackward" ng-click="backward()" title="后退">
                     <i class="fa fa-angle-left"></i>
                 </button>
-                <button class="forward" ng-disabled="!historyCanForward" ng-click="forward()">
+                <button class="forward" ng-disabled="!historyCanForward" ng-click="forward()" title="前进">
                     <i class="fa fa-angle-right"></i>
                 </button>
             </div>

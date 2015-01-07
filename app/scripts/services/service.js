@@ -968,6 +968,31 @@ angular.module('ossClientUiApp')
                 }
             },
             {
+              name: 'bucketdownload',
+              text: '下载',
+              getState: function () {
+                return 1;
+              },
+              execute: function (bucket) {
+                var list = [{
+                    location: bucket['Location'],
+                    bucket: bucket['Name'],
+                    object: ""
+                  }]
+
+                OSS.invoke('saveFile', {
+                  list: list
+                }, function (res) {
+                  if (!res.error) {
+                    $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                    $rootScope.$broadcast('reloadDownloadQueue');
+                  } else {
+                    $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                  }
+                })
+              }
+            },
+            {
                 name: 'download',
                 text: '下载',
                 getState: function (selectedFiles) {
@@ -1558,8 +1583,8 @@ angular.module('ossClientUiApp')
             },
             getAcls: function () {
                 return {
-                    "public-read-write": "公共读写",
                     "public-read": "公共读",
+                    "public-read-write": "公共读写",
                     "private": "私有"
                 }
             },
@@ -1907,7 +1932,7 @@ angular.module('ossClientUiApp')
                         $scope.min = 1;
 
                         //线程数最大限制
-                        $scope.max = 99;
+                        $scope.max = 10;
 
                         //任务数最大限制
                         $scope.maxTaskLimit = 99;

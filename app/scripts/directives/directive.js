@@ -216,7 +216,6 @@ angular.module('ossClientUiApp')
                 executeCmd:'&'
             },
             link: function postLink(scope) {
-
                 scope.handleCmdClick = function(cmd,item){
                     scope.executeCmd({
                         cmd:cmd,
@@ -237,11 +236,11 @@ angular.module('ossClientUiApp')
                 scope.isWaiting = OSSQueueItem.isWaiting;
 
                 //是否已暂停
-                scope.isPasued = OSSQueueItem.isPasued;
+                scope.isPasued = OSSQueueItem.isPaused;
 
                 //获取进度
                 scope.getProgress = function(item){
-                    if(scope.isPasued(item) || scope.isWaiting(item) ||  scope.isInProgress(item)){
+                    if(scope.isError(item) || scope.isPasued(item) || scope.isWaiting(item) ||  scope.isInProgress(item)){
                         if(item.filesize == 0){
                             return 100;
                         }
@@ -275,6 +274,40 @@ angular.module('ossClientUiApp')
                 });
             }
         };
+    }])
+    .directive('onlyNumber', ['$timeout',function ($timeout) {
+        return {
+          restrict: 'A',
+          replace: false,
+          link: function postLink(scope, element, attrs) {
+            var _val = 0;
+            $timeout(function(){
+              var min = parseInt(attrs.min),max = parseInt(attrs.max)
+              _val = element.val();
+              element.keydown(function(event) {
+                if(event.ctrlKey || event.shiftKey){
+                  return false;
+                }
+                if((event.keyCode > 47 && event.keyCode < 58) || (event.keyCode > 95 && event.keyCode < 106) || "37 38 39 40 8".indexOf(event.keyCode+"") >= 0){
+                  return true
+                }
+                return false
+
+              }).keyup(function(event){
+                if((min || min == 0) && (max || max == 0)) {
+                  _val = element.val();
+                  if (!_val || _val < min) {
+                    element.val(min);
+                    _val = min;
+                  } else if (_val > max) {
+                    element.val(max);
+                    _val = max;
+                  }
+                }
+              });
+            })
+          }
+        }
     }])
     .directive('fileIcon', ['OSSObject', function (OSSObject) {
         return {

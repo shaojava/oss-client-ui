@@ -66,6 +66,10 @@ angular
                 location += '-internal';
             }
 
+            if(!$scope.isCustomClient && !isCloudHost){
+              location = null;
+            }
+
             if(OSSConfig.isGuiZhouClient()){
                 if(!location){
                     alert('请选择区域');

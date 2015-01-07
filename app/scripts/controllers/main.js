@@ -8,7 +8,7 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig) {
+    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu) {
 
         $scope.showRefer = OSSConfig.showRefer();
         //
@@ -29,7 +29,6 @@ angular.module('ossClientUiApp')
                 if (param && param.act == 'add') {
                     $scope.buckets.push(param.bucket);
                     $scope.scrollToIndex = $scope.buckets.length - 1;
-                    console.log('$scope.scrollToIndex',$scope.scrollToIndex);
                     $location.path(OSSLocation.getUrl(param.bucket.Name));
                 }
 
@@ -54,6 +53,11 @@ angular.module('ossClientUiApp')
         $scope.setRefer = function (bucket) {
           OSSModal.setRefer(bucket);
         }
+        $scope.downloadBucket = function (bucket){
+          OSSAlert.confirm('确定要下载整个Bucket吗？').result.then(function() {
+            OSSMenu.getMenu("bucketdownload").execute(bucket);
+          });
+        }
         $scope.onConextMenuShow = function (bucket) {
             $scope.activeBucket = bucket;
         }
@@ -65,13 +69,10 @@ angular.module('ossClientUiApp')
         $scope.backward = function () {
             OSSLocationHistory.backward();
         };
-
         //前进
         $scope.forward = function () {
             OSSLocationHistory.forward();
         };
-
-
         Bucket.list().then(function (buckets) {
             if(buckets){
                 $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
@@ -409,7 +410,7 @@ angular.module('ossClientUiApp')
 
 
         $scope.showTip = localStorageService.get('hide-tip') == 1 ?  false: true;
-        console.log('$scope.showTip',localStorageService.get('hide-tip'));
+        //console.log('$scope.showTip',localStorageService.get('hide-tip'));
         $scope.tipContent = '<i class="fa fa-info-circle"></i> <span>小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。</span>';
         $scope.disableTip = function(){
             $scope.showTip = false;
