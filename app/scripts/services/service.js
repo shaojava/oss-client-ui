@@ -2481,6 +2481,7 @@ angular.module('ossClientUiApp')
                                 $scope.parts = $scope.parts.concat(parts);
                             }).error(function (res,status) {
                                 $scope.loading = false;
+                                $scope.firstLoading = false;
                                 $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                             })
                         };
