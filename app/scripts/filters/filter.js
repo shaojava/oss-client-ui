@@ -30,6 +30,7 @@ angular.module('ossClientUiApp')
             if (!speed) {
                 return '--:--:--';
             }
+
             //var time = (filesize - offset) / speed * 1000;
             //console.log('time',time);
             //return time ? $filter('date')(time, '00:mm:ss') : '--:--:--';
@@ -38,10 +39,10 @@ angular.module('ossClientUiApp')
               second = 0;
               return '--:--:--';
             }
-            var d = parseInt(second/3600/24);
-            var h = parseInt((second/3600) % 24);
-            var m = parseInt((second/60) % 24);
-            var s = parseInt(second % 60)
+            var d = parseInt(parseInt(second)/3600/24);
+            var h = parseInt((parseInt(second)/3600) % 24);
+            var m = parseInt((parseInt(second)/60) % 24);
+            var s = parseInt(parseInt(second) % 60)
             if(d>0){
               return '大于' + d +"天"
             }else {
@@ -53,6 +54,9 @@ angular.module('ossClientUiApp')
               }
               if (s < 10) {
                 s = '0' + s
+              }
+              if(h == '00' && m == '00' && s == '00'){
+                 return '00:00:01';
               }
               return h + ":" + m + ":" + s
             }

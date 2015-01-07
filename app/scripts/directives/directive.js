@@ -279,6 +279,9 @@ angular.module('ossClientUiApp')
         return {
           restrict: 'A',
           replace: false,
+          scope:{
+            number:'=onlyNumber'
+          },
           link: function postLink(scope, element, attrs) {
             var _val = 0;
             $timeout(function(){
@@ -297,9 +300,11 @@ angular.module('ossClientUiApp')
                 if((min || min == 0) && (max || max == 0)) {
                   _val = element.val();
                   if (!_val || _val < min) {
+                    scope.number = min;
                     element.val(min);
                     _val = min;
                   } else if (_val > max) {
+                    scope.number = max;
                     element.val(max);
                     _val = max;
                   }

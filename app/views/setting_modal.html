@@ -9,13 +9,13 @@
             <div class="form-group">
                 <label class="col-xs-5 control-label" for="upload_task_limit">同时任务数：</label>
                 <div class="col-xs-2">
-                    <input type="number" only-number min="{{min}}" max="{{maxTaskLimit}}" class="form-control" ng-model="setting.upload_task_max" name="task_limit" id="upload_task_limit" />
+                    <input type="number" only-number="setting.upload_task_max" min="{{min}}" max="{{maxTaskLimit}}" class="form-control" ng-model="setting.upload_task_max" name="task_limit" id="upload_task_limit" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="upload_thread_limit" class="col-xs-5 control-label">单任务线程数：</label>
                 <div class="col-xs-2">
-                    <input type="number" only-number min="{{min}}" max="{{max}}"  ng-model="setting.upload_peer_max" class="form-control" name="download_peer_max" id="upload_thread_limit"/>
+                    <input type="number" only-number="setting.upload_peer_max" min="{{min}}" max="{{max}}"  ng-model="setting.upload_peer_max" class="form-control" name="download_peer_max" id="upload_thread_limit"/>
                 </div>
             </div>
         </fieldset>
@@ -24,14 +24,14 @@
             <div class="form-group">
                 <label for="download_task_limit" class="col-xs-5 control-label">同时任务数：</label>
                 <div class="col-xs-2">
-                    <input type="number" only-number min="{{min}}" max="{{maxTaskLimit}}" ng-model="setting.download_task_max" class="form-control" name="download_task_limit" id="download_task_limit"/>
+                    <input type="number" only-number="setting.download_task_max" min="{{min}}" max="{{maxTaskLimit}}" ng-model="setting.download_task_max" class="form-control" name="download_task_limit" id="download_task_limit"/>
                 </div>
 
             </div>
             <div class="form-group">
                 <label for="download_thread_limit" class="col-xs-5 control-label">单任务线程数：</label>
                 <div class="col-xs-2">
-                    <input type="number" only-number min="{{min}}" max="{{max}}" ng-model="setting.download_peer_max" class="form-control" name="download_thread_limit" id="download_thread_limit"/>
+                    <input type="number" only-number="setting.download_peer_max" min="{{min}}" max="{{max}}" ng-model="setting.download_peer_max" class="form-control" name="download_thread_limit" id="download_thread_limit"/>
                 </div>
             </div>
         </fieldset>

@@ -570,7 +570,7 @@ angular.module('ossClientUiApp')
                         $timeout(function () {
                             _.each(_.filter(items, function (item) {
                                 return OSSQueueItem.isPaused(item);
-                            }), OSSQueueItem.setPaused);
+                            }), OSSQueueItem.setWaiting);
                         });
                     });
                 },
@@ -2460,13 +2460,12 @@ angular.module('ossClientUiApp')
                         var lastMaker = '';
 
                         var allLoaded = false;
-
+                        $scope.firstLoading = true;
                         var loadPart = function () {
                             if ($scope.loading) {
                                 return;
                             }
                             $scope.loading = true;
-                            $scope.firstLoading = true;
                             OSSApi.listUploadPart(bucket, upload, lastMaker, size).success(function (res) {
                                 $scope.loading = false;
                                 if(!$scope.parts || !$scope.parts.length){
