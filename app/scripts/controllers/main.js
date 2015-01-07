@@ -69,9 +69,41 @@ angular.module('ossClientUiApp')
         $scope.backward = function () {
             OSSLocationHistory.backward();
         };
+        //返回到的路径
+        $scope.backwardPath = function() {
+           var _path = OSSLocationHistory.backwardPath();
+           if(_path){
+             _path = decodeURIComponent(_path);
+             if( _path.charAt(_path.length - 1) == '/'){
+               _path = _path.substring(0,_path.length - 1);
+             }
+             var _index = _path.lastIndexOf("/");
+             if(_index >= 0){
+               _path = _path.substring(_index+1)
+             }
+             return "返回到 "+_path;
+           }
+           return "返回";
+        };
         //前进
         $scope.forward = function () {
             OSSLocationHistory.forward();
+        };
+        //前进到的路径
+        $scope.forwardPath = function() {
+          var _path = OSSLocationHistory.forwardPath();
+          if(_path){
+            _path = decodeURIComponent(_path);
+            if( _path.charAt(_path.length - 1) == '/'){
+              _path = _path.substring(0,_path.length - 1);
+            }
+            var _index = _path.lastIndexOf("/");
+            if(_index >= 0){
+              _path = _path.substring(_index+1)
+            }
+            return "前进到 "+_path;
+          }
+          return "前进";
         };
         Bucket.list().then(function (buckets) {
             if(buckets){

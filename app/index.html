@@ -60,11 +60,11 @@
         </div>
         <div class="bread">
             <div class="history">
-                <button class="backward" ng-disabled="!historyCanBackward" ng-click="backward()" title="后退">
-                    <i class="fa fa-angle-left"></i>
+                <button class="backward" ng-disabled="!historyCanBackward" ng-click="backward()">
+                    <i class="fa fa-angle-left" title="{{backwardPath()}}"></i>
                 </button>
-                <button class="forward" ng-disabled="!historyCanForward" ng-click="forward()" title="前进">
-                    <i class="fa fa-angle-right"></i>
+                <button class="forward" ng-disabled="!historyCanForward" ng-click="forward()">
+                    <i class="fa fa-angle-right" title="{{forwardPath();}}"></i>
                 </button>
             </div>
             <ul class="bread-list" >

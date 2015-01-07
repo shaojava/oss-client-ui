@@ -1295,12 +1295,25 @@ angular.module('ossClientUiApp')
             forward: function () {
                 this.go(true);
             },
+            backwardPath:function(){
+              if(this.canBackward()) {
+                return history[current - 1]
+              }
+              return null;
+            },
             backward: function () {
                 this.go();
+            },
+            forwardPath:function(){
+              if(this.canForward()) {
+                return history[current + 1]
+              }
+              return null;
             },
             canForward: function () {
                 return current < history.length - 1;
             },
+
             canBackward: function () {
                 return current > 0;
             }
