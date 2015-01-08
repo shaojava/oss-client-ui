@@ -159,7 +159,24 @@ input:focus {
   .form-control::-webkit-input-placeholder {
     transition: color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   }
+  .login-log{
+     position:absolute;
+     bottom:0px;
+     left:0px;
+     right:0px;
+     text-align: center;
+     padding-bottom: 10px;
 
+  }
+  .login-log > img{
+    opacity: 0.3;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+  }
 }
 
 .dark-theme{

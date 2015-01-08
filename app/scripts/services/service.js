@@ -1137,15 +1137,21 @@ angular.module('ossClientUiApp')
                 name: 'set_header',
                 text: '设置HTTP头',
                 getState: function (selectedFiles) {
-                    var len = selectedFiles.length;
-                    if (!len || len > 1) {
-                        return 0;
-                    } else {
-                        return selectedFiles[0].dir ? 0 : 1
-                    }
+                    if (!selectedFiles || selectedFiles.length == 0)
+                      return 0;
+                    var dirs = _.find(selectedFiles, function(item) {
+                      return item.dir;
+                    })
+                    return dirs ? 0 : 1
+                    //var len = selectedFiles.length;
+                    //if (!len || len > 1) {
+                    //    return 0;
+                    //} else {
+                    //    return selectedFiles[0].dir ? 0 : 1
+                    //}
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
-                    OSSModal.setObjectHttpHeader(bucket, selectedFiles[0]);
+                    OSSModal.setObjectHttpHeader(bucket, selectedFiles);
                 }
             }
 
@@ -1564,7 +1570,7 @@ angular.module('ossClientUiApp')
     .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope','OSSRegion', function (OSSApi, $q,OSSException,$rootScope,OSSRegion) {
         var buckets = null;
         var deferred = $q.defer();
-        var listPromise;
+        var listPromise,_i=1;
         return {
             list: function () {
                 if (listPromise) {
@@ -1593,6 +1599,41 @@ angular.module('ossClientUiApp')
                     });
                     return listPromise = deferred.promise;
                 }
+            },
+            loadNew: function () {
+                _i++;
+                var _deferred = $q.defer();
+                var newBuckets = [];
+                OSSApi.getBuckets().success(function (res) {
+                    var bucketList = null;
+                    var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                    if(resBuckets){
+                        bucketList = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                    }else{
+                        bucketList = [];
+                    }
+                    //bucketList.push({
+                    //  CreationDate: "2014-12-08T10:36:38.000Z",
+                    //  Location: "oss-cn-guizhou-a",
+                    //  Name: "bkgz00"+_i
+                    //})
+                    //接口返回的bucket的location会带上-a，需要替换成不带-a的
+                    angular.forEach(bucketList,function(newBucket){
+                        var existItem = _.find(buckets, function(bucket) {
+                            return bucket.Name == newBucket.Name;
+                        })
+                        if (!existItem) {
+                            var region  = OSSRegion.getRegionByLocation(newBucket.Location);
+                            if(region){
+                              newBucket.Location = region.location.replace('-internal','');
+                            }
+                            newBuckets.push(newBucket);
+                        }
+                    });
+                    buckets = buckets.concat(newBuckets);
+                    _deferred.resolve(newBuckets);
+                });
+              return _deferred.promise;
             },
             getAcls: function () {
                 return {
@@ -2183,13 +2224,12 @@ angular.module('ossClientUiApp')
              * @param object
              * @returns {*}
              */
-            setObjectHttpHeader: function (bucket, object) {
+            setObjectHttpHeader: function (bucket, objects) {
                 var option = {
                     templateUrl: 'views/set_http_header_modal.html',
                     windowClass: 'set_http_header_modal',
                     controller: function ($scope, $modalInstance) {
-
-                        $scope.object = object;
+                        $scope.objects = objects;
 
                         $scope.headers = [];
                         angular.forEach('Content-Type Content-Disposition Content-Language Cache-Control Expires'.split(' '), function (val) {
@@ -2222,25 +2262,27 @@ angular.module('ossClientUiApp')
                             }
                         });
 
-                        $scope.loading = true;
-                        OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
+                        if(objects && objects.length == 1){
+                          var object = objects[0];
+                          $scope.loading = true;
+                          OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
                             $scope.loading = false;
                             angular.forEach($scope.headers, function (header) {
-                                header.model = getHeader(header.name);
+                              header.model = getHeader(header.name);
                             })
                             angular.forEach(getHeader(), function (val, key) {
-                                if (key.indexOf('x-oss-meta-') === 0) {
-                                    $scope.customHeaders.push({
-                                        nameModel: key.replace(/^x-oss-meta-/, ''),
-                                        contentModel: val
-                                    })
-                                }
+                              if (key.indexOf('x-oss-meta-') === 0) {
+                                $scope.customHeaders.push({
+                                  nameModel: key.replace(/^x-oss-meta-/, ''),
+                                  contentModel: val
+                                })
+                              }
                             });
-                        }).error(function (res,status) {
+                          }).error(function (res,status) {
                             $scope.loading = false;
                             $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                        });
-
+                          });
+                        }
 
                         $scope.setHttpHeader = function (headers, customHeaders) {
                             var ossHeaders = {}, canonicalizedOSSheaders = {};
@@ -2312,16 +2354,30 @@ angular.module('ossClientUiApp')
                             //    }
                             //});
 
-                            angular.extend(canonicalizedOSSheaders,{
-                                'x-oss-copy-source': '/' + bucket.Name + '/' + encodeURIComponent(object.path)
-                            });
-                            OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
-                                $scope.saving = false;
-                                $modalInstance.close();
-                            }).error(function(res,status){
-                                $scope.saving = false;
-                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                            });
+
+                            var errorSetObjects = [];
+                            angular.forEach(objects,function(object,index){
+                                angular.extend(canonicalizedOSSheaders,{
+                                  'x-oss-copy-source': '/' + bucket.Name + '/' + encodeURIComponent(object.path)
+                                });
+                                OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
+                                    if(index == objects.length - 1) {
+                                      $scope.saving = false;
+                                      $modalInstance.close();
+                                    }
+                                }).error(function(res,status) {
+                                  var _filename = object.filename;
+                                  errorSetObjects.push({'filename':_filename,'errmsg':OSSException.getError(res, status).msg});
+                                  if (index == objects.length - 1){
+                                    $scope.saving = false;
+                                    var _errorMsg = '';
+                                    angular.forEach(errorSetObjects,function(item){
+                                      _errorMsg += "文件"+item.filename+"设置http头的错误信息:"+item.errmsg + "<br/>"
+                                    })
+                                    $rootScope.$broadcast('showError', _errorMsg);
+                                  }
+                                });
+                            })
                         };
 
                         $scope.addCustomHeader = function () {

@@ -8,7 +8,7 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu) {
+    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu','$interval', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu,$interval) {
 
         $scope.showRefer = OSSConfig.showRefer();
         //
@@ -53,6 +53,7 @@ angular.module('ossClientUiApp')
         $scope.setRefer = function (bucket) {
           OSSModal.setRefer(bucket);
         }
+        //下载整个bucket
         $scope.downloadBucket = function (bucket){
           OSSAlert.confirm('确定要下载整个Bucket吗？').result.then(function() {
             OSSMenu.getMenu("bucketdownload").execute(bucket);
@@ -105,11 +106,32 @@ angular.module('ossClientUiApp')
           }
           return "前进";
         };
-        Bucket.list().then(function (buckets) {
-            if(buckets){
+        //获取所有bucket列表
+        var loadBuckets = function(){
+            Bucket.list().then(function (buckets) {
+              if(buckets){
                 $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
-            }
-        });
+              }
+            });
+        }
+        loadBuckets();
+
+        //开启bucket定时器，5分钟加载一次
+        var loadNewBuckets = function(){
+            Bucket.loadNew().then(function (buckets) {
+                if(buckets){
+                  var newBuckets = angular.isArray(buckets) ? buckets : [buckets];
+                  $scope.buckets = $scope.buckets.concat(newBuckets);
+                }
+            });
+        }
+        $interval(function(){
+          loadNewBuckets();
+        },60000 * 5);
+
+        $scope.refreshBuckets = function(){
+          loadNewBuckets();
+        };
 
         $scope.breadFilter = function(value){
             return !value.hide;
@@ -170,7 +192,11 @@ angular.module('ossClientUiApp')
         });
 
         //当前区域
-        $scope.currentLocation = OSS.invoke('getCurrentLocation');
+        $scope.currentLocation = 'OSS'
+        var _loginLocation = OSS.invoke('getCurrentLocation');
+        if(_loginLocation) {
+          $scope.currentLocation = 'OSS-当前选择区域：' + $filter('getLocationName')(OSS.invoke('getCurrentLocation'));
+        }
     }])
 /**
  * 传输队列
