@@ -186,9 +186,16 @@
   line-height: 32px;
 }
 
-.set_refer_modal{
-  .input-wrapper{
+.set_refer_modal {
+  .input-wrapper {
     @include ellipsis;
   }
-
+}
+.stop_loaddownloadqueue_modal{
+  .input-wrapper {
+    @include ellipsis;
+  }
+  .modal-dialog{
+      width:400px;
+  }
 }

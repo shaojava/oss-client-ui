@@ -59,6 +59,21 @@ angular.module('ossClientUiApp')
             OSSMenu.getMenu("bucketdownload").execute(bucket);
           });
         }
+
+        //开始下载锁定OSS界面
+        $scope.$on('startDownloadFilesLoading',function(){
+            $scope.startDownloadFiles = true;
+        })
+        //结束下载锁定OSS界面
+        $scope.$on('endDownloadFilesLoading',function(){
+            $scope.startDownloadFiles = false;
+        })
+        //终止加载下载队列
+        $scope.stopLoadDownloadQueue = function(){
+            var _delLoaded = $scope.delLoaded?1:0
+            OSS.invoke('stopLoadDownload', {all:_delLoaded});
+        }
+
         $scope.onConextMenuShow = function (bucket) {
             $scope.activeBucket = bucket;
         }

@@ -979,15 +979,22 @@ angular.module('ossClientUiApp')
                     bucket: bucket['Name'],
                     object: ""
                   }]
-
-                OSS.invoke('saveFile', {
-                  list: list
-                }, function (res) {
-                  if (!res.error) {
-                    $rootScope.$broadcast('toggleTransQueue', true, 'download');
-                    $rootScope.$broadcast('reloadDownloadQueue');
-                  } else {
-                    $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                OSS.invoke('saveFileDlg',null,function(res){
+                  var _path = res.path
+                  if(_path){
+                    $rootScope.$broadcast('startDownloadFilesLoading');
+                    OSS.invoke('saveFile', {
+                      list: list,
+                      path:_path
+                    }, function (res) {
+                      $rootScope.$broadcast('endDownloadFilesLoading')
+                      if (!res.error) {
+                        $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                        $rootScope.$broadcast('reloadDownloadQueue');
+                      } else {
+                        $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                      }
+                    })
                   }
                 })
               }
@@ -1012,16 +1019,23 @@ angular.module('ossClientUiApp')
                             etag:val.etag
                         }
                     });
-
-                    OSS.invoke('saveFile', {
-                        list: list
-                    }, function (res) {
-                        if (!res.error) {
+                    OSS.invoke('saveFileDlg',null,function(res){
+                      var _path = res.path
+                      if(_path){
+                        $rootScope.$broadcast('startDownloadFilesLoading');
+                        OSS.invoke('saveFile', {
+                          list: list,
+                          path:_path
+                        }, function (res) {
+                          $rootScope.$broadcast('endDownloadFilesLoading')
+                          if (!res.error) {
                             $rootScope.$broadcast('toggleTransQueue', true, 'download');
                             $rootScope.$broadcast('reloadDownloadQueue');
-                        } else {
+                          } else {
                             $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
-                        }
+                          }
+                        })
+                      }
                     })
                 }
             },
@@ -1570,7 +1584,7 @@ angular.module('ossClientUiApp')
     .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope','OSSRegion', function (OSSApi, $q,OSSException,$rootScope,OSSRegion) {
         var buckets = null;
         var deferred = $q.defer();
-        var listPromise,_i=1;
+        var listPromise;
         return {
             list: function () {
                 if (listPromise) {
@@ -1601,7 +1615,6 @@ angular.module('ossClientUiApp')
                 }
             },
             loadNew: function () {
-                _i++;
                 var _deferred = $q.defer();
                 var newBuckets = [];
                 OSSApi.getBuckets().success(function (res) {
@@ -1612,11 +1625,6 @@ angular.module('ossClientUiApp')
                     }else{
                         bucketList = [];
                     }
-                    //bucketList.push({
-                    //  CreationDate: "2014-12-08T10:36:38.000Z",
-                    //  Location: "oss-cn-guizhou-a",
-                    //  Name: "bkgz00"+_i
-                    //})
                     //接口返回的bucket的location会带上-a，需要替换成不带-a的
                     angular.forEach(bucketList,function(newBucket){
                         var existItem = _.find(buckets, function(bucket) {
