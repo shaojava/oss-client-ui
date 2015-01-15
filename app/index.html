@@ -145,10 +145,10 @@
         <div class="bread">
             <div class="history">
                 <button class="backward" ng-disabled="!historyCanBackward" ng-click="backward()">
-                    <i class="fa fa-angle-left" title="{{backwardPath()}}"></i>
+                    <i class="fa fa-chevron-circle-left" title="{{backwardPath()}}" style="color:#50acf3;"></i>
                 </button>
                 <button class="forward" ng-disabled="!historyCanForward" ng-click="forward()">
-                    <i class="fa fa-angle-right" title="{{forwardPath();}}"></i>
+                    <i class="fa fa-chevron-circle-right" title="{{forwardPath();}}" style="color:#50acf3;"></i>
                 </button>
             </div>
             <ul class="bread-list" >
@@ -164,9 +164,9 @@
         <div class="trans-queue" ng-controller="TransQueueCtrl" ng-dblclick="handleTransQueueDblClick($event)">
             <div class="total-speed-wrapper">
                 <span>上传速度：<strong
-                        ng-show="OSSUploadQueue.uploadSpeed>0" ><span ng-bind="OSSUploadQueue.uploadSpeed|bitSize"></span>/秒</strong><em
+                        ng-show="OSSUploadQueue.uploadSpeed>0" ><nobr><span ng-bind="OSSUploadQueue.uploadSpeed|bitSize"></span>/秒</nobr></strong><em
                         ng-show="OSSUploadQueue.uploadSpeed<=0">-</em></span>
-                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0" ><span ng-bind="OSSDownloadQueue.downloadSpeed|bitSize"></span>/秒</strong><em
+                <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0" ><nobr>{{OSSDownloadQueue.downloadSpeed|bitSize}}/秒</nobr></strong><em
                         ng-show="OSSDownloadQueue.downloadSpeed<=0">-</em></span>
             </div>
             <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()"><i class="fa fa-lg"
