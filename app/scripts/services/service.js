@@ -1619,27 +1619,32 @@ angular.module('ossClientUiApp')
                 var newBuckets = [];
                 OSSApi.getBuckets().success(function (res) {
                     var bucketList = null;
-                    var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                    var resBuckets = null;
+                    if(res && res['ListAllMyBucketsResult'] && res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']) {
+                        resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                    }
                     if(resBuckets){
                         bucketList = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
                     }else{
                         bucketList = [];
                     }
-                    //接口返回的bucket的location会带上-a，需要替换成不带-a的
-                    angular.forEach(bucketList,function(newBucket){
-                        var existItem = _.find(buckets, function(bucket) {
-                            return bucket.Name == newBucket.Name;
-                        })
-                        if (!existItem) {
-                            var region  = OSSRegion.getRegionByLocation(newBucket.Location);
-                            if(region){
-                              newBucket.Location = region.location.replace('-internal','');
-                            }
-                            newBuckets.push(newBucket);
-                        }
+                    angular.forEach(bucketList,function(bucket){
+                      var oldItem = _.findWhere(buckets, {Name: bucket.Name});
+                      if(!oldItem){
+                        newBuckets.push(bucket);
+                      }
                     });
-                    buckets = buckets.concat(newBuckets);
-                    _deferred.resolve(newBuckets);
+                    //接口返回的bucket的location会带上-a，需要替换成不带-a的
+                    angular.forEach(newBuckets,function(bucket){
+                      var region  = OSSRegion.getRegionByLocation(bucket.Location);
+                      if(region){
+                        bucket.Location = region.location.replace('-internal','');
+                      }
+                    });
+                    if(newBuckets && newBuckets.length > 0) {
+                        buckets = buckets.concat(newBuckets);
+                    }
+                    _deferred.resolve(buckets);
                 });
               return _deferred.promise;
             },
@@ -2294,7 +2299,7 @@ angular.module('ossClientUiApp')
 
                         $scope.setHttpHeader = function (headers, customHeaders) {
                             var ossHeaders = {}, canonicalizedOSSheaders = {};
-                            var unValidFieldValue = false;
+                            var unValidFieldValue = false,contentTypeRequired = false;
                             var fieldValueReg = /^[a-zA-Z0-9\-_/.]+$/;
 
                             var checkFieldValueIsValid = function(value){
@@ -2304,6 +2309,10 @@ angular.module('ossClientUiApp')
                             };
 
                             angular.forEach(headers, function (val) {
+                                if(val.name == 'Content-Type' && !val.model){
+                                    contentTypeRequired = true;
+                                    return false;
+                                }
                                 if (val.model) {
                                     if(!checkFieldValueIsValid(val.model)){
                                         unValidFieldValue = true;
@@ -2329,7 +2338,12 @@ angular.module('ossClientUiApp')
                                     }
                                 }
                             });
-
+                            if(contentTypeRequired){
+                              var msg  = 'HTTP属性值格式错误';
+                              msg += '<p class="text-muted">Content-Type是必填字段</p>'
+                              $rootScope.$broadcast('showError',msg);
+                              return;
+                            }
                             if(unValidFieldValue){
                                 var msg  = 'HTTP属性值格式错误';
                                 msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号</p>'
@@ -2363,20 +2377,22 @@ angular.module('ossClientUiApp')
                             //});
 
 
-                            var errorSetObjects = [];
+                            var errorSetObjects = [],_submitCount = 0;
                             angular.forEach(objects,function(object,index){
                                 angular.extend(canonicalizedOSSheaders,{
                                   'x-oss-copy-source': '/' + bucket.Name + '/' + encodeURIComponent(object.path)
                                 });
                                 OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
-                                    if(index == objects.length - 1) {
+                                    _submitCount += 1;
+                                    if(_submitCount == objects.length) {
                                       $scope.saving = false;
                                       $modalInstance.close();
                                     }
                                 }).error(function(res,status) {
+                                  _submitCount += 1;
                                   var _filename = object.filename;
                                   errorSetObjects.push({'filename':_filename,'errmsg':OSSException.getError(res, status).msg});
-                                  if (index == objects.length - 1){
+                                  if (_submitCount == objects.length){
                                     $scope.saving = false;
                                     var _errorMsg = '';
                                     angular.forEach(errorSetObjects,function(item){

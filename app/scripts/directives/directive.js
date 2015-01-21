@@ -97,7 +97,7 @@ angular.module('ossClientUiApp')
                 var $breadList = bread.find('.bread-list');
                 var $searchWrapper = element.parent();
 
-                var hideSearch = function () {
+                var hideSearch = scope.hideSearch = function () {
                     $searchWrapper.find('.search-scope').remove();
                     $searchWrapper.find('.fa-remove').remove();
                     $breadList.show();
@@ -117,13 +117,22 @@ angular.module('ossClientUiApp')
                     var currentBucket = Bucket.getCurrentBucket();
                     var searchScopeName = currentObj.path ? $filter('getPrefixName')(currentObj.path, 1) : currentBucket.Name;
                     var $removeIcon = $('<a href="javascript:;" class="fa fa-remove fa-lg"></a>');
-                    var $searchScope = $('<div class="search-scope"> 在 <span>' + searchScopeName + '</span> 中搜索</div>');
+                    var $searchDomain = $('<a style="color:#fff;text-decoration: underline !important;cursor:pointer">' + searchScopeName + '</a>');
+                    var $searchScope = $('<div class="search-scope"> 在 <span id="searchdomain"></span> 中搜索</div>');
+                    $searchScope.find("span[id='searchdomain']").append($searchDomain);
                     element.next('.fa').hide();
                     element.after($searchScope).after($removeIcon);
                     element.css({
                         'padding-left': $searchScope.outerWidth(true) + 6
                     });
                     $breadList.hide();
+                    $searchDomain.on('click', function () {
+                      scope.$apply(function(){
+                        if(element.val()) {
+                          hideSearch();
+                        }
+                      });
+                    })
                     $removeIcon.on('click', function () {
                         scope.$apply(function(){
                             hideSearch();
@@ -131,7 +140,11 @@ angular.module('ossClientUiApp')
                     })
                     element.focus();
                 };
-
+                element.on('blur',function(){
+                   if(!element.val() || element.val().length == 0){
+                     hideSearch();
+                   }
+                })
                 element.on('mousedown', function () {
                     showSearch();
                 });
@@ -280,7 +293,8 @@ angular.module('ossClientUiApp')
           restrict: 'A',
           replace: false,
           scope:{
-            number:'=onlyNumber'
+            number:'=onlyNumber',
+            showError:'='
           },
           link: function postLink(scope, element, attrs) {
             var _val = 0;
@@ -292,21 +306,31 @@ angular.module('ossClientUiApp')
                   return false;
                 }
                 if((event.keyCode > 47 && event.keyCode < 58) || (event.keyCode > 95 && event.keyCode < 106) || "37 38 39 40 8".indexOf(event.keyCode+"") >= 0){
+                  var _selectStart = event.target.selectionStart;
+                  var _selectEnd = event.target.selectionEnd;
+                  var _eleVal = element.val() + "";
+                  if(_eleVal.length <= _selectStart || _selectStart == _selectEnd){
+                    if(_eleVal.length == (max+"").length && "37 38 39 40 8".indexOf(event.keyCode+"") < 0){
+                      return false;
+                    }
+                  }
                   return true
                 }
                 return false
 
-              }).keyup(function(event){
+              }).blur(function(event){
                 if((min || min == 0) && (max || max == 0)) {
                   _val = element.val();
                   if (!_val || _val < min) {
                     scope.number = min;
                     element.val(min);
                     _val = min;
+                    scope.showError = true;
                   } else if (_val > max) {
                     scope.number = max;
                     element.val(max);
                     _val = max;
+                    scope.showError = true;
                   }
                 }
               });
@@ -328,6 +352,21 @@ angular.module('ossClientUiApp')
                 scope.icon = OSSObject.getIcon(scope.dir, scope.filename);
             }
         };
+    }])
+    .directive('showContextMenu',['$timeout',function($timeout){
+        return {
+          restrict: 'A',
+          link: function(scope,element,attrs){
+             element.bind('click',function(event){
+               event.preventDefault();
+               event.stopPropagation();
+               $timeout(function() {
+                 element.parents("li").trigger("contextmenu",event);
+               });
+             })
+
+          }
+        }
     }])
     .directive('keyboardNav', ['$parse', function ($parse) {
         return {

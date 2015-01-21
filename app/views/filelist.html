@@ -4,7 +4,7 @@
             <menu ng-repeat="menu in menuGroup" ng-if="!isExclude(menu)" name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>
         </div>
         <div class="bucket-region">
-          当前Bucket所在区域：{{bucket.Location | getLocationName}}
+          存储区域：{{bucket.Location | getLocationName}}
         </div>
 
         <!--<menu ng-repeat="menu in selectFileMenuList" name="{{menu.name}}" state="menu.getState(getSelectedList())" execute="menu.execute(bucket,objectPrefix,getSelectedList())">{{menu.text}}</menu>-->
@@ -41,13 +41,21 @@
      ng-right-click="handleFileListClick($event)"
         >
     <div class="empty" ng-if="!files.length && !loadingFile">没有文件</div>
-    <div class="clearfix file-item" ng-repeat="file in files" ng-dblclick="openFile(file,file.dir)" ng-class="{'selected':file.selected}" ng-click="handleClick($event,file,$index)"  context-menu="onContextMenuShow(file)" data-target="menu-select-file">
+    <div class="clearfix file-item" ng-repeat="file in files" ng-dblclick="openFile(file,file.dir)" ng-class="{'selected':file.selected}" ng-click="handleClick($event,file,$index)"  context-menu="onContextMenuShow(file)" data-target="menu-select-file" context-menu-disabled="!file.selected">
         <div class="pull-left filename">
+          <span context-menu="onContextMenuShow(file)" data-target="menu-select-file">
             <file-icon dir="{{file.dir}}" size="32" filename="{{file.filename}}"></file-icon>
             <span class="name" ng-bind="file.filename"></span>
+          </span>
         </div>
-        <div class="pull-right file-create-time" ng-bind="file.dir?'-' : (file.lastModified | formatTime)"></div>
-        <div class="pull-right filesize" ng-bind="file.dir?'-' : (file.size | bitSize)"></div>
+        <div class="pull-right file-create-time" >
+          <span context-menu="onContextMenuShow(file)" data-target="menu-select-file" ng-bind="file.dir?'-' : (file.lastModified | formatTime)">
+          </span>
+        </div>
+        <div class="pull-right filesize">
+          <span context-menu="onContextMenuShow(file)" data-target="menu-select-file" ng-bind="file.dir?'-' : (file.size | bitSize)">
+          </span>
+        </div>
     </div>
     <div class="text-muted loading-banner" ng-show="loadingFile && files.length">
     <i class="fa fa-circle-o-notch fa-spin"></i>

@@ -52366,9 +52366,9 @@ angular
         link: function($scope, $element, $attrs) {
           var opened = false;
 
-          function open(event, menuElement) {
+          function open(event, menuElement,positions) {
+            positions = positions || {}
             menuElement.addClass('open');
-
             var doc = $document[0].documentElement;
             var docLeft = (window.pageXOffset || doc.scrollLeft) -
                           (doc.clientLeft || 0),
@@ -52378,10 +52378,15 @@ angular
                 elementHeight = menuElement[0].scrollHeight;
             var docWidth = doc.clientWidth + docLeft,
               docHeight = doc.clientHeight + docTop,
-              totalWidth = elementWidth + event.pageX,
-              totalHeight = elementHeight + event.pageY,
-              left = Math.max(event.pageX - docLeft, 0),
-              top = Math.max(event.pageY - docTop, 0);
+
+              pageX = event.pageX || positions.pageX,
+              pageY = event.pageY || positions.pageY,
+
+              totalWidth = elementWidth + pageX,
+              totalHeight = elementHeight + pageY,
+
+              left = Math.max(pageX - docLeft, 0),
+              top = Math.max(pageY - docTop, 0);
 
             if (totalWidth > docWidth) {
               left = left - (totalWidth - docWidth);
@@ -52406,7 +52411,7 @@ angular
             opened = false;
           }
 
-          $element.bind('contextmenu', function(event) {
+          $element.bind('contextmenu', function(event,positions) {
             if (!$scope.disabled()) {
               if (ContextMenuService.menuElement !== null) {
                 close(ContextMenuService.menuElement);
@@ -52423,7 +52428,7 @@ angular
                 $scope.callback({ $event: event });
               });
               $scope.$apply(function() {
-                open(event, ContextMenuService.menuElement);
+                open(event, ContextMenuService.menuElement,positions);
               });
             }
           });
@@ -52438,7 +52443,7 @@ angular
           }
 
           function handleClickEvent(event) {
-            if (!$scope.disabled() &&
+            if (        //!$scope.disabled() &&   //被注视
               opened &&
               (event.button !== 2 ||
                event.target !== ContextMenuService.element)) {
