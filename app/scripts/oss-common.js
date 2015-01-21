@@ -497,3 +497,24 @@ angular.module('OSSCommon', [
     }])
 ;
 
+/**
+ * 客户端的回调
+ * @param name
+ * @param params
+ */
+var ossClientCallback = function (name, param) {
+  console.log('客户端的回调[ossClientCallback]', arguments);
+  if (typeof name !== 'string') {
+    name = String(name);
+  }
+  var rootScope = jQuery(document).scope();
+  var JSONparam;
+  if (param) {
+    JSONparam = JSON.parse(param);
+  }
+  rootScope && rootScope.$broadcast(name, JSONparam);
+};
+//通知当前下载列表加载的数量
+ossClientCallback.getUpdateLoadingCount = function(){
+  return 'UpdateLoadingCount';
+}

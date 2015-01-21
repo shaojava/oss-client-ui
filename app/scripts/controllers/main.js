@@ -8,7 +8,7 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu','$interval', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu,$interval) {
+    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu','$interval','OSSDownloadQueue', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu,$interval,OSSDownloadQueue) {
 
         $scope.showRefer = OSSConfig.showRefer();
         //
@@ -59,10 +59,16 @@ angular.module('ossClientUiApp')
             OSSMenu.getMenu("bucketdownload").execute(bucket);
           });
         }
-
+        //监听下载列表加载数量
+        $scope.$on(ossClientCallback.getUpdateLoadingCount(),function(event,loadDownLoadCount){
+            $scope.loadDownloadCount = loadDownLoadCount;
+        })
         //开始下载锁定OSS界面
         $scope.$on('startDownloadFilesLoading',function(){
-            $scope.startDownloadFiles = true;
+          $scope.OSSDownloadQueue = OSSDownloadQueue.init();
+          $scope.OSSDownloadQueue.refresh();
+          $scope.startDownloadFiles = true;
+
         })
         //结束下载锁定OSS界面
         $scope.$on('endDownloadFilesLoading',function(){
@@ -136,13 +142,13 @@ angular.module('ossClientUiApp')
             Bucket.loadNew().then(function (buckets) {
                 if(buckets){
                   var newBuckets = angular.isArray(buckets) ? buckets : [buckets];
-                  $scope.buckets = $scope.buckets.concat(newBuckets);
+                  $scope.buckets = newBuckets;
                 }
             });
         }
         $interval(function(){
           loadNewBuckets();
-        },60000 * 5);
+        },1000 * 60 * 5);
 
         $scope.refreshBuckets = function(){
           loadNewBuckets();
@@ -492,7 +498,6 @@ angular.module('ossClientUiApp')
 
         //默认排序
         $scope.orderBy = '';
-
         //默认去第一个bucket
         if (buckets.length && !bucketName) {
             $location.path(OSSLocation.getUrl(buckets[0].Name));
@@ -500,6 +505,11 @@ angular.module('ossClientUiApp')
         }
 
         $scope.bucket = Bucket.getBucket(bucketName);
+        if(!$scope.bucket){
+            $location.path(OSSLocation.getUrl(buckets[0].Name));
+            return;
+        }
+
         $scope.objectPrefix = $routeParams.object ? $routeParams.object : '';
         OSSObject.setCurrentObject({
             path: $scope.objectPrefix,
