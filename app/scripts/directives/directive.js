@@ -81,6 +81,8 @@ angular.module('ossClientUiApp')
                     }
                     var keyword = ngModel.$modelValue;
                     if(!keyword){
+                        $(element).blur();
+                        hideSearch();
                         return;
                     }
                     var currentObj = OSSObject.getCurrentObject();

@@ -874,7 +874,7 @@ angular.module('ossClientUiApp')
  * object的操作菜单
  */
     .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException','OSSConfig', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException,OSSConfig) {
-        var currentMenus = 'upload create paste'.split(' '),
+        var currentMenus = 'upload create paste downloadcurrent'.split(' '),
             selectMenus = 'download copy del get_uri set_header paste'.split(' '),
             groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
         var allMenu = [
@@ -966,6 +966,41 @@ angular.module('ossClientUiApp')
 
                     })
                 }
+            },
+            {
+              name: 'downloadcurrent',
+              text: '下载当前目录',
+              getState: function(){
+                return 1;
+              },
+              execute: function (bucket, currentObject){
+
+                var list = [{
+                    location: bucket['Location'],
+                    bucket: bucket['Name'],
+                    object: currentObject,
+                    filesize: 0,
+                    etag:""
+                  }]
+                OSS.invoke('saveFileDlg',null,function(res){
+                  var _path = res.path
+                  if(_path){
+                    $rootScope.$broadcast('startDownloadFilesLoading');
+                    OSS.invoke('saveFile', {
+                      list: list,
+                      path:_path
+                    }, function (res) {
+                      $rootScope.$broadcast('endDownloadFilesLoading')
+                      if (!res.error) {
+                        $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                        $rootScope.$broadcast('reloadDownloadQueue');
+                      } else {
+                        $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                      }
+                    })
+                  }
+                })
+              }
             },
             {
               name: 'bucketdownload',
