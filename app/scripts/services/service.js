@@ -2045,6 +2045,9 @@ angular.module('ossClientUiApp')
                             if(!checkSetting(setting)){
                                 return;
                             }
+                            angular.forEach(setting,function(val,key){
+                                setting[key] = parseInt(val)
+                            })
                             OSS.invoke('setTransInfo',setting);
                             $modalInstance.dismiss('cancel');
                         };
