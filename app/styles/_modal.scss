@@ -206,4 +206,10 @@
    input{
      text-align: center;
    }
+  fieldset{
+    padding-top:20px;
+    legend{
+      margin-bottom: 0;
+    }
+  }
 }
