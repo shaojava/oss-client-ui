@@ -35,14 +35,13 @@ angular.module('ossClientUiApp')
             //console.log('time',time);
             //return time ? $filter('date')(time, '00:mm:ss') : '--:--:--';
             var second = (filesize - offset) / speed
-            console.log("=========get file download times==========","filesize:"+filesize,"offset:"+offset,"speed:"+speed,"seconds(秒):"+second);
             if (second < 0 ){
               second = 0;
               return '--:--:--';
             }
             var d = parseInt(parseInt(second)/3600/24);
             var h = parseInt((parseInt(second)/3600) % 24);
-            var m = parseInt((parseInt(second)/60) % 24);
+            var m = parseInt((parseInt(second)/60) % 60);
             var s = parseInt(parseInt(second) % 60)
             if(d>0){
               return '大于' + d +"天"
