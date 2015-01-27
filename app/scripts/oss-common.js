@@ -160,8 +160,14 @@ angular.module('OSSCommon', [
                 if (location.indexOf('-internal') > 0) {
                     return location;
                 }
+                if (currentLocation && location + '-a' == currentLocation) {
+                  return location + '-a';
+                }
                 if (currentLocation && location + '-internal' == currentLocation) {
-                    return location + '-internal';
+                  return location + '-internal';
+                }
+                if (currentLocation && location + '-a-internal' == currentLocation) {
+                    return location + '-a-internal';
                 }
                 return location;
             }

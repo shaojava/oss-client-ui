@@ -60,6 +60,15 @@
   left: 0;
   bottom: 0;
   right: 0;
+  .left-sidebar.custom-client{
+    .left-footer{
+      height: 0;
+      display: none;
+    }
+    .bucket-list{
+      bottom:0;
+    }
+  }
 }
 
 .left-sidebar {

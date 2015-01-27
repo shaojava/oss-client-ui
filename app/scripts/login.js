@@ -36,7 +36,8 @@ angular
 
         $scope.getSectionClass = function(sectionId){
             return {
-                'current':sectionId == $scope.step
+                'current':sectionId == $scope.step,
+                'custom-client':$scope.isCustomClient
             };
         };
 

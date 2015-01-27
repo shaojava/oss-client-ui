@@ -14,6 +14,14 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <script src="scripts/vendor.js"></script>
+
+    <!-- build:js({.tmp,app}) scripts/login-script.js -->
+    <!--<script src="scripts/oss-client.js"></script>-->
+    <script src="scripts/interface.js"></script>
+    <script src="scripts/oss-common.js"></script>
+    <script src="scripts/login.js"></script>
+    <!-- endbuild -->
 </head>
 <body ng-controller="MainCtrl" id="login-page" class="oss-dialog dark-theme"
       ng-class="{'custom-client':isCustomClient}">
@@ -118,18 +126,11 @@
             </div>
         </div>
     </section>
-    <div class="login-log">
+    <div class="login-log" ng-hide="isCustomClient">
       <img src="images/zy_powerby.png" />
     </div>
 </div>
 
-<script src="scripts/vendor.js"></script>
 
-<!-- build:js({.tmp,app}) scripts/login-script.js -->
-<!--<script src="scripts/oss-client.js"></script>-->
-<script src="scripts/interface.js"></script>
-<script src="scripts/oss-common.js"></script>
-<script src="scripts/login.js"></script>
-<!-- endbuild -->
 </body>
 </html>

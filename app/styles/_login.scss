@@ -17,9 +17,13 @@ body{
       display: none;
     }
 
-  > section.current{
-    display: block;
-  }
+    > section.current{
+      display: block;
+    }
+
+    > section.custom-client div.form-group{
+       margin-bottom: 25px;
+    }
   }
 
   .tip{

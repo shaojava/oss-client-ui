@@ -9,7 +9,14 @@
  */
 angular.module('ossClientUiApp')
     .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu','$interval','OSSDownloadQueue', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu,$interval,OSSDownloadQueue) {
-
+        /**
+         * 是否定制客户端
+         * @type {boolean|*}
+         */
+        $scope.isCustomClient = OSSConfig.isCustomClient();
+        /**
+         * 是否显示白名单
+         */
         $scope.showRefer = OSSConfig.showRefer();
         //
         $scope.bucketsLoaded = false;
