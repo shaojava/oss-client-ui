@@ -87,7 +87,8 @@ angular.module('ossClientUiApp')
         })
         //终止加载下载队列
         $scope.stopLoadDownloadQueue = function(){
-            var _delLoaded = $scope.delLoaded?1:0
+            $scope.loadDownloadCount.downloadcount = 0;
+            var _delLoaded = $scope.delLoaded?1:0;
             OSS.invoke('stopLoadDownload', {all:_delLoaded});
         }
 
