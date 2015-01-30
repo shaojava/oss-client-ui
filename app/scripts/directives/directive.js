@@ -323,7 +323,11 @@ angular.module('ossClientUiApp')
               }).blur(function(event){
                 if((min || min == 0) && (max || max == 0)) {
                   _val = element.val();
-                  if (!_val || _val < min) {
+                  if(!_val || isNaN(_val)) {
+                    scope.number = min;
+                    element.val(min);
+                    _val = min;
+                  }else if (_val < min) {
                     scope.number = min;
                     element.val(min);
                     _val = min;
