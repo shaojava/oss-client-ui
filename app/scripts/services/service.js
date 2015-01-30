@@ -974,7 +974,6 @@ angular.module('ossClientUiApp')
                 return 1;
               },
               execute: function (bucket, currentObject){
-
                 var list = [{
                     location: bucket['Location'],
                     bucket: bucket['Name'],
