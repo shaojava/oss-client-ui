@@ -20,6 +20,10 @@ angular.module('ossClientUiApp')
         $scope.showRefer = OSSConfig.showRefer();
         //
         $scope.bucketsLoaded = false;
+        $scope.loadDownloadCount = {
+          count:0,
+          downloadcount:0
+        }
         usSpinnerService.spin('body-spinner');
 
         $scope.$on('bucketsLoaded',function(){

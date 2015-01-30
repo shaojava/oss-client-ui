@@ -169,8 +169,8 @@
                 <span>下载速度：<strong ng-show="OSSDownloadQueue.downloadSpeed>0" ><nobr>{{OSSDownloadQueue.downloadSpeed|bitSize}}/秒</nobr></strong><em
                         ng-show="OSSDownloadQueue.downloadSpeed<=0">-</em></span>
             </div>
-            <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()"><i class="fa fa-lg"
-                                                                                              ng-class="{'fa-angle-double-up':!showTransQueue,'fa-angle-double-down':showTransQueue}"></i></a>
+            <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()">
+              <i class="fa fa-lg" ng-class="{'fa-angle-double-up':!showTransQueue,'fa-angle-double-down':showTransQueue}"></i></a>
             <tabset>
                 <tab heading="{{tab.name == 'upload' ? tab.title + (OSSUploadQueue.totalCount > 0 ? '(' + OSSUploadQueue.doneCount+ '/' + OSSUploadQueue.totalCount + ')':''):tab.name == 'download'?tab.title +(OSSDownloadQueue.totalCount?'(' + OSSDownloadQueue.doneCount + '/' + OSSDownloadQueue.totalCount + ')' : ''):tab.title}}" active="tab.active" ng-repeat="tab in tabs" select="selectTab(tab)">
                     <div ng-switch on="tab.name">
