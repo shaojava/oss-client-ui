@@ -10497,12 +10497,13 @@ input:focus {
 /* line 206, ../../app/styles/_modal.scss */
 .setting_modal input {
   text-align: center;
+  padding: 0;
 }
-/* line 209, ../../app/styles/_modal.scss */
+/* line 210, ../../app/styles/_modal.scss */
 .setting_modal fieldset {
   padding-top: 20px;
 }
-/* line 211, ../../app/styles/_modal.scss */
+/* line 212, ../../app/styles/_modal.scss */
 .setting_modal fieldset legend {
   margin-bottom: 0;
 }
