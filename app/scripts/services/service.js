@@ -1627,17 +1627,20 @@ angular.module('ossClientUiApp')
                     OSSApi.getBuckets().success(function (res) {
                         //获取当前的区域
                         var currentLocation = OSS.invoke('getCurrentLocation');
-
                         $rootScope.$broadcast('bucketsLoaded');
                         var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                         if(resBuckets){
                           buckets = []
                           var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                          angular.forEach(_list,function(bucket){
-                              if(bucket.Location == currentLocation){
+                          if(currentLocation) {
+                            angular.forEach(_list, function (bucket) {
+                              if (bucket.Location == currentLocation) {
                                 buckets.push(bucket);
                               }
-                          })
+                            })
+                          }else{
+                            buckets = _list;
+                          }
                         }else{
                             buckets = [];
                         }
@@ -1670,11 +1673,15 @@ angular.module('ossClientUiApp')
                     if(resBuckets){
                         bucketList = []
                         var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                        angular.forEach(_list,function(bucket){
-                          if(bucket.Location == currentLocation){
-                            bucketList.push(bucket);
-                          }
-                        })
+                        if(currentLocation) {
+                          angular.forEach(_list, function (bucket) {
+                            if (bucket.Location == currentLocation) {
+                              bucketList.push(bucket);
+                            }
+                          })
+                        }else{
+                          bucketList = _list;
+                        }
                     }else{
                         bucketList = [];
                     }
