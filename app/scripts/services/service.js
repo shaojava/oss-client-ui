@@ -1625,10 +1625,19 @@ angular.module('ossClientUiApp')
                     return listPromise;
                 } else {
                     OSSApi.getBuckets().success(function (res) {
+                        //获取当前的区域
+                        var currentLocation = OSS.invoke('getCurrentLocation');
+
                         $rootScope.$broadcast('bucketsLoaded');
                         var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                         if(resBuckets){
-                            buckets = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                          buckets = []
+                          var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                          angular.forEach(_list,function(bucket){
+                              if(bucket.Location == currentLocation){
+                                buckets.push(bucket);
+                              }
+                          })
                         }else{
                             buckets = [];
                         }
@@ -1654,11 +1663,18 @@ angular.module('ossClientUiApp')
                 OSSApi.getBuckets().success(function (res) {
                     var bucketList = null;
                     var resBuckets = null;
+                    var currentLocation = OSS.invoke('getCurrentLocation');
                     if(res && res['ListAllMyBucketsResult'] && res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']) {
                         resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                     }
                     if(resBuckets){
-                        bucketList = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                        bucketList = null
+                        var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                        angular.forEach(_list,function(bucket){
+                          if(bucket.Location == currentLocation){
+                            bucketList.push(bucket);
+                          }
+                        })
                     }else{
                         bucketList = [];
                     }
