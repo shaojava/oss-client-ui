@@ -146,10 +146,14 @@ angular.module('OSSCommon', [
         var locations = OSSConfig.getLocations();
         var currentLocation = OSS.invoke('getCurrentLocation');
         return {
-            list: function () {
-                return _.where(locations, {
-                    enable: 1
-                });
+            list: function (_netType) {
+                var params = {
+                  enable: 1
+                }
+                if(_netType){
+                  params.network = _netType
+                }
+                return _.where(locations, params);
             },
             getRegionByLocation: function (location) {
                 return _.find(locations, function (item) {
@@ -480,11 +484,11 @@ angular.module('OSSCommon', [
                 name: '@',
                 placeHolder: '@',
                 searchDisabled: '=',
-                defaultLocation:'@'
+                defaultLocation:'@',
+                networkType:'='
             },
             templateUrl: 'views/location-select.html',
             link: function (scope) {
-                scope.locations = OSSRegion.list();
                 scope.$watch('locations.selected', function (val) {
                     scope.selectLocation = val;
                 });
@@ -493,6 +497,8 @@ angular.module('OSSCommon', [
                 }
                 scope.$watch('defaultLocation',function(newVal){
                     if(!newVal) return;
+                    var netType = newVal.indexOf("oss-cn-guizhou-a") >= 0 ? 'internet' : 'intranet';
+                    scope.locations = OSSRegion.list(netType);
                     scope.locations.selected = _.find(scope.locations,function(region){
                         return region.location.indexOf(newVal) == 0;
                     });
