@@ -484,8 +484,7 @@ angular.module('OSSCommon', [
                 name: '@',
                 placeHolder: '@',
                 searchDisabled: '=',
-                defaultLocation:'@',
-                networkType:'='
+                defaultLocation:'@'
             },
             templateUrl: 'views/location-select.html',
             link: function (scope) {
