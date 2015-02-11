@@ -1668,7 +1668,7 @@ angular.module('ossClientUiApp')
                         resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                     }
                     if(resBuckets){
-                        bucketList = null
+                        bucketList = []
                         var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
                         angular.forEach(_list,function(bucket){
                           if(bucket.Location == currentLocation){
