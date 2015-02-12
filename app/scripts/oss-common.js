@@ -149,7 +149,7 @@ angular.module('OSSCommon', [
             list: function (_netType) {
                 var params = {
                   enable: 1
-                }
+                };
                 if(_netType){
                   params.network = _netType
                 }

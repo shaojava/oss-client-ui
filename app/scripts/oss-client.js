@@ -5,10 +5,10 @@
 'use strict';
 ;(function (window) {
 
-    var accessId = "fmVEoAkpUByBS1cs";
-    var accessSecret = "HWsJ79uEwsrh7PB6ASGpyrdZkwJWdR";
-//    var accessId = "aNgmvBucXXcJnOgj";
-//    var accessSecret = "GBJN7GarVWrITZT9YZR64Ir6bOLEM5";
+    var accessId = "";
+    var accessSecret = "";
+//    var accessId = "";
+//    var accessSecret = "";
 
     function isOSSClient() {
         var sync = navigator.userAgent.split(';')[0] || '';
