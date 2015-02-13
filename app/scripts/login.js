@@ -221,6 +221,7 @@ angular
         };
 
         //
+
         $scope.checkingLocation = false;
         $scope.predictionLocation = '';
         if(OSSConfig.isGuiZhouClient()){

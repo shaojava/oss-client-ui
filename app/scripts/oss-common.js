@@ -495,7 +495,10 @@ angular.module('OSSCommon', [
                     scope.locations.selected = scope.locations[0];
                 }
                 scope.$watch('defaultLocation',function(newVal){
-                    if(!newVal) return;
+                    if(!newVal){
+                        scope.locations = OSSRegion.list(netType);
+                        return;
+                    }
                     var netType = newVal.indexOf("oss-cn-guizhou-a") >= 0 ? 'internet' : 'intranet';
                     scope.locations = OSSRegion.list(netType);
                     scope.locations.selected = _.find(scope.locations,function(region){
