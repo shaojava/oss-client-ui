@@ -155,6 +155,18 @@ angular.module('OSSCommon', [
                 }
                 return _.where(locations, params);
             },
+            /**
+             * 判断当前location是否是当前登录区域允许的bucket
+             */
+            getEnableRegionByLocation: function (location) {
+                var enableLocations = this.list();
+                return _.find(enableLocations, function (item) {
+                    return location.indexOf(item.location) === 0||
+                           location.indexOf(item.location.replace('-a-internal', '')) === 0 ||
+                           location.indexOf(item.location.replace('-a', '')) === 0 ||
+                           location.indexOf(item.location.replace('-internal', '')) === 0;
+                });
+            },
             getRegionByLocation: function (location) {
                 return _.find(locations, function (item) {
                     return location.indexOf(item.location.replace('-internal', '')) === 0;
@@ -183,6 +195,42 @@ angular.module('OSSCommon', [
  */
     .factory('OSSException', ['OSSConfig', function (OSSConfig) {
         var erroList = {
+            getClientMessage:function(resError){
+                if(resError.Code == 'AccessDenied' && resError.Message == 'Request has expired.'){
+                    var serverTime = new Date(resError.ServerTime).getTime();
+                    var clientTime = new Date(resError.Expires).getTime();
+                    var expiresTime = parseInt(Math.abs(clientTime - serverTime) / 1000);
+                    var d = parseInt(parseInt(expiresTime)/3600/24);
+                    var h = parseInt((parseInt(expiresTime)/3600) % 24);
+                    var m = parseInt((parseInt(expiresTime)/60) % 60);
+                    var s = parseInt(parseInt(expiresTime) % 60)
+                    var str = '操作失败，当前客户端时间比服务器时间';
+                    if(clientTime - serverTime > 0){
+                      str += '快'
+                    }else if(clientTime - serverTime < 0){
+                      str += '慢'
+                    }else{
+                      return ;
+                    }
+                    if(d > 0){
+                      str += d + '天'
+                    }
+                    if(h > 0){
+                      str += h + '小时'
+                    }
+                    if(m > 0){
+                      str += m + '分钟'
+                    }
+                    if(s > 0){
+                      str += s + '秒'
+                    }
+                    return str;
+                }else if (erroList[resError.Code]) {
+                    return erroList[resError.Code];
+                }else{
+                    return res.Message;
+                }
+            },
             'AccessDenied': '拒绝访问',
             'BucketAlreadyExists': 'Bucket已经存在',
             'BucketNotEmpty': 'Bucket不为空',
@@ -240,11 +288,7 @@ angular.module('OSSCommon', [
                         code: resError.Code || '',
                         msg: resError.Message || ''
                     });
-
-                    var message = resError.Message;
-                    if (erroList[resError.Code]) {
-                        message = erroList[resError.Code];
-                    }
+                    var message = erroList.getClientMessage(resError);
                     angular.extend(error, {
                         msg: message
                     });
@@ -474,12 +518,13 @@ angular.module('OSSCommon', [
 /**
  * bucket区域选择下拉框
  */
-    .directive('locationSelect', ['OSSRegion', function (OSSRegion) {
+    .directive('locationSelect', ['OSSRegion','OSSConfig', function (OSSRegion,OSSConfig) {
         return {
             restrict: 'E',
             replace: true,
             scope: {
                 selectLocation: '=',
+                loginNetworktype: '=',
                 disableSelect: '=',
                 name: '@',
                 placeHolder: '@',
@@ -488,19 +533,26 @@ angular.module('OSSCommon', [
             },
             templateUrl: 'views/location-select.html',
             link: function (scope) {
+                scope.locations = OSSRegion.list();
                 scope.$watch('locations.selected', function (val) {
                     scope.selectLocation = val;
                 });
                 if (!scope.placeHolder) {
-                    scope.locations.selected = scope.locations[0];
+                  scope.locations.selected = scope.locations[0];
                 }
+                scope.$watch('loginNetworktype',function(newVal){
+                  if(!newVal){
+                      return;
+                  }
+                  scope.locations = OSSRegion.list(newVal);
+                  if (!scope.placeHolder) {
+                    scope.locations.selected = scope.locations[0];
+                  }
+                })
                 scope.$watch('defaultLocation',function(newVal){
                     if(!newVal){
-                        scope.locations = OSSRegion.list(netType);
                         return;
                     }
-                    var netType = newVal.indexOf("oss-cn-guizhou-a") >= 0 ? 'internet' : 'intranet';
-                    scope.locations = OSSRegion.list(netType);
                     scope.locations.selected = _.find(scope.locations,function(region){
                         return region.location.indexOf(newVal) == 0;
                     });

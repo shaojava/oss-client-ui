@@ -1634,22 +1634,32 @@ angular.module('ossClientUiApp')
                           var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
                           if(currentLocation) {
                             angular.forEach(_list, function (bucket) {
-                              if (bucket.Location == currentLocation) {
-                                buckets.push(bucket);
-                              }
+                              if( currentLocation.indexOf(bucket.Location) === 0 ||
+                                  bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
+                                  bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
+                                  bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
+
+                                  buckets.push(bucket);
+
+                                }
                             })
                           }else{
-                            buckets = _list;
+                            angular.forEach(_list,function(bucket){
+                                var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                                if (region) {
+                                  buckets.push(bucket);
+                                }
+                            })
                           }
                         }else{
                             buckets = [];
                         }
                         //接口返回的bucket的location会带上-a，需要替换成不带-a的
                         angular.forEach(buckets,function(bucket){
-                            var region  = OSSRegion.getRegionByLocation(bucket.Location);
-                            if(region){
-                                bucket.Location = region.location.replace('-internal','');
-                            }
+                          var region  = OSSRegion.getRegionByLocation(bucket.Location);
+                          if(region){
+                            bucket.Location = region.location.replace('-internal','');
+                          }
                         });
                         deferred.resolve(buckets);
                     }).error(function (res,status) {
@@ -1675,12 +1685,22 @@ angular.module('ossClientUiApp')
                         var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
                         if(currentLocation) {
                           angular.forEach(_list, function (bucket) {
-                            if (bucket.Location == currentLocation) {
+                            if( currentLocation.indexOf(bucket.Location) === 0 ||
+                              bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
+                              bucket.Location.indexOf(currentLocation.location.replace('-a', '')) === 0 ||
+                              bucket.Location.indexOf(currentLocation.location.replace('-internal', '')) === 0){
+
                               bucketList.push(bucket);
+
                             }
                           })
                         }else{
-                          bucketList = _list;
+                          angular.forEach(_list,function(bucket){
+                            var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                            if (region) {
+                              bucketList.push(bucket);
+                            }
+                          })
                         }
                     }else{
                         bucketList = [];

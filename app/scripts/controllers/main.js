@@ -64,6 +64,7 @@ angular.module('ossClientUiApp')
         $scope.setRefer = function (bucket) {
           OSSModal.setRefer(bucket);
         }
+
         //下载整个bucket
         $scope.downloadBucket = function (bucket){
           OSSAlert.confirm('确定要下载整个Bucket吗？').result.then(function() {
