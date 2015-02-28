@@ -18,6 +18,10 @@ angular.module('ossClientUiApp')
          * 是否显示白名单
          */
         $scope.showRefer = OSSConfig.showRefer();
+        /**
+         * 是否显示图片服务器设置
+         */
+        $scope.showChannel = OSSConfig.showChannel();
         //
         $scope.bucketsLoaded = false;
         $scope.loadDownloadCount = {
@@ -26,6 +30,7 @@ angular.module('ossClientUiApp')
         }
         usSpinnerService.spin('body-spinner');
 
+        //bucket加载完成后关闭loading
         $scope.$on('bucketsLoaded',function(){
             $scope.bucketsLoaded = true;
             usSpinnerService.stop('body-spinner');
@@ -63,6 +68,11 @@ angular.module('ossClientUiApp')
         //refer设置
         $scope.setRefer = function (bucket) {
           OSSModal.setRefer(bucket);
+        }
+
+        //图片服务器设置
+        $scope.setImageServer = function (bucket) {
+          OSSModal.setImageServer(bucket);
         }
 
         //下载整个bucket
@@ -142,10 +152,12 @@ angular.module('ossClientUiApp')
         };
         //获取所有bucket列表
         var loadBuckets = function(){
+            $scope.loading = true;
             Bucket.list().then(function (buckets) {
               if(buckets){
                 $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
               }
+              $scope.loading = false;
             });
         }
         loadBuckets();
@@ -163,8 +175,16 @@ angular.module('ossClientUiApp')
           loadNewBuckets();
         },1000 * 60 * 5);
 
+        //刷新bucket列表
         $scope.refreshBuckets = function(){
-          loadNewBuckets();
+            $scope.loading = true;
+            Bucket.loadNew().then(function (buckets) {
+              if(buckets){
+                var newBuckets = angular.isArray(buckets) ? buckets : [buckets];
+                $scope.buckets = newBuckets;
+              }
+              $scope.loading = false;
+            });
         };
 
         $scope.breadFilter = function(value){
