@@ -17,6 +17,7 @@
     <!-- endbuild -->
 </head>
 <body  id="index-page">
+<div ng-if="!bucketsLoaded" class="loading-page"></div>
 <div class="wrapper" ng-show="bucketsLoaded">
     <div class="left-sidebar" ng-class="{'has-current-locaiton':currentLocation,'custom-client':isCustomClient}">
         <div class="left-header">

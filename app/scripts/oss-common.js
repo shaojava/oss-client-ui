@@ -62,8 +62,8 @@ angular.module('OSSCommon', [
                 source: "",
                 disable_location_select: 0,
                 host: "aliyuncs.com",
-                showrefer:false,
-                showchannel:false,
+                showrefer:true,
+                showchannel:true,
                 locations: [
                     {
                       "location": "oss-cn-guizhou-a",

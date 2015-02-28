@@ -164,6 +164,9 @@ angular.module('ossClientUiApp')
 
         //开启bucket定时器，5分钟加载一次
         var loadNewBuckets = function(){
+            if($scope.loading){
+              return;
+            }
             Bucket.loadNew().then(function (buckets) {
                 if(buckets){
                   var newBuckets = angular.isArray(buckets) ? buckets : [buckets];
@@ -177,6 +180,9 @@ angular.module('ossClientUiApp')
 
         //刷新bucket列表
         $scope.refreshBuckets = function(){
+            if($scope.loading){
+                return;
+            }
             $scope.loading = true;
             Bucket.loadNew().then(function (buckets) {
               if(buckets){
