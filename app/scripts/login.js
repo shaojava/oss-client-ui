@@ -213,16 +213,20 @@ angular
                 timeout:3000
             }).error(function(req,status){
                 if(!req && !status){
+                    $scope.netWorkType = 'internet';
                     callback('oss-cn-guizhou-a');
                 }else{
+                    $scope.netWorkType = 'intranet';
                     callback('oss-cn-gzzwy-a');
                 }
             });
         };
 
         //
+
         $scope.checkingLocation = false;
         $scope.predictionLocation = '';
+        $scope.netWorkType = null;
         if(OSSConfig.isGuiZhouClient()){
             $scope.checkingLocation = true;
             usSpinnerService.spin('checking-locaiton-spinner');

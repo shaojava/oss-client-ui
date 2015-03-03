@@ -1579,6 +1579,22 @@ angular.module('ossClientUiApp')
             getXMLHeader: function () {
                 return '<?xml version="1.0" encoding="UTF-8"?>';
             },
+            getCreateChannelXml: function (setting) {
+                return [
+                  this.getXMLHeader(),
+                  "<Channel>",
+                  "<Status>",
+                  setting.Status,
+                  "</Status>",
+                  "<OrigPicForbidden>",
+                  setting.OrigPicForbidden,
+                  "</OrigPicForbidden> ",
+                  "<UseStyleOnly>" ,
+                  setting.UseStyleOnly,
+                  "</UseStyleOnly>",
+                  "</Channel>"
+                ].join('');
+            },
             getCreateBucketXML: function (region) {
                 //去掉”-internal“
                 region = region.replace('-internal', '');
@@ -1634,22 +1650,32 @@ angular.module('ossClientUiApp')
                           var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
                           if(currentLocation) {
                             angular.forEach(_list, function (bucket) {
-                              if (bucket.Location == currentLocation) {
-                                buckets.push(bucket);
-                              }
+                              if( currentLocation.indexOf(bucket.Location) === 0 ||
+                                  bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
+                                  bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
+                                  bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
+
+                                  buckets.push(bucket);
+
+                                }
                             })
                           }else{
-                            buckets = _list;
+                            angular.forEach(_list,function(bucket){
+                                var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                                if (region) {
+                                  buckets.push(bucket);
+                                }
+                            })
                           }
                         }else{
                             buckets = [];
                         }
                         //接口返回的bucket的location会带上-a，需要替换成不带-a的
                         angular.forEach(buckets,function(bucket){
-                            var region  = OSSRegion.getRegionByLocation(bucket.Location);
-                            if(region){
-                                bucket.Location = region.location.replace('-internal','');
-                            }
+                          var region  = OSSRegion.getRegionByLocation(bucket.Location);
+                          if(region){
+                            bucket.Location = region.location.replace('-internal','');
+                          }
                         });
                         deferred.resolve(buckets);
                     }).error(function (res,status) {
@@ -1675,12 +1701,22 @@ angular.module('ossClientUiApp')
                         var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
                         if(currentLocation) {
                           angular.forEach(_list, function (bucket) {
-                            if (bucket.Location == currentLocation) {
+                            if( currentLocation.indexOf(bucket.Location) === 0 ||
+                              bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
+                              bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
+                              bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
+
                               bucketList.push(bucket);
+
                             }
                           })
                         }else{
-                          bucketList = _list;
+                          angular.forEach(_list,function(bucket){
+                            var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                            if (region) {
+                              bucketList.push(bucket);
+                            }
+                          })
                         }
                     }else{
                         bucketList = [];
@@ -1821,6 +1857,41 @@ angular.module('ossClientUiApp')
               return $http.put(requestUrl,RequestXML.getSetBucketReferXML(refer),{
                 headers: headers
               });
+            },
+            saveBucketChannel:function (bucketName,bucketRegion,_status,_origPicForbidden,_useStyleOnly){
+              var expires = getExpires();
+              var canonicalizedResource = getCanonicalizedResource(bucketName);
+              var contentType = 'application/xml';
+              var signature = OSS.invoke('getSignature', {
+                verb: 'PUT',
+                content_type: contentType,
+                expires: expires,
+                canonicalized_resource: canonicalizedResource
+              });
+              var setting = {
+                Status : _status ? 'enable' : 'disable',
+                OrigPicForbidden : _origPicForbidden,
+                UseStyleOnly : _useStyleOnly
+              }
+              var headers = angular.extend({}, {}, {
+                'Accept': contentType,
+                'Content-Type': contentType
+              });
+              var requestUrl = getRequestUrl(bucketName, bucketRegion.replace("oss","img"), expires, signature, canonicalizedResource);
+              return $http.put(requestUrl,RequestXML.getCreateChannelXml(setting),{
+                headers: headers
+              });
+            },
+            getBucketChannel: function (bucket) {
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name);
+                var signature = OSS.invoke('getSignature', {
+                  verb: 'GET',
+                  expires: expires,
+                  canonicalized_resource: canonicalizedResource
+                });
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location.replace("oss",'img'), expires, signature, canonicalizedResource);
+                return $http.get(requestUrl);
             },
             createBucket: function (bucketName, region, acl) {
                 var expires = getExpires();
@@ -2540,6 +2611,49 @@ angular.module('ossClientUiApp')
                   }
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
+            setImageServer: function (bucket){
+              var option = {
+                templateUrl: 'views/set_image_server_modal.html',
+                windowClass: 'set_imageserver_modal',
+                controller: function ($scope, $modalInstance) {
+                  $scope.loading = true;
+                  $scope.channel = {
+                      name: bucket.Name,
+                      Status: false,
+                      OrigPicForbidden: false,
+                      UseStyleOnly: false
+                  }
+                  OSSApi.getBucketChannel(bucket).success(function(res){
+                      var channel = res.Channel;
+                      $scope.channel.name = channel.Name;
+                      $scope.channel.Status = channel.Status.toLowerCase().indexOf('enable') === 0 ? true : false;
+                      $scope.channel.OrigPicForbidden = channel.OrigPicForbidden.toLowerCase() === 'true' ? true : false;
+                      $scope.channel.UseStyleOnly = channel.UseStyleOnly.toLowerCase() === 'true' ? true : false;
+                      $scope.loading = false;
+                  }).error(function(res,status){
+                      if (status && status == 404){
+                         $scope.loading = false;
+                      }else{
+                         $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      }
+                  });
+                  $scope.saveChannel = function () {
+                      $scope.saving = true;
+                      OSSApi.saveBucketChannel(bucket.Name,bucket.Location,$scope.channel.Status,$scope.channel.OrigPicForbidden,$scope.channel.UseStyleOnly).success(function(res){
+                          $scope.saving = false;
+                          $modalInstance.dismiss('cancel');
+                      }).error(function(res,status){
+                          $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      })
+                  }
+                  $scope.cancel = function () {
+                      $modalInstance.dismiss('cancel');
                   };
                 }
               }
