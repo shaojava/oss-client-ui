@@ -15,6 +15,18 @@ body{
 
     > section{
       display: none;
+      div.set-http-server{
+        line-height: 35px;
+        > a{
+          color:#bababa;
+          cursor:pointer;
+        }
+      }
+      div.checkbox{
+         > label {
+           line-height: 22px;
+         }
+      }
     }
 
     > section.current{

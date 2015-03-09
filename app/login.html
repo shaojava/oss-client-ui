@@ -31,14 +31,17 @@
             <input type="text" ng-model="accessKeySecret" class="form-control" placeholder="Access Key Secret"/>
         </div>
         <div class="form-group" ng-show="!isCustomClient">
-            <div class="checkbox">
-                <label><input type="checkbox" ng-model="isCloudHost"/>本机是ECS云主机</label>
-            </div>
+          <div class="checkbox pull-left">
+            <label><input type="checkbox" ng-model="isCloudHost"/>本机是ECS云主机</label>
+          </div>
+          <div class="pull-right set-http-server">
+            <a class="set-http-server" ng-click="step = 'setHttpServer'">
+              <i class="fa button-icon button-setting-icon" style="{{customHost&&customHost.length?'color:rgb(45,146,255);':''}}" ng-class="{'fa-check-square-o':customHost && customHost.length,'fa-cog':!customHost || !customHost.length}" style="font-size: 14px;margin-right:5px;"></i>自定义服务器地址</a>
+          </div>
         </div>
         <div class="form-group" >
             <location-select select-location="region" login-networktype="netWorkType" default-location="{{defaultLocation}}" disable-select="checkingLocation||(!isCloudHost && !isCustomClient)"
                              place-holder="{{regionSelectTip}}"/>
-
         </div>
         <div class="form-group">
             <div class="btn-wrapper">
@@ -76,6 +79,26 @@
                 <button class="btn btn-default" ng-click="step='loginById'">返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
             </div>
         </div>
+    </section>
+    <!--设置自定义服务器-->
+    <section class="form-horizontal" ng-class="getSectionClass('setHttpServer')">
+      <div class="form-group">
+        <input type="text" ng-model="host" class="form-control" placeholder="自定义服务器地址"/>
+      </div>
+      <div class="form-group">
+        <div class="btn-wrapper">
+          <button class="btn btn-primary" ng-click="customDomain(host);">确&nbsp;&nbsp;&nbsp;&nbsp;定</button>
+          <button class="btn btn-default" ng-click="step = 'loginById'">返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
+        </div>
+      </div>
+      <div class="form-group" style="font-size: 14px;line-height: 26px;position: absolute;left:90px;right:90px;bottom:80px;">
+        <div class="pull-left">
+            注:
+        </div>
+        <div style="padding-left:20px;">
+          自定义服务地址设置后只有设置了登录密码才能一直保存，否则下次登录时将自动清空。
+        </div>
+      </div>
     </section>
     <!--设置密码-->
     <section class="form-horizontal"  ng-class="getSectionClass('setPassword')">
