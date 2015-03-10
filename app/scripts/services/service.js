@@ -1786,9 +1786,9 @@ angular.module('ossClientUiApp')
             region = OSSRegion.changeLocation(region);
             var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
             //如果不是内网并且设置了自定义服务器，则以自定义服务器的host进行请求
-            //if(!OSSRegion.isIntranet(region) && customHost){
-            //    requestUrl = customHost;
-            //}
+            if(customHost){
+                requestUrl = 'http://' + (bucket ? bucket + "." : "") + customHost;
+            }
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
             requestUrl += canonicalizedResource;
             requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
@@ -1810,8 +1810,11 @@ angular.module('ossClientUiApp')
             getURI: function (bucket, objectName, expires) {
                 if (!expires) {
                     var _location = OSSRegion.changeLocation(bucket.Location);
-                    return 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
-                    //return 'http://' + bucket.Name + '.' + bucket.Location + '.' + host + '/' + encodeURIComponent(objectName);
+                    var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
+                    if(customHost){
+                      _url = 'http://' + bucket.Name + customHost + '/' + encodeURIComponent(objectName);
+                    }
+                    return _url;
                 } else {
                     expires = getExpires(expires);
                     var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectName);
