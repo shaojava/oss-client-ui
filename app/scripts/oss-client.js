@@ -106,16 +106,26 @@
                 source:"",
                 disable_location_select:0,
                 host:"aliyuncs.com",
+                showrefer:false,
+                showchannel:false,
                 locations:[
                     {
-                        location:'oss-cn-guizhou-a',
-                        name:'互联网',
-                        enable:0
+                      "location": "oss-cn-guizhou-a",
+                      "name": "互联网",
+                      "enable": 0,
+                      "network":"internet"
                     },
                     {
-                        location:'oss-cn-gzzwy-a',
-                        name:'政务外网',
-                        enable:0
+                      "location": "oss-cn-guizhou-a-internal",
+                      "name": "政务外网",
+                      "enable": 0,
+                      "network":"internet"
+                    },
+                    {
+                      "location": "oss-cn-gzzwy-a-internal",
+                      "name": "政务外网",
+                      "enable": 0,
+                      "network":"intranet"
                     },
                     {
                         location:'oss-cn-hangzhou-a',
