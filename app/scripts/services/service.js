@@ -1809,8 +1809,8 @@ angular.module('ossClientUiApp')
         };
 
         return {
-            getURI: function (bucket, objectName, expires) {
-                if (!expires) {
+            getURI: function (bucket, objectName, _expires) {
+                if (!_expires) {
                     var _location = OSSRegion.changeLocation(bucket.Location);
                     var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
 
@@ -1820,7 +1820,7 @@ angular.module('ossClientUiApp')
                     }
                     return _url;
                 } else {
-                    expires = getExpires(expires);
+                    var expires = getExpires(+_expires);
                     var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectName);
                     var signature = OSS.invoke('getSignature', {
                         verb: 'GET',

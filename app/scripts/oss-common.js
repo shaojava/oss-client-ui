@@ -242,7 +242,7 @@ angular.module('OSSCommon', [
                     var h = parseInt((parseInt(expiresTime)/3600) % 24);
                     var m = parseInt((parseInt(expiresTime)/60) % 60);
                     var s = parseInt(parseInt(expiresTime) % 60)
-                    var str = '操作失败，当前客户端时间比服务器时间';
+                    var str = '数据加载失败，当前您电脑的时间比服务器时间';
                     if(clientTime - serverTime > 0){
                       str += '快'
                     }else if(clientTime - serverTime < 0){
@@ -262,6 +262,7 @@ angular.module('OSSCommon', [
                     if(s > 0){
                       str += s + '秒'
                     }
+                    str += ",请调整您的电脑时间后重试。"
                     return str;
                 }else if (erroList[resError.Code]) {
                     return erroList[resError.Code];
