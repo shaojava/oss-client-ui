@@ -5,10 +5,8 @@
 'use strict';
 ;(function (window) {
 
-    var accessId = "";
-    var accessSecret = "";
-//    var accessId = "";
-//    var accessSecret = "";
+    var accessId = "aNgmvBucXXcJnOgj";
+    var accessSecret = "GBJN7GarVWrITZT9YZR64Ir6bOLEM5";
 
     function isOSSClient() {
         var sync = navigator.userAgent.split(';')[0] || '';
@@ -155,63 +153,13 @@
                     }
                 ]
             });
-            return JSON.stringify({
-                source:'guizhou',
-                disable_location_select:1,
-                host:'aliyuncs.com',
-                showrefer:true,
-                showchannel:true,
-                custom_server_host:'',
-                locations:[
-                    {
-                      "location": "oss-cn-guizhou-a",
-                      "name": "互联网",
-                      "enable": 1,
-                      "network":"internet"
-                    },
-                    {
-                      "location": "oss-cn-guizhou-a-internal",
-                      "name": "政务外网",
-                      "enable": 1,
-                      "network":"internet"
-                    },
-                    {
-                      "location": "oss-cn-gzzwy-a-internal",
-                      "name": "政务外网",
-                      "enable": 1,
-                      "network":"intranet"
-                    },
-                    {
-                        location:'oss-cn-hangzhou-a',
-                        name:'杭州',
-                        enable:0
-                    },
-                    {
-                        location:'oss-cn-qingdao-a',
-                        name:'青岛',
-                        enable:0
-                    },
-                    {
-                        location:'oss-cn-beijing-a',
-                        name:'北京',
-                        enable:0
-                    },
-                    {
-                        location:'oss-cn-hongkong-a',
-                        name:'香港',
-                        enable:0
-                    },
-                    {
-                        location:'oss-cn-shenzhen-a',
-                        name:'深圳',
-                        enable:0
-                    }
-                ]
-            });
+            return re;
         },
         getCurrentLocation:function(){
-            //return 'oss-cn-gzzwy-a';
-            return JSON.stringify('oss-cn-guizhou-a');
+            return JSON.stringify('');
+        },
+        getCurrentHost:function(){
+            return JSON.stringify('');
         }
     };
 

@@ -290,6 +290,32 @@ angular.module('ossClientUiApp')
             }
         };
     }])
+    .directive('webUploader',['$parse',function($parse){
+        return {
+            restrict: 'A',
+            priority: 500,
+            link: function postLink(scope, element, attrs) {
+                scope.$watch(attrs.webUploader,function(enable){
+                    if(enable){
+                        var options = $parse(attrs['webUploaderOptions'])();
+                        if(!options) options = {};
+                        angular.extend(options,{
+                            swf: '/bower_components/fex-webuploader/dist/Uploader.swf',
+                            server: 'http://webuploader.duapp.com/server/fileupload.php',
+                            pick: element
+                        });
+                        console.log('options',options);
+                        var uploader = WebUploader.create(options);
+                    }else{
+
+                    }
+                });
+
+
+
+            }
+        }
+    }])
     .directive('onlyNumber', ['$timeout',function ($timeout) {
         return {
           restrict: 'A',
