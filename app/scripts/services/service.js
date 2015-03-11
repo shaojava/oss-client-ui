@@ -1644,6 +1644,10 @@ angular.module('ossClientUiApp')
                         //获取当前的区域
                         var currentLocation = OSS.invoke('getCurrentLocation');
                         $rootScope.$broadcast('bucketsLoaded');
+                        if(!res['ListAllMyBucketsResult']||!res['ListAllMyBucketsResult']['Buckets']||!res['ListAllMyBucketsResult']['Buckets']['Bucket']){
+                            $rootScope.$broadcast('showError','数据请求失败，如果你自定义了服务器地址，请检查是否正常。');
+                            return;
+                        }
                         var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                         if(resBuckets){
                           buckets = []
@@ -1654,7 +1658,6 @@ angular.module('ossClientUiApp')
                                   bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
                                   bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
                                   bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
-
                                   buckets.push(bucket);
 
                                 }
@@ -1705,9 +1708,7 @@ angular.module('ossClientUiApp')
                               bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
                               bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
                               bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
-
                               bucketList.push(bucket);
-
                             }
                           })
                         }else{
@@ -1769,11 +1770,12 @@ angular.module('ossClientUiApp')
     .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion',function ($http, RequestXML, OSSConfig,OSSRegion) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
-
         //获取当前的区域
         var currentLocation = OSS.invoke('getCurrentLocation');
-
+        //获取默认的HOST
         var host = OSSConfig.getHost();
+        //获取用户自定义的HOST
+        var customHost = OSS.invoke('getCurrentHost');
 
         var getExpires = function (expires) {
             expires = angular.isUndefined(expires) ? 30 : expires;
@@ -1782,7 +1784,13 @@ angular.module('ossClientUiApp')
 
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam) {
             region = OSSRegion.changeLocation(region);
+            //默认发送请求地址
             var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
+
+            //如果设置了自定义服务器，则以自定义服务器的host进行请求
+            if(customHost){
+                requestUrl = 'http://' + (bucket ? bucket + "." : "") + customHost;
+            }
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
             requestUrl += canonicalizedResource;
             requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
@@ -1804,8 +1812,13 @@ angular.module('ossClientUiApp')
             getURI: function (bucket, objectName, expires) {
                 if (!expires) {
                     var _location = OSSRegion.changeLocation(bucket.Location);
-                    return 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
-                    //return 'http://' + bucket.Name + '.' + bucket.Location + '.' + host + '/' + encodeURIComponent(objectName);
+                    var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
+
+                    //如果是在客户端设置了服务器地址
+                    if(customHost){
+                      _url = 'http://' + bucket.Name + customHost + '/' + encodeURIComponent(objectName);
+                    }
+                    return _url;
                 } else {
                     expires = getExpires(expires);
                     var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectName);
@@ -2303,7 +2316,7 @@ angular.module('ossClientUiApp')
                                 return;
                             }
                             $scope.loading = true;
-                            OSSApi.createBucket(bucketName, region.location, acl.value).success(function () {
+                            OSSApi.createBucket(bucketName, region.location, acl.value).success(function (res) {
                                 $scope.loading = false;
                                 $modalInstance.close({
                                     act: 'add',

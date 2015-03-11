@@ -62,8 +62,6 @@ angular.module('OSSCommon', [
                 source: "",
                 disable_location_select: 0,
                 host: "aliyuncs.com",
-                showrefer:true,
-                showchannel:true,
                 locations: [
                     {
                       "location": "oss-cn-guizhou-a",
@@ -131,14 +129,14 @@ angular.module('OSSCommon', [
              * @returns {boolean}
              */
             showRefer: function () {
-                return !!config.showrefer
+                return !!config.showrefer;
             },
             /**
              * 是否显示图片服务器设置
              * @returns {boolean}
              */
             showChannel: function () {
-                return !!config.showchannel
+                return !!config.showchannel;
             },
             /**
              * 创建bucket是否不允许选择区域
@@ -206,6 +204,26 @@ angular.module('OSSCommon', [
                     return location + '-a-internal';
                 }
                 return location;
+            },
+            //判断是内网
+            isIntranet: function (location) {
+                if (location.indexOf('internal') > 0){
+                    return true;
+                }
+                return false;
+            },
+            getGuiZhouIntranetLocationItem: function () {
+                return _.find(locations, function (item) {
+                  return  item.enable === 1 && item.network === "intranet";
+                });
+            },
+            getGuiZhouInternetLocationItem: function () {
+                return _.find(locations, function (item) {
+                  return  item.enable === 1 && item.network === "internet";
+                });
+            },
+            getIntranetLocation: function (location) {
+                return location.replace('-internal', '');
             }
         };
     }])

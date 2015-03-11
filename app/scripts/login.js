@@ -43,7 +43,6 @@ angular
         $scope.customHost = OSS.invoke('getCurrentHost');
         //提交自定义的服务器地址
         $scope.customDomain = function (host) {
-          console.log("---host---",host)
           if (!host || !host.length) {
             alert('请输入服务器地址');
             return;
@@ -113,7 +112,6 @@ angular
                     if (!res.error) {
                         $scope.step = 'setPassword';
                     } else {
-                        console.log("===login res===",res);
                         alert(OSSException.getClientErrorMsg(res));
                     }
                 });
@@ -226,18 +224,19 @@ angular
         };
 
         var checkCurrentLocation = function(callback){
-            var region = OSSRegion.getRegionByLocation('oss-cn-gzzwy-a');
+            var region = OSSRegion.getGuiZhouIntranetLocationItem();
             var host = OSSConfig.getHost();
             var requestUrl = 'http://'+region.location + '.' + host;
             $http.get(requestUrl,{
                 timeout:3000
             }).error(function(req,status){
                 if(!req && !status){
-                    $scope.netWorkType = 'internet';
-                    callback('oss-cn-guizhou-a');
+                    region = OSSRegion.getGuiZhouInternetLocationItem();
+                    $scope.netWorkType = region.network;
+                    callback(region.location);
                 }else{
-                    $scope.netWorkType = 'intranet';
-                    callback('oss-cn-gzzwy-a');
+                    $scope.netWorkType = region.network;
+                    callback(region.location);
                 }
             });
         };
