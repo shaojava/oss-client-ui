@@ -62,8 +62,6 @@ angular.module('OSSCommon', [
                 source: "",
                 disable_location_select: 0,
                 host: "aliyuncs.com",
-                showrefer:false,
-                showchannel:false,
                 locations: [
                     {
                       "location": "oss-cn-guizhou-a",
@@ -131,14 +129,14 @@ angular.module('OSSCommon', [
              * @returns {boolean}
              */
             showRefer: function () {
-                return !!config.showrefer
+                return !!config.showrefer;
             },
             /**
              * 是否显示图片服务器设置
              * @returns {boolean}
              */
             showChannel: function () {
-                return !!config.showchannel
+                return !!config.showchannel;
             },
             /**
              * 创建bucket是否不允许选择区域

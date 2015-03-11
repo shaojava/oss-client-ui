@@ -108,6 +108,7 @@
                 host:"aliyuncs.com",
                 showrefer:false,
                 showchannel:false,
+                custom_server_host:'',
                 locations:[
                     {
                       "location": "oss-cn-guizhou-a",
@@ -158,16 +159,27 @@
                 source:'guizhou',
                 disable_location_select:1,
                 host:'aliyuncs.com',
+                showrefer:true,
+                showchannel:true,
+                custom_server_host:'',
                 locations:[
                     {
-                        location:'oss-cn-guizhou-a',
-                        name:'互联网',
-                        enable:1
+                      "location": "oss-cn-guizhou-a",
+                      "name": "互联网",
+                      "enable": 1,
+                      "network":"internet"
                     },
                     {
-                        location:'oss-cn-gzzwy-a',
-                        name:'政务外网',
-                        enable:1
+                      "location": "oss-cn-guizhou-a-internal",
+                      "name": "政务外网",
+                      "enable": 1,
+                      "network":"internet"
+                    },
+                    {
+                      "location": "oss-cn-gzzwy-a-internal",
+                      "name": "政务外网",
+                      "enable": 1,
+                      "network":"intranet"
                     },
                     {
                         location:'oss-cn-hangzhou-a',

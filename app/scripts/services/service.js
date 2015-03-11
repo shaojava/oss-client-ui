@@ -1784,8 +1784,10 @@ angular.module('ossClientUiApp')
 
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam) {
             region = OSSRegion.changeLocation(region);
+            //默认发送请求地址
             var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
-            //如果不是内网并且设置了自定义服务器，则以自定义服务器的host进行请求
+
+            //如果设置了自定义服务器，则以自定义服务器的host进行请求
             if(customHost){
                 requestUrl = 'http://' + (bucket ? bucket + "." : "") + customHost;
             }
@@ -1811,6 +1813,8 @@ angular.module('ossClientUiApp')
                 if (!expires) {
                     var _location = OSSRegion.changeLocation(bucket.Location);
                     var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
+
+                    //如果是在客户端设置了服务器地址
                     if(customHost){
                       _url = 'http://' + bucket.Name + customHost + '/' + encodeURIComponent(objectName);
                     }
