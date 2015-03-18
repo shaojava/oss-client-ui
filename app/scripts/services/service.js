@@ -569,7 +569,7 @@ angular.module('ossClientUiApp')
                     OSS.invoke('startUpload', prepareUpladParam(), function () {
                         $timeout(function () {
                             _.each(_.filter(items, function (item) {
-                                return OSSQueueItem.isPaused(item);
+                                return OSSQueueItem.isPaused(item) || OSSQueueItem.isError(item);
                             }), OSSQueueItem.setWaiting);
                         });
                     });
