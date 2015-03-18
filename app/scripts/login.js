@@ -65,7 +65,9 @@ angular
 
         //提交登录
 
-        $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, location) {
+        $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, region) {
+
+            var location = undefined;
             if (!accessKeyId || !accessKeyId.length) {
                 alert('请输入 Access Key ID');
                 return;
@@ -75,7 +77,9 @@ angular
                 alert('请输入 Access Key Secret');
                 return;
             }
-
+            if(region && region.location){
+              location = region.location;
+            }
             //如果是云主机
             if (!$scope.isCustomClient && isCloudHost) {
                 if(!location){
@@ -93,6 +97,13 @@ angular
                 if(!location){
                     alert('请选择区域');
                     return;
+                }
+                //如果配置了自定义服务器地址，则设在自定义服务器地址
+                var customHost = region.customhost;
+                if (customHost && customHost.length) {
+                  OSS.invoke('setServerLocation', {
+                    location: customHost
+                  });
                 }
             }
             var param = {
@@ -227,6 +238,9 @@ angular
             var region = OSSRegion.getGuiZhouIntranetLocationItem();
             var host = OSSConfig.getHost();
             var requestUrl = 'http://'+region.location + '.' + host;
+            if(region.customhost && region.customhost.length){
+              requestUrl = 'http://'+region.customhost;
+            }
             $http.get(requestUrl,{
                 timeout:3000
             }).error(function(req,status){
