@@ -115,7 +115,7 @@ angular.module('OSSCommon', [
              * @returns {boolean}
              */
             isCustomClient: function () {
-                return config.source != '';
+                return config.source && config.source != '';
             },
             /**
              * 是否是贵州的定制客户端
@@ -314,7 +314,7 @@ angular.module('OSSCommon', [
                         msg = erroList['AccessDenied'];
                     } else {
                         msg = '网络请求错误';
-                        if (OSSConfig.isGuiZhouClient()) {
+                        if (OSSConfig.isCustomClient()) {
                             msg += '<p class="text-muted">（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）</p>';
                         }
                     }

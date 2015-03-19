@@ -93,7 +93,7 @@ angular
               location = null;
             }
 
-            if(OSSConfig.isGuiZhouClient()){
+            if(OSSConfig.isCustomClient()){
                 if(!location){
                     alert('请选择区域');
                     return;
@@ -260,7 +260,7 @@ angular
         $scope.checkingLocation = false;
         $scope.predictionLocation = '';
         $scope.netWorkType = null;
-        if(OSSConfig.isGuiZhouClient()){
+        if(OSSConfig.isCustomClient()){
             $scope.checkingLocation = true;
             usSpinnerService.spin('checking-locaiton-spinner');
             checkCurrentLocation(function(predictionLocation){
