@@ -1644,11 +1644,15 @@ angular.module('ossClientUiApp')
                         //获取当前的区域
                         var currentLocation = OSS.invoke('getCurrentLocation');
                         $rootScope.$broadcast('bucketsLoaded');
-                        if(!res['ListAllMyBucketsResult']||!res['ListAllMyBucketsResult']['Buckets']||!res['ListAllMyBucketsResult']['Buckets']['Bucket']){
+                        if(!res['ListAllMyBucketsResult']){
                             $rootScope.$broadcast('showError','数据请求失败，如果你自定义了服务器地址，请检查是否正常。');
                             return;
                         }
-                        var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                        var resBuckets = [];
+                        if(res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']){
+                            resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                        }
+
                         if(resBuckets){
                           buckets = []
                           var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
@@ -1659,7 +1663,6 @@ angular.module('ossClientUiApp')
                                   bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
                                   bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
                                   buckets.push(bucket);
-
                                 }
                             })
                           }else{
