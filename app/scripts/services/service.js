@@ -2447,12 +2447,12 @@ angular.module('ossClientUiApp')
                         $scope.setHttpHeader = function (headers, customHeaders) {
                             var ossHeaders = {}, canonicalizedOSSheaders = {};
                             var unValidFieldValue = false,contentTypeRequired = false;
-                            var fieldValueReg = /^[a-zA-Z0-9\-_/.]+$/;
+                            var fieldValueReg = /^[a-zA-Z0-9\-_/.="]+$/;
 
                             var checkFieldValueIsValid = function(value){
                               //不检查
                               //return true;
-                              return /^[a-zA-Z0-9\-_/.;,:]+$/.test(value);
+                              return /^[a-zA-Z0-9\-_/.;,:="]+$/.test(value);
                             };
 
                             angular.forEach(headers, function (val) {
@@ -2493,7 +2493,7 @@ angular.module('ossClientUiApp')
                             }
                             if(unValidFieldValue){
                                 var msg  = 'HTTP属性值格式错误';
-                                msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号</p>'
+                                msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号</p>'
                                 $rootScope.$broadcast('showError',msg);
                                 return;
                             }
