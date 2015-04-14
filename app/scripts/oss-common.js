@@ -207,20 +207,25 @@ angular.module('OSSCommon', [
             },
             //判断是内网
             isIntranet: function (location) {
-                if (location.indexOf('internal') > 0){
+                if (location.indexOf('intranet') >= 0){
                     return true;
                 }
                 return false;
             },
-            getGuiZhouIntranetLocationItem: function () {
+            getIntranetLocationItem: function () {
                 return _.find(locations, function (item) {
                   return  item.enable === 1 && item.network === "intranet";
                 });
             },
-            getGuiZhouInternetLocationItem: function () {
+            getInternetLocationItem: function () {
                 return _.find(locations, function (item) {
                   return  item.enable === 1 && item.network === "internet";
                 });
+            },
+            getAllIntranetLocationItem:function () {
+                return _.filter(locations,function(item){
+                  return item.enable === 1 && item.network === "intranet";
+                })
             },
             getIntranetLocation: function (location) {
                 return location.replace('-internal', '');
@@ -584,6 +589,10 @@ angular.module('OSSCommon', [
                       return;
                   }
                   scope.locations = OSSRegion.list(newVal);
+                  //如果是内网，则只显示一个内网
+                  if(OSSRegion.isIntranet(newVal)) {
+                    scope.locations = [scope.locations[1]]
+                  }
                   if (!scope.placeHolder) {
                     scope.locations.selected = scope.locations[0];
                   }

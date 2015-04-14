@@ -1643,6 +1643,8 @@ angular.module('ossClientUiApp')
                     OSSApi.getBuckets().success(function (res) {
                         //获取当前的区域
                         var currentLocation = OSS.invoke('getCurrentLocation');
+                        var isIntranet = OSSRegion.isIntranet(currentLocation);
+                        console.info("service.js bucket list currentLocation:",currentLocation,isIntranet,OSSRegion.getAllIntranetLocationItem());
                         $rootScope.$broadcast('bucketsLoaded');
                         if(!res['ListAllMyBucketsResult']){
                             $rootScope.$broadcast('showError','数据请求失败，如果你自定义了服务器地址，请检查是否正常。');
@@ -1655,15 +1657,26 @@ angular.module('ossClientUiApp')
 
                         if(resBuckets){
                           buckets = []
+                          //||
+                          //bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
+                          //bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
+                          //bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0
                           var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                          if(currentLocation) {
+                          if(currentLocation && !isIntranet) {
                             angular.forEach(_list, function (bucket) {
-                              if( currentLocation.indexOf(bucket.Location) === 0 ||
-                                  bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
-                                  bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
-                                  bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
+                              if( currentLocation.indexOf(bucket.Location) === 0){
                                   buckets.push(bucket);
                                 }
+                            })
+                          }else if(currentLocation && isIntranet){
+                            var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                            angular.forEach(_list, function (bucket) {
+                              var _item = _.find(intranetLocations,function(item){
+                                 return item.enable === 1 && item.location === bucket.Location;
+                              })
+                              if(_item){
+                                buckets.push(bucket);
+                              }
                             })
                           }else{
                             angular.forEach(_list,function(bucket){
@@ -1699,19 +1712,27 @@ angular.module('ossClientUiApp')
                     var bucketList = null;
                     var resBuckets = null;
                     var currentLocation = OSS.invoke('getCurrentLocation');
+                    var isIntranet = OSSRegion.isIntranet(currentLocation);
                     if(res && res['ListAllMyBucketsResult'] && res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']) {
                         resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                     }
                     if(resBuckets){
                         bucketList = []
                         var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                        if(currentLocation) {
+                        if(currentLocation && !isIntranet) {
                           angular.forEach(_list, function (bucket) {
-                            if( currentLocation.indexOf(bucket.Location) === 0 ||
-                              bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
-                              bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
-                              bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
+                            if( currentLocation.indexOf(bucket.Location) === 0 ){
                               bucketList.push(bucket);
+                            }
+                          })
+                        }else if(currentLocation && isIntranet){
+                          var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                          angular.forEach(_list, function (bucket) {
+                            var _item = _.find(intranetLocations,function(item){
+                              return item.enable === 1 && item.location === bucket.Location;
+                            })
+                            if(_item){
+                              buckets.push(bucket);
                             }
                           })
                         }else{

@@ -66,7 +66,7 @@ angular
         //提交登录
 
         $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, region) {
-
+            console.info("login oss argument:",arguments)
             var location = undefined;
             if (!accessKeyId || !accessKeyId.length) {
                 alert('请输入 Access Key ID');
@@ -235,7 +235,7 @@ angular
         };
 
         var checkCurrentLocation = function(callback){
-            var region = OSSRegion.getGuiZhouIntranetLocationItem();
+            var region = OSSRegion.getAllIntranetLocationItem()[1];
             var host = OSSConfig.getHost();
             var requestUrl = 'http://'+region.location + '.' + host;
             if(region.customhost && region.customhost.length){
@@ -245,7 +245,7 @@ angular
                 timeout:3000
             }).error(function(req,status){
                 if(!req && !status){
-                    region = OSSRegion.getGuiZhouInternetLocationItem();
+                    region = OSSRegion.getInternetLocationItem();
                     $scope.netWorkType = region.network;
                     callback(region.location);
                 }else{
