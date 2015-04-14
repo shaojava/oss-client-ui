@@ -589,10 +589,7 @@ angular.module('OSSCommon', [
                       return;
                   }
                   scope.locations = OSSRegion.list(newVal);
-                  //如果是内网，则只显示一个内网
-                  if(OSSRegion.isIntranet(newVal)) {
-                    scope.locations = [scope.locations[1]]
-                  }
+
                   if (!scope.placeHolder) {
                     scope.locations.selected = scope.locations[0];
                   }

@@ -1927,7 +1927,8 @@ angular.module('ossClientUiApp')
                   expires: expires,
                   canonicalized_resource: canonicalizedResource
                 });
-                var requestUrl = getRequestUrl(bucket.Name, bucket.Location.replace("oss",'img'), expires, signature, canonicalizedResource);
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                requestUrl = requestUrl.replace(bucket.Location,bucket.Location.replace("oss",'img'))
                 return $http.get(requestUrl);
             },
             createBucket: function (bucketName, region, acl) {
