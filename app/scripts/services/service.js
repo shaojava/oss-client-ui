@@ -1672,7 +1672,7 @@ angular.module('ossClientUiApp')
                             var intranetLocations = OSSRegion.getAllIntranetLocationItem();
                             angular.forEach(_list, function (bucket) {
                               var _item = _.find(intranetLocations,function(item){
-                                 return item.enable === 1 && item.location === bucket.Location;
+                                 return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
                               })
                               if(_item){
                                 buckets.push(bucket);
@@ -1729,10 +1729,10 @@ angular.module('ossClientUiApp')
                           var intranetLocations = OSSRegion.getAllIntranetLocationItem();
                           angular.forEach(_list, function (bucket) {
                             var _item = _.find(intranetLocations,function(item){
-                              return item.enable === 1 && item.location === bucket.Location;
+                              return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
                             })
                             if(_item){
-                              buckets.push(bucket);
+                              bucketList.push(bucket);
                             }
                           })
                         }else{
@@ -1914,7 +1914,8 @@ angular.module('ossClientUiApp')
                 'Accept': contentType,
                 'Content-Type': contentType
               });
-              var requestUrl = getRequestUrl(bucketName, bucketRegion.replace("oss","img"), expires, signature, canonicalizedResource);
+              var requestUrl = getRequestUrl(bucketName, bucketRegion, expires, signature, canonicalizedResource);
+              requestUrl = requestUrl.replace(bucketRegion,bucket.Location.replace("oss",'img'))
               return $http.put(requestUrl,RequestXML.getCreateChannelXml(setting),{
                 headers: headers
               });
@@ -2378,6 +2379,7 @@ angular.module('ossClientUiApp')
                         //删除bucket
                         $scope.delBucket = function () {
                             _context.delBucketConfirm(bucket).result.then(function (param) {
+                                console.log("===bucket location===",bucket)
                                 OSS.invoke('deleteBucket', {
                                     keyid: param.accessKey,
                                     keysecret: param.accessSecret,

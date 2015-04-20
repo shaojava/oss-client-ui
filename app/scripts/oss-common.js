@@ -191,6 +191,17 @@ angular.module('OSSCommon', [
                 });
             },
             changeLocation: function (location) {
+              var isIntranet = this.isIntranet(currentLocation);
+                if(OSSConfig.isCustomClient() && isIntranet) {
+                  var intranetLocations = this.getAllIntranetLocationItem();
+                  var _location = location;
+                  angular.forEach(intranetLocations, function (item) {
+                    if (item.location === location || item.location === location + '-internal' || item.location === location + '-a-internal') {
+                      _location = item.location;
+                    }
+                  })
+                  return _location;
+                }
                 if (location.indexOf('-internal') > 0) {
                     return location;
                 }
@@ -207,7 +218,7 @@ angular.module('OSSCommon', [
             },
             //判断是内网
             isIntranet: function (location) {
-                if (location.indexOf('intranet') >= 0){
+                if (location.indexOf('internal') > 0){
                     return true;
                 }
                 return false;
