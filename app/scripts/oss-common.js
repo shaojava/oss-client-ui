@@ -105,6 +105,11 @@ angular.module('OSSCommon', [
                         location: 'oss-cn-shenzhen',
                         name: '深圳',
                         enable: 1
+                    },
+                    {
+                      location: 'oss-us-west-1',
+                      name: '美国',
+                      enable: 1
                     }
                 ]
             };
