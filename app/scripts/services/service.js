@@ -569,7 +569,7 @@ angular.module('ossClientUiApp')
                     OSS.invoke('startUpload', prepareUpladParam(), function () {
                         $timeout(function () {
                             _.each(_.filter(items, function (item) {
-                                return OSSQueueItem.isPaused(item);
+                                return OSSQueueItem.isPaused(item) || OSSQueueItem.isError(item);
                             }), OSSQueueItem.setWaiting);
                         });
                     });
@@ -1643,24 +1643,35 @@ angular.module('ossClientUiApp')
                     OSSApi.getBuckets().success(function (res) {
                         //获取当前的区域
                         var currentLocation = OSS.invoke('getCurrentLocation');
+                        var isIntranet = OSSRegion.isIntranet(currentLocation);
                         $rootScope.$broadcast('bucketsLoaded');
-                        if(!res['ListAllMyBucketsResult']||!res['ListAllMyBucketsResult']['Buckets']||!res['ListAllMyBucketsResult']['Buckets']['Bucket']){
+                        if(!res['ListAllMyBucketsResult']){
                             $rootScope.$broadcast('showError','数据请求失败，如果你自定义了服务器地址，请检查是否正常。');
                             return;
                         }
-                        var resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                        var resBuckets = [];
+                        if(res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']){
+                            resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
+                        }
+
                         if(resBuckets){
                           buckets = []
                           var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                          if(currentLocation) {
+                          if(currentLocation && !isIntranet) {
                             angular.forEach(_list, function (bucket) {
-                              if( currentLocation.indexOf(bucket.Location) === 0 ||
-                                  bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
-                                  bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
-                                  bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
+                              if( currentLocation.indexOf(bucket.Location) === 0){
                                   buckets.push(bucket);
-
                                 }
+                            })
+                          }else if(currentLocation && isIntranet){
+                            var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                            angular.forEach(_list, function (bucket) {
+                              var _item = _.find(intranetLocations,function(item){
+                                 return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
+                              })
+                              if(_item){
+                                buckets.push(bucket);
+                              }
                             })
                           }else{
                             angular.forEach(_list,function(bucket){
@@ -1696,18 +1707,26 @@ angular.module('ossClientUiApp')
                     var bucketList = null;
                     var resBuckets = null;
                     var currentLocation = OSS.invoke('getCurrentLocation');
+                    var isIntranet = OSSRegion.isIntranet(currentLocation);
                     if(res && res['ListAllMyBucketsResult'] && res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']) {
                         resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                     }
                     if(resBuckets){
                         bucketList = []
                         var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                        if(currentLocation) {
+                        if(currentLocation && !isIntranet) {
                           angular.forEach(_list, function (bucket) {
-                            if( currentLocation.indexOf(bucket.Location) === 0 ||
-                              bucket.Location.indexOf(currentLocation.replace('-a-internal', '')) === 0 ||
-                              bucket.Location.indexOf(currentLocation.replace('-a', '')) === 0 ||
-                              bucket.Location.indexOf(currentLocation.replace('-internal', '')) === 0){
+                            if( currentLocation.indexOf(bucket.Location) === 0 ){
+                              bucketList.push(bucket);
+                            }
+                          })
+                        }else if(currentLocation && isIntranet){
+                          var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                          angular.forEach(_list, function (bucket) {
+                            var _item = _.find(intranetLocations,function(item){
+                              return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
+                            })
+                            if(_item){
                               bucketList.push(bucket);
                             }
                           })
@@ -1772,6 +1791,8 @@ angular.module('ossClientUiApp')
         var OSSAccessKeyId = OSS.invoke('getAccessID');
         //获取当前的区域
         var currentLocation = OSS.invoke('getCurrentLocation');
+        //判断当前是内网
+        var isIntranet = OSSRegion.isIntranet(currentLocation);
         //获取默认的HOST
         var host = OSSConfig.getHost();
         //获取用户自定义的HOST
@@ -1782,14 +1803,42 @@ angular.module('ossClientUiApp')
             return parseInt(new Date().getTime() / 1000) + expires;
         };
 
-        var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam) {
+        var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam,isImgServer) {
             region = OSSRegion.changeLocation(region);
             //默认发送请求地址
             var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
-
+            //判断是否是图片服务器
+            isImgServer = !!isImgServer;
+            if(isImgServer){
+              requestUrl = requestUrl.replace(region,region.replace("oss",'img'))
+            }
             //如果设置了自定义服务器，则以自定义服务器的host进行请求
             if(customHost){
-                requestUrl = 'http://' + (bucket ? bucket + "." : "") + customHost;
+                var _imgServer = null
+                var _customHost = customHost
+                if(OSSConfig.isCustomClient()){
+                  if(isIntranet) {
+                    var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                    var _item = _.find(intranetLocations, function (item) {
+                      return item.enable === 1 && item.location === region;
+                    })
+                    requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
+                    _imgServer = _item.imghost
+                    _customHost = _item.customhost
+                  }else{
+                      var internetLocation = OSSRegion.getInternetLocationItem();
+                      _imgServer = internetLocation.imghost
+                  }
+                }
+                requestUrl = 'http://' + (bucket ? bucket + "." : "") + _customHost;
+                if(isImgServer){
+                  if(!_imgServer) {
+                    var _host = _customHost.substring(0, _customHost.indexOf(".")) + "-picture" + _customHost.substring(_customHost.indexOf("."))
+                    requestUrl = requestUrl.replace(_customHost, _host)
+                  }else{
+                    requestUrl = 'http://' + (bucket ? bucket + "." : "") + _imgServer
+                  }
+                }
             }
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
             requestUrl += canonicalizedResource;
@@ -1809,18 +1858,24 @@ angular.module('ossClientUiApp')
         };
 
         return {
-            getURI: function (bucket, objectName, expires) {
-                if (!expires) {
+            getURI: function (bucket, objectName, _expires) {
+                if (!_expires) {
                     var _location = OSSRegion.changeLocation(bucket.Location);
                     var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
-
-                    //如果是在客户端设置了服务器地址
-                    if(customHost){
-                      _url = 'http://' + bucket.Name + customHost + '/' + encodeURIComponent(objectName);
+                    //如果设置了自定义服务器，则以自定义服务器的host进行请求
+                    if(OSSConfig.isCustomClient() && customHost){
+                      _url = 'http://' + bucket.Name + '.' + customHost + '/' + encodeURIComponent(objectName);
+                      if(isIntranet){
+                        var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                        var _item = _.find(intranetLocations,function(item){
+                          return item.enable === 1 && item.location === region;
+                        })
+                        _url = 'http://' + bucket.Name + '.' + _item.customhost + '/' + encodeURIComponent(objectName);
+                      }
                     }
                     return _url;
                 } else {
-                    expires = getExpires(expires);
+                    var expires = getExpires(+_expires);
                     var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectName);
                     var signature = OSS.invoke('getSignature', {
                         verb: 'GET',
@@ -1890,7 +1945,7 @@ angular.module('ossClientUiApp')
                 'Accept': contentType,
                 'Content-Type': contentType
               });
-              var requestUrl = getRequestUrl(bucketName, bucketRegion.replace("oss","img"), expires, signature, canonicalizedResource);
+              var requestUrl = getRequestUrl(bucketName, bucketRegion, expires, signature, canonicalizedResource,null,true);
               return $http.put(requestUrl,RequestXML.getCreateChannelXml(setting),{
                 headers: headers
               });
@@ -1903,7 +1958,7 @@ angular.module('ossClientUiApp')
                   expires: expires,
                   canonicalized_resource: canonicalizedResource
                 });
-                var requestUrl = getRequestUrl(bucket.Name, bucket.Location.replace("oss",'img'), expires, signature, canonicalizedResource);
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource,null,true);
                 return $http.get(requestUrl);
             },
             createBucket: function (bucketName, region, acl) {
@@ -2444,12 +2499,12 @@ angular.module('ossClientUiApp')
                         $scope.setHttpHeader = function (headers, customHeaders) {
                             var ossHeaders = {}, canonicalizedOSSheaders = {};
                             var unValidFieldValue = false,contentTypeRequired = false;
-                            var fieldValueReg = /^[a-zA-Z0-9\-_/.]+$/;
+                            var fieldValueReg = /^[a-zA-Z0-9\-_/.="]+$/;
 
                             var checkFieldValueIsValid = function(value){
                               //不检查
                               //return true;
-                              return /^[a-zA-Z0-9\-_/.;,:]+$/.test(value);
+                              return /^[a-zA-Z0-9\-_/.;,:="]+$/.test(value);
                             };
 
                             angular.forEach(headers, function (val) {
@@ -2490,7 +2545,7 @@ angular.module('ossClientUiApp')
                             }
                             if(unValidFieldValue){
                                 var msg  = 'HTTP属性值格式错误';
-                                msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号</p>'
+                                msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号</p>'
                                 $rootScope.$broadcast('showError',msg);
                                 return;
                             }

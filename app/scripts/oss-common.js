@@ -105,6 +105,11 @@ angular.module('OSSCommon', [
                         location: 'oss-cn-shenzhen',
                         name: '深圳',
                         enable: 1
+                    },
+                    {
+                      location: 'oss-us-west-1',
+                      name: '美国',
+                      enable: 1
                     }
                 ]
             };
@@ -115,7 +120,7 @@ angular.module('OSSCommon', [
              * @returns {boolean}
              */
             isCustomClient: function () {
-                return config.source != '';
+                return config.source && config.source != '';
             },
             /**
              * 是否是贵州的定制客户端
@@ -191,6 +196,17 @@ angular.module('OSSCommon', [
                 });
             },
             changeLocation: function (location) {
+              var isIntranet = this.isIntranet(currentLocation);
+                if(OSSConfig.isCustomClient() && isIntranet) {
+                  var intranetLocations = this.getAllIntranetLocationItem();
+                  var _location = location;
+                  angular.forEach(intranetLocations, function (item) {
+                    if (item.location === location || item.location === location + '-internal' || item.location === location + '-a-internal') {
+                      _location = item.location;
+                    }
+                  })
+                  return _location;
+                }
                 if (location.indexOf('-internal') > 0) {
                     return location;
                 }
@@ -212,15 +228,20 @@ angular.module('OSSCommon', [
                 }
                 return false;
             },
-            getGuiZhouIntranetLocationItem: function () {
+            getIntranetLocationItem: function () {
                 return _.find(locations, function (item) {
                   return  item.enable === 1 && item.network === "intranet";
                 });
             },
-            getGuiZhouInternetLocationItem: function () {
+            getInternetLocationItem: function () {
                 return _.find(locations, function (item) {
                   return  item.enable === 1 && item.network === "internet";
                 });
+            },
+            getAllIntranetLocationItem:function () {
+                return _.filter(locations,function(item){
+                  return item.enable === 1 && item.network === "intranet";
+                })
             },
             getIntranetLocation: function (location) {
                 return location.replace('-internal', '');
@@ -242,7 +263,7 @@ angular.module('OSSCommon', [
                     var h = parseInt((parseInt(expiresTime)/3600) % 24);
                     var m = parseInt((parseInt(expiresTime)/60) % 60);
                     var s = parseInt(parseInt(expiresTime) % 60)
-                    var str = '操作失败，当前客户端时间比服务器时间';
+                    var str = '数据加载失败，当前您电脑的时间比服务器时间';
                     if(clientTime - serverTime > 0){
                       str += '快'
                     }else if(clientTime - serverTime < 0){
@@ -262,6 +283,7 @@ angular.module('OSSCommon', [
                     if(s > 0){
                       str += s + '秒'
                     }
+                    str += ",请调整您的电脑时间后重试。"
                     return str;
                 }else if (erroList[resError.Code]) {
                     return erroList[resError.Code];
@@ -313,7 +335,7 @@ angular.module('OSSCommon', [
                         msg = erroList['AccessDenied'];
                     } else {
                         msg = '网络请求错误';
-                        if (OSSConfig.isGuiZhouClient()) {
+                        if (OSSConfig.isCustomClient()) {
                             msg += '<p class="text-muted">（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）</p>';
                         }
                     }
@@ -583,6 +605,7 @@ angular.module('OSSCommon', [
                       return;
                   }
                   scope.locations = OSSRegion.list(newVal);
+
                   if (!scope.placeHolder) {
                     scope.locations.selected = scope.locations[0];
                   }

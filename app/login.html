@@ -46,7 +46,7 @@
         <div class="form-group">
             <div class="btn-wrapper">
                 <button ng-disabled="loging" class="btn btn-primary btn-login"
-                        ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region.location)">登&nbsp;&nbsp;&nbsp;&nbsp;录
+                        ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region)">登&nbsp;&nbsp;&nbsp;&nbsp;录
                 </button>
                 <button class="btn btn-default" ng-click="step='importAuthorization'" ng-show="!isCustomClient">导入授权
                 </button>
@@ -93,7 +93,7 @@
       </div>
       <div class="form-group">
         <div class="btn-wrapper">
-          <button class="btn btn-primary" ng-click="customDomain(host);">确&nbsp;&nbsp;&nbsp;&nbsp;定</button>
+          <button class="btn btn-primary" ng-click="customDomain(host);">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
           <button class="btn btn-default" ng-click="step = 'loginById'">返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
         </div>
       </div>

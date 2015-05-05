@@ -65,7 +65,9 @@ angular
 
         //提交登录
 
-        $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, location) {
+        $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, region) {
+            console.info("login oss argument:",arguments)
+            var location = undefined;
             if (!accessKeyId || !accessKeyId.length) {
                 alert('请输入 Access Key ID');
                 return;
@@ -75,7 +77,9 @@ angular
                 alert('请输入 Access Key Secret');
                 return;
             }
-
+            if(region && region.location){
+              location = region.location;
+            }
             //如果是云主机
             if (!$scope.isCustomClient && isCloudHost) {
                 if(!location){
@@ -89,10 +93,17 @@ angular
               location = null;
             }
 
-            if(OSSConfig.isGuiZhouClient()){
+            if(OSSConfig.isCustomClient()){
                 if(!location){
                     alert('请选择区域');
                     return;
+                }
+                //如果配置了自定义服务器地址，则设在自定义服务器地址
+                var customHost = region.customhost;
+                if (customHost && customHost.length) {
+                  OSS.invoke('setServerLocation', {
+                    location: customHost
+                  });
                 }
             }
             var param = {
@@ -224,14 +235,17 @@ angular
         };
 
         var checkCurrentLocation = function(callback){
-            var region = OSSRegion.getGuiZhouIntranetLocationItem();
+            var region = OSSRegion.getAllIntranetLocationItem()[1];
             var host = OSSConfig.getHost();
             var requestUrl = 'http://'+region.location + '.' + host;
+            if(region.customhost && region.customhost.length){
+              requestUrl = 'http://'+region.customhost;
+            }
             $http.get(requestUrl,{
                 timeout:3000
             }).error(function(req,status){
                 if(!req && !status){
-                    region = OSSRegion.getGuiZhouInternetLocationItem();
+                    region = OSSRegion.getInternetLocationItem();
                     $scope.netWorkType = region.network;
                     callback(region.location);
                 }else{
@@ -246,7 +260,7 @@ angular
         $scope.checkingLocation = false;
         $scope.predictionLocation = '';
         $scope.netWorkType = null;
-        if(OSSConfig.isGuiZhouClient()){
+        if(OSSConfig.isCustomClient()){
             $scope.checkingLocation = true;
             usSpinnerService.spin('checking-locaiton-spinner');
             checkCurrentLocation(function(predictionLocation){
