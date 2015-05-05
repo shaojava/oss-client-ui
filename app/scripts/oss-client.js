@@ -39,6 +39,9 @@
     }
 
     var OSSClient = {
+        selectFileDlg:function(){
+            return;
+        },
         getAccessID: function () {
             return JSON.stringify(accessId);
         },
@@ -69,31 +72,7 @@
 
         },
         getUpload: function () {
-            return JSON.stringify({
-                "download": 0,
-                "upload": 0,
-                "count": 1,
-                "list": [{
-                    "bucket": "121212121212",
-                    "object": "PhpStorm-8.0.dmg",
-                    "fullpath": "C:\\Users\\george\\Desktop\\PhpStorm-8.0.dmg",
-                    "offset": 100000000,
-                    "filesize": 137181104,
-                    "status": 5,
-                    "speed": 10000,
-                    "errormsg": ""
-                },
-                    {
-                        "bucket": "121212121212",
-                        "object": "PhpStorm-8.0.dmg",
-                        "fullpath": "C:\\Users\\george\\Desktop\\PhpStorm-8.0.dmg",
-                        "offset": 0,
-                        "filesize": 137181104,
-                        "status": 5,
-                        "speed": 0,
-                        "errormsg": ""
-                    }]
-            });
+            return null;
         },
         getDownload: function () {
 

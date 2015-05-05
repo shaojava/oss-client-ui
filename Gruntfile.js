@@ -7,6 +7,9 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+var LIVERELOAD_PORT = 35730;
+var SERVER_PORT = 9101;
+
 module.exports = function (grunt) {
 
     // Load grunt tasks automatically
@@ -20,6 +23,7 @@ module.exports = function (grunt) {
         app: require('./bower.json').appPath || 'app',
         dist: 'dist'
     };
+
 
     // Define the configuration for all the tasks
     grunt.initConfig({
@@ -73,16 +77,17 @@ module.exports = function (grunt) {
         // The actual grunt server settings
         connect: {
             options: {
-                port: 9100,
+                port: SERVER_PORT,
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: 'localhost',
-                livereload: 35727
+                livereload: LIVERELOAD_PORT
             },
             livereload: {
                 options: {
                     open: true,
-                    middleware: function (connect) {
+                    middleware: function (connect,options) {
                         return [
+                            require('grunt-connect-proxy/lib/utils').proxyRequest,
                             connect.static('.tmp'),
                             connect().use(
                                 '/bower_components',
@@ -114,7 +119,15 @@ module.exports = function (grunt) {
                     open: true,
                     base: '<%= yeoman.dist %>'
                 }
-            }
+            },
+            proxies: [
+                {
+                    context: ['/api'],
+                    host: 'oss.aliyuncs.com',
+                    https: false,
+                    xforward: true
+                }
+            ]
         },
 
         // Make sure code styles are up to par and there are no obvious mistakes
@@ -465,6 +478,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'wiredep',
+            //'configureProxies:server',
             'concurrent:server',
             'autoprefixer',
             'connect:livereload',

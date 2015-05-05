@@ -67,7 +67,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .directive('smartSearch', ['$location', '$rootScope', '$filter', 'OSSObject', 'Bucket','OSSLocation', function ($location, $rootScope, $filter, OSSObject, Bucket,OSSLocation) {
+    .directive('smartSearch', ['$location', '$rootScope', '$filter', 'OSSObject', 'Bucket', 'OSSLocation', function ($location, $rootScope, $filter, OSSObject, Bucket, OSSLocation) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -80,7 +80,7 @@ angular.module('ossClientUiApp')
                         return;
                     }
                     var keyword = ngModel.$modelValue;
-                    if(!keyword){
+                    if (!keyword) {
                         $(element).blur();
                         hideSearch();
                         return;
@@ -88,7 +88,7 @@ angular.module('ossClientUiApp')
                     var currentObj = OSSObject.getCurrentObject();
                     var currentBucket = Bucket.getCurrentBucket();
                     scope.$apply(function () {
-                        var url = OSSLocation.getUrl(currentBucket.Name,currentObj.path,'file',{
+                        var url = OSSLocation.getUrl(currentBucket.Name, currentObj.path, 'file', {
                             keyword: keyword,
                             scope: ''
                         });
@@ -106,7 +106,7 @@ angular.module('ossClientUiApp')
                     element.next('.fa').show();
                     scope[attrs.ngModel] = '';
                     var search = $location.search();
-                    if(search.keyword){
+                    if (search.keyword) {
                         $location.url($location.path());
                     }
                 };
@@ -129,23 +129,23 @@ angular.module('ossClientUiApp')
                     });
                     $breadList.hide();
                     $searchDomain.on('click', function () {
-                      scope.$apply(function(){
-                        if(element.val()) {
-                          hideSearch();
-                        }
-                      });
+                        scope.$apply(function () {
+                            if (element.val()) {
+                                hideSearch();
+                            }
+                        });
                     })
                     $removeIcon.on('click', function () {
-                        scope.$apply(function(){
+                        scope.$apply(function () {
                             hideSearch();
                         });
                     })
                     element.focus();
                 };
-                element.on('blur',function(){
-                   if(!element.val() || element.val().length == 0){
-                     hideSearch();
-                   }
+                element.on('blur', function () {
+                    if (!element.val() || element.val().length == 0) {
+                        hideSearch();
+                    }
                 })
                 element.on('mousedown', function () {
                     showSearch();
@@ -155,16 +155,16 @@ angular.module('ossClientUiApp')
                     showSearch();
                 });
 
-                scope.$on('$locationChangeSuccess',function(){
+                scope.$on('$locationChangeSuccess', function () {
                     var param = $location.search();
-                    if(!param || !param.keyword){
+                    if (!param || !param.keyword) {
                         hideSearch();
                     }
                 });
             }
         };
     }])
-    .directive('smartBread', ['$timeout',function ($timeout) {
+    .directive('smartBread', ['$timeout', function ($timeout) {
         return {
             restrict: 'A',
             link: function postLink(scope, element, attrs) {
@@ -175,52 +175,52 @@ angular.module('ossClientUiApp')
                     offsetParent = element.offsetParent(),
                     lastMaxWidth = 0;
 
-                if(element.css('maxWidth').indexOf('%')>=0){
-                    lastMaxWidth =  offsetParent.width() * (parseFloat(element.css('maxWidth'))/100);
-                }else{
+                if (element.css('maxWidth').indexOf('%') >= 0) {
+                    lastMaxWidth = offsetParent.width() * (parseFloat(element.css('maxWidth')) / 100);
+                } else {
                     lastMaxWidth = parseInt(element.css('maxWidth'));
                 }
 
-                var getBreadItemWidth = function(breadItem){
+                var getBreadItemWidth = function (breadItem) {
                     return breadItem.outerWidth(true);
                     //return breadText.length * fontSize + marginWidth + borderWidth;
                 };
 
-                var getTotalBreadWidth = function(breads){
+                var getTotalBreadWidth = function (breads) {
                     var totalWidth = 0;
-                    breads.each(function(){
+                    breads.each(function () {
                         totalWidth += getBreadItemWidth($(this));
                     })
                     //totalWidth -= borderWidth;
                     return totalWidth;
                 };
 
-                var setBreadUI = function(){
+                var setBreadUI = function () {
                     var realWidth = element.width();
                     var totalWidth = getTotalBreadWidth(element.find('.bread-item'));
-                    if(totalWidth > lastMaxWidth){
-                        if(totalWidth > lastMaxWidth){
+                    if (totalWidth > lastMaxWidth) {
+                        if (totalWidth > lastMaxWidth) {
                             scope.breads.shift();
                         }
                     }
                 };
 
-                scope.$watch('breads',function(val){
-                    if(!val || !val.length){
+                scope.$watch('breads', function (val) {
+                    if (!val || !val.length) {
                         return;
                     }
-                    $timeout(function(){
+                    $timeout(function () {
                         setBreadUI();
                     });
                 });
 
-                $(window).on('resize',function(){
-                    lastMaxWidth =  offsetParent().width() * maxWidthSet;
+                $(window).on('resize', function () {
+                    lastMaxWidth = offsetParent().width() * maxWidthSet;
                 });
             }
         };
     }])
-    .directive('queueItem', ['OSSQueueItem',function (OSSQueueItem) {
+    .directive('queueItem', ['OSSQueueItem', function (OSSQueueItem) {
         return {
             templateUrl: 'views/queue-item.html',
             restrict: 'E',
@@ -228,13 +228,13 @@ angular.module('ossClientUiApp')
             scope: {
                 type: '@',
                 item: '=data',
-                executeCmd:'&'
+                executeCmd: '&'
             },
             link: function postLink(scope) {
-                scope.handleCmdClick = function(cmd,item){
+                scope.handleCmdClick = function (cmd, item) {
                     scope.executeCmd({
-                        cmd:cmd,
-                        item:item
+                        cmd: cmd,
+                        item: item
                     });
                 };
 
@@ -254,13 +254,13 @@ angular.module('ossClientUiApp')
                 scope.isPasued = OSSQueueItem.isPaused;
 
                 //获取进度
-                scope.getProgress = function(item){
-                    if(scope.isError(item) || scope.isPasued(item) || scope.isWaiting(item) ||  scope.isInProgress(item)){
-                        if(item.filesize == 0){
+                scope.getProgress = function (item) {
+                    if (scope.isError(item) || scope.isPasued(item) || scope.isWaiting(item) || scope.isInProgress(item)) {
+                        if (item.filesize == 0) {
                             return 100;
                         }
-                        return item.offset/item.filesize*100;
-                    }else{
+                        return item.offset / item.filesize * 100;
+                    } else {
                         return 100;
                     }
 
@@ -290,84 +290,91 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .directive('webUploader',['$parse',function($parse){
+    .directive('webUploader', ['$parse', function ($parse) {
         return {
             restrict: 'A',
             priority: 500,
             link: function postLink(scope, element, attrs) {
-                scope.$watch(attrs.webUploader,function(enable){
-                    if(enable){
-                        var options = $parse(attrs['webUploaderOptions'])();
-                        if(!options) options = {};
-                        angular.extend(options,{
+                scope.$watch(attrs.webUploader, function (enable) {
+                    if (enable) {
+                        var options = $parse(attrs.webUploaderOptions)(scope);
+                        if (!options) options = {};
+                        angular.extend(options, {
                             swf: '/bower_components/fex-webuploader/dist/Uploader.swf',
                             server: 'http://webuploader.duapp.com/server/fileupload.php',
                             pick: element
                         });
-                        console.log('options',options);
                         var uploader = WebUploader.create(options);
-                    }else{
+                        var callbacks = $parse(attrs['webUploaderCallbacks'])(scope);
+                        angular.forEach(callbacks, function (fn, key) {
+                            uploader.on(key, function () {
+                                var args = arguments;
+                                scope.$apply(function () {
+                                    fn.apply(this, args);
+                                })
+                            })
+                        });
+                    } else {
 
                     }
                 });
 
 
-
             }
         }
     }])
-    .directive('onlyNumber', ['$timeout',function ($timeout) {
+    .directive('onlyNumber', ['$timeout', function ($timeout) {
         return {
-          restrict: 'A',
-          replace: false,
-          scope:{
-            number:'=onlyNumber',
-            showError:'='
-          },
-          link: function postLink(scope, element, attrs) {
-            var _val = 0;
-            $timeout(function(){
-              var min = parseInt(attrs.min),max = parseInt(attrs.max)
-              _val = element.val();
-              element.keydown(function(event) {
-                if(event.ctrlKey || event.shiftKey){
-                  return false;
-                }
-                if((event.keyCode > 47 && event.keyCode < 58) || (event.keyCode > 95 && event.keyCode < 106) || "37 38 39 40 8".indexOf(event.keyCode+"") >= 0){
-                  var _selectStart = event.target.selectionStart;
-                  var _selectEnd = event.target.selectionEnd;
-                  var _eleVal = element.val() + "";
-                  if(_eleVal.length <= _selectStart || _selectStart == _selectEnd){
-                    if(_eleVal.length == (max+"").length && "37 38 39 40 8".indexOf(event.keyCode+"") < 0){
-                      return false;
-                    }
-                  }
-                  return true
-                }
-                return false
+            restrict: 'A',
+            replace: false,
+            scope: {
+                number: '=onlyNumber',
+                showError: '='
+            },
+            link: function postLink(scope, element, attrs) {
+                var _val = 0;
+                $timeout(function () {
+                    var min = parseInt(attrs.min), max = parseInt(attrs.max)
+                    _val = element.val();
+                    element.keydown(function (event) {
+                        if (event.ctrlKey || event.shiftKey) {
+                            return false;
+                        }
+                        if ((event.keyCode > 47 && event.keyCode < 58) || (event.keyCode > 95 && event.keyCode < 106) || "37 38 39 40 8".indexOf(event.keyCode + "") >= 0) {
+                            var _selectStart = event.target.selectionStart;
+                            var _selectEnd = event.target.selectionEnd;
+                            var _eleVal = element.val() + "";
+                            if (_eleVal.length <= _selectStart || _selectStart == _selectEnd) {
+                                if (_eleVal.length == (max + "").length && "37 38 39 40 8".indexOf(event.keyCode + "") < 0) {
+                                    return false;
+                                }
+                            }
+                            return true
+                        }
+                        return false
 
-              }).blur(function(event){
-                if((min || min == 0) && (max || max == 0)) {
-                  _val = element.val();
-                  if(!_val || isNaN(_val)) {
-                    scope.number = min;
-                    element.val(min);
-                    _val = min;
-                  }else if (_val < min) {
-                    scope.number = min;
-                    element.val(min);
-                    _val = min;
-                    scope.showError = true;
-                  } else if (_val > max) {
-                    scope.number = max;
-                    element.val(max);
-                    _val = max;
-                    scope.showError = true;
-                  }
-                }
-              });
-            })
-          }
+                    }).blur(function (event) {
+                        if ((min || min == 0) && (max || max == 0)) {
+                            _val = element.val();
+                            if (!_val || isNaN(_val)) {
+                                scope.number = min;
+                                element.val(min);
+                                _val = min;
+                            } else if (_val < min) {
+                                scope.number = min;
+                                element.val(min);
+                                _val = min;
+                                scope.showError = true;
+                            } else if (_val > max) {
+                                scope.number = max;
+                                element.val(max);
+                                _val = max;
+                                scope.showError = true;
+                            }
+                        }
+                    });
+                })
+            }
         }
     }])
     .directive('fileIcon', ['OSSObject', function (OSSObject) {
@@ -385,19 +392,19 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .directive('showContextMenu',['$timeout',function($timeout){
+    .directive('showContextMenu', ['$timeout', function ($timeout) {
         return {
-          restrict: 'A',
-          link: function(scope,element,attrs){
-             element.bind('click',function(event){
-               event.preventDefault();
-               event.stopPropagation();
-               $timeout(function() {
-                 element.parents("li").trigger("contextmenu",event);
-               });
-             })
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                element.bind('click', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $timeout(function () {
+                        element.parents("li").trigger("contextmenu", event);
+                    });
+                })
 
-          }
+            }
         }
     }])
     .directive('keyboardNav', ['$parse', function ($parse) {
@@ -561,7 +568,7 @@ angular.module('ossClientUiApp')
                     $event.preventDefault();
                 });
 
-                scope.$on('$destroy',function(){
+                scope.$on('$destroy', function () {
                     $(document).off('keydown.keyboardNav');
                 });
 
