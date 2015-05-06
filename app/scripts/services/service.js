@@ -1636,7 +1636,7 @@ angular.module('ossClientUiApp')
         var deferred = $q.defer();
         var listPromise;
         //是否是政务外网环境下
-        var isIntranetNet = Boolean(localStorageService.get(OSSRegion.getRegionPerfix()) === 'true')
+        var isIntranetNet = localStorageService.get(OSSRegion.getRegionPerfix())
         //获取当前的区域
         var currentLocation = OSS.invoke('getCurrentLocation');
         //当前登录的是否政务外网
@@ -1669,7 +1669,7 @@ angular.module('ossClientUiApp')
                                     })
                                 }else {
                                     var intranetLocations =  []
-                                    if(isIntranet){
+                                    if(isIntranet && isIntranetNet === '1'){
                                         intranetLocations = OSSRegion.getIntranetLocationItem();
                                     }else{
                                         intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
@@ -1732,7 +1732,7 @@ angular.module('ossClientUiApp')
                                 })
                             }else{
                                 var intranetLocations =  []
-                                if(isIntranet){
+                                if(isIntranet && isIntranetNet === '1'){
                                     intranetLocations = OSSRegion.getIntranetLocationItem();
                                 }else{
                                     intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
@@ -1806,7 +1806,7 @@ angular.module('ossClientUiApp')
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
         //是否是政务外网环境下
-        var isIntranetNet = Boolean(localStorageService.get(OSSRegion.getRegionPerfix()) === 'true')
+        var isIntranetNet = localStorageService.get(OSSRegion.getRegionPerfix())
         //获取当前的区域
         var currentLocation = OSS.invoke('getCurrentLocation');
         //判断当前登录的是内网
@@ -1822,45 +1822,54 @@ angular.module('ossClientUiApp')
         };
 
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam,isImgServer) {
+            console.log("========get request url 1 region========",region);
             region = OSSRegion.changeLocation(region);
+            console.log("========get request url 2 region========",region);
             //默认发送请求地址
             var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
+            console.log("========get request url requestUrl========",requestUrl);
             //判断是否是图片服务器
             isImgServer = !!isImgServer;
             if(isImgServer){
               requestUrl = requestUrl.replace(region,region.replace("oss",'img'))
             }
             //如果设置了自定义服务器，则以自定义服务器的host进行请求
+            console.log("========get request url customHost========",customHost);
             if(customHost){
                 var _imgServer = null
                 var _customHost = customHost
                 //当前是自定义版本
                 if(OSSConfig.isCustomClient()){
+                    console.log("========get request url isIntranetNet========",isIntranetNet);
                     //当前是在政务外网环境下
                     if(isIntranetNet) {
                         var intranetLocations =  []
                         //登录的是政务外网下的域名
-                        if(isIntranet){
+                        if(isIntranet && isIntranetNet === '1'){
                             intranetLocations = OSSRegion.getIntranetLocationItem();
                         }
                         //登录的不是政务外网下的域名
                         else{
                             intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
                         }
+                        console.log("========get request url intranetLocations========",intranetLocations);
                         var _item = _.find(intranetLocations, function (item) {
                             return item.enable === 1 && item.location.indexOf(region)>=0;
                         })
                         requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
                         _imgServer = _item.imghost
                         _customHost = _item.customhost
+                        console.log("========get request url 2 requestUrl========",requestUrl);
                     }
                     //当前是在互联网环境
                     else{
                         var internetLocation = OSSRegion.getInternetLocationItem();
                         _imgServer = internetLocation.imghost
                     }
+                }else {
+                  requestUrl = 'http://' + (bucket ? bucket + "." : "") + _customHost;
                 }
-                requestUrl = 'http://' + (bucket ? bucket + "." : "") + _customHost;
+
                 if(isImgServer){
                   if(!_imgServer) {
                     var _host = _customHost.substring(0, _customHost.indexOf(".")) + "-picture" + _customHost.substring(_customHost.indexOf("."))
@@ -1870,6 +1879,7 @@ angular.module('ossClientUiApp')
                   }
                 }
             }
+            console.log("========get request url 3 requestUrl========",requestUrl);
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
             requestUrl += canonicalizedResource;
             requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
@@ -1899,7 +1909,7 @@ angular.module('ossClientUiApp')
                         if(isIntranetNet){
                             var intranetLocations =  []
                             //登录的是政务外网下的域名
-                            if(isIntranet){
+                            if(isIntranet && isIntranetNet === '1'){
                                 intranetLocations = OSSRegion.getIntranetLocationItem();
                             }
                             //登录的不是政务外网下的域名

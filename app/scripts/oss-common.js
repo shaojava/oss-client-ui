@@ -165,7 +165,7 @@ angular.module('OSSCommon', [
 /**
  * bucket区域
  */
-    .factory('OSSRegion', ['OSSConfig', function (OSSConfig) {
+    .factory('OSSRegion', ['OSSConfig','localStorageService', function (OSSConfig,localStorageService) {
         var locations = OSSConfig.getLocations();
         var currentLocation = OSS.invoke('getCurrentLocation');
         return {
@@ -199,9 +199,19 @@ angular.module('OSSCommon', [
                 });
             },
             changeLocation: function (location) {
-              var isIntranet = this.isIntranet(currentLocation);
-                if(OSSConfig.isCustomClient() && isIntranet) {
-                  var intranetLocations = this.getIntranetLocationItem();
+                //是否是政务外网环境下
+                var isIntranetNet = localStorageService.get(this.getRegionPerfix())
+                var isIntranet = this.isIntranet(currentLocation);
+                if(isIntranetNet) {
+                  var intranetLocations = [];
+                  //登录的是政务外网下的域名
+                  if(isIntranet && isIntranetNet === '1'){
+                    intranetLocations = this.getIntranetLocationItem();
+                  }
+                  //登录的不是政务外网下的域名
+                  else{
+                    intranetLocations = [this.getInternetLocationItem()].concat([this.getIntranetInner(true)])
+                  }
                   var _location = location;
                   angular.forEach(intranetLocations, function (item) {
                       if (item.location === location || item.location === location + '-internal' || item.location === location + '-a-internal') {
@@ -606,7 +616,7 @@ angular.module('OSSCommon', [
             templateUrl: 'views/location-select.html',
             link: function (scope) {
                 if (!OSSConfig.isCustomClient()) {
-                    localStorageService.set(OSSRegion.getRegionPerfix(),false);
+                    localStorageService.remove(OSSRegion.getRegionPerfix());
                     scope.locations = OSSRegion.list();
                     if (!scope.placeHolder) {
                         scope.locations.selected = scope.locations[0];
@@ -624,7 +634,6 @@ angular.module('OSSCommon', [
                         if(!newVal){
                             return;
                         }
-                        localStorageService.set(OSSRegion.getRegionPerfix(),OSSRegion.isIntranet(null,newVal));
                         if (OSSRegion.isIntranet(null,newVal)) {
                             var region = OSSRegion.getIntranetInner(false);
                             var host = OSSConfig.getHost();
@@ -637,10 +646,12 @@ angular.module('OSSCommon', [
                             }).error(function(req,status){
                                 //走不通
                                 if(!req && !status){
+                                    localStorageService.set(OSSRegion.getRegionPerfix(),'2');
                                     scope.locations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
                                 }
                                 //走的通
                                 else{
+                                    localStorageService.set(OSSRegion.getRegionPerfix(),'1');
                                     scope.locations = OSSRegion.getIntranetLocationItem()
                                 }
                                 //当前可以显示的bucket
@@ -650,6 +661,7 @@ angular.module('OSSCommon', [
                                 });
                             });
                         }else {
+                            localStorageService.remove(OSSRegion.getRegionPerfix())
                             scope.locations = OSSRegion.list(newVal);
                             $rootScope.$broadcast('unDisabledLocationSelect')
                             scope.locations.selected = _.find(scope.locations,function(region){
