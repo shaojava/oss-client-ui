@@ -51,7 +51,8 @@ angular
             });
 
         $httpProvider.defaults.transformResponse.unshift(function (response, header) {
-            if (header('content-type') == 'application/xml') {
+
+            if (header('content-type') && header('content-type').indexOf('application/xml') >= 0) {
                 return $.xml2json(response);
             }
             return response;
