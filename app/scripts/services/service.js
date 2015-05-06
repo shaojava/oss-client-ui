@@ -1754,7 +1754,6 @@ angular.module('ossClientUiApp')
                                 }
                             })
                         }
-
                     }else{
                         bucketList = [];
                     }
@@ -1835,24 +1834,31 @@ angular.module('ossClientUiApp')
             if(customHost){
                 var _imgServer = null
                 var _customHost = customHost
+                //当前是自定义版本
                 if(OSSConfig.isCustomClient()){
-                  if(isIntranetNet) {
-                    var intranetLocations =  []
-                    if(isIntranet){
-                        intranetLocations = OSSRegion.getIntranetLocationItem();
-                    }else{
-                        intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                    //当前是在政务外网环境下
+                    if(isIntranetNet) {
+                        var intranetLocations =  []
+                        //登录的是政务外网下的域名
+                        if(isIntranet){
+                            intranetLocations = OSSRegion.getIntranetLocationItem();
+                        }
+                        //登录的不是政务外网下的域名
+                        else{
+                            intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                        }
+                        var _item = _.find(intranetLocations, function (item) {
+                            return item.enable === 1 && item.location.indexOf(region)>=0;
+                        })
+                        requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
+                        _imgServer = _item.imghost
+                        _customHost = _item.customhost
                     }
-                    var _item = _.find(intranetLocations, function (item) {
-                      return item.enable === 1 && item.location.indexOf(region)>=0;
-                    })
-                    requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
-                    _imgServer = _item.imghost
-                    _customHost = _item.customhost
-                  }else{
-                      var internetLocation = OSSRegion.getInternetLocationItem();
-                      _imgServer = internetLocation.imghost
-                  }
+                    //当前是在互联网环境
+                    else{
+                        var internetLocation = OSSRegion.getInternetLocationItem();
+                        _imgServer = internetLocation.imghost
+                    }
                 }
                 requestUrl = 'http://' + (bucket ? bucket + "." : "") + _customHost;
                 if(isImgServer){
@@ -1888,19 +1894,23 @@ angular.module('ossClientUiApp')
                     var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
                     //如果设置了自定义服务器，则以自定义服务器的host进行请求
                     if(OSSConfig.isCustomClient() && customHost){
-                      _url = 'http://' + bucket.Name + '.' + customHost + '/' + encodeURIComponent(objectName);
-                      if(isIntranetNet){
-                        var intranetLocations =  []
-                        if(isIntranet){
-                            intranetLocations = OSSRegion.getIntranetLocationItem();
-                        }else{
-                            intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                        _url = 'http://' + bucket.Name + '.' + customHost + '/' + encodeURIComponent(objectName);
+                        //当前是在政务外网环境下
+                        if(isIntranetNet){
+                            var intranetLocations =  []
+                            //登录的是政务外网下的域名
+                            if(isIntranet){
+                                intranetLocations = OSSRegion.getIntranetLocationItem();
+                            }
+                            //登录的不是政务外网下的域名
+                            else{
+                                intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                            }
+                            var _item = _.find(intranetLocations,function(item){
+                                return item.enable === 1 && item.location.indexOf(_location)>=0;
+                            })
+                            _url = 'http://' + bucket.Name + '.' + _item.customhost + '/' + encodeURIComponent(objectName);
                         }
-                        var _item = _.find(intranetLocations,function(item){
-                          return item.enable === 1 && item.location.indexOf(_location)>=0;
-                        })
-                        _url = 'http://' + bucket.Name + '.' + _item.customhost + '/' + encodeURIComponent(objectName);
-                      }
                     }
                     return _url;
                 } else {
