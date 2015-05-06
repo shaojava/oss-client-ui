@@ -1407,9 +1407,9 @@ angular.module('ossClientUiApp')
                     commonPrefixes = commonPrefixes ? angular.isArray(commonPrefixes) ? commonPrefixes : [commonPrefixes] : [];
                     var files = [];
                     angular.forEach($.merge(commonPrefixes, contents), function (file) {
-                        //if (file.Key !== prefix && file.Prefix !== prefix) {
-                        files.push(_self.format(file));
-                        //}
+                        if (file.Key !== prefix && file.Prefix !== prefix) {
+                            files.push(_self.format(file));
+                        }
                     })
 
                     defer.resolve({
