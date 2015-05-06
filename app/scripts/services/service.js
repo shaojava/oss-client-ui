@@ -1860,6 +1860,7 @@ angular.module('ossClientUiApp')
                 }else if(bucket){
                     route = 'bucket'
                 }
+                route = 'api';
                 requestUrl = '/' + route + '?' + $.param({
                     bucket:bucket,
                     host:host,
