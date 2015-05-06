@@ -1805,48 +1805,62 @@ angular.module('ossClientUiApp')
 
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam,isImgServer) {
             region = OSSRegion.changeLocation(region);
-            //默认发送请求地址
-            var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
+
             //判断是否是图片服务器
             isImgServer = !!isImgServer;
             if(isImgServer){
-              requestUrl = requestUrl.replace(region,region.replace("oss",'img'))
+                region = region.replace("oss",'img');
             }
-            //如果设置了自定义服务器，则以自定义服务器的host进行请求
-            if(customHost){
-                var _imgServer = null
-                var _customHost = customHost
-                if(OSSConfig.isCustomClient()){
-                  if(isIntranet) {
-                    var intranetLocations = OSSRegion.getAllIntranetLocationItem();
-                    var _item = _.find(intranetLocations, function (item) {
-                      return item.enable === 1 && item.location === region;
-                    })
-                    requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
-                    _imgServer = _item.imghost
-                    _customHost = _item.customhost
-                  }else{
-                      var internetLocation = OSSRegion.getInternetLocationItem();
-                      _imgServer = internetLocation.imghost
-                  }
+
+            //默认发送请求地址
+            var requestUrl = '';
+            if(OSS.isClientOS()){
+                requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
+                //如果设置了自定义服务器，则以自定义服务器的host进行请求
+                if(customHost){
+                    var _imgServer = null;
+                    var _customHost = customHost;
+                    if(OSSConfig.isCustomClient()){
+                        if(isIntranet) {
+                            var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                            var _item = _.find(intranetLocations, function (item) {
+                                return item.enable === 1 && item.location === region;
+                            })
+                            requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
+                            _imgServer = _item.imghost
+                            _customHost = _item.customhost
+                        }else{
+                            var internetLocation = OSSRegion.getInternetLocationItem();
+                            _imgServer = internetLocation.imghost
+                        }
+                    }
+                    requestUrl = 'http://' + (bucket ? bucket + "." : "") + _customHost;
+                    if(isImgServer){
+                        if(!_imgServer) {
+                            var _host = _customHost.substring(0, _customHost.indexOf(".")) + "-picture" + _customHost.substring(_customHost.indexOf("."))
+                            requestUrl = requestUrl.replace(_customHost, _host)
+                        }else{
+                            requestUrl = 'http://' + (bucket ? bucket + "." : "") + _imgServer
+                        }
+                    }
                 }
-                requestUrl = 'http://' + (bucket ? bucket + "." : "") + _customHost;
-                if(isImgServer){
-                  if(!_imgServer) {
-                    var _host = _customHost.substring(0, _customHost.indexOf(".")) + "-picture" + _customHost.substring(_customHost.indexOf("."))
-                    requestUrl = requestUrl.replace(_customHost, _host)
-                  }else{
-                    requestUrl = 'http://' + (bucket ? bucket + "." : "") + _imgServer
-                  }
-                }
+                canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
+                requestUrl += canonicalizedResource;
+                requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
+                    OSSAccessKeyId: OSSAccessKeyId,
+                    Expires: expires,
+                    Signature: signature
+                });
+
+            }else{
+                canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
+                requestUrl = '/api?' + $.param({
+                    bucket:bucket,
+                    host:host,
+                    region:region,
+                    "canonicalized-resource":canonicalizedResource
+                });
             }
-            canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
-            requestUrl += canonicalizedResource;
-            requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
-                OSSAccessKeyId: OSSAccessKeyId,
-                Expires: expires,
-                Signature: signature
-            });
 
             requestUrl += (extraParam ? '&' + $.param(extraParam) : '');
             return requestUrl;
