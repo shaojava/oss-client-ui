@@ -1814,7 +1814,7 @@ angular.module('ossClientUiApp')
 
             //默认发送请求地址
             var requestUrl = '';
-            if(OSS.isClientOS()){
+            if(location.port == 9101 || OSS.isClientOS()){
                 requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
                 //如果设置了自定义服务器，则以自定义服务器的host进行请求
                 if(customHost){
