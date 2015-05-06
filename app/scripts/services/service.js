@@ -1822,25 +1822,20 @@ angular.module('ossClientUiApp')
         };
 
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam,isImgServer) {
-            console.log("========get request url 1 region========",region);
             region = OSSRegion.changeLocation(region);
-            console.log("========get request url 2 region========",region);
             //默认发送请求地址
             var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
-            console.log("========get request url requestUrl========",requestUrl);
             //判断是否是图片服务器
             isImgServer = !!isImgServer;
             if(isImgServer){
               requestUrl = requestUrl.replace(region,region.replace("oss",'img'))
             }
             //如果设置了自定义服务器，则以自定义服务器的host进行请求
-            console.log("========get request url customHost========",customHost);
             if(customHost){
                 var _imgServer = null
                 var _customHost = customHost
                 //当前是自定义版本
                 if(OSSConfig.isCustomClient()){
-                    console.log("========get request url isIntranetNet========",isIntranetNet);
                     //当前是在政务外网环境下
                     if(isIntranetNet) {
                         var intranetLocations =  []
@@ -1852,14 +1847,12 @@ angular.module('ossClientUiApp')
                         else{
                             intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
                         }
-                        console.log("========get request url intranetLocations========",intranetLocations);
                         var _item = _.find(intranetLocations, function (item) {
                             return item.enable === 1 && item.location.indexOf(region)>=0;
                         })
                         requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
                         _imgServer = _item.imghost
                         _customHost = _item.customhost
-                        console.log("========get request url 2 requestUrl========",requestUrl);
                     }
                     //当前是在互联网环境
                     else{
@@ -1879,7 +1872,6 @@ angular.module('ossClientUiApp')
                   }
                 }
             }
-            console.log("========get request url 3 requestUrl========",requestUrl);
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
             requestUrl += canonicalizedResource;
             requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
