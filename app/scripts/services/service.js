@@ -1854,7 +1854,13 @@ angular.module('ossClientUiApp')
 
             }else{
                 canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
-                requestUrl = '/api?' + $.param({
+                var route = 'service';
+                if(canonicalizedResource){
+                    route = 'object'
+                }else if(bucket){
+                    route = 'bucket'
+                }
+                requestUrl = '/' + route + '?' + $.param({
                     bucket:bucket,
                     host:host,
                     region:region,
