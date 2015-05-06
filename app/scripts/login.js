@@ -235,7 +235,7 @@ angular
         };
 
         var checkCurrentLocation = function(callback){
-            var region = OSSRegion.getAllIntranetLocationItem()[1];
+            var region = OSSRegion.getIntranetInner(true);
             var host = OSSConfig.getHost();
             var requestUrl = 'http://'+region.location + '.' + host;
             if(region.customhost && region.customhost.length){
@@ -264,10 +264,11 @@ angular
             $scope.checkingLocation = true;
             usSpinnerService.spin('checking-locaiton-spinner');
             checkCurrentLocation(function(predictionLocation){
-                $scope.checkingLocation = false;
-                usSpinnerService.stop('checking-locaiton-spinner');
                 $scope.defaultLocation = predictionLocation;
             });
         }
-
+        $scope.$on('unDisabledLocationSelect',function(){
+          $scope.checkingLocation = false;
+          usSpinnerService.stop('checking-locaiton-spinner');
+        })
     }]);

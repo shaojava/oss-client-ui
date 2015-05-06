@@ -1631,19 +1631,22 @@ angular.module('ossClientUiApp')
 /**
  * bucket相关
  */
-    .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope','OSSRegion', function (OSSApi, $q,OSSException,$rootScope,OSSRegion) {
+    .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope','OSSRegion','localStorageService','OSSConfig', function (OSSApi, $q,OSSException,$rootScope,OSSRegion,localStorageService,OSSConfig) {
         var buckets = null;
         var deferred = $q.defer();
         var listPromise;
+        //是否是政务外网环境下
+        var isIntranetNet = Boolean(localStorageService.get(OSSRegion.getRegionPerfix()) === 'true')
+        //获取当前的区域
+        var currentLocation = OSS.invoke('getCurrentLocation');
+        //当前登录的是否政务外网
+        var isIntranet = OSSRegion.isIntranet(currentLocation);
         return {
             list: function () {
                 if (listPromise) {
                     return listPromise;
                 } else {
                     OSSApi.getBuckets().success(function (res) {
-                        //获取当前的区域
-                        var currentLocation = OSS.invoke('getCurrentLocation');
-                        var isIntranet = OSSRegion.isIntranet(currentLocation);
                         $rootScope.$broadcast('bucketsLoaded');
                         if(!res['ListAllMyBucketsResult']){
                             $rootScope.$broadcast('showError','数据请求失败，如果你自定义了服务器地址，请检查是否正常。');
@@ -1655,41 +1658,48 @@ angular.module('ossClientUiApp')
                         }
 
                         if(resBuckets){
-                          buckets = []
-                          var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                          if(currentLocation && !isIntranet) {
-                            angular.forEach(_list, function (bucket) {
-                              if( currentLocation.indexOf(bucket.Location) === 0){
-                                  buckets.push(bucket);
+                            buckets = []
+                            var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                            if(OSSConfig.isCustomClient()){
+                                if(!isIntranetNet) {
+                                    angular.forEach(_list, function (bucket) {
+                                        if (currentLocation.indexOf(bucket.Location) === 0) {
+                                            buckets.push(bucket);
+                                        }
+                                    })
+                                }else {
+                                    var intranetLocations =  []
+                                    if(isIntranet){
+                                        intranetLocations = OSSRegion.getIntranetLocationItem();
+                                    }else{
+                                        intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                                    }
+                                    angular.forEach(_list, function (bucket) {
+                                        var _item = _.find(intranetLocations,function(item){
+                                            return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
+                                        })
+                                        if(_item){
+                                            buckets.push(bucket);
+                                        }
+                                    })
                                 }
-                            })
-                          }else if(currentLocation && isIntranet){
-                            var intranetLocations = OSSRegion.getAllIntranetLocationItem();
-                            angular.forEach(_list, function (bucket) {
-                              var _item = _.find(intranetLocations,function(item){
-                                 return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
-                              })
-                              if(_item){
-                                buckets.push(bucket);
-                              }
-                            })
-                          }else{
-                            angular.forEach(_list,function(bucket){
-                                var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
-                                if (region) {
-                                  buckets.push(bucket);
-                                }
-                            })
-                          }
+                            }else{
+                                angular.forEach(_list,function(bucket){
+                                    var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                                    if (region) {
+                                        buckets.push(bucket);
+                                    }
+                                })
+                            }
                         }else{
                             buckets = [];
                         }
                         //接口返回的bucket的location会带上-a，需要替换成不带-a的
                         angular.forEach(buckets,function(bucket){
-                          var region  = OSSRegion.getRegionByLocation(bucket.Location);
-                          if(region){
-                            bucket.Location = region.location.replace('-internal','');
-                          }
+                            var region  = OSSRegion.getRegionByLocation(bucket.Location);
+                            if(region){
+                                bucket.Location = region.location.replace('-internal','');
+                            }
                         });
                         deferred.resolve(buckets);
                     }).error(function (res,status) {
@@ -1706,38 +1716,45 @@ angular.module('ossClientUiApp')
                 OSSApi.getBuckets().success(function (res) {
                     var bucketList = null;
                     var resBuckets = null;
-                    var currentLocation = OSS.invoke('getCurrentLocation');
-                    var isIntranet = OSSRegion.isIntranet(currentLocation);
+
                     if(res && res['ListAllMyBucketsResult'] && res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']) {
                         resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                     }
                     if(resBuckets){
                         bucketList = []
                         var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                        if(currentLocation && !isIntranet) {
-                          angular.forEach(_list, function (bucket) {
-                            if( currentLocation.indexOf(bucket.Location) === 0 ){
-                              bucketList.push(bucket);
+                        if(OSSConfig.isCustomClient()){
+                            if(!isIntranetNet) {
+                                angular.forEach(_list, function (bucket) {
+                                    if( currentLocation.indexOf(bucket.Location) === 0 ){
+                                        bucketList.push(bucket);
+                                    }
+                                })
+                            }else{
+                                var intranetLocations =  []
+                                if(isIntranet){
+                                    intranetLocations = OSSRegion.getIntranetLocationItem();
+                                }else{
+                                    intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                                }
+                                angular.forEach(_list, function (bucket) {
+                                    var _item = _.find(intranetLocations,function(item){
+                                        return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
+                                    })
+                                    if(_item){
+                                        bucketList.push(bucket);
+                                    }
+                                })
                             }
-                          })
-                        }else if(currentLocation && isIntranet){
-                          var intranetLocations = OSSRegion.getAllIntranetLocationItem();
-                          angular.forEach(_list, function (bucket) {
-                            var _item = _.find(intranetLocations,function(item){
-                              return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
-                            })
-                            if(_item){
-                              bucketList.push(bucket);
-                            }
-                          })
                         }else{
-                          angular.forEach(_list,function(bucket){
-                            var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
-                            if (region) {
-                              bucketList.push(bucket);
-                            }
-                          })
+                            angular.forEach(_list,function(bucket){
+                                var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                                if (region) {
+                                    bucketList.push(bucket);
+                                }
+                            })
                         }
+
                     }else{
                         bucketList = [];
                     }
@@ -1786,12 +1803,14 @@ angular.module('ossClientUiApp')
 /**
  * api相关
  */
-    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion',function ($http, RequestXML, OSSConfig,OSSRegion) {
+    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion','localStorageService',function ($http, RequestXML, OSSConfig,OSSRegion,localStorageService) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
+        //是否是政务外网环境下
+        var isIntranetNet = Boolean(localStorageService.get(OSSRegion.getRegionPerfix()) === 'true')
         //获取当前的区域
         var currentLocation = OSS.invoke('getCurrentLocation');
-        //判断当前是内网
+        //判断当前登录的是内网
         var isIntranet = OSSRegion.isIntranet(currentLocation);
         //获取默认的HOST
         var host = OSSConfig.getHost();
@@ -1817,10 +1836,15 @@ angular.module('ossClientUiApp')
                 var _imgServer = null
                 var _customHost = customHost
                 if(OSSConfig.isCustomClient()){
-                  if(isIntranet) {
-                    var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                  if(isIntranetNet) {
+                    var intranetLocations =  []
+                    if(isIntranet){
+                        intranetLocations = OSSRegion.getIntranetLocationItem();
+                    }else{
+                        intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                    }
                     var _item = _.find(intranetLocations, function (item) {
-                      return item.enable === 1 && item.location === region;
+                      return item.enable === 1 && item.location.indexOf(region)>=0;
                     })
                     requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
                     _imgServer = _item.imghost
@@ -1865,10 +1889,15 @@ angular.module('ossClientUiApp')
                     //如果设置了自定义服务器，则以自定义服务器的host进行请求
                     if(OSSConfig.isCustomClient() && customHost){
                       _url = 'http://' + bucket.Name + '.' + customHost + '/' + encodeURIComponent(objectName);
-                      if(isIntranet){
-                        var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                      if(isIntranetNet){
+                        var intranetLocations =  []
+                        if(isIntranet){
+                            intranetLocations = OSSRegion.getIntranetLocationItem();
+                        }else{
+                            intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                        }
                         var _item = _.find(intranetLocations,function(item){
-                          return item.enable === 1 && item.location === region;
+                          return item.enable === 1 && item.location.indexOf(_location)>=0;
                         })
                         _url = 'http://' + bucket.Name + '.' + _item.customhost + '/' + encodeURIComponent(objectName);
                       }

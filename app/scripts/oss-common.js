@@ -169,6 +169,9 @@ angular.module('OSSCommon', [
         var locations = OSSConfig.getLocations();
         var currentLocation = OSS.invoke('getCurrentLocation');
         return {
+            getRegionPerfix: function () {
+                return "CLIENT_LOGIN_REGION"
+            },
             list: function (_netType) {
                 var params = {
                   enable: 1
@@ -198,12 +201,12 @@ angular.module('OSSCommon', [
             changeLocation: function (location) {
               var isIntranet = this.isIntranet(currentLocation);
                 if(OSSConfig.isCustomClient() && isIntranet) {
-                  var intranetLocations = this.getAllIntranetLocationItem();
+                  var intranetLocations = this.getIntranetLocationItem();
                   var _location = location;
                   angular.forEach(intranetLocations, function (item) {
-                    if (item.location === location || item.location === location + '-internal' || item.location === location + '-a-internal') {
-                      _location = item.location;
-                    }
+                      if (item.location === location || item.location === location + '-internal' || item.location === location + '-a-internal') {
+                          _location = item.location;
+                      }
                   })
                   return _location;
                 }
@@ -211,10 +214,10 @@ angular.module('OSSCommon', [
                     return location;
                 }
                 if (currentLocation && location + '-a' == currentLocation) {
-                  return location + '-a';
+                    return location + '-a';
                 }
                 if (currentLocation && location + '-internal' == currentLocation) {
-                  return location + '-internal';
+                    return location + '-internal';
                 }
                 if (currentLocation && location + '-a-internal' == currentLocation) {
                     return location + '-a-internal';
@@ -222,29 +225,38 @@ angular.module('OSSCommon', [
                 return location;
             },
             //判断是内网
-            isIntranet: function (location) {
-                if (location.indexOf('internal') > 0){
+            isIntranet: function (location,network) {
+                if (location){
+                    var region = _.find(locations, function (item) {
+                        return  item.enable === 1 && item.location === location;
+                    });
+                    if (region.network === 'intranet') {
+                        return true;
+                    }
+                }else if(network && network === 'intranet'){
                     return true;
                 }
                 return false;
             },
             getIntranetLocationItem: function () {
-                return _.find(locations, function (item) {
-                  return  item.enable === 1 && item.network === "intranet";
+                return _.filter(locations, function (item) {
+                    return  item.enable === 1 && item.network === "intranet";
                 });
             },
             getInternetLocationItem: function () {
                 return _.find(locations, function (item) {
-                  return  item.enable === 1 && item.network === "internet";
+                    return  item.enable === 1 && item.network === "internet";
                 });
-            },
-            getAllIntranetLocationItem:function () {
-                return _.filter(locations,function(item){
-                  return item.enable === 1 && item.network === "intranet";
-                })
             },
             getIntranetLocation: function (location) {
                 return location.replace('-internal', '');
+            },
+            getIntranetInner: function (loadInner) {
+                if (!!loadInner) {
+                    return this.getIntranetLocationItem()[1]
+                }else{
+                    return this.getIntranetLocationItem()[0]
+                }
             }
         };
     }])
@@ -578,7 +590,7 @@ angular.module('OSSCommon', [
 /**
  * bucket区域选择下拉框
  */
-    .directive('locationSelect', ['OSSRegion','OSSConfig', function (OSSRegion,OSSConfig) {
+    .directive('locationSelect', ['$rootScope','OSSRegion','OSSConfig','$http','localStorageService', function ($rootScope,OSSRegion,OSSConfig,$http,localStorageService) {
         return {
             restrict: 'E',
             replace: true,
@@ -593,32 +605,62 @@ angular.module('OSSCommon', [
             },
             templateUrl: 'views/location-select.html',
             link: function (scope) {
-                scope.locations = OSSRegion.list();
+                if (!OSSConfig.isCustomClient()) {
+                    localStorageService.set(OSSRegion.getRegionPerfix(),false);
+                    scope.locations = OSSRegion.list();
+                    if (!scope.placeHolder) {
+                        scope.locations.selected = scope.locations[0];
+                    }
+                    scope.$watch('defaultLocation',function(newVal){
+                        if(!newVal){
+                            return;
+                        }
+                        scope.locations.selected = _.find(scope.locations,function(region){
+                            return region.location.indexOf(newVal) == 0;
+                        });
+                    });
+                }else{
+                    scope.$watch('loginNetworktype',function(newVal){
+                        if(!newVal){
+                            return;
+                        }
+                        localStorageService.set(OSSRegion.getRegionPerfix(),OSSRegion.isIntranet(null,newVal));
+                        if (OSSRegion.isIntranet(null,newVal)) {
+                            var region = OSSRegion.getIntranetInner(false);
+                            var host = OSSConfig.getHost();
+                            var requestUrl = 'http://'+region.location + '.' + host;
+                            if(region.customhost && region.customhost.length){
+                                requestUrl = 'http://'+region.customhost;
+                            }
+                            $http.get(requestUrl,{
+                                timeout:3000
+                            }).error(function(req,status){
+                                //走不通
+                                if(!req && !status){
+                                    scope.locations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                                }
+                                //走的通
+                                else{
+                                    scope.locations = OSSRegion.getIntranetLocationItem()
+                                }
+                                //当前可以显示的bucket
+                                $rootScope.$broadcast('unDisabledLocationSelect')
+                                scope.locations.selected = _.find(scope.locations,function(region){
+                                    return region.location.indexOf(scope.defaultLocation) == 0;
+                                });
+                            });
+                        }else {
+                            scope.locations = OSSRegion.list(newVal);
+                            $rootScope.$broadcast('unDisabledLocationSelect')
+                            scope.locations.selected = _.find(scope.locations,function(region){
+                                return region.location.indexOf(scope.defaultLocation) == 0;
+                            });
+                        }
+                    })
+                }
                 scope.$watch('locations.selected', function (val) {
                     scope.selectLocation = val;
                 });
-                if (!scope.placeHolder) {
-                  scope.locations.selected = scope.locations[0];
-                }
-                scope.$watch('loginNetworktype',function(newVal){
-                  if(!newVal){
-                      return;
-                  }
-                  scope.locations = OSSRegion.list(newVal);
-
-                  if (!scope.placeHolder) {
-                    scope.locations.selected = scope.locations[0];
-                  }
-                })
-                scope.$watch('defaultLocation',function(newVal){
-                    if(!newVal){
-                        return;
-                    }
-                    scope.locations.selected = _.find(scope.locations,function(region){
-                        return region.location.indexOf(newVal) == 0;
-                    });
-                });
-
             }
         }
     }])
