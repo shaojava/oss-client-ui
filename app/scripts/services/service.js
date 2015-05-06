@@ -1405,13 +1405,13 @@ angular.module('ossClientUiApp')
 
                     var commonPrefixes = res['ListBucketResult']['CommonPrefixes'];
                     commonPrefixes = commonPrefixes ? angular.isArray(commonPrefixes) ? commonPrefixes : [commonPrefixes] : [];
-
                     var files = [];
                     angular.forEach($.merge(commonPrefixes, contents), function (file) {
-                        if (file.Key !== prefix && file.Prefix !== prefix) {
-                            files.push(_self.format(file));
-                        }
+                        //if (file.Key !== prefix && file.Prefix !== prefix) {
+                        files.push(_self.format(file));
+                        //}
                     })
+
                     defer.resolve({
                         files: files,
                         marker: res['ListBucketResult']['NextMarker'],
