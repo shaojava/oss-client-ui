@@ -1872,7 +1872,8 @@ angular.module('ossClientUiApp')
             var headers = {};
             if (!OSS.isClientOS()) {
                 angular.extend(headers, {
-                    'x-proxy-host': getRequestHost(bucket, region, isImgServer)
+                    'x-proxy-host': getRequestHost(bucket, region, isImgServer),
+                    'x-proxy-bucket': bucket
                 })
             }
             return headers;
