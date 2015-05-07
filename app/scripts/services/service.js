@@ -1870,7 +1870,7 @@ angular.module('ossClientUiApp')
 
         var getRequestDefaultHeaders = function (bucket, region, isImgServer) {
             var headers = {};
-            if (OSS.isClientOS()) {
+            if (!OSS.isClientOS()) {
                 angular.extend(headers, {
                     'x-proxy-host': getRequestHost(bucket, region, isImgServer)
                 })
@@ -1921,7 +1921,8 @@ angular.module('ossClientUiApp')
                 });
                 var region = (currentLocation ? currentLocation : 'oss');
                 var requestUrl = getRequestUrl('', (currentLocation ? currentLocation : 'oss'), expires, signature, canonicalizedResource);
-                return $http.get(requestUrl, '', {
+                console.log('dd',getRequestDefaultHeaders('',region))
+                return $http.get(requestUrl,{
                     headers: getRequestDefaultHeaders('',region)
                 });
             },
@@ -1934,7 +1935,7 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
-                return $http.get(requestUrl, '', {
+                return $http.get(requestUrl, {
                     headers: getRequestDefaultHeaders(bucket.Name,bucket.Location)
                 });
             },
@@ -1990,7 +1991,7 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, null, true);
-                return $http.get(requestUrl, '', {
+                return $http.get(requestUrl,  {
                     headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
                 });
             },
@@ -2027,7 +2028,7 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
-                return $http.get(requestUrl, '', {
+                return $http.get(requestUrl, {
                     headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
                 });
             },
@@ -2086,7 +2087,7 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
-                return $http.get(requestUrl, '', {
+                return $http.get(requestUrl, {
                     headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
                 });
             },
@@ -2139,7 +2140,7 @@ angular.module('ossClientUiApp')
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
                 var headers =  getRequestDefaultHeaders(bucket.Name, bucket.Location);
-                return $http.get(requestUrl, '', {
+                return $http.get(requestUrl, {
                     headers: headers
                 });
             },
@@ -2171,7 +2172,7 @@ angular.module('ossClientUiApp')
                 });
                 var headers =  getRequestDefaultHeaders(bucket.Name, bucket.Location);
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(upload.path), {uploadId: upload.id}), param);
-                return $http.get(requestUrl, '', {
+                return $http.get(requestUrl,{
                     headers: headers
                 });
             }
