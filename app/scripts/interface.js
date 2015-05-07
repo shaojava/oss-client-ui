@@ -110,7 +110,7 @@ var OSS = {
      * @returns {boolean}
      */
     isClientOS: function () {
-        return this.isWindowsClient() || this.isMacClient();
+        return location.port== 9101 || this.isWindowsClient() || this.isMacClient();
     },
     /**
      * @description 是否oss客户端

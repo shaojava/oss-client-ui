@@ -28,9 +28,9 @@ angular.module('ossClientUiApp')
                     $scope.buttons = buttons;
 
                     $scope.buttonClick = function (button) {
-                        if(angular.isFunction(button.callback)){
+                        if (angular.isFunction(button.callback)) {
                             button.callback($modalInstance)
-                        }else{
+                        } else {
                             $modalInstance.close();
                         }
                     };
@@ -46,20 +46,20 @@ angular.module('ossClientUiApp')
 
 
         return {
-            confirm:function(message,title){
+            confirm: function (message, title) {
                 title = angular.isUndefined(title) ? '请确认' : title;
                 var buttons = [
                     {
                         text: '确定',
                         classes: 'btn btn-primary',
-                        callback:function($modalInstance){
+                        callback: function ($modalInstance) {
                             $modalInstance.close();
                         }
                     },
                     {
                         text: '取消',
                         classes: 'btn btn-default',
-                        callback:function($modalInstance){
+                        callback: function ($modalInstance) {
                             $modalInstance.dismiss('cancel');
                         }
                     }
@@ -340,7 +340,7 @@ angular.module('ossClientUiApp')
 /**
  * 上传、下载队列的操作菜单
  */
-    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout','OSSAlert', 'OSSDownloadQueue','OSSUploadQueue',function ($rootScope, OSSQueueItem, $timeout,OSSAlert,OSSDownloadQueue,OSSUploadQueue) {
+    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout', 'OSSAlert', 'OSSDownloadQueue', 'OSSUploadQueue', function ($rootScope, OSSQueueItem, $timeout, OSSAlert, OSSDownloadQueue, OSSUploadQueue) {
         /**
          * 检测参数的合法性
          * @param selectedItems
@@ -358,13 +358,13 @@ angular.module('ossClientUiApp')
          * @param selectedItems
          * @returns {{all: number, list: Array}}
          */
-        var prepareUpladParam = function (selectedItems,finish) {
+        var prepareUpladParam = function (selectedItems, finish) {
             var param = {
                 all: selectedItems && selectedItems.length ? 0 : 1
             };
-            if(typeof finish !== 'undefined'){
-                angular.extend(param,{
-                    finish:finish
+            if (typeof finish !== 'undefined') {
+                angular.extend(param, {
+                    finish: finish
                 })
             }
             if (selectedItems) {
@@ -384,13 +384,13 @@ angular.module('ossClientUiApp')
          * @param selectedItems
          * @returns {{all: number, list: Array}}
          */
-        var prepareDownloadParam = function (selectedItems,finish) {
+        var prepareDownloadParam = function (selectedItems, finish) {
             var param = {
                 all: selectedItems && selectedItems.length ? 0 : 1
             };
-            if(typeof finish !== 'undefined'){
-                angular.extend(param,{
-                    finish:finish
+            if (typeof finish !== 'undefined') {
+                angular.extend(param, {
+                    finish: finish
                 })
             }
             if (selectedItems) {
@@ -484,7 +484,7 @@ angular.module('ossClientUiApp')
                 text: '取消',
                 execute: function (selectedItems) {
                     var msg = '你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的上传？';
-                    OSSAlert.confirm(msg).result.then(function(){
+                    OSSAlert.confirm(msg).result.then(function () {
                         if (!checkArgValid(selectedItems)) {
                             return;
                         }
@@ -493,7 +493,7 @@ angular.module('ossClientUiApp')
                                 $rootScope.$broadcast('removeQueue', 'upload', selectedItems);
                             })
                         });
-                    },function(){
+                    }, function () {
                         return;
                     })
                 },
@@ -583,8 +583,8 @@ angular.module('ossClientUiApp')
                 text: '全部取消',
                 execute: function (selectedItems, items) {
                     var msg = '你确定要取消所有上传？';
-                    OSSAlert.confirm(msg).result.then(function(){
-                        OSS.invoke('deleteUpload', prepareUpladParam(false,0), function () {
+                    OSSAlert.confirm(msg).result.then(function () {
+                        OSS.invoke('deleteUpload', prepareUpladParam(false, 0), function () {
                             $timeout(function () {
                                 $rootScope.$broadcast('reloadUploadQueue');
                             })
@@ -606,7 +606,7 @@ angular.module('ossClientUiApp')
                         $timeout(function () {
                             $rootScope.$broadcast('removeQueue', 'upload', _.filter(items, function (item) {
                                 return OSSQueueItem.isDone(item);
-                            }),function(){
+                            }), function () {
                                 $rootScope.$broadcast('reloadUploadQueue');
                             });
 
@@ -701,7 +701,7 @@ angular.module('ossClientUiApp')
                 text: '取消',
                 execute: function (selectedItems) {
                     var msg = '你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的下载？';
-                    OSSAlert.confirm(msg).result.then(function(){
+                    OSSAlert.confirm(msg).result.then(function () {
                         if (!checkArgValid(selectedItems)) {
                             return;
                         }
@@ -772,7 +772,7 @@ angular.module('ossClientUiApp')
                     });
 
                 },
-                getState: function (selectItems, items,doneCount,totalCount) {
+                getState: function (selectItems, items, doneCount, totalCount) {
                     return !items || !items.length ? 0 : 1;
                 }
             },
@@ -795,8 +795,8 @@ angular.module('ossClientUiApp')
                 text: '全部取消',
                 execute: function (selectedItems, items) {
                     var msg = '你确定要取消所有下载？';
-                    OSSAlert.confirm(msg).result.then(function(){
-                        OSS.invoke('deleteDownload', prepareDownloadParam(false,0), function () {
+                    OSSAlert.confirm(msg).result.then(function () {
+                        OSS.invoke('deleteDownload', prepareDownloadParam(false, 0), function () {
                             $timeout(function () {
                                 $rootScope.$broadcast('reloadDownloadQueue');
                             })
@@ -818,7 +818,7 @@ angular.module('ossClientUiApp')
                         $timeout(function () {
                             $rootScope.$broadcast('removeQueue', 'download', _.filter(items, function (item) {
                                 return OSSQueueItem.isDone(item);
-                            }),function(){
+                            }), function () {
                                 $rootScope.$broadcast('reloadDownloadQueue');
                             });
                         });
@@ -832,7 +832,7 @@ angular.module('ossClientUiApp')
 
         var groupMenu = [
             ['start', 'pause', 'cancel', 'remove'],
-            ['startAll', 'pauseAll','stopAll', 'removeAll']
+            ['startAll', 'pauseAll', 'stopAll', 'removeAll']
         ];
 
         var OSSQueueMenu = {
@@ -873,10 +873,10 @@ angular.module('ossClientUiApp')
 /**
  * object的操作菜单
  */
-    .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException','OSSConfig', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException,OSSConfig) {
+    .factory('OSSMenu', ['Clipboard', 'OSSAlert', 'OSSModal', '$rootScope', 'OSSApi', 'OSSException', 'OSSConfig', function (Clipboard, OSSAlert, OSSModal, $rootScope, OSSApi, OSSException, OSSConfig) {
         var currentMenus = 'upload create paste downloadcurrent'.split(' '),
             selectMenus = 'download copy del get_uri set_header paste'.split(' '),
-            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
+            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' '), 'paste'.split(' ')];
         var allMenu = [
             {
                 name: 'upload',
@@ -916,7 +916,7 @@ angular.module('ossClientUiApp')
                 },
                 execute: function (bucket, currentObject) {
                     $rootScope.$broadcast('createObject', function (filename, callback) {
-                        var msg  = '文件夹名称格式错误';
+                        var msg = '文件夹名称格式错误';
                         msg += '<p class="text-muted">';
                         msg += '1. 只能包含字母，数字，中文，下划线（_）和短横线（-）,小数点（.）<br/>';
                         msg += '2. 只能以字母、数字或者中文开头<br/>';
@@ -924,29 +924,29 @@ angular.module('ossClientUiApp')
                         msg += '4. Object总长度必须在1-1023之间<br/>';
                         msg += '</p>';
 
-                        if(!/^[a-zA-Z0-9\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5_\-.]{0,253}$/.test(filename)){
-                            $rootScope.$broadcast('showError',msg);
+                        if (!/^[a-zA-Z0-9\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5_\-.]{0,253}$/.test(filename)) {
+                            $rootScope.$broadcast('showError', msg);
                             $.isFunction(callback) && callback(false);
                             return;
                         }
-                        if(Util.String.mbLen(filename) > 254){
-                            $rootScope.$broadcast('showError',msg);
+                        if (Util.String.mbLen(filename) > 254) {
+                            $rootScope.$broadcast('showError', msg);
                             $.isFunction(callback) && callback(false);
                             return;
                         }
                         var objectPath = currentObject ? currentObject + filename + '/' : filename + '/';
-                        if(Util.String.mbLen(objectPath) > 1023){
-                            $rootScope.$broadcast('showError',msg);
+                        if (Util.String.mbLen(objectPath) > 1023) {
+                            $rootScope.$broadcast('showError', msg);
                             $.isFunction(callback) && callback(false);
                             return;
                         }
                         //新建之前先去检测是否有同名的文件夹
-                        OSSApi.getObjectMeta(bucket,objectPath).success(function(){
-                            $rootScope.$broadcast('showError','已存在相同名称的文件夹');
+                        OSSApi.getObjectMeta(bucket, objectPath).success(function () {
+                            $rootScope.$broadcast('showError', '已存在相同名称的文件夹');
                             $.isFunction(callback) && callback(false);
-                        }).error(function(response, statusCode){
+                        }).error(function (response, statusCode) {
                             var error = OSSException.getError(response, statusCode);
-                            if(error.status != 404){
+                            if (error.status != 404) {
                                 $rootScope.$broadcast('showError', error.msg);
                                 $.isFunction(callback) && callback(false);
                                 return;
@@ -968,70 +968,70 @@ angular.module('ossClientUiApp')
                 }
             },
             {
-              name: 'downloadcurrent',
-              text: '下载当前目录',
-              getState: function(){
-                return 1;
-              },
-              execute: function (bucket, currentObject){
-                var list = [{
-                    location: bucket['Location'],
-                    bucket: bucket['Name'],
-                    object: currentObject,
-                    filesize: 0,
-                    etag:""
-                  }]
-                OSS.invoke('saveFileDlg',null,function(res){
-                  var _path = res.path
-                  if(_path){
-                    $rootScope.$broadcast('startDownloadFilesLoading');
-                    OSS.invoke('saveFile', {
-                      list: list,
-                      path:_path
-                    }, function (res) {
-                      $rootScope.$broadcast('endDownloadFilesLoading')
-                      if (!res.error) {
-                        $rootScope.$broadcast('toggleTransQueue', true, 'download');
-                        $rootScope.$broadcast('reloadDownloadQueue');
-                      } else {
-                        $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
-                      }
+                name: 'downloadcurrent',
+                text: '下载当前目录',
+                getState: function () {
+                    return 1;
+                },
+                execute: function (bucket, currentObject) {
+                    var list = [{
+                        location: bucket['Location'],
+                        bucket: bucket['Name'],
+                        object: currentObject,
+                        filesize: 0,
+                        etag: ""
+                    }]
+                    OSS.invoke('saveFileDlg', null, function (res) {
+                        var _path = res.path
+                        if (_path) {
+                            $rootScope.$broadcast('startDownloadFilesLoading');
+                            OSS.invoke('saveFile', {
+                                list: list,
+                                path: _path
+                            }, function (res) {
+                                $rootScope.$broadcast('endDownloadFilesLoading')
+                                if (!res.error) {
+                                    $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                                    $rootScope.$broadcast('reloadDownloadQueue');
+                                } else {
+                                    $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                                }
+                            })
+                        }
                     })
-                  }
-                })
-              }
+                }
             },
             {
-              name: 'bucketdownload',
-              text: '下载',
-              getState: function () {
-                return 1;
-              },
-              execute: function (bucket) {
-                var list = [{
-                    location: bucket['Location'],
-                    bucket: bucket['Name'],
-                    object: ""
-                  }]
-                OSS.invoke('saveFileDlg',null,function(res){
-                  var _path = res.path
-                  if(_path){
-                    $rootScope.$broadcast('startDownloadFilesLoading');
-                    OSS.invoke('saveFile', {
-                      list: list,
-                      path:_path
-                    }, function (res) {
-                      $rootScope.$broadcast('endDownloadFilesLoading')
-                      if (!res.error) {
-                        $rootScope.$broadcast('toggleTransQueue', true, 'download');
-                        $rootScope.$broadcast('reloadDownloadQueue');
-                      } else {
-                        $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
-                      }
+                name: 'bucketdownload',
+                text: '下载',
+                getState: function () {
+                    return 1;
+                },
+                execute: function (bucket) {
+                    var list = [{
+                        location: bucket['Location'],
+                        bucket: bucket['Name'],
+                        object: ""
+                    }]
+                    OSS.invoke('saveFileDlg', null, function (res) {
+                        var _path = res.path
+                        if (_path) {
+                            $rootScope.$broadcast('startDownloadFilesLoading');
+                            OSS.invoke('saveFile', {
+                                list: list,
+                                path: _path
+                            }, function (res) {
+                                $rootScope.$broadcast('endDownloadFilesLoading')
+                                if (!res.error) {
+                                    $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                                    $rootScope.$broadcast('reloadDownloadQueue');
+                                } else {
+                                    $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                                }
+                            })
+                        }
                     })
-                  }
-                })
-              }
+                }
             },
             {
                 name: 'download',
@@ -1050,26 +1050,26 @@ angular.module('ossClientUiApp')
                             bucket: bucket['Name'],
                             object: val.path,
                             filesize: val.size,
-                            etag:val.etag
+                            etag: val.etag
                         }
                     });
-                    OSS.invoke('saveFileDlg',null,function(res){
-                      var _path = res.path
-                      if(_path){
-                        $rootScope.$broadcast('startDownloadFilesLoading');
-                        OSS.invoke('saveFile', {
-                          list: list,
-                          path:_path
-                        }, function (res) {
-                          $rootScope.$broadcast('endDownloadFilesLoading')
-                          if (!res.error) {
-                            $rootScope.$broadcast('toggleTransQueue', true, 'download');
-                            $rootScope.$broadcast('reloadDownloadQueue');
-                          } else {
-                            $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
-                          }
-                        })
-                      }
+                    OSS.invoke('saveFileDlg', null, function (res) {
+                        var _path = res.path
+                        if (_path) {
+                            $rootScope.$broadcast('startDownloadFilesLoading');
+                            OSS.invoke('saveFile', {
+                                list: list,
+                                path: _path
+                            }, function (res) {
+                                $rootScope.$broadcast('endDownloadFilesLoading')
+                                if (!res.error) {
+                                    $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                                    $rootScope.$broadcast('reloadDownloadQueue');
+                                } else {
+                                    $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                                }
+                            })
+                        }
                     })
                 }
             },
@@ -1110,8 +1110,8 @@ angular.module('ossClientUiApp')
                                 filesize: object.filesize
                             }
                         });
-                        if(bucket['Location'] != targetBucket['Location']){
-                            $rootScope.$broadcast('showError','不同区域的Bucket之间不能复制');
+                        if (bucket['Location'] != targetBucket['Location']) {
+                            $rootScope.$broadcast('showError', '不同区域的Bucket之间不能复制');
                             return;
                         }
                         var copyToCurrent = selectedFiles.length == 1 && selectedFiles[0].dir ? false : true;
@@ -1124,7 +1124,7 @@ angular.module('ossClientUiApp')
                             list: list
                         }, function (res) {
                             if (!res.error) {
-                                if(copyToCurrent){
+                                if (copyToCurrent) {
                                     $rootScope.$broadcast('reloadFileList');
                                 }
                             } else {
@@ -1145,7 +1145,7 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
-                    OSSAlert.confirm('确定要删除？').result.then(function(){
+                    OSSAlert.confirm('确定要删除？').result.then(function () {
                         var list = _.map(selectedFiles, function (object) {
                             return {
                                 object: object.path
@@ -1186,9 +1186,9 @@ angular.module('ossClientUiApp')
                 text: '设置HTTP头',
                 getState: function (selectedFiles) {
                     if (!selectedFiles || selectedFiles.length == 0)
-                      return 0;
-                    var dirs = _.find(selectedFiles, function(item) {
-                      return item.dir;
+                        return 0;
+                    var dirs = _.find(selectedFiles, function (item) {
+                        return item.dir;
                     })
                     return dirs ? 0 : 1
                     //var len = selectedFiles.length;
@@ -1204,21 +1204,21 @@ angular.module('ossClientUiApp')
             }
 
         ];
-        if(OSSConfig.showRefer()){
-          var referSetting = {
-              name: 'refer',
-              text: 'Refer设置',
-              getState: function () {
-                return 1;
-              },
-              execute: function (bucket) {
-                OSSModal.setRefer(bucket);
-              }
-          }
+        if (OSSConfig.showRefer()) {
+            var referSetting = {
+                name: 'refer',
+                text: 'Refer设置',
+                getState: function () {
+                    return 1;
+                },
+                execute: function (bucket) {
+                    OSSModal.setRefer(bucket);
+                }
+            }
 
-          allMenu.splice(0,0,referSetting);
-          currentMenus = currentMenus.concat(['refer']);
-          groupMenu[0].push('refer');
+            allMenu.splice(0, 0, referSetting);
+            currentMenus = currentMenus.concat(['refer']);
+            groupMenu[0].push('refer');
         }
         return {
             getAllMenu: function () {
@@ -1262,7 +1262,7 @@ angular.module('ossClientUiApp')
 /**
  * 碎片的的操作菜单
  */
-    .factory('OSSUploadMenu', ['Bucket','OSSAlert', 'OSSApi', '$rootScope', 'OSSModal','OSSException',function (Bucket, OSSAlert,OSSApi,$rootScope, OSSModal,OSSException) {
+    .factory('OSSUploadMenu', ['Bucket', 'OSSAlert', 'OSSApi', '$rootScope', 'OSSModal', 'OSSException', function (Bucket, OSSAlert, OSSApi, $rootScope, OSSModal, OSSException) {
         var allMenu = [
             {
                 name: 'remove',
@@ -1275,12 +1275,12 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (selectedUploads) {
-                    OSSAlert.confirm('确定要删除选择的碎片？').result.then(function(){
+                    OSSAlert.confirm('确定要删除选择的碎片？').result.then(function () {
                         angular.forEach(selectedUploads, function (upload) {
                             OSSApi.deleteUpload(Bucket.getCurrentBucket(), upload).success(function () {
                                 $rootScope.$broadcast('removeUpload', upload);
-                            }).error(function (res,status) {
-                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                            }).error(function (res, status) {
+                                $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
                             });
                         });
                     });
@@ -1349,20 +1349,20 @@ angular.module('ossClientUiApp')
             forward: function () {
                 this.go(true);
             },
-            backwardPath:function(){
-              if(this.canBackward()) {
-                return history[current - 1]
-              }
-              return null;
+            backwardPath: function () {
+                if (this.canBackward()) {
+                    return history[current - 1]
+                }
+                return null;
             },
             backward: function () {
                 this.go();
             },
-            forwardPath:function(){
-              if(this.canForward()) {
-                return history[current + 1]
-              }
-              return null;
+            forwardPath: function () {
+                if (this.canForward()) {
+                    return history[current + 1]
+                }
+                return null;
             },
             canForward: function () {
                 return current < history.length - 1;
@@ -1418,8 +1418,8 @@ angular.module('ossClientUiApp')
                         allLoaded: res['ListBucketResult']['IsTruncated'] === 'false'
                     });
 
-                }).error(function (res,status) {
-                    defer.reject(res,status);
+                }).error(function (res, status) {
+                    defer.reject(res, status);
                 });
                 return defer.promise;
             },
@@ -1433,7 +1433,7 @@ angular.module('ossClientUiApp')
                     filename: filename,
                     lastModified: object.LastModified || '',
                     size: object.Size ? parseInt(object.Size) : 0,
-                    etag:object.ETag || ''
+                    etag: object.ETag || ''
                 }
             },
             open: function (bucket, path, isDir) {
@@ -1498,7 +1498,7 @@ angular.module('ossClientUiApp')
                 }
                 return OSSLocation.isCurrentBucket(bucketName) && objectPath == ($routeParams.object || '');
             },
-            getUrl: function (bucketName, prefix, filter,searchParam) {
+            getUrl: function (bucketName, prefix, filter, searchParam) {
 
                 filter = angular.isUndefined(filter) ? 'file' : filter;
                 prefix = angular.isUndefined(prefix) ? '' : prefix;
@@ -1512,7 +1512,7 @@ angular.module('ossClientUiApp')
                 if (prefix) {
                     url += '/' + encodeURIComponent(prefix);
                 }
-                if(searchParam){
+                if (searchParam) {
                     url += '?' + $.param(searchParam);
                 }
                 return url;
@@ -1581,18 +1581,18 @@ angular.module('ossClientUiApp')
             },
             getCreateChannelXml: function (setting) {
                 return [
-                  this.getXMLHeader(),
-                  "<Channel>",
-                  "<Status>",
-                  setting.Status,
-                  "</Status>",
-                  "<OrigPicForbidden>",
-                  setting.OrigPicForbidden,
-                  "</OrigPicForbidden> ",
-                  "<UseStyleOnly>" ,
-                  setting.UseStyleOnly,
-                  "</UseStyleOnly>",
-                  "</Channel>"
+                    this.getXMLHeader(),
+                    "<Channel>",
+                    "<Status>",
+                    setting.Status,
+                    "</Status>",
+                    "<OrigPicForbidden>",
+                    setting.OrigPicForbidden,
+                    "</OrigPicForbidden> ",
+                    "<UseStyleOnly>",
+                    setting.UseStyleOnly,
+                    "</UseStyleOnly>",
+                    "</Channel>"
                 ].join('');
             },
             getCreateBucketXML: function (region) {
@@ -1608,22 +1608,22 @@ angular.module('ossClientUiApp')
                 ].join('');
             },
             getSetBucketReferXML: function (refer) {
-              var referers = refer.content.split(";")
-              var _referContent = ""
-              for(var i=0;i<referers.length;i++){
-                _referContent +="<Referer>" + referers[i] + "</Referer>"
-              }
-              return [
-                this.getXMLHeader(),
-                "<RefererConfiguration>",
-                "<AllowEmptyReferer>",
-                refer.allowEmpty,
-                "</AllowEmptyReferer>",
-                "<RefererList>",
-                _referContent,
-                "</RefererList>",
-                "</RefererConfiguration>"
-              ].join('')
+                var referers = refer.content.split(";")
+                var _referContent = ""
+                for (var i = 0; i < referers.length; i++) {
+                    _referContent += "<Referer>" + referers[i] + "</Referer>"
+                }
+                return [
+                    this.getXMLHeader(),
+                    "<RefererConfiguration>",
+                    "<AllowEmptyReferer>",
+                    refer.allowEmpty,
+                    "</AllowEmptyReferer>",
+                    "<RefererList>",
+                    _referContent,
+                    "</RefererList>",
+                    "</RefererConfiguration>"
+                ].join('')
             }
         };
     })
@@ -1631,7 +1631,7 @@ angular.module('ossClientUiApp')
 /**
  * bucket相关
  */
-    .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope','OSSRegion', function (OSSApi, $q,OSSException,$rootScope,OSSRegion) {
+    .factory('Bucket', ['OSSApi', '$q', 'OSSException', '$rootScope', 'OSSRegion', function (OSSApi, $q, OSSException, $rootScope, OSSRegion) {
         var buckets = null;
         var deferred = $q.defer();
         var listPromise;
@@ -1645,57 +1645,57 @@ angular.module('ossClientUiApp')
                         var currentLocation = OSS.invoke('getCurrentLocation');
                         var isIntranet = OSSRegion.isIntranet(currentLocation);
                         $rootScope.$broadcast('bucketsLoaded');
-                        if(!res['ListAllMyBucketsResult']){
-                            $rootScope.$broadcast('showError','数据请求失败，如果你自定义了服务器地址，请检查是否正常。');
+                        if (!res['ListAllMyBucketsResult']) {
+                            $rootScope.$broadcast('showError', '数据请求失败，如果你自定义了服务器地址，请检查是否正常。');
                             return;
                         }
                         var resBuckets = [];
-                        if(res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']){
+                        if (res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']) {
                             resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                         }
 
-                        if(resBuckets){
-                          buckets = []
-                          var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                          if(currentLocation && !isIntranet) {
-                            angular.forEach(_list, function (bucket) {
-                              if( currentLocation.indexOf(bucket.Location) === 0){
-                                  buckets.push(bucket);
-                                }
-                            })
-                          }else if(currentLocation && isIntranet){
-                            var intranetLocations = OSSRegion.getAllIntranetLocationItem();
-                            angular.forEach(_list, function (bucket) {
-                              var _item = _.find(intranetLocations,function(item){
-                                 return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
-                              })
-                              if(_item){
-                                buckets.push(bucket);
-                              }
-                            })
-                          }else{
-                            angular.forEach(_list,function(bucket){
-                                var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
-                                if (region) {
-                                  buckets.push(bucket);
-                                }
-                            })
-                          }
-                        }else{
+                        if (resBuckets) {
+                            buckets = []
+                            var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
+                            if (currentLocation && !isIntranet) {
+                                angular.forEach(_list, function (bucket) {
+                                    if (currentLocation.indexOf(bucket.Location) === 0) {
+                                        buckets.push(bucket);
+                                    }
+                                })
+                            } else if (currentLocation && isIntranet) {
+                                var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                                angular.forEach(_list, function (bucket) {
+                                    var _item = _.find(intranetLocations, function (item) {
+                                        return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
+                                    })
+                                    if (_item) {
+                                        buckets.push(bucket);
+                                    }
+                                })
+                            } else {
+                                angular.forEach(_list, function (bucket) {
+                                    var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                                    if (region) {
+                                        buckets.push(bucket);
+                                    }
+                                })
+                            }
+                        } else {
                             buckets = [];
                         }
                         //接口返回的bucket的location会带上-a，需要替换成不带-a的
-                        angular.forEach(buckets,function(bucket){
-                          var region  = OSSRegion.getRegionByLocation(bucket.Location);
-                          if(region){
-                            bucket.Location = region.location.replace('-internal','');
-                          }
+                        angular.forEach(buckets, function (bucket) {
+                            var region = OSSRegion.getRegionByLocation(bucket.Location);
+                            if (region) {
+                                bucket.Location = region.location.replace('-internal', '');
+                            }
                         });
                         deferred.resolve(buckets);
-                    }).error(function (res,status) {
+                    }).error(function (res, status) {
                         $rootScope.$broadcast('bucketsLoaded');
-                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                        deferred.reject(res,status);
+                        $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                        deferred.reject(res, status);
                     });
                     return listPromise = deferred.promise;
                 }
@@ -1708,58 +1708,58 @@ angular.module('ossClientUiApp')
                     var resBuckets = null;
                     var currentLocation = OSS.invoke('getCurrentLocation');
                     var isIntranet = OSSRegion.isIntranet(currentLocation);
-                    if(res && res['ListAllMyBucketsResult'] && res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']) {
+                    if (res && res['ListAllMyBucketsResult'] && res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']) {
                         resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                     }
-                    if(resBuckets){
+                    if (resBuckets) {
                         bucketList = []
                         var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
-                        if(currentLocation && !isIntranet) {
-                          angular.forEach(_list, function (bucket) {
-                            if( currentLocation.indexOf(bucket.Location) === 0 ){
-                              bucketList.push(bucket);
-                            }
-                          })
-                        }else if(currentLocation && isIntranet){
-                          var intranetLocations = OSSRegion.getAllIntranetLocationItem();
-                          angular.forEach(_list, function (bucket) {
-                            var _item = _.find(intranetLocations,function(item){
-                              return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
+                        if (currentLocation && !isIntranet) {
+                            angular.forEach(_list, function (bucket) {
+                                if (currentLocation.indexOf(bucket.Location) === 0) {
+                                    bucketList.push(bucket);
+                                }
                             })
-                            if(_item){
-                              bucketList.push(bucket);
-                            }
-                          })
-                        }else{
-                          angular.forEach(_list,function(bucket){
-                            var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
-                            if (region) {
-                              bucketList.push(bucket);
-                            }
-                          })
+                        } else if (currentLocation && isIntranet) {
+                            var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                            angular.forEach(_list, function (bucket) {
+                                var _item = _.find(intranetLocations, function (item) {
+                                    return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
+                                })
+                                if (_item) {
+                                    bucketList.push(bucket);
+                                }
+                            })
+                        } else {
+                            angular.forEach(_list, function (bucket) {
+                                var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                                if (region) {
+                                    bucketList.push(bucket);
+                                }
+                            })
                         }
-                    }else{
+                    } else {
                         bucketList = [];
                     }
-                    angular.forEach(bucketList,function(bucket){
-                      var oldItem = _.findWhere(buckets, {Name: bucket.Name});
-                      if(!oldItem){
-                        newBuckets.push(bucket);
-                      }
+                    angular.forEach(bucketList, function (bucket) {
+                        var oldItem = _.findWhere(buckets, {Name: bucket.Name});
+                        if (!oldItem) {
+                            newBuckets.push(bucket);
+                        }
                     });
                     //接口返回的bucket的location会带上-a，需要替换成不带-a的
-                    angular.forEach(newBuckets,function(bucket){
-                      var region  = OSSRegion.getRegionByLocation(bucket.Location);
-                      if(region){
-                        bucket.Location = region.location.replace('-internal','');
-                      }
+                    angular.forEach(newBuckets, function (bucket) {
+                        var region = OSSRegion.getRegionByLocation(bucket.Location);
+                        if (region) {
+                            bucket.Location = region.location.replace('-internal', '');
+                        }
                     });
-                    if(newBuckets && newBuckets.length > 0) {
+                    if (newBuckets && newBuckets.length > 0) {
                         buckets = buckets.concat(newBuckets);
                     }
                     _deferred.resolve(buckets);
                 });
-              return _deferred.promise;
+                return _deferred.promise;
             },
             getAcls: function () {
                 return {
@@ -1786,7 +1786,7 @@ angular.module('ossClientUiApp')
 /**
  * api相关
  */
-    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion',function ($http, RequestXML, OSSConfig,OSSRegion) {
+    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion', function ($http, RequestXML, OSSConfig, OSSRegion) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
         //获取当前的区域
@@ -1803,74 +1803,79 @@ angular.module('ossClientUiApp')
             return parseInt(new Date().getTime() / 1000) + expires;
         };
 
-        var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam,isImgServer) {
+        var getRequestHost = function (bucket, region, isImgServer) {
+            var requestHost = '';
             region = OSSRegion.changeLocation(region);
-
             //判断是否是图片服务器
             isImgServer = !!isImgServer;
-            if(isImgServer){
-                region = region.replace("oss",'img');
+            if (isImgServer) {
+                region = region.replace("oss", 'img');
             }
 
-            //默认发送请求地址
+            requestHost = (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
+            //如果设置了自定义服务器，则以自定义服务器的host进行请求
+            if (customHost) {
+                var _imgServer = null;
+                var _customHost = customHost;
+                if (OSSConfig.isCustomClient()) {
+                    if (isIntranet) {
+                        var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                        var _item = _.find(intranetLocations, function (item) {
+                            return item.enable === 1 && item.location === region;
+                        });
+                        requestHost = (bucket ? bucket + "." : "") + _item.customhost;
+                        _imgServer = _item.imghost;
+                        _customHost = _item.customhost;
+                    } else {
+                        var internetLocation = OSSRegion.getInternetLocationItem();
+                        _imgServer = internetLocation.imghost;
+                    }
+                }
+                requestHost = (bucket ? bucket + "." : "") + _customHost;
+                if (isImgServer) {
+                    if (!_imgServer) {
+                        var _host = _customHost.substring(0, _customHost.indexOf(".")) + "-picture" + _customHost.substring(_customHost.indexOf("."));
+                        requestHost = requestHost.replace(_customHost, _host);
+                    } else {
+                        requestHost = (bucket ? bucket + "." : "") + _imgServer;
+                    }
+                }
+            }
+            return requestHost;
+        };
+
+        var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam, isImgServer) {
+            var requestHost = getRequestHost(bucket, region, isImgServer);
             var requestUrl = '';
-            if(location.port == 9101 || OSS.isClientOS()){
-                requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;
-                //如果设置了自定义服务器，则以自定义服务器的host进行请求
-                if(customHost){
-                    var _imgServer = null;
-                    var _customHost = customHost;
-                    if(OSSConfig.isCustomClient()){
-                        if(isIntranet) {
-                            var intranetLocations = OSSRegion.getAllIntranetLocationItem();
-                            var _item = _.find(intranetLocations, function (item) {
-                                return item.enable === 1 && item.location === region;
-                            })
-                            requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
-                            _imgServer = _item.imghost
-                            _customHost = _item.customhost
-                        }else{
-                            var internetLocation = OSSRegion.getInternetLocationItem();
-                            _imgServer = internetLocation.imghost
-                        }
-                    }
-                    requestUrl = 'http://' + (bucket ? bucket + "." : "") + _customHost;
-                    if(isImgServer){
-                        if(!_imgServer) {
-                            var _host = _customHost.substring(0, _customHost.indexOf(".")) + "-picture" + _customHost.substring(_customHost.indexOf("."))
-                            requestUrl = requestUrl.replace(_customHost, _host)
-                        }else{
-                            requestUrl = 'http://' + (bucket ? bucket + "." : "") + _imgServer
-                        }
-                    }
-                }
-                canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
-                requestUrl += canonicalizedResource;
-                requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
-                    OSSAccessKeyId: OSSAccessKeyId,
-                    Expires: expires,
-                    Signature: signature
-                });
 
-            }else{
-                canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
-                var route = 'service';
-                if(canonicalizedResource){
-                    route = 'object'
-                }else if(bucket){
-                    route = 'bucket'
-                }
-                route = 'api';
-                requestUrl = '/' + route + '?' + $.param({
-                    bucket:bucket,
-                    host:host,
-                    region:region,
-                    "canonicalized-resource":canonicalizedResource
-                });
+            if (OSS.isClientOS()) {
+                requestUrl = requestHost ? 'http://' + requestHost : requestUrl;
+            } else {
+                requestUrl = '/api';
             }
-
-            requestUrl += (extraParam ? '&' + $.param(extraParam) : '');
+            canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
+            requestUrl += canonicalizedResource;
+            var queryParam = angular.extend({}, extraParam,!OSS.isClientOS()? {} : {
+                OSSAccessKeyId: OSSAccessKeyId,
+                Expires: expires,
+                Signature: signature
+            });
+            //console.log('queryParam',queryParam);
+            var queryStr = $.param(queryParam);
+            if(queryStr){
+                requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + queryStr;
+            }
             return requestUrl;
+        };
+
+        var getRequestDefaultHeaders = function (bucket, region, isImgServer) {
+            var headers = {};
+            if (OSS.isClientOS()) {
+                angular.extend(headers, {
+                    'x-proxy-host': getRequestHost(bucket, region, isImgServer)
+                })
+            }
+            return headers;
         };
 
         var getCanonicalizedResource = function (bucketName, objectName, subResources) {
@@ -1884,15 +1889,15 @@ angular.module('ossClientUiApp')
                     var _location = OSSRegion.changeLocation(bucket.Location);
                     var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
                     //如果设置了自定义服务器，则以自定义服务器的host进行请求
-                    if(OSSConfig.isCustomClient() && customHost){
-                      _url = 'http://' + bucket.Name + '.' + customHost + '/' + encodeURIComponent(objectName);
-                      if(isIntranet){
-                        var intranetLocations = OSSRegion.getAllIntranetLocationItem();
-                        var _item = _.find(intranetLocations,function(item){
-                          return item.enable === 1 && item.location === region;
-                        })
-                        _url = 'http://' + bucket.Name + '.' + _item.customhost + '/' + encodeURIComponent(objectName);
-                      }
+                    if (OSSConfig.isCustomClient() && customHost) {
+                        _url = 'http://' + bucket.Name + '.' + customHost + '/' + encodeURIComponent(objectName);
+                        if (isIntranet) {
+                            var intranetLocations = OSSRegion.getAllIntranetLocationItem();
+                            var _item = _.find(intranetLocations, function (item) {
+                                return item.enable === 1 && item.location === region;
+                            })
+                            _url = 'http://' + bucket.Name + '.' + _item.customhost + '/' + encodeURIComponent(objectName);
+                        }
                     }
                     return _url;
                 } else {
@@ -1914,73 +1919,80 @@ angular.module('ossClientUiApp')
                     expires: expires,
                     canonicalized_resource: canonicalizedResource
                 });
+                var region = (currentLocation ? currentLocation : 'oss');
                 var requestUrl = getRequestUrl('', (currentLocation ? currentLocation : 'oss'), expires, signature, canonicalizedResource);
-                return $http.get(requestUrl);
+                return $http.get(requestUrl, '', {
+                    headers: getRequestDefaultHeaders('',region)
+                });
             },
             getBucketRefer: function (bucket) {
-              var expires = getExpires();
-              var canonicalizedResource = getCanonicalizedResource(bucket.Name, '',{referer: undefined});
-              var signature = OSS.invoke('getSignature', {
-                verb: 'GET',
-                expires: expires,
-                canonicalized_resource: canonicalizedResource
-              });
-              var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
-              return $http.get(requestUrl);
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {referer: undefined});
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'GET',
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
+                });
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                return $http.get(requestUrl, '', {
+                    headers: getRequestDefaultHeaders(bucket.Name,bucket.Location)
+                });
             },
-            setBucketRefer: function (bucket,refer) {
-              var expires = getExpires();
-              var canonicalizedResource = getCanonicalizedResource(bucket.Name, '',{referer: undefined});
-              var contentType = 'application/xml';
-              var signature = OSS.invoke('getSignature', {
-                verb: 'PUT',
-                content_type: contentType,
-                expires: expires,
-                canonicalized_resource: canonicalizedResource
-              });
-              var headers = angular.extend({}, {}, {
-                'Accept': contentType,
-                'Content-Type': contentType
-              });
-              var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
-              return $http.put(requestUrl,RequestXML.getSetBucketReferXML(refer),{
-                headers: headers
-              });
+            setBucketRefer: function (bucket, refer) {
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {referer: undefined});
+                var contentType = 'application/xml';
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'PUT',
+                    content_type: contentType,
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
+                });
+                var headers = angular.extend({}, getRequestDefaultHeaders(bucket.Name,bucket.Location), {
+                    'Accept': contentType,
+                    'Content-Type': contentType
+                });
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                return $http.put(requestUrl, RequestXML.getSetBucketReferXML(refer), {
+                    headers: headers
+                });
             },
-            saveBucketChannel:function (bucketName,bucketRegion,_status,_origPicForbidden,_useStyleOnly){
-              var expires = getExpires();
-              var canonicalizedResource = getCanonicalizedResource(bucketName);
-              var contentType = 'application/xml';
-              var signature = OSS.invoke('getSignature', {
-                verb: 'PUT',
-                content_type: contentType,
-                expires: expires,
-                canonicalized_resource: canonicalizedResource
-              });
-              var setting = {
-                Status : _status ? 'enable' : 'disable',
-                OrigPicForbidden : _origPicForbidden,
-                UseStyleOnly : _useStyleOnly
-              }
-              var headers = angular.extend({}, {}, {
-                'Accept': contentType,
-                'Content-Type': contentType
-              });
-              var requestUrl = getRequestUrl(bucketName, bucketRegion, expires, signature, canonicalizedResource,null,true);
-              return $http.put(requestUrl,RequestXML.getCreateChannelXml(setting),{
-                headers: headers
-              });
+            saveBucketChannel: function (bucketName, bucketRegion, _status, _origPicForbidden, _useStyleOnly) {
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucketName);
+                var contentType = 'application/xml';
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'PUT',
+                    content_type: contentType,
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
+                });
+                var setting = {
+                    Status: _status ? 'enable' : 'disable',
+                    OrigPicForbidden: _origPicForbidden,
+                    UseStyleOnly: _useStyleOnly
+                }
+                var headers = angular.extend({}, getRequestDefaultHeaders(bucketName,bucketRegion), {
+                    'Accept': contentType,
+                    'Content-Type': contentType
+                });
+                var requestUrl = getRequestUrl(bucketName, bucketRegion, expires, signature, canonicalizedResource, null, true);
+                return $http.put(requestUrl, RequestXML.getCreateChannelXml(setting), {
+                    headers: headers
+                });
             },
             getBucketChannel: function (bucket) {
                 var expires = getExpires();
                 var canonicalizedResource = getCanonicalizedResource(bucket.Name);
                 var signature = OSS.invoke('getSignature', {
-                  verb: 'GET',
-                  expires: expires,
-                  canonicalized_resource: canonicalizedResource
+                    verb: 'GET',
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
                 });
-                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource,null,true);
-                return $http.get(requestUrl);
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, null, true);
+                return $http.get(requestUrl, '', {
+                    headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
+                });
             },
             createBucket: function (bucketName, region, acl) {
                 var expires = getExpires();
@@ -1998,7 +2010,7 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucketName, region, expires, signature, canonicalizedResource);
-                var headers = angular.extend({}, canonicalizedOSSheaders, {
+                var headers = angular.extend({}, canonicalizedOSSheaders, getRequestDefaultHeaders(bucketName,region), {
                     'Content-Type': contentType
                 });
                 return $http.put(requestUrl, RequestXML.getCreateBucketXML(region), {
@@ -2015,7 +2027,9 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
-                return $http.get(requestUrl);
+                return $http.get(requestUrl, '', {
+                    headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
+                });
             },
             editBucket: function (bucket, acl) {
                 var expires = getExpires();
@@ -2033,7 +2047,7 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
-                var headers = angular.extend({}, canonicalizedOSSheaders, {
+                var headers = angular.extend({}, canonicalizedOSSheaders, getRequestDefaultHeaders(bucket.Name, bucket.Location), {
                     'Content-Type': contentType
                 });
                 return $http.put(requestUrl, "", {
@@ -2050,7 +2064,9 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
-                return $http.delete(requestUrl);
+                return $http.delete(requestUrl, '', {
+                    headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
+                });
             },
             getObjects: function (bucket, prefix, delimiter, marker, maxKeys) {
                 var param = {
@@ -2070,7 +2086,9 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
-                return $http.get(requestUrl);
+                return $http.get(requestUrl, '', {
+                    headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
+                });
             },
             getObjectMeta: function (bucket, object) {
                 var expires = getExpires();
@@ -2082,7 +2100,9 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(object)));
-                return $http.head(requestUrl);
+                return $http.head(requestUrl, '', {
+                    headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
+                });
             },
             putObject: function (bucket, objectPath, headers, canonicalizedOSSheaders) {
                 var expires = getExpires();
@@ -2097,7 +2117,7 @@ angular.module('ossClientUiApp')
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(objectPath)));
                 return $http.put(requestUrl, '', {
-                    headers: angular.extend({}, headers, canonicalizedOSSheaders)
+                    headers: angular.extend({}, headers, getRequestDefaultHeaders(bucket.Name, bucket.Location), canonicalizedOSSheaders)
                 });
             },
             listUploads: function (bucket, prefix, delimiter, keyMarker, maxUploads, uploadIdMaker) {
@@ -2118,7 +2138,10 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
-                return $http.get(requestUrl);
+                var headers =  getRequestDefaultHeaders(bucket.Name, bucket.Location);
+                return $http.get(requestUrl, '', {
+                    headers: headers
+                });
             },
             deleteUpload: function (bucket, upload) {
                 var expires = getExpires();
@@ -2129,7 +2152,10 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(upload.path), {'uploadId': upload.id}));
-                return $http.delete(requestUrl);
+                var headers =  getRequestDefaultHeaders(bucket.Name, bucket.Location);
+                return $http.delete(requestUrl, '', {
+                    headers: headers
+                });
             },
             listUploadPart: function (bucket, upload, partNumberMaker, maxParts) {
                 var param = {
@@ -2143,8 +2169,11 @@ angular.module('ossClientUiApp')
                     expires: expires,
                     canonicalized_resource: canonicalizedResource
                 });
+                var headers =  getRequestDefaultHeaders(bucket.Name, bucket.Location);
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(upload.path), {uploadId: upload.id}), param);
-                return $http.get(requestUrl);
+                return $http.get(requestUrl, '', {
+                    headers: headers
+                });
             }
         };
     }])
@@ -2178,8 +2207,8 @@ angular.module('ossClientUiApp')
                         allLoaded: result['IsTruncated'] === 'false'
                     });
 
-                }).error(function (res,status) {
-                    defer.reject(res,status);
+                }).error(function (res, status) {
+                    defer.reject(res, status);
                 });
                 return defer.promise;
             },
@@ -2202,12 +2231,12 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
+    .factory('OSSModal', ['$modal', 'OSSAlert', 'OSSDialog', 'OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSAlert, OSSDialog, OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
         var defaultOption = {
             backdrop: 'static'
         };
         return {
-            setting:function(){
+            setting: function () {
                 var option = {
                     templateUrl: 'views/setting_modal.html',
                     windowClass: 'setting_modal',
@@ -2225,55 +2254,55 @@ angular.module('ossClientUiApp')
 
                         $scope.setting = OSS.invoke('getTransInfo');
 
-                        var checkSetting = function(setting){
+                        var checkSetting = function (setting) {
                             var unValidMsg = '';
-                            angular.forEach(setting,function(val,key){
-                                    if(!/^[1-9]{1}[0-9]*$/.test(val)){
-                                        unValidMsg = '设置的值必须是正整数';
-                                        if(_.indexOf(['upload_peer_max','download_peer_max'],key) >= 0){
-                                            unValidMsg = '单任务线程数必须是大于' +  $scope.min + '小于等于'+$scope.max+'的整数';
-                                        }else{
-                                            unValidMsg = '同时任务数必须是大于' +  $scope.min + '小于等于'+$scope.maxTaskLimit+'的整数';
-                                        }
-                                        return false;
+                            angular.forEach(setting, function (val, key) {
+                                if (!/^[1-9]{1}[0-9]*$/.test(val)) {
+                                    unValidMsg = '设置的值必须是正整数';
+                                    if (_.indexOf(['upload_peer_max', 'download_peer_max'], key) >= 0) {
+                                        unValidMsg = '单任务线程数必须是大于' + $scope.min + '小于等于' + $scope.max + '的整数';
+                                    } else {
+                                        unValidMsg = '同时任务数必须是大于' + $scope.min + '小于等于' + $scope.maxTaskLimit + '的整数';
                                     }
-                                    //if(val <= $scope.min){
-                                    //    unValidMsg = '设置的值必须大于0';
-                                    //    return false;
-                                    //}
-                                    //if(_.indexOf(['upload_peer_max','download_peer_max'],key) >= 0 && val > $scope.max){
-                                    //    unValidMsg = '最大线程数不能超过' + $scope.max;
-                                    //    return false;
-                                    //}
-                                    //if(_.indexOf(['upload_task_max','download_task_max'],key) >= 0 && val > $scope.maxTaskLimit){
-                                    //    unValidMsg = '最大任务数不能超过' + $scope.maxTaskLimit;
-                                    //    return false;
-                                    //}
+                                    return false;
+                                }
+                                //if(val <= $scope.min){
+                                //    unValidMsg = '设置的值必须大于0';
+                                //    return false;
+                                //}
+                                //if(_.indexOf(['upload_peer_max','download_peer_max'],key) >= 0 && val > $scope.max){
+                                //    unValidMsg = '最大线程数不能超过' + $scope.max;
+                                //    return false;
+                                //}
+                                //if(_.indexOf(['upload_task_max','download_task_max'],key) >= 0 && val > $scope.maxTaskLimit){
+                                //    unValidMsg = '最大任务数不能超过' + $scope.maxTaskLimit;
+                                //    return false;
+                                //}
                             });
 
-                            if(unValidMsg){
-                                $rootScope.$broadcast('showError',unValidMsg);
+                            if (unValidMsg) {
+                                $rootScope.$broadcast('showError', unValidMsg);
                                 return false;
                             }
                             return true;
                         };
 
-                        $scope.saveSetting = function(setting){
-                            if(!checkSetting(setting)){
+                        $scope.saveSetting = function (setting) {
+                            if (!checkSetting(setting)) {
                                 return;
                             }
-                            angular.forEach(setting,function(val,key){
+                            angular.forEach(setting, function (val, key) {
                                 setting[key] = parseInt(val)
                             })
-                            OSS.invoke('setTransInfo',setting);
+                            OSS.invoke('setTransInfo', setting);
                             $modalInstance.dismiss('cancel');
                         };
 
-                        $scope.cancel = function(){
+                        $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
 
-                        $scope.exportAuth = function(){
+                        $scope.exportAuth = function () {
                             OSSDialog.exportAuthorization();
                         };
                     }
@@ -2362,10 +2391,10 @@ angular.module('ossClientUiApp')
                                 $scope.loading = false;
                                 $scope.getingBucketInfo = false;
                                 $scope.acls.selected = Util.Array.getObjectByKeyValue($scope.acls, 'value', res["AccessControlPolicy"]["AccessControlList"]["Grant"]);
-                            }).error(function (res,status) {
+                            }).error(function (res, status) {
                                 $scope.loading = false;
                                 $scope.getingBucketInfo = false;
-                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                                $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
                             });
                         } else {
                             $scope.loading = true;
@@ -2380,15 +2409,15 @@ angular.module('ossClientUiApp')
                         $scope.loading = false;
                         $scope.createBucket = function (bucketName, region, acl) {
                             if (!bucketName || !bucketName.length) {
-                                $rootScope.$broadcast('showError','Bucket的名称不能为空');
+                                $rootScope.$broadcast('showError', 'Bucket的名称不能为空');
                                 return;
                             }
-                            if(!/^[a-z0-9][a-z0-9\-]{1,61}[a-z0-9]$/.test(bucketName)){
-                                $rootScope.$broadcast('showError','Bucket的名称格式错误');
+                            if (!/^[a-z0-9][a-z0-9\-]{1,61}[a-z0-9]$/.test(bucketName)) {
+                                $rootScope.$broadcast('showError', 'Bucket的名称格式错误');
                                 return;
                             }
-                            if(Bucket.getBucket(bucketName)){
-                                $rootScope.$broadcast('showError','已存在相同名称的Bucket');
+                            if (Bucket.getBucket(bucketName)) {
+                                $rootScope.$broadcast('showError', '已存在相同名称的Bucket');
                                 return;
                             }
                             $scope.loading = true;
@@ -2495,46 +2524,46 @@ angular.module('ossClientUiApp')
                             }
                         });
 
-                        if(objects && objects.length == 1){
-                          var object = objects[0];
-                          $scope.loading = true;
-                          OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
-                            $scope.loading = false;
-                            angular.forEach($scope.headers, function (header) {
-                              header.model = getHeader(header.name);
-                            })
-                            angular.forEach(getHeader(), function (val, key) {
-                              if (key.indexOf('x-oss-meta-') === 0) {
-                                $scope.customHeaders.push({
-                                  nameModel: key.replace(/^x-oss-meta-/, ''),
-                                  contentModel: val
+                        if (objects && objects.length == 1) {
+                            var object = objects[0];
+                            $scope.loading = true;
+                            OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
+                                $scope.loading = false;
+                                angular.forEach($scope.headers, function (header) {
+                                    header.model = getHeader(header.name);
                                 })
-                              }
+                                angular.forEach(getHeader(), function (val, key) {
+                                    if (key.indexOf('x-oss-meta-') === 0) {
+                                        $scope.customHeaders.push({
+                                            nameModel: key.replace(/^x-oss-meta-/, ''),
+                                            contentModel: val
+                                        })
+                                    }
+                                });
+                            }).error(function (res, status) {
+                                $scope.loading = false;
+                                $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
                             });
-                          }).error(function (res,status) {
-                            $scope.loading = false;
-                            $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                          });
                         }
 
                         $scope.setHttpHeader = function (headers, customHeaders) {
                             var ossHeaders = {}, canonicalizedOSSheaders = {};
-                            var unValidFieldValue = false,contentTypeRequired = false;
+                            var unValidFieldValue = false, contentTypeRequired = false;
                             var fieldValueReg = /^[a-zA-Z0-9\-_/.="]+$/;
 
-                            var checkFieldValueIsValid = function(value){
-                              //不检查
-                              //return true;
-                              return /^[a-zA-Z0-9\-_/.;,:="]+$/.test(value);
+                            var checkFieldValueIsValid = function (value) {
+                                //不检查
+                                //return true;
+                                return /^[a-zA-Z0-9\-_/.;,:="]+$/.test(value);
                             };
 
                             angular.forEach(headers, function (val) {
-                                if(val.name == 'Content-Type' && !val.model){
+                                if (val.name == 'Content-Type' && !val.model) {
                                     contentTypeRequired = true;
                                     return false;
                                 }
                                 if (val.model) {
-                                    if(!checkFieldValueIsValid(val.model)){
+                                    if (!checkFieldValueIsValid(val.model)) {
                                         unValidFieldValue = true;
                                         return false;
                                     }
@@ -2545,12 +2574,12 @@ angular.module('ossClientUiApp')
                             var unValidField = false;
                             angular.forEach(customHeaders, function (val) {
                                 if (val.nameModel) {
-                                    if(!/^[a-zA-Z0-9\-]+$/.test(val.nameModel)){
+                                    if (!/^[a-zA-Z0-9\-]+$/.test(val.nameModel)) {
                                         unValidField = true;
                                         return false;
                                     }
-                                    if(val.contentModel){
-                                        if(!checkFieldValueIsValid(val.contentModel)){
+                                    if (val.contentModel) {
+                                        if (!checkFieldValueIsValid(val.contentModel)) {
                                             unValidFieldValue = true;
                                             return false;
                                         }
@@ -2558,23 +2587,23 @@ angular.module('ossClientUiApp')
                                     }
                                 }
                             });
-                            if(contentTypeRequired){
-                              var msg  = 'HTTP属性值格式错误';
-                              msg += '<p class="text-muted">Content-Type是必填字段</p>'
-                              $rootScope.$broadcast('showError',msg);
-                              return;
+                            if (contentTypeRequired) {
+                                var msg = 'HTTP属性值格式错误';
+                                msg += '<p class="text-muted">Content-Type是必填字段</p>'
+                                $rootScope.$broadcast('showError', msg);
+                                return;
                             }
-                            if(unValidFieldValue){
-                                var msg  = 'HTTP属性值格式错误';
+                            if (unValidFieldValue) {
+                                var msg = 'HTTP属性值格式错误';
                                 msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号</p>'
-                                $rootScope.$broadcast('showError',msg);
+                                $rootScope.$broadcast('showError', msg);
                                 return;
                             }
 
-                            if(unValidField){
-                                var msg  = '属性名称格式错误';
+                            if (unValidField) {
+                                var msg = '属性名称格式错误';
                                 msg += '<p class="text-muted">属性名称只能包含英文、数子或横线</p>'
-                                $rootScope.$broadcast('showError',msg);
+                                $rootScope.$broadcast('showError', msg);
                                 return;
                             }
 
@@ -2597,29 +2626,32 @@ angular.module('ossClientUiApp')
                             //});
 
 
-                            var errorSetObjects = [],_submitCount = 0;
-                            angular.forEach(objects,function(object,index){
-                                angular.extend(canonicalizedOSSheaders,{
-                                  'x-oss-copy-source': '/' + bucket.Name + '/' + encodeURIComponent(object.path)
+                            var errorSetObjects = [], _submitCount = 0;
+                            angular.forEach(objects, function (object, index) {
+                                angular.extend(canonicalizedOSSheaders, {
+                                    'x-oss-copy-source': '/' + bucket.Name + '/' + encodeURIComponent(object.path)
                                 });
                                 OSSApi.putObject(bucket, object.path, ossHeaders, canonicalizedOSSheaders).success(function (res) {
                                     _submitCount += 1;
-                                    if(_submitCount == objects.length) {
-                                      $scope.saving = false;
-                                      $modalInstance.close();
+                                    if (_submitCount == objects.length) {
+                                        $scope.saving = false;
+                                        $modalInstance.close();
                                     }
-                                }).error(function(res,status) {
-                                  _submitCount += 1;
-                                  var _filename = object.filename;
-                                  errorSetObjects.push({'filename':_filename,'errmsg':OSSException.getError(res, status).msg});
-                                  if (_submitCount == objects.length){
-                                    $scope.saving = false;
-                                    var _errorMsg = '';
-                                    angular.forEach(errorSetObjects,function(item){
-                                      _errorMsg += "文件"+item.filename+"设置http头的错误信息:"+item.errmsg + "<br/>"
-                                    })
-                                    $rootScope.$broadcast('showError', _errorMsg);
-                                  }
+                                }).error(function (res, status) {
+                                    _submitCount += 1;
+                                    var _filename = object.filename;
+                                    errorSetObjects.push({
+                                        'filename': _filename,
+                                        'errmsg': OSSException.getError(res, status).msg
+                                    });
+                                    if (_submitCount == objects.length) {
+                                        $scope.saving = false;
+                                        var _errorMsg = '';
+                                        angular.forEach(errorSetObjects, function (item) {
+                                            _errorMsg += "文件" + item.filename + "设置http头的错误信息:" + item.errmsg + "<br/>"
+                                        })
+                                        $rootScope.$broadcast('showError', _errorMsg);
+                                    }
                                 });
                             })
                         };
@@ -2644,110 +2676,110 @@ angular.module('ossClientUiApp')
                 option = angular.extend({}, defaultOption, option);
                 return $modal.open(option);
             },
-            setRefer: function (bucket){
-              var option = {
-                templateUrl: 'views/set_refer_modal.html',
-                windowClass: 'set_refer_modal',
-                controller: function ($scope, $modalInstance) {
-                  $scope.loading = true;
-                  $scope.refer = {
-                    content:'',
-                    allowEmpty:true
-                  }
-
-                  OSSApi.getBucketRefer(bucket).success(function (res) {
-                    $scope.loading = false;
-                    var _referContent = ""
-                    if(res.RefererConfiguration && res.RefererConfiguration.RefererList && res.RefererConfiguration.RefererList.Referer) {
-                      if(angular.isArray(res.RefererConfiguration.RefererList.Referer)) {
-                        for (var i = 0; i < res.RefererConfiguration.RefererList.Referer.length; i++) {
-                          _referContent += res.RefererConfiguration.RefererList.Referer[i] + ";"
+            setRefer: function (bucket) {
+                var option = {
+                    templateUrl: 'views/set_refer_modal.html',
+                    windowClass: 'set_refer_modal',
+                    controller: function ($scope, $modalInstance) {
+                        $scope.loading = true;
+                        $scope.refer = {
+                            content: '',
+                            allowEmpty: true
                         }
-                      }else{
-                        _referContent += res.RefererConfiguration.RefererList.Referer + ";"
-                      }
-                    }
-                    $scope.refer.content = _referContent.replace(/;/g,"\r")
-                    $scope.refer.allowEmpty = Boolean(res.RefererConfiguration.AllowEmptyReferer == 'true');
 
-                  }).error(function(res,status){
-                    $scope.loading = false;
-                    $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                  });
+                        OSSApi.getBucketRefer(bucket).success(function (res) {
+                            $scope.loading = false;
+                            var _referContent = ""
+                            if (res.RefererConfiguration && res.RefererConfiguration.RefererList && res.RefererConfiguration.RefererList.Referer) {
+                                if (angular.isArray(res.RefererConfiguration.RefererList.Referer)) {
+                                    for (var i = 0; i < res.RefererConfiguration.RefererList.Referer.length; i++) {
+                                        _referContent += res.RefererConfiguration.RefererList.Referer[i] + ";"
+                                    }
+                                } else {
+                                    _referContent += res.RefererConfiguration.RefererList.Referer + ";"
+                                }
+                            }
+                            $scope.refer.content = _referContent.replace(/;/g, "\r")
+                            $scope.refer.allowEmpty = Boolean(res.RefererConfiguration.AllowEmptyReferer == 'true');
 
-                  $scope.disabledSave = function () {
-                    if (!$scope.refer.allowEmpty && (!$scope.refer.content || $scope.refer.content.length == 0)) {
-                      return true
-                    }else if($scope.saving){
-                      return true
-                    }
-                    return false
-                  }
+                        }).error(function (res, status) {
+                            $scope.loading = false;
+                            $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                        });
 
-                  $scope.setReferer = function () {
-                    $scope.saving = true;
-                    var _refer = $scope.refer.content.replace(/\r|\n/ig,";");
-                    var params = {
-                      content:_refer,
-                      allowEmpty:$scope.refer.allowEmpty
+                        $scope.disabledSave = function () {
+                            if (!$scope.refer.allowEmpty && (!$scope.refer.content || $scope.refer.content.length == 0)) {
+                                return true
+                            } else if ($scope.saving) {
+                                return true
+                            }
+                            return false
+                        }
+
+                        $scope.setReferer = function () {
+                            $scope.saving = true;
+                            var _refer = $scope.refer.content.replace(/\r|\n/ig, ";");
+                            var params = {
+                                content: _refer,
+                                allowEmpty: $scope.refer.allowEmpty
+                            }
+                            OSSApi.setBucketRefer(bucket, params).success(function (res) {
+                                $scope.saving = false
+                                $modalInstance.dismiss('cancel');
+                            }).error(function (res, status) {
+                                $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                            })
+                        }
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
                     }
-                    OSSApi.setBucketRefer(bucket,params).success(function (res) {
-                      $scope.saving = false
-                      $modalInstance.dismiss('cancel');
-                    }).error(function(res,status){
-                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                    })
-                  }
-                  $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                  };
                 }
-              }
-              option = angular.extend({}, defaultOption, option);
-              return $modal.open(option);
+                option = angular.extend({}, defaultOption, option);
+                return $modal.open(option);
             },
-            setImageServer: function (bucket){
-              var option = {
-                templateUrl: 'views/set_image_server_modal.html',
-                windowClass: 'set_imageserver_modal',
-                controller: function ($scope, $modalInstance) {
-                  $scope.loading = true;
-                  $scope.channel = {
-                      name: bucket.Name,
-                      Status: false,
-                      OrigPicForbidden: false,
-                      UseStyleOnly: false
-                  }
-                  OSSApi.getBucketChannel(bucket).success(function(res){
-                      var channel = res.Channel;
-                      $scope.channel.name = channel.Name;
-                      $scope.channel.Status = channel.Status.toLowerCase().indexOf('enable') === 0 ? true : false;
-                      $scope.channel.OrigPicForbidden = channel.OrigPicForbidden.toLowerCase() === 'true' ? true : false;
-                      $scope.channel.UseStyleOnly = channel.UseStyleOnly.toLowerCase() === 'true' ? true : false;
-                      $scope.loading = false;
-                  }).error(function(res,status){
-                      if (status && status == 404){
-                         $scope.loading = false;
-                      }else{
-                         $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                      }
-                  });
-                  $scope.saveChannel = function () {
-                      $scope.saving = true;
-                      OSSApi.saveBucketChannel(bucket.Name,bucket.Location,$scope.channel.Status,$scope.channel.OrigPicForbidden,$scope.channel.UseStyleOnly).success(function(res){
-                          $scope.saving = false;
-                          $modalInstance.dismiss('cancel');
-                      }).error(function(res,status){
-                          $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                      })
-                  }
-                  $scope.cancel = function () {
-                      $modalInstance.dismiss('cancel');
-                  };
+            setImageServer: function (bucket) {
+                var option = {
+                    templateUrl: 'views/set_image_server_modal.html',
+                    windowClass: 'set_imageserver_modal',
+                    controller: function ($scope, $modalInstance) {
+                        $scope.loading = true;
+                        $scope.channel = {
+                            name: bucket.Name,
+                            Status: false,
+                            OrigPicForbidden: false,
+                            UseStyleOnly: false
+                        }
+                        OSSApi.getBucketChannel(bucket).success(function (res) {
+                            var channel = res.Channel;
+                            $scope.channel.name = channel.Name;
+                            $scope.channel.Status = channel.Status.toLowerCase().indexOf('enable') === 0 ? true : false;
+                            $scope.channel.OrigPicForbidden = channel.OrigPicForbidden.toLowerCase() === 'true' ? true : false;
+                            $scope.channel.UseStyleOnly = channel.UseStyleOnly.toLowerCase() === 'true' ? true : false;
+                            $scope.loading = false;
+                        }).error(function (res, status) {
+                            if (status && status == 404) {
+                                $scope.loading = false;
+                            } else {
+                                $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                            }
+                        });
+                        $scope.saveChannel = function () {
+                            $scope.saving = true;
+                            OSSApi.saveBucketChannel(bucket.Name, bucket.Location, $scope.channel.Status, $scope.channel.OrigPicForbidden, $scope.channel.UseStyleOnly).success(function (res) {
+                                $scope.saving = false;
+                                $modalInstance.dismiss('cancel');
+                            }).error(function (res, status) {
+                                $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                            })
+                        }
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    }
                 }
-              }
-              option = angular.extend({}, defaultOption, option);
-              return $modal.open(option);
+                option = angular.extend({}, defaultOption, option);
+                return $modal.open(option);
             },
             getObjectURI: function (bucket, object) {
                 var option = {
@@ -2778,9 +2810,9 @@ angular.module('ossClientUiApp')
                                     $scope.uri = OSSApi.getURI(bucket, object.path);
                                 }
                             }
-                        }).error(function (res,status) {
+                        }).error(function (res, status) {
                             $scope.loading = false;
-                            $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                            $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
                         });
 
                         //获取私有bucket的uri
@@ -2824,27 +2856,27 @@ angular.module('ossClientUiApp')
                             $scope.loading = true;
                             OSSApi.listUploadPart(bucket, upload, lastMaker, size).success(function (res) {
                                 $scope.loading = false;
-                                if(!$scope.parts || !$scope.parts.length){
+                                if (!$scope.parts || !$scope.parts.length) {
                                     $scope.firstLoading = false;
                                 }
                                 var result = res['ListPartsResult'];
                                 lastMaker = result['NextPartNumberMarker'];
                                 allLoaded = result['IsTruncated'] === 'false';
                                 var parts = [];
-                                if(result['Part']){
+                                if (result['Part']) {
                                     parts = angular.isArray(result['Part']) ? result['Part'] : [result['Part']];
                                 }
                                 $scope.parts = $scope.parts.concat(parts);
-                            }).error(function (res,status) {
+                            }).error(function (res, status) {
                                 $scope.loading = false;
                                 $scope.firstLoading = false;
-                                $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                                $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
                             })
                         };
 
                         loadPart();
 
-                        $scope.$watch('firstLoading',function(newVal){
+                        $scope.$watch('firstLoading', function (newVal) {
                             if (newVal) {
                                 usSpinnerService.spin('load-upload-detail-spinner');
                             } else {
@@ -2880,15 +2912,15 @@ angular.module('ossClientUiApp')
 
                         $scope.delConfirm = function (accessKey, accessSecret) {
                             if (!accessKey) {
-                                $rootScope.$broadcast('showError','请输入 Access Key ID');
+                                $rootScope.$broadcast('showError', '请输入 Access Key ID');
                                 return;
                             }
                             if (!accessSecret) {
-                                $rootScope.$broadcast('showError','请输入 Access Key Secret');
+                                $rootScope.$broadcast('showError', '请输入 Access Key Secret');
                                 return;
                             }
 
-                            OSSAlert.confirm('确定要删除Bucket “' + bucket.Name + '“吗？删除后数据将无法恢复').result.then(function(){
+                            OSSAlert.confirm('确定要删除Bucket “' + bucket.Name + '“吗？删除后数据将无法恢复').result.then(function () {
                                 $modalInstance.close({
                                     accessKey: accessKey,
                                     accessSecret: accessSecret
