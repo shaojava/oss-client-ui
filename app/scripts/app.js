@@ -21,7 +21,9 @@ angular
         'angularSpinner',
         'ng-context-menu',
         'ui.select',
-        'LocalStorageModule'
+        'LocalStorageModule',
+        'base64',
+        'angular-md5'
     ])
     .config(['$routeProvider', '$httpProvider','uiSelectConfig', function ($routeProvider, $httpProvider,uiSelectConfig) {
         //设置ui-select的默认样式

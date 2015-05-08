@@ -403,17 +403,21 @@ angular.module('ossClientUiApp')
                 name: 'upload',
                 title: '上传队列'
                 //title: '上传队列' + ($scope.OSSUploadQueue.totalCount ? '(' + $scope.OSSUploadQueue.doneCount + '/' + $scope.OSSUploadQueue.totalCount + ')' : '')
-            },
-            {
+            }
+        ];
+
+        if(OSS.isClientOS()){
+            $scope.tabs =  $scope.tabs.concat([{
                 name: 'download',
                 title: '下载队列'
                 //title: '下载队列' + ($scope.OSSDownloadQueue.doneCount ? '(' + $scope.OSSDownloadQueue.doneCount + '/' + $scope.OSSDownloadQueue.totalCount + ')' : '')
             },
-            {
-                name: 'log',
-                title: '错误日志'
-            }
-        ];
+                {
+                    name: 'log',
+                    title: '错误日志'
+                }]);
+
+        }
 
         //选中tab
         $scope.$on('toggleTransQueue', function ($event, isShow, currentTab) {

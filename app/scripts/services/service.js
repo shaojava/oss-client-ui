@@ -1152,17 +1152,25 @@ angular.module('ossClientUiApp')
                             }
                         });
 
-                        OSS.invoke('deleteObject', {
-                            bucket: bucket['Name'],
-                            location: bucket['Location'],
-                            list: list
-                        }, function (res) {
-                            if (!res.error) {
+                        if(OSS.isClientOS()){
+                            OSS.invoke('deleteObject', {
+                                bucket: bucket['Name'],
+                                location: bucket['Location'],
+                                list: list
+                            }, function (res) {
+                                if (!res.error) {
+                                    $rootScope.$broadcast('removeObject', selectedFiles);
+                                } else {
+                                    $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                                }
+                            })
+                        }else{
+                            OSSModal.delObjects(bucket,list).result.then(function(){
                                 $rootScope.$broadcast('removeObject', selectedFiles);
-                            } else {
-                                $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
-                            }
-                        })
+                            },function(){
+
+                            });
+                        }
                     });
                 }
             },
@@ -1423,6 +1431,37 @@ angular.module('ossClientUiApp')
                 });
                 return defer.promise;
             },
+            listAll: function (bucket, prefix, delimiter) {
+                var _context = this,
+                    deferred = $q.defer(),
+                    lastLoadMarker = '',
+                    loadFileCount = 500,
+                    objects = [],
+                    loading = false,
+                    isAllDone = false,
+                    reTryCount = 0;
+                while (!loading) {
+                    if(isAllDone){
+                        deferred.resolve(objects);
+                        break;
+                    }
+                    loading = true;
+                    _context.list(bucket, prefix, delimiter, lastLoadMarker, loadFileCount).then(function (res) {
+                        reTryCount = 0;
+                        lastLoadMarker = res.marker;
+                        objects = objects.concat(res['files']);
+                        loading = false;
+                        isAllDone = res.allLoaded;
+                    }, function () {
+                        loading = false;
+                        reTryCount ++;
+                        if(reTryCount == 2){
+                            isAllDone = true;
+                        }
+                    });
+                }
+                return deferred.promise;
+            },
             format: function (object) {
                 var path = object.Key || object.Prefix;
                 var isDir = Util.String.lastChar(path) === '/' ? 1 : 0;
@@ -1608,7 +1647,7 @@ angular.module('ossClientUiApp')
                 ].join('');
             },
             getSetBucketReferXML: function (refer) {
-                var referers = refer.content.split(";")
+                var referers = refer.content.split(";");
                 var _referContent = ""
                 for (var i = 0; i < referers.length; i++) {
                     _referContent += "<Referer>" + referers[i] + "</Referer>"
@@ -1624,6 +1663,25 @@ angular.module('ossClientUiApp')
                     "</RefererList>",
                     "</RefererConfiguration>"
                 ].join('')
+            },
+            getDeleteObjectsXML: function (objects) {
+
+                var objectsXMl = '';
+                angular.forEach(objects, function (object) {
+                    objectsXMl += '<Object>';
+                    objectsXMl += '<Key>';
+                    objectsXMl += object;
+                    objectsXMl += '</Key>';
+                    objectsXMl += '</Object>';
+                });
+
+                return [
+                    this.getXMLHeader(),
+                    "<Delete>",
+                    "<Quiet>true</Quiet>",
+                    objectsXMl,
+                    "</Delete>"
+                ].join('');
             }
         };
     })
@@ -1786,7 +1844,7 @@ angular.module('ossClientUiApp')
 /**
  * api相关
  */
-    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion', function ($http, RequestXML, OSSConfig, OSSRegion) {
+    .factory('OSSApi', ['md5','$base64','$http', 'RequestXML', 'OSSConfig', 'OSSRegion', '$q', function (md5,$base64,$http, RequestXML, OSSConfig, OSSRegion, $q) {
 
         var OSSAccessKeyId = OSS.invoke('getAccessID');
         //获取当前的区域
@@ -1855,14 +1913,14 @@ angular.module('ossClientUiApp')
             }
             canonicalizedResource = canonicalizedResource.replace(new RegExp('^\/' + bucket), '');
             requestUrl += canonicalizedResource;
-            var queryParam = angular.extend({}, extraParam,!OSS.isClientOS()? {} : {
+            var queryParam = angular.extend({}, extraParam, !OSS.isClientOS() ? {} : {
                 OSSAccessKeyId: OSSAccessKeyId,
                 Expires: expires,
                 Signature: signature
             });
             //console.log('queryParam',queryParam);
             var queryStr = $.param(queryParam);
-            if(queryStr){
+            if (queryStr) {
                 requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + queryStr;
             }
             return requestUrl;
@@ -1922,9 +1980,9 @@ angular.module('ossClientUiApp')
                 });
                 var region = (currentLocation ? currentLocation : 'oss');
                 var requestUrl = getRequestUrl('', (currentLocation ? currentLocation : 'oss'), expires, signature, canonicalizedResource);
-                console.log('dd',getRequestDefaultHeaders('',region))
-                return $http.get(requestUrl,{
-                    headers: getRequestDefaultHeaders('',region)
+                console.log('dd', getRequestDefaultHeaders('', region))
+                return $http.get(requestUrl, {
+                    headers: getRequestDefaultHeaders('', region)
                 });
             },
             getBucketRefer: function (bucket) {
@@ -1937,7 +1995,7 @@ angular.module('ossClientUiApp')
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
                 return $http.get(requestUrl, {
-                    headers: getRequestDefaultHeaders(bucket.Name,bucket.Location)
+                    headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
                 });
             },
             setBucketRefer: function (bucket, refer) {
@@ -1950,7 +2008,7 @@ angular.module('ossClientUiApp')
                     expires: expires,
                     canonicalized_resource: canonicalizedResource
                 });
-                var headers = angular.extend({}, getRequestDefaultHeaders(bucket.Name,bucket.Location), {
+                var headers = angular.extend({}, getRequestDefaultHeaders(bucket.Name, bucket.Location), {
                     'Accept': contentType,
                     'Content-Type': contentType
                 });
@@ -1974,7 +2032,7 @@ angular.module('ossClientUiApp')
                     OrigPicForbidden: _origPicForbidden,
                     UseStyleOnly: _useStyleOnly
                 }
-                var headers = angular.extend({}, getRequestDefaultHeaders(bucketName,bucketRegion), {
+                var headers = angular.extend({}, getRequestDefaultHeaders(bucketName, bucketRegion), {
                     'Accept': contentType,
                     'Content-Type': contentType
                 });
@@ -1992,7 +2050,7 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, null, true);
-                return $http.get(requestUrl,  {
+                return $http.get(requestUrl, {
                     headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
                 });
             },
@@ -2012,7 +2070,7 @@ angular.module('ossClientUiApp')
                 });
 
                 var requestUrl = getRequestUrl(bucketName, region, expires, signature, canonicalizedResource);
-                var headers = angular.extend({}, canonicalizedOSSheaders, getRequestDefaultHeaders(bucketName,region), {
+                var headers = angular.extend({}, canonicalizedOSSheaders, getRequestDefaultHeaders(bucketName, region), {
                     'Content-Type': contentType
                 });
                 return $http.put(requestUrl, RequestXML.getCreateBucketXML(region), {
@@ -2092,6 +2150,29 @@ angular.module('ossClientUiApp')
                     headers: getRequestDefaultHeaders(bucket.Name, bucket.Location)
                 });
             },
+
+            delMultiObjects: function (bucket, objects) {
+                var expires = getExpires();
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, '', {'delete': undefined});
+                var contentType = 'application/xml';
+                var xmlContent = RequestXML.getDeleteObjectsXML(objects);
+                var md5Content = CryptoJS.MD5(xmlContent).toString(CryptoJS.enc.Base64);
+                var signature = OSS.invoke('getSignature', {
+                    verb: 'POST',
+                    content_type: contentType,
+                    content_md5:'',
+                    expires: expires,
+                    canonicalized_resource: canonicalizedResource
+                });
+
+                var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+                return $http.post(requestUrl, xmlContent, {
+                    headers: angular.extend({},{
+                        'Content-Type': contentType,
+                        'Content-MD5': md5Content
+                    },getRequestDefaultHeaders(bucket.Name, bucket.Location))
+                });
+            },
             getObjectMeta: function (bucket, object) {
                 var expires = getExpires();
                 var canonicalizedResource = getCanonicalizedResource(bucket.Name, object);
@@ -2140,7 +2221,7 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource, param);
-                var headers =  getRequestDefaultHeaders(bucket.Name, bucket.Location);
+                var headers = getRequestDefaultHeaders(bucket.Name, bucket.Location);
                 return $http.get(requestUrl, {
                     headers: headers
                 });
@@ -2154,7 +2235,7 @@ angular.module('ossClientUiApp')
                     canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(upload.path), {'uploadId': upload.id}));
-                var headers =  getRequestDefaultHeaders(bucket.Name, bucket.Location);
+                var headers = getRequestDefaultHeaders(bucket.Name, bucket.Location);
                 return $http.delete(requestUrl, '', {
                     headers: headers
                 });
@@ -2171,9 +2252,9 @@ angular.module('ossClientUiApp')
                     expires: expires,
                     canonicalized_resource: canonicalizedResource
                 });
-                var headers =  getRequestDefaultHeaders(bucket.Name, bucket.Location);
+                var headers = getRequestDefaultHeaders(bucket.Name, bucket.Location);
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(upload.path), {uploadId: upload.id}), param);
-                return $http.get(requestUrl,{
+                return $http.get(requestUrl, {
                     headers: headers
                 });
             }
@@ -2233,11 +2314,95 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSAlert', 'OSSDialog', 'OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSAlert, OSSDialog, OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
+    .factory('OSSModal', ['$q','$filter', '$modal', 'OSSAlert', 'OSSDialog', 'OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($q,$filter, $modal, OSSAlert, OSSDialog, OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
         var defaultOption = {
             backdrop: 'static'
         };
         return {
+            delObjects: function (bucket, objects) {
+                var option = {
+                    templateUrl: 'views/del_object_modal.html',
+                    windowClass: 'del_object_modal',
+                    controller: function ($scope, $modalInstance) {
+
+                        $scope.count = 0; //总删除的object数
+
+                        $scope.doneCount = 0; //已经完成object数
+
+                        $scope.status = 'preparing';
+
+                        var delCountPerRequest = 500;
+
+                        var getAllObject = function () {
+                            var deferred = $q.defer();
+                            var allObjects = [];
+                            var getedCount = 0;
+                            angular.forEach(objects, function (val) {
+                                if (!$filter('isDir')(val.object)) {
+                                    allObjects.push(val.object);
+                                    getedCount++;
+                                    $scope.count++;
+                                    if (getedCount == objects.length) {
+                                        deferred.resolve(allObjects);
+                                    }
+                                } else {
+                                    OSSObject.listAll(bucket, val.object, '').then(function (resObjects) {
+                                        allObjects = allObjects.concat(_.pluck(resObjects, 'path'));
+                                        getedCount++;
+                                        $scope.count += objects.length;
+                                        if (getedCount == objects.length) {
+                                            deferred.resolve(allObjects);
+                                        }
+                                    });
+                                }
+                            });
+                            return deferred.promise;
+                        };
+
+                        var splitArray = function(array,perCount){
+                            var arr = [],
+                                len = array.length;
+                            if(!len) return arr;
+                            for(var i=0;i <= Math.floor(len/perCount);i++){
+                                var spiceLen = array.slice(i*perCount,i*perCount + perCount);
+                                if(spiceLen && spiceLen.length){
+                                    arr.push(array.slice(i*perCount,i*perCount + perCount));
+                                }
+                            }
+                            return arr;
+                        };
+
+
+                        var buildDelPromises = function(allObjects){
+                            var promises = [];
+                            var arr = splitArray(allObjects,2);
+                            angular.forEach(arr,function(val){
+                                var promise = OSSApi.delMultiObjects(bucket, val);
+                                promise.then(function(){
+                                    $scope.doneCount += val.length;
+                                },function(){
+                                    $scope.doneCount += val.length;
+                                });
+                                promises.push(promise);
+                            });
+                            return promises;
+                        };
+
+                        getAllObject().then(function (allObjects) {
+                            $scope.status = 'deleting';
+                            $q.all(buildDelPromises(allObjects)).then(function(){
+                                console.log('allDone',1);
+                                $modalInstance.close();
+                            });
+
+                        });
+
+
+                    }
+                };
+                option = angular.extend({}, defaultOption, option);
+                return $modal.open(option);
+            },
             setting: function () {
                 var option = {
                     templateUrl: 'views/setting_modal.html',
