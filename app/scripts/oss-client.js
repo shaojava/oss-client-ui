@@ -152,6 +152,11 @@
                         location:'oss-cn-shenzhen-a',
                         name:'深圳',
                         enable:1
+                    },
+                    {
+                      location: 'oss-us-west-1',
+                      name: '美国',
+                      enable: 1
                     }
                 ]
             });
@@ -205,6 +210,11 @@
                         location:'oss-cn-shenzhen-a',
                         name:'深圳',
                         enable:0
+                    },
+                    {
+                      location: 'oss-us-west-1',
+                      name: '美国',
+                      enable: 0
                     }
                 ]
             });
