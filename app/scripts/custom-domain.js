@@ -9,7 +9,8 @@ angular
         'ngTouch',
         'ui.bootstrap',
         'angularSpinner',
-        'OSSCommon'
+        'OSSCommon',
+        'LocalStorageModule'
     ])
     .controller('MainCtrl', ['$scope', 'OSSException', function ($scope, OSSException) {
 
