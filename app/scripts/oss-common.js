@@ -240,7 +240,7 @@ angular.module('OSSCommon', [
                     var region = _.find(locations, function (item) {
                         return  item.enable === 1 && item.location === location;
                     });
-                    if (region.network === 'intranet') {
+                    if (region && region.network === 'intranet') {
                         return true;
                     }
                 }else if(network && network === 'intranet'){
