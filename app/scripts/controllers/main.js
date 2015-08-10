@@ -8,7 +8,7 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu','$interval','OSSDownloadQueue', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu,$interval,OSSDownloadQueue) {
+    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu','$interval','OSSDownloadQueue','SpeedService', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu,$interval,OSSDownloadQueue,SpeedService) {
         /**
          * 是否定制客户端
          * @type {boolean|*}
@@ -22,7 +22,12 @@ angular.module('ossClientUiApp')
          * 是否显示图片服务器设置
          */
         $scope.showChannel = OSSConfig.showChannel();
-        //
+
+        /**
+         *加速服务
+        */
+        $scope.speedSetting = SpeedService.getSpeedSetting();
+
         $scope.bucketsLoaded = false;
         $scope.loadDownloadCount = {
           count:0,
@@ -50,6 +55,11 @@ angular.module('ossClientUiApp')
 
             });
         };
+
+        //oss加速服务
+        $scope.showSpeedModal = function () {
+          OSSModal.setSpeed();
+        }
 
         //bucket设置
         $scope.editBucket = function (bucket) {

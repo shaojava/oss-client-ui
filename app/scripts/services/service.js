@@ -1798,12 +1798,63 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-
+    .factory('SpeedService',['$timeout','OSSConfig',function($timeout,OSSConfig){
+        var caclurtimeout = null;
+        var speedSetting={
+              speed:{
+                  cartNumber:null,
+                  timeHour:0,
+                  timeMinute:0,
+                  timeSecond:0
+              },
+              active:false,
+              show:!OSSConfig.isCustomClient()
+        }
+        var SpeedService = {
+          getSpeedSetting:function(){
+            return speedSetting;
+          },
+          setSpeedSetting:function(_speedSetting){
+            speedSetting.speed = _speedSetting.speed;
+            speedSetting.active = _speedSetting.active || false;
+            SpeedService.caclurSpeedNotUserTime();
+          },
+          caclurSpeedNotUserTime:function(){
+            var _notUserdSecond = speedSetting.speed.timeCount - speedSetting.speed.timeUsed;
+            var _hours = parseInt(_notUserdSecond / 3600);
+            var _minuts = parseInt((_notUserdSecond % 3600) / 60);
+            var _seconds =  parseInt((_notUserdSecond % 3600) % 60);
+            speedSetting.speed.timeHour = +_hours >= 10 ? _hours : '0' + _hours;
+            speedSetting.speed.timeMinute = +_minuts >= 10 ? _minuts : '0' + _minuts;
+            speedSetting.speed.timeSecond = +_seconds >= 10 ? _seconds : '0' + _seconds;
+          },
+          caclurSpeedTime:function(){
+            caclurtimeout = $timeout(function(){
+              if(speedSetting.active){
+                speedSetting.speed.timeUsed += 1;
+                SpeedService.caclurSpeedNotUserTime();
+                SpeedService.caclurSpeedTime();
+              }else{
+                if(caclurtimeout){
+                  $timeout.cancel(caclurtimeout);
+                }
+              }
+            },1000)
+          },
+          disabledSpeed:function(){
+            speedSetting.active = false;
+          },
+          abledSpeed:function(){
+            speedSetting.active = true;
+          }
+        }
+      return SpeedService;
+    }])
 /**
  * api相关
  */
-    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion','localStorageService',function ($http, RequestXML, OSSConfig,OSSRegion,localStorageService) {
-
+    .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion','localStorageService','$q',function ($http, RequestXML, OSSConfig,OSSRegion,localStorageService,$q) {
+        var ajaxBaseUri = "http://120.26.70.209:3000"
         var OSSAccessKeyId = OSS.invoke('getAccessID');
         //是否是政务外网环境下
         var isIntranetNet = localStorageService.get(OSSRegion.getRegionPerfix())
@@ -2165,6 +2216,28 @@ angular.module('ossClientUiApp')
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(upload.path), {uploadId: upload.id}), param);
                 return $http.get(requestUrl);
+            },
+            getSpeedCart: function(cartNumber,baseUri){
+              baseUri = baseUri || ajaxBaseUri
+              var requestUrl = baseUri + '/cardnumber/detail/get';
+              requestUrl += (requestUrl.indexOf('?') >= 0 ? '&' : '?') + $.param({
+                'cartNumber':cartNumber
+              });
+              return $http.get(requestUrl);
+            },
+            startCartSpeed: function (cartNumber,baseUri) {
+              baseUri = baseUri || ajaxBaseUri
+              var requestUrl = baseUri + '/flowwallet/upload/init';
+              var param = {
+                'cartNumber':cartNumber
+              }
+              var defer = $q.defer()
+              $http.post(requestUrl,param).success(function(res){
+                defer.resolve(res)
+              }).error(function(res){
+                defer.resolve(res)
+              })
+              return defer.promise;
             }
         };
     }])
@@ -2222,7 +2295,7 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService) {
+    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -2663,6 +2736,74 @@ angular.module('ossClientUiApp')
                 };
                 option = angular.extend({}, defaultOption, option);
                 return $modal.open(option);
+            },
+            setSpeed: function (){
+              var option = {
+                templateUrl: 'views/set_speed_modal.html',
+                windowClass: 'set_speed_modal',
+                controller: function ($scope, $modalInstance,$timeout) {
+                  var _loadCartSpeedTimeout = null;
+                  $scope.speedSetting = SpeedService.getSpeedSetting();
+                  var startCartSpeed = function (cartNumber) {
+                    OSSApi.startCartSpeed(cartNumber).then(function(res){
+                      if(res.err_code == '400'){
+                        $rootScope.$broadcast('showError',res.err_msg);
+                        return false;
+                      }
+                      if (!SpeedService.getSpeedSetting().active) {
+                        SpeedService.abledSpeed();
+                        SpeedService.caclurSpeedTime();
+                      }
+                      _loadCartSpeedTimeout = $timeout(function(){
+                        startCartSpeed();
+                      },30000)
+                    })
+                  }
+
+                  $scope.stopOpenSpeed = function () {
+                    $timeout.cancel(_loadCartSpeedTimeout);
+                    SpeedService.disabledSpeed();
+                  }
+
+                  $scope.startOpenSpeed = function () {
+                    $scope.doing = true
+                    OSSApi.getSpeedCart($scope.speedSetting.speed.cartNumber).success(function(res){
+                      $scope.doing = false
+                      var _speed = {
+                        "cartNumber": res.cart_number,
+                        "orderId": res.order_id,
+                        "timeCount": res.time_count,
+                        "timeUsed": res.time_used
+                      }
+                      SpeedService.setSpeedSetting({speed:_speed})
+                      startCartSpeed($scope.speedSetting.speed.cartNumber);
+                    }).error(function(res,status){
+                      $scope.doing = false;
+                      var _message = "";
+                      if(typeof(res)  === 'string'){
+                        _message = res
+                      }else{
+                        _message = res.err_msg
+                      }
+                      $rootScope.$broadcast('showError',_message);
+                    })
+                  }
+
+                  $scope.goBuy = function(){
+                    OSS.invoke('openUrl',{"url":"http://www.baidu.com"})
+                  }
+
+                  $scope.goSearchBill = function(){
+                    OSS.invoke('openUrl',{"url":"http://www.baidu.com"})
+                  }
+
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
             },
             setRefer: function (bucket){
               var option = {

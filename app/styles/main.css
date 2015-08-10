@@ -9410,12 +9410,12 @@ input:focus {
 .oss-dialog .section-wrapper section {
   padding: 10px 80px;
 }
-/* line 111, ../../app/styles/_common.scss */
+/* line 109, ../../app/styles/_common.scss */
 .oss-dialog .form-group .btn-wrapper {
   margin-left: -2%;
   margin-right: -3%;
 }
-/* line 115, ../../app/styles/_common.scss */
+/* line 113, ../../app/styles/_common.scss */
 .oss-dialog .form-group .btn-wrapper .btn {
   width: 45%;
   margin: 0 2%;
@@ -9423,42 +9423,42 @@ input:focus {
   padding-bottom: 6px;
   font-size: 14px;
 }
-/* line 123, ../../app/styles/_common.scss */
+/* line 121, ../../app/styles/_common.scss */
 .oss-dialog .form-group .btn-wrapper .btn-default {
   background: #fff;
   border-color: #fff;
 }
-/* line 128, ../../app/styles/_common.scss */
+/* line 126, ../../app/styles/_common.scss */
 .oss-dialog .form-group .btn-wrapper .btn-primary {
   background: #50acf3;
   border-color: #50acf3;
 }
-/* line 137, ../../app/styles/_common.scss */
+/* line 135, ../../app/styles/_common.scss */
 .oss-dialog .form-control {
   border-radius: 2px;
   height: 34px;
 }
-/* line 142, ../../app/styles/_common.scss */
+/* line 140, ../../app/styles/_common.scss */
 .oss-dialog .form-horizontal .control-label {
   padding-top: 7px;
   margin-bottom: 0;
   text-align: right;
 }
-/* line 148, ../../app/styles/_common.scss */
+/* line 146, ../../app/styles/_common.scss */
 .oss-dialog .input-group .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-/* line 153, ../../app/styles/_common.scss */
+/* line 151, ../../app/styles/_common.scss */
 .oss-dialog .form-control:focus {
   outline: 0;
   box-shadow: none;
 }
-/* line 159, ../../app/styles/_common.scss */
+/* line 157, ../../app/styles/_common.scss */
 .oss-dialog .form-control::-webkit-input-placeholder {
   transition: color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-/* line 162, ../../app/styles/_common.scss */
+/* line 160, ../../app/styles/_common.scss */
 .oss-dialog .login-log {
   position: absolute;
   bottom: 0px;
@@ -9467,7 +9467,7 @@ input:focus {
   text-align: center;
   padding-bottom: 10px;
 }
-/* line 171, ../../app/styles/_common.scss */
+/* line 169, ../../app/styles/_common.scss */
 .oss-dialog .login-log > img {
   opacity: 0.3;
   -webkit-filter: grayscale(100%);
@@ -9479,55 +9479,55 @@ input:focus {
   filter: gray;
 }
 
-/* line 182, ../../app/styles/_common.scss */
+/* line 180, ../../app/styles/_common.scss */
 .dark-theme {
   background: #24272b;
   color: #fff;
 }
-/* line 186, ../../app/styles/_common.scss */
+/* line 184, ../../app/styles/_common.scss */
 .dark-theme select option {
   background: #24272b;
 }
-/* line 190, ../../app/styles/_common.scss */
+/* line 188, ../../app/styles/_common.scss */
 .dark-theme .fa-info-circle {
   color: #fc9701;
 }
-/* line 194, ../../app/styles/_common.scss */
+/* line 192, ../../app/styles/_common.scss */
 .dark-theme .form-group {
   color: #bababa;
 }
-/* line 201, ../../app/styles/_common.scss */
+/* line 196, ../../app/styles/_common.scss */
 .dark-theme .form-control {
   background-color: rgba(255, 255, 255, 0.1);
   border-color: transparent;
   color: #fff;
 }
-/* line 207, ../../app/styles/_common.scss */
+/* line 202, ../../app/styles/_common.scss */
 .dark-theme .form-control[disabled], .dark-theme .form-control[readonly], .dark-theme fieldset[disabled] .form-control {
   color: #777777;
 }
-/* line 211, ../../app/styles/_common.scss */
+/* line 206, ../../app/styles/_common.scss */
 .dark-theme .input-group-addon {
   background: rgba(255, 255, 255, 0.1);
   border-color: transparent;
 }
-/* line 217, ../../app/styles/_common.scss */
+/* line 211, ../../app/styles/_common.scss */
 .dark-theme .form-control:focus {
   border-color: transparent;
 }
-/* line 221, ../../app/styles/_common.scss */
+/* line 215, ../../app/styles/_common.scss */
 .dark-theme .form-control:focus::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* line 226, ../../app/styles/_common.scss */
+/* line 220, ../../app/styles/_common.scss */
 .position-fixed {
   position: fixed;
   z-index: 999;
 }
 
 /* 滚动条样式 */
-/* line 232, ../../app/styles/_common.scss */
+/* line 226, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar {
   height: 8px;
   overflow: visible;
@@ -9537,52 +9537,52 @@ input:focus {
   -o-transition: all linear 0.1s;
 }
 
-/* line 242, ../../app/styles/_common.scss */
+/* line 236, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar-button {
   height: 0;
   width: 0;
   display: none;
 }
 
-/* line 247, ../../app/styles/_common.scss */
+/* line 241, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.2);
   min-height: 28px;
   border-radius: 5px;
 }
 
-/* line 253, ../../app/styles/_common.scss */
+/* line 247, ../../app/styles/_common.scss */
 .scrollbar.dark::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* line 256, ../../app/styles/_common.scss */
+/* line 250, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: #7c7c7c;
 }
 
-/* line 260, ../../app/styles/_common.scss */
+/* line 254, ../../app/styles/_common.scss */
 .scrollbar::-webkit-scrollbar-corner {
   height: 0;
   width: 0;
   display: none;
 }
 
-/* line 265, ../../app/styles/_common.scss */
+/* line 259, ../../app/styles/_common.scss */
 .scrollbar::-webkit-resizer {
   height: 0;
   width: 0;
   display: none;
 }
 
-/* line 271, ../../app/styles/_common.scss */
+/* line 265, ../../app/styles/_common.scss */
 .empty {
   color: #999;
   text-align: center;
   padding-top: 60px;
 }
 
-/* line 277, ../../app/styles/_common.scss */
+/* line 271, ../../app/styles/_common.scss */
 .modal-footer .spinner-wrapper {
   height: 30px;
   width: 30px;
@@ -9590,22 +9590,40 @@ input:focus {
 }
 
 /*重写ui-select的样式有bug*/
-/* line 284, ../../app/styles/_common.scss */
+/* line 278, ../../app/styles/_common.scss */
 .ui-select-bootstrap .btn {
   padding-top: 0;
   padding-bottom: 0;
 }
 
-/* line 289, ../../app/styles/_common.scss */
+/* line 283, ../../app/styles/_common.scss */
 .ui-select-bootstrap .ui-select-choices-row > a {
   padding-top: 0;
   padding-bottom: 0;
 }
 
-/* line 294, ../../app/styles/_common.scss */
+/* line 288, ../../app/styles/_common.scss */
 i.fa.button-setting-icon {
   font-size: 14px;
   margin-right: 5px;
+}
+
+/* line 293, ../../app/styles/_common.scss */
+.icon-24x24 {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url(../images/icon-24x24.png) no-repeat center;
+}
+
+/* line 300, ../../app/styles/_common.scss */
+.icon-24x24.icon-no-speed {
+  background-position: 0 0;
+}
+
+/* line 304, ../../app/styles/_common.scss */
+.icon-24x24.icon-speeded {
+  background-position: -48px 0;
 }
 
 /* line 1, ../../app/styles/_app.scss */
@@ -9738,24 +9756,34 @@ i.fa.button-setting-icon {
   padding: 0 15px;
   border-bottom: 0px solid rgba(255, 255, 255, 0.1);
 }
-/* line 120, ../../app/styles/_app.scss */
+/* line 119, ../../app/styles/_app.scss */
+.left-sidebar .left-header .speed-icon {
+  float: right;
+  margin-top: -35px;
+  cursor: pointer;
+}
+/* line 123, ../../app/styles/_app.scss */
+.left-sidebar .left-header .speed-icon:hover {
+  background-position: -24px 0;
+}
+/* line 128, ../../app/styles/_app.scss */
 .left-sidebar .left-buttons {
   height: 30px;
   padding: 5px;
   background-color: #373c3e;
   text-align: center;
 }
-/* line 125, ../../app/styles/_app.scss */
+/* line 133, ../../app/styles/_app.scss */
 .left-sidebar .left-buttons a {
   margin: auto 5px;
   vertical-align: middle;
   cursor: pointer;
 }
-/* line 130, ../../app/styles/_app.scss */
+/* line 138, ../../app/styles/_app.scss */
 .left-sidebar .left-buttons a:hover .button-label {
   color: #fff;
 }
-/* line 133, ../../app/styles/_app.scss */
+/* line 141, ../../app/styles/_app.scss */
 .left-sidebar .left-buttons .button-icon {
   border: 1px solid #50acf3;
   box-shadow: 0 0 0 1px #50acf3;
@@ -9766,27 +9794,27 @@ i.fa.button-setting-icon {
   color: #50acf3;
   margin-right: 3px;
 }
-/* line 145, ../../app/styles/_app.scss */
+/* line 153, ../../app/styles/_app.scss */
 .left-sidebar .left-buttons .button-setting-icon {
   border: 0px;
   box-shadow: 0 0 0 0px #50acf3;
   font-size: 16px;
 }
-/* line 152, ../../app/styles/_app.scss */
+/* line 160, ../../app/styles/_app.scss */
 .left-sidebar a {
   color: #bababa;
 }
-/* line 155, ../../app/styles/_app.scss */
+/* line 163, ../../app/styles/_app.scss */
 .left-sidebar a:hover {
   text-decoration: none;
 }
-/* line 160, ../../app/styles/_app.scss */
+/* line 168, ../../app/styles/_app.scss */
 .left-sidebar h1 {
   color: #fff;
   font-size: 18px;
   line-height: 50px;
 }
-/* line 166, ../../app/styles/_app.scss */
+/* line 174, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list {
   position: absolute;
   top: 80px;
@@ -9795,7 +9823,7 @@ i.fa.button-setting-icon {
   overflow: auto;
   width: 100%;
 }
-/* line 173, ../../app/styles/_app.scss */
+/* line 181, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list .no-bucket-left {
   width: 100%;
   text-align: center;
@@ -9805,21 +9833,21 @@ i.fa.button-setting-icon {
   top: 50%;
   margin-top: -15px;
 }
-/* line 181, ../../app/styles/_app.scss */
+/* line 189, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list .no-bucket-left > .bucket-loading > .spinner > div > div {
   background-color: #fff !important;
 }
-/* line 185, ../../app/styles/_app.scss */
+/* line 193, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list > ul > li {
   margin: 4px 0;
   position: relative;
 }
-/* line 189, ../../app/styles/_app.scss */
+/* line 197, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list > ul > li ul.dropdown-menu {
   left: auto;
   right: 10px;
 }
-/* line 194, ../../app/styles/_app.scss */
+/* line 202, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list > ul > li > a {
   display: block;
   height: 30px;
@@ -9831,24 +9859,24 @@ i.fa.button-setting-icon {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 202, ../../app/styles/_app.scss */
+/* line 210, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list > ul > li > a:hover, .left-sidebar .bucket-list > ul > li > a:focus, .left-sidebar .bucket-list > ul > li > a.selected {
   background: #000;
 }
-/* line 208, ../../app/styles/_app.scss */
+/* line 216, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list > ul > li > a:focus .show-menu, .left-sidebar .bucket-list > ul > li > a:hover .show-menu {
   display: inline-block;
 }
-/* line 213, ../../app/styles/_app.scss */
+/* line 221, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list > ul > li > a.selected {
   border-left-color: #50acf3;
   color: #fff;
 }
-/* line 216, ../../app/styles/_app.scss */
+/* line 224, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list > ul > li > a.selected > span.show-menu {
   display: block;
 }
-/* line 221, ../../app/styles/_app.scss */
+/* line 229, ../../app/styles/_app.scss */
 .left-sidebar .bucket-list > ul > li > a .show-menu {
   position: absolute;
   right: 0;
@@ -9860,7 +9888,7 @@ i.fa.button-setting-icon {
   text-align: center;
 }
 
-/* line 237, ../../app/styles/_app.scss */
+/* line 245, ../../app/styles/_app.scss */
 .main {
   position: absolute;
   top: 0;
@@ -9869,7 +9897,7 @@ i.fa.button-setting-icon {
   left: 190px;
   overflow: hidden;
 }
-/* line 244, ../../app/styles/_app.scss */
+/* line 252, ../../app/styles/_app.scss */
 .main .no-bucket-detail {
   height: 264px;
   width: 700px;
@@ -9880,11 +9908,11 @@ i.fa.button-setting-icon {
   margin-left: -350px;
   padding: 0 15px;
 }
-/* line 253, ../../app/styles/_app.scss */
+/* line 261, ../../app/styles/_app.scss */
 .main .no-bucket-detail .image-container {
   float: left;
 }
-/* line 256, ../../app/styles/_app.scss */
+/* line 264, ../../app/styles/_app.scss */
 .main .no-bucket-detail .text-container {
   height: 100%;
   width: 100%;
@@ -9897,38 +9925,38 @@ i.fa.button-setting-icon {
   text-shadow: rgba(255, 255, 255, 0.5) 0 2px 3px, rgba(255, 255, 255, 0.2) 1px 3px 3px;
   transition: text-shadow .1s ease-out, background-color .2s ease-out;
 }
-/* line 269, ../../app/styles/_app.scss */
+/* line 277, ../../app/styles/_app.scss */
 .main .no-bucket-detail .text-container .title {
   height: 132px;
   padding-top: 80px;
   font-size: 28px;
   font-weight: bold;
 }
-/* line 275, ../../app/styles/_app.scss */
+/* line 283, ../../app/styles/_app.scss */
 .main .no-bucket-detail .text-container .detail {
   height: 132px;
   font-size: 18px;
   padding-top: 10px;
 }
-/* line 279, ../../app/styles/_app.scss */
+/* line 287, ../../app/styles/_app.scss */
 .main .no-bucket-detail .text-container .detail a {
   cursor: pointer;
 }
-/* line 286, ../../app/styles/_app.scss */
+/* line 294, ../../app/styles/_app.scss */
 .main .search-wrapper {
   height: 42px;
   border-bottom: 1px solid #d8d8d8;
   padding: 6px 12px 0 54px;
   position: relative;
 }
-/* line 292, ../../app/styles/_app.scss */
+/* line 300, ../../app/styles/_app.scss */
 .main .search-wrapper > .fa {
   position: absolute;
   top: 15px;
   right: 21px;
   color: #c9ccd0;
 }
-/* line 299, ../../app/styles/_app.scss */
+/* line 307, ../../app/styles/_app.scss */
 .main .search-wrapper input {
   height: 30px;
   border: 1px solid #d8d8d8;
@@ -9937,7 +9965,7 @@ i.fa.button-setting-icon {
   width: 100%;
   padding: 0 25px 0 15px;
 }
-/* line 308, ../../app/styles/_app.scss */
+/* line 316, ../../app/styles/_app.scss */
 .main .search-wrapper .search-scope {
   position: absolute;
   left: 59px;
@@ -9949,7 +9977,7 @@ i.fa.button-setting-icon {
   color: #fff;
   padding: 0 12px;
 }
-/* line 319, ../../app/styles/_app.scss */
+/* line 327, ../../app/styles/_app.scss */
 .main .search-wrapper .search-scope span {
   display: inline-block;
   max-width: 120px;
@@ -9959,7 +9987,7 @@ i.fa.button-setting-icon {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 329, ../../app/styles/_app.scss */
+/* line 337, ../../app/styles/_app.scss */
 .main .bread {
   line-height: 42px;
   height: 42px;
@@ -9967,7 +9995,7 @@ i.fa.button-setting-icon {
   top: 0;
   left: 0;
 }
-/* line 336, ../../app/styles/_app.scss */
+/* line 344, ../../app/styles/_app.scss */
 .main .bread > .history {
   float: left;
   font-size: 22px;
@@ -9975,12 +10003,12 @@ i.fa.button-setting-icon {
   width: 54px;
   text-align: center;
 }
-/* line 343, ../../app/styles/_app.scss */
+/* line 351, ../../app/styles/_app.scss */
 .main .bread > .history > button {
   margin: 0;
   padding: 0;
 }
-/* line 349, ../../app/styles/_app.scss */
+/* line 357, ../../app/styles/_app.scss */
 .main .bread > .bread-list {
   float: left;
   margin-left: 15px;
@@ -9988,7 +10016,7 @@ i.fa.button-setting-icon {
   white-space: nowrap;
   overflow: hidden;
 }
-/* line 355, ../../app/styles/_app.scss */
+/* line 363, ../../app/styles/_app.scss */
 .main .bread > .bread-list > li {
   display: inline-block;
   max-width: 400px;
@@ -9996,12 +10024,12 @@ i.fa.button-setting-icon {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 359, ../../app/styles/_app.scss */
+/* line 367, ../../app/styles/_app.scss */
 .main .bread > .bread-list > li a {
   color: #333;
   text-decoration: none;
 }
-/* line 364, ../../app/styles/_app.scss */
+/* line 372, ../../app/styles/_app.scss */
 .main .bread > .bread-list > li:after {
   content: "";
   display: inline-block;
@@ -10011,23 +10039,23 @@ i.fa.button-setting-icon {
   border-left-color: #999;
   margin: 0 5px;
 }
-/* line 375, ../../app/styles/_app.scss */
+/* line 383, ../../app/styles/_app.scss */
 .main .bread > .bread-list > li:last-child:after {
   display: none;
 }
-/* line 383, ../../app/styles/_app.scss */
+/* line 391, ../../app/styles/_app.scss */
 .main .toolbar {
   height: 40px;
 }
-/* line 386, ../../app/styles/_app.scss */
+/* line 394, ../../app/styles/_app.scss */
 .main .toolbar .menu-list {
   margin: 0 5px;
 }
-/* line 389, ../../app/styles/_app.scss */
+/* line 397, ../../app/styles/_app.scss */
 .main .toolbar .menu-list .btn-group {
   margin: 5px 5px 0 5px;
 }
-/* line 393, ../../app/styles/_app.scss */
+/* line 401, ../../app/styles/_app.scss */
 .main .toolbar .menu-list .bucket-region {
   position: relative;
   right: 5px;
@@ -10036,7 +10064,7 @@ i.fa.button-setting-icon {
   color: #50acf3;
   padding-top: 10px;
 }
-/* line 405, ../../app/styles/_app.scss */
+/* line 413, ../../app/styles/_app.scss */
 .main .file-browser {
   position: absolute;
   left: 0;
@@ -10045,7 +10073,7 @@ i.fa.button-setting-icon {
   bottom: 40px;
   transition: bottom 0.25s linear;
 }
-/* line 413, ../../app/styles/_app.scss */
+/* line 421, ../../app/styles/_app.scss */
 .main .file-browser .oss-tip {
   margin: 0;
   height: 30px;
@@ -10053,14 +10081,14 @@ i.fa.button-setting-icon {
   padding: 0 15px;
   border-top: 1px solid #d8d8d8;
 }
-/* line 421, ../../app/styles/_app.scss */
+/* line 429, ../../app/styles/_app.scss */
 .main .file-browser .filelist-header {
   border-top: 1px solid #d8d8d8;
   height: 30px;
   line-height: 30px;
   background: #fff;
 }
-/* line 428, ../../app/styles/_app.scss */
+/* line 436, ../../app/styles/_app.scss */
 .main .file-browser .filename {
   padding-left: 15px;
   max-width: 50%;
@@ -10068,51 +10096,51 @@ i.fa.button-setting-icon {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 432, ../../app/styles/_app.scss */
+/* line 440, ../../app/styles/_app.scss */
 .main .file-browser .filename .file-icon-32 {
   margin-right: 10px;
 }
-/* line 437, ../../app/styles/_app.scss */
+/* line 445, ../../app/styles/_app.scss */
 .main .file-browser .upload-part-list .filename {
   max-width: 35%;
 }
-/* line 442, ../../app/styles/_app.scss */
+/* line 450, ../../app/styles/_app.scss */
 .main .file-browser .new-file-item .filename {
   max-width: none;
 }
-/* line 446, ../../app/styles/_app.scss */
+/* line 454, ../../app/styles/_app.scss */
 .main .file-browser .filesize {
   width: 160px;
 }
-/* line 450, ../../app/styles/_app.scss */
+/* line 458, ../../app/styles/_app.scss */
 .main .file-browser .file-create-time,
 .main .file-browser .init-time {
   width: 190px;
 }
-/* line 455, ../../app/styles/_app.scss */
+/* line 463, ../../app/styles/_app.scss */
 .main .file-browser .upload-id {
   width: 330px;
 }
-/* line 459, ../../app/styles/_app.scss */
+/* line 467, ../../app/styles/_app.scss */
 .main .file-browser .file-item {
   line-height: 40px;
   cursor: default;
 }
-/* line 463, ../../app/styles/_app.scss */
+/* line 471, ../../app/styles/_app.scss */
 .main .file-browser .file-item:nth-child(even) {
   background: #f7f7f7;
 }
-/* line 471, ../../app/styles/_app.scss */
+/* line 479, ../../app/styles/_app.scss */
 .main .file-browser .file-item.selected {
   background: #50acf3;
   color: #fff;
 }
-/* line 476, ../../app/styles/_app.scss */
+/* line 484, ../../app/styles/_app.scss */
 .main .file-browser .file-item .filename {
   font-size: 14px;
   font-family: "hiragino sans gb", "Helvetica Neue", "Helvetica", "Arial", "宋体", "simsun", "sans-serif";
 }
-/* line 483, ../../app/styles/_app.scss */
+/* line 491, ../../app/styles/_app.scss */
 .main .file-browser .filelist-body {
   position: absolute;
   left: 0;
@@ -10122,26 +10150,26 @@ i.fa.button-setting-icon {
   overflow: auto;
   background: #fff;
 }
-/* line 494, ../../app/styles/_app.scss */
+/* line 502, ../../app/styles/_app.scss */
 .main .file-browser .filelist-body .new-file-item .btn {
   margin-left: 10px;
 }
-/* line 498, ../../app/styles/_app.scss */
+/* line 506, ../../app/styles/_app.scss */
 .main .file-browser .filelist-body .new-file-item .form-control {
   display: inline-block;
   width: 300px;
 }
-/* line 505, ../../app/styles/_app.scss */
+/* line 513, ../../app/styles/_app.scss */
 .main .file-browser .filelist-body .loading-banner {
   height: 32px;
   line-height: 32px;
   text-align: center;
 }
-/* line 512, ../../app/styles/_app.scss */
+/* line 520, ../../app/styles/_app.scss */
 .main .file-browser .filelist-body.tip-shown {
   top: 100px;
 }
-/* line 517, ../../app/styles/_app.scss */
+/* line 525, ../../app/styles/_app.scss */
 .main .trans-queue {
   position: absolute;
   bottom: -230px;
@@ -10152,37 +10180,37 @@ i.fa.button-setting-icon {
   background: #fff;
   transition: bottom 0.25s linear;
 }
-/* line 527, ../../app/styles/_app.scss */
+/* line 535, ../../app/styles/_app.scss */
 .main .trans-queue .total-speed-wrapper {
   position: absolute;
   right: 50px;
   line-height: 40px;
 }
-/* line 532, ../../app/styles/_app.scss */
+/* line 540, ../../app/styles/_app.scss */
 .main .trans-queue .total-speed-wrapper span {
   margin: 0 5px;
 }
-/* line 536, ../../app/styles/_app.scss */
+/* line 544, ../../app/styles/_app.scss */
 .main .trans-queue .total-speed-wrapper strong {
   font-weight: normal;
 }
-/* line 541, ../../app/styles/_app.scss */
+/* line 549, ../../app/styles/_app.scss */
 .main .trans-queue .slide_queue {
   position: absolute;
   right: 20px;
   top: 12px;
 }
-/* line 545, ../../app/styles/_app.scss */
+/* line 553, ../../app/styles/_app.scss */
 .main .trans-queue .slide_queue .fa {
   color: #000;
 }
-/* line 550, ../../app/styles/_app.scss */
+/* line 558, ../../app/styles/_app.scss */
 .main .trans-queue .nav-tabs {
   background: #f2f2f2;
   padding-left: 10px;
   padding-top: 5px;
 }
-/* line 556, ../../app/styles/_app.scss */
+/* line 564, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content {
   position: absolute;
   left: 0;
@@ -10190,21 +10218,21 @@ i.fa.button-setting-icon {
   bottom: 0;
   top: 39px;
 }
-/* line 563, ../../app/styles/_app.scss */
+/* line 571, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content .opt-bar {
   background: #fff;
   padding: 5px 10px;
   border-bottom: 1px solid #d8d8d8;
 }
-/* line 568, ../../app/styles/_app.scss */
+/* line 576, ../../app/styles/_app.scss */
 .main .trans-queue .tab-content .opt-bar .opt-list > .btn-group {
   margin-right: 5px;
 }
-/* line 578, ../../app/styles/_app.scss */
+/* line 586, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list {
   overflow: auto;
 }
-/* line 581, ../../app/styles/_app.scss */
+/* line 589, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item {
   height: 34px;
   line-height: 34px;
@@ -10212,12 +10240,12 @@ i.fa.button-setting-icon {
   position: relative;
   overflow: hidden;
 }
-/* line 587, ../../app/styles/_app.scss */
+/* line 595, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > div {
   position: relative;
   padding: 0 15px;
 }
-/* line 592, ../../app/styles/_app.scss */
+/* line 600, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > .queue-progress {
   position: absolute;
   top: 24px;
@@ -10227,33 +10255,33 @@ i.fa.button-setting-icon {
   height: 5px;
   padding: 0;
 }
-/* line 600, ../../app/styles/_app.scss */
+/* line 608, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > .queue-progress .progress {
   height: 100%;
   margin-bottom: 0;
 }
-/* line 606, ../../app/styles/_app.scss */
+/* line 614, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item.done > .queue-progress {
   display: none;
 }
-/* line 610, ../../app/styles/_app.scss */
+/* line 618, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item > .bg-success {
   background: rgba(68, 157, 68, 0.3);
 }
-/* line 614, ../../app/styles/_app.scss */
+/* line 622, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item:nth-child(even) {
   background: #f7f7f7;
 }
-/* line 618, ../../app/styles/_app.scss */
+/* line 626, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item:hover {
   background: #e1e3e7;
 }
-/* line 622, ../../app/styles/_app.scss */
+/* line 630, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item.selected {
   background: #50acf3 !important;
   color: #fff;
 }
-/* line 627, ../../app/styles/_app.scss */
+/* line 635, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .filesize {
   width: 140px;
   overflow: hidden;
@@ -10262,7 +10290,7 @@ i.fa.button-setting-icon {
   padding: 0 20px;
   text-align: center;
 }
-/* line 634, ../../app/styles/_app.scss */
+/* line 642, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .filename {
   padding: 0 10px;
   max-width: 52%;
@@ -10270,20 +10298,20 @@ i.fa.button-setting-icon {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* line 638, ../../app/styles/_app.scss */
+/* line 646, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .filename > i {
   margin-right: 5px;
 }
-/* line 641, ../../app/styles/_app.scss */
+/* line 649, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .filename .name {
   position: relative;
   bottom: 4px;
 }
-/* line 647, ../../app/styles/_app.scss */
+/* line 655, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item.done .filename .name {
   bottom: -1px;
 }
-/* line 651, ../../app/styles/_app.scss */
+/* line 659, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .remain-time {
   width: 140px;
   overflow: hidden;
@@ -10291,18 +10319,18 @@ i.fa.button-setting-icon {
   white-space: nowrap;
   text-align: center;
 }
-/* line 657, ../../app/styles/_app.scss */
+/* line 665, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list .queue-item .opts {
   width: 100px;
   text-align: right;
 }
-/* line 665, ../../app/styles/_app.scss */
+/* line 673, ../../app/styles/_app.scss */
 .main .trans-queue .log-wrapper textarea {
   resize: none;
   border: 0;
   cursor: text;
 }
-/* line 672, ../../app/styles/_app.scss */
+/* line 680, ../../app/styles/_app.scss */
 .main .trans-queue .queue-list,
 .main .trans-queue .log-wrapper textarea {
   position: absolute;
@@ -10312,11 +10340,11 @@ i.fa.button-setting-icon {
   right: 0;
   overflow: auto;
 }
-/* line 685, ../../app/styles/_app.scss */
+/* line 693, ../../app/styles/_app.scss */
 .main.show-trans-queue .trans-queue {
   bottom: 0;
 }
-/* line 689, ../../app/styles/_app.scss */
+/* line 697, ../../app/styles/_app.scss */
 .main.show-trans-queue .file-browser {
   bottom: 270px;
 }
@@ -10528,6 +10556,46 @@ i.fa.button-setting-icon {
 /* line 212, ../../app/styles/_modal.scss */
 .setting_modal fieldset legend {
   margin-bottom: 0;
+}
+
+/* line 219, ../../app/styles/_modal.scss */
+.set_speed_modal .time-show {
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+}
+/* line 223, ../../app/styles/_modal.scss */
+.set_speed_modal .time-show .time-text {
+  font-size: 24px;
+  color: #FF9327;
+}
+/* line 228, ../../app/styles/_modal.scss */
+.set_speed_modal .cart-input {
+  text-align: center;
+  line-height: 30px;
+  padding: 15px 0;
+}
+/* line 232, ../../app/styles/_modal.scss */
+.set_speed_modal .cart-input .cart-container {
+  width: 65%;
+  margin: 0 auto;
+}
+/* line 235, ../../app/styles/_modal.scss */
+.set_speed_modal .cart-input .cart-container > input {
+  width: 250px;
+  float: left;
+}
+/* line 239, ../../app/styles/_modal.scss */
+.set_speed_modal .cart-input .cart-container > a {
+  float: left;
+  margin: 0 5px;
+}
+/* line 245, ../../app/styles/_modal.scss */
+.set_speed_modal .cart-desc {
+  text-align: center;
+  line-height: 25px;
+  width: 65%;
+  margin: 0 auto;
 }
 
 /* line 1, ../../app/styles/_login.scss */

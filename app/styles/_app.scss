@@ -116,6 +116,14 @@
 //    line-height: $titleHeight;
     padding: 0 15px;
     border-bottom: 0px solid rgba(255, 255, 255, .1);
+    .speed-icon{
+      float: right;
+      margin-top:-35px;
+      cursor: pointer;
+      &:hover{
+        background-position: -24px 0;
+      }
+    }
   }
   .left-buttons{
     height: 30px;

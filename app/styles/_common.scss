@@ -106,8 +106,6 @@ input:focus {
   }
 
   .form-group{
-
-
     .btn-wrapper{
       margin-left: -2%;
       margin-right: -3%;
@@ -193,10 +191,7 @@ input:focus {
 
   .form-group{
     color:#bababa;
-
-
   }
-
 
   .form-control {
     background-color: $darkThemeFormControlBg;
@@ -212,7 +207,6 @@ input:focus {
     background: $darkThemeFormControlBg;
     border-color: transparent;
   }
-
 
   .form-control:focus {
     border-color: transparent;
@@ -295,3 +289,19 @@ i.fa.button-setting-icon{
   font-size:14px;
   margin-right:5px;
 }
+
+.icon-24x24 {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url(../images/icon-24x24.png) no-repeat center;
+}
+
+.icon-24x24.icon-no-speed{
+  background-position: 0 0;
+}
+
+.icon-24x24.icon-speeded{
+  background-position: -48px 0;
+}
+

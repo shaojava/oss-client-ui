@@ -214,3 +214,38 @@
     }
   }
 }
+
+.set_speed_modal{
+  .time-show{
+    text-align: center;
+    line-height: 30px;
+    font-size:14px;
+    .time-text{
+      font-size: 24px;
+      color: #FF9327;
+    }
+  }
+  .cart-input{
+    text-align: center;
+    line-height: 30px;
+    padding:15px 0;
+    .cart-container{
+      width:65%;
+      margin:0 auto;
+      > input{
+        width:250px;
+        float:left;
+      }
+      > a{
+        float:left;
+        margin:0 5px;
+      }
+    }
+  }
+  .cart-desc{
+    text-align: center;
+    line-height: 25px;
+    width:65%;
+    margin:0 auto;
+  }
+}
