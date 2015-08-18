@@ -71,7 +71,7 @@
         <div class="dropdown position-fixed" id="bucket-menu">
             <ul class="dropdown-menu" role="menu">
                 <li><a href="javascript:;" ng-click="editBucket(activeBucket)">属性管理</a></li>
-                <li><a href="javascript:;" ng-click="callbackSetting(activeBucket)">回调设置</a></li>
+                <li><a ng-if="!isCustomClient" href="javascript:;" ng-click="callbackSetting(activeBucket)">回调设置</a></li>
                 <li><a href="javascript:;" ng-click="manageBucketPartition(activeBucket)">碎片管理</a></li>
                 <li><a href="javascript:;" ng-if="showRefer" ng-click="setRefer(activeBucket)">Refer设置</a></li>
                 <li><a href="javascript:;" ng-if="showChannel" ng-click="setImageServer(activeBucket)">图片设置</a></li>
