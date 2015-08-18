@@ -14,7 +14,6 @@
     "angular-route": "1.2.16",
     "jquery-xml2json": "~0.0.6",
     "font-awesome": "~4.2.0",
-    "angular-ui-bootstrap": "~0.11.0",
     "angular-base64": "~2.0.2",
     "cryptojslib": "https://github.com/GeorgeXu/CryptoJS.git#~3.1.4",
     "util.js": "https://github.com/GeorgeXu/util.js.git#~0.0.2",
@@ -22,7 +21,8 @@
     "underscore": "~1.7.0",
     "ng-context-menu": "~1.0.1",
     "angular-ui-select": "~0.8.3",
-    "angular-local-storage": "~0.1.5"
+    "angular-local-storage": "~0.1.5",
+    "angular-ui-bootstrap-bower": "~0.13.3"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

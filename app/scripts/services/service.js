@@ -2805,6 +2805,33 @@ angular.module('ossClientUiApp')
               option = angular.extend({}, defaultOption, option);
               return $modal.open(option);
             },
+            callbackSetting: function (bucket){
+              var option = {
+                templateUrl: 'views/callback-setting.html',
+                windowClass: 'callback-setting-modal',
+                controller: function ($scope, $modalInstance,$timeout) {
+                  //重连最小次数
+                  $scope.min = 1;
+                  //重连最大次数
+                  $scope.max = 5;
+
+                  $scope.callbackSetting = {
+                    file:true,
+                    folder:false,
+                    times:3,
+                    url:'',
+                    rule:'',
+                    status:'0'
+                  }
+
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
             setRefer: function (bucket){
               var option = {
                 templateUrl: 'views/set_refer_modal.html',

@@ -70,6 +70,11 @@ angular.module('ossClientUiApp')
             });
         };
 
+        //回调设置
+        $scope.callbackSetting = function (bucket) {
+            OSSModal.callbackSetting(bucket);
+        }
+
         $scope.manageBucketPartition = function(activeBucket){
             var url = OSSLocation.getUrl(activeBucket.Name, '', 'upload');
             $location.url(url);
