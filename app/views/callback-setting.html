@@ -6,13 +6,13 @@
   <form class="form-horizontal" name="callbackSettingCallback" role="form">
     <div class="form-group">
       <label class="col-sm-4 control-label">匹配类型:</label>
-      <div class="col-xs-5 checkbox">
+      <div class="col-xs-5 radio">
         <label>
-          <input type="checkbox" ng-model="callbackSetting.file"> 文件
+          <input type="radio" name="type" ng-model="callbackSetting.type" value="1"> 文件
         </label>
 
         <label style="margin-left: 15px;">
-          <input type="checkbox" ng-model="callbackSetting.folder"> 文件夹
+          <input type="radio" name="type" ng-model="callbackSetting.type" value="2"> 文件夹
         </label>
       </div>
     </div>
@@ -53,6 +53,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-default" ng-disabled="callbackSettingCallback.$invalid">确定</button>
+  <button type="button" class="btn btn-default" ng-disabled="callbackSettingCallback.$invalid" ng-click="setCallback()">确定</button>
   <button type="button" class="btn btn-default" ng-click="cancel()">关闭</button>
 </div>

@@ -1854,7 +1854,7 @@ angular.module('ossClientUiApp')
  * api相关
  */
     .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion','localStorageService','$q',function ($http, RequestXML, OSSConfig,OSSRegion,localStorageService,$q) {
-        var ajaxBaseUri = "http://120.26.70.209:3000"
+        var ajaxBaseUri = "http://pay.jiagouyun.com"
         var OSSAccessKeyId = OSS.invoke('getAccessID');
         //是否是政务外网环境下
         var isIntranetNet = localStorageService.get(OSSRegion.getRegionPerfix())
@@ -2790,11 +2790,11 @@ angular.module('ossClientUiApp')
                   }
 
                   $scope.goBuy = function(){
-                    OSS.invoke('openUrl',{"url":"http://www.baidu.com"})
+                    OSS.invoke('openUrl',{"url":"http://pay.jiagouyun.com"})
                   }
 
                   $scope.goSearchBill = function(){
-                    OSS.invoke('openUrl',{"url":"http://www.baidu.com"})
+                    //OSS.invoke('openUrl',{"url":"http://www.baidu.com"})
                   }
 
                   $scope.cancel = function () {
@@ -2816,14 +2816,31 @@ angular.module('ossClientUiApp')
                   $scope.max = 5;
 
                   $scope.callbackSetting = {
-                    file:true,
-                    folder:false,
+                    type:1,
                     times:3,
                     url:'',
                     rule:'',
-                    status:'0'
+                    status:0
                   }
 
+                  var _s = OSS.invoke('getCallFunctionInfo', {
+                    bucket:bucket.Name
+                  });
+                  console.log("callback setting:",_s,{
+                    bucket:bucket.Name
+                  })
+                  $scope.setCallback = function(){
+                    var _params = {
+                      bucket:bucket.Name,
+                      type:parseInt($scope.callbackSetting.type),
+                      regular:$scope.callbackSetting.rule,
+                      url:$scope.callbackSetting.url,
+                      status:parseInt($scope.callbackSetting.status),
+                      num:parseInt($scope.callbackSetting.times)
+                    }
+                    console.log("set callback setting:",_params)
+                    OSS.invoke('setCallFunctionInfo',_params);
+                  }
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                   };
