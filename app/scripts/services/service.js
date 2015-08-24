@@ -2815,20 +2815,16 @@ angular.module('ossClientUiApp')
                   //重连最大次数
                   $scope.max = 5;
 
-                  $scope.callbackSetting = {
-                    type:1,
-                    times:3,
-                    url:'',
-                    rule:'',
-                    status:0
-                  }
-
-                  var _s = OSS.invoke('getCallFunctionInfo', {
+                  var _setting = OSS.invoke('getCallFunctionInfo', {
                     bucket:bucket.Name
                   });
-                  console.log("callback setting:",_s,{
-                    bucket:bucket.Name
-                  })
+                  $scope.callbackSetting = {
+                    type:_setting.type || 1,
+                    times:_setting.num || 3,
+                    url:_setting.url || '',
+                    rule:_setting.regular || '',
+                    status:_setting.status || 0
+                  }
                   $scope.setCallback = function(){
                     var _params = {
                       bucket:bucket.Name,
@@ -2838,8 +2834,8 @@ angular.module('ossClientUiApp')
                       status:parseInt($scope.callbackSetting.status),
                       num:parseInt($scope.callbackSetting.times)
                     }
-                    console.log("set callback setting:",_params)
                     OSS.invoke('setCallFunctionInfo',_params);
+                    $modalInstance.dismiss('cancel');
                   }
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
