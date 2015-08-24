@@ -2819,7 +2819,6 @@ angular.module('ossClientUiApp')
                     bucket:bucket.Name
                   });
                   $scope.callbackSetting = {
-                    type:_setting.type || 1,
                     times:_setting.num || 3,
                     url:_setting.url || '',
                     rule:_setting.regular || '',
@@ -2828,7 +2827,6 @@ angular.module('ossClientUiApp')
                   $scope.setCallback = function(){
                     var _params = {
                       bucket:bucket.Name,
-                      type:parseInt($scope.callbackSetting.type),
                       regular:$scope.callbackSetting.rule,
                       url:$scope.callbackSetting.url,
                       status:parseInt($scope.callbackSetting.status),
