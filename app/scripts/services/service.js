@@ -2078,12 +2078,12 @@ angular.module('ossClientUiApp')
 
                 var signature = OSS.invoke('getSignature', {
                     verb: 'PUT',
+                    content_md5:CryptoJS.MD5(RequestXML.getCreateBucketXML(region)).toString(),
                     content_type: contentType,
                     expires: expires,
                     canonicalized_oss_headers: canonicalizedOSSheaders,
                     canonicalized_resource: canonicalizedResource
                 });
-
                 var requestUrl = getRequestUrl(bucketName, region, expires, signature, canonicalizedResource);
                 var headers = angular.extend({}, canonicalizedOSSheaders, {
                     'Content-Type': contentType
