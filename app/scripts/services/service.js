@@ -13,12 +13,12 @@ angular.module('ossClientUiApp')
  */
     .factory('OSSAlert', ['$modal', function ($modal) {
 
-        function openAlertModal(type, message, title, buttons) {
+        function openAlertModal(type, message, title, buttons,errOptions) {
             var option = {
                 templateUrl: 'views/alert_modal.html',
                 windowClass: 'alert-modal ' + type + '-alert-modal',
                 controller: function ($scope, $modalInstance) {
-
+                    $scope.isWindowClient = OSS.isWindowsClient()
                     $scope.type = type;
 
                     $scope.message = message;
@@ -27,6 +27,21 @@ angular.module('ossClientUiApp')
 
                     $scope.buttons = buttons;
 
+                    $scope.errOptions = errOptions;
+
+                    var getRandomNum = function(){
+                      var numArr = [0,1,2,3,4,5,6,7,8,9];
+                      var _str = "";
+                      for(var i=0;i<5;i++){
+                        var index = Math.floor(Math.random() * 10)
+                        _str += numArr[index] + "";
+                      }
+                      return _str;
+                    }
+
+                    if(errOptions && errOptions.Code === 'BucketAlreadyExists'){
+                        errOptions.newBucketName = errOptions.bucketName + "-" + getRandomNum();
+                    }
                     $scope.buttonClick = function (button) {
                         if(angular.isFunction(button.callback)){
                             button.callback($modalInstance)
@@ -90,15 +105,15 @@ angular.module('ossClientUiApp')
                 ] : buttons;
                 return openAlertModal('warning', message, title, buttons);
             },
-            error: function (message, title, buttons) {
-                title = angular.isUndefined(title) ? '错误' : title;
-                buttons = angular.isUndefined(buttons) ? [
+            error: function (message, title, buttons,otherOption) {
+                title = angular.isUndefined(title) || !title ? '错误' : title;
+                buttons = angular.isUndefined(buttons) || !buttons ? [
                     {
                         text: '关闭',
                         classes: 'btn btn-default'
                     }
                 ] : buttons;
-                return openAlertModal('error', message, title, buttons);
+                return openAlertModal('error', message, title, buttons,otherOption);
             },
             success: function (message, title, buttons) {
                 title = angular.isUndefined(title) ? '成功' : title;
@@ -1868,7 +1883,7 @@ angular.module('ossClientUiApp')
         var customHost = OSS.invoke('getCurrentHost');
 
         var getExpires = function (expires) {
-            expires = angular.isUndefined(expires) ? 30 : expires;
+            expires = angular.isUndefined(expires) ? 3000 : expires;
             return parseInt(new Date().getTime() / 1000) + expires;
         };
 
@@ -2060,6 +2075,7 @@ angular.module('ossClientUiApp')
                 };
                 var canonicalizedResource = getCanonicalizedResource(bucketName);
                 var contentType = 'application/xml';
+
                 var signature = OSS.invoke('getSignature', {
                     verb: 'PUT',
                     content_type: contentType,
@@ -2481,7 +2497,11 @@ angular.module('ossClientUiApp')
                                 return;
                             }
                             if(Bucket.getBucket(bucketName)){
-                                $rootScope.$broadcast('showError','已存在相同名称的Bucket');
+                                var _options = {
+                                  bucketName:bucketName,
+                                  Code: "BucketAlreadyExists"
+                                }
+                                $rootScope.$broadcast('showError','已存在相同名称的Bucket',null,null,_options);
                                 return;
                             }
                             $scope.loading = true;
@@ -2497,7 +2517,14 @@ angular.module('ossClientUiApp')
                                 });
                             }).error(function (response, statusCode) {
                                 $scope.loading = false;
-                                $rootScope.$broadcast('showError', OSSException.getError(response, statusCode).msg);
+                                var _options = undefined;
+                                if (response && response.Error && response.Error.Code === 'BucketAlreadyExists') {
+                                  _options = {
+                                    bucketName: bucketName,
+                                    Code: "BucketAlreadyExists"
+                                  }
+                                }
+                                $rootScope.$broadcast('showError', OSSException.getError(response, statusCode).msg,null,null,_options);
                             });
                         };
 

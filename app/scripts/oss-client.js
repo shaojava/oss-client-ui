@@ -154,6 +154,16 @@
                         enable:1
                     },
                     {
+                      location: 'oss-cn-shanghai',
+                      name: '上海',
+                      enable: 1
+                    },
+                    {
+                      location:'oss-ap-southeast-1',
+                      name:'新加坡',
+                      enable:1
+                    },
+                    {
                       location: 'oss-us-west-1',
                       name: '美国',
                       enable: 1
@@ -210,6 +220,16 @@
                         location:'oss-cn-shenzhen-a',
                         name:'深圳',
                         enable:0
+                    },
+                    {
+                      location: 'oss-cn-shanghai',
+                      name: '上海',
+                      enable: 0
+                    },
+                    {
+                      location:'oss-ap-southeast-1',
+                      name:'新加坡',
+                      enable:1
                     },
                     {
                       location: 'oss-us-west-1',

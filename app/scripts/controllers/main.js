@@ -254,9 +254,9 @@ angular.module('ossClientUiApp')
         });
 
         //显示错误提示框
-        $scope.$on('showError', function (event, errorMsg, errorTitle) {
+        $scope.$on('showError', function (event, errorMsg, errorTitle,buttons,options) {
             if (!errorMsg) return;
-            OSSAlert.error(errorMsg, errorTitle);
+            OSSAlert.error(errorMsg, errorTitle,buttons,options);
         });
 
         $scope.$on('removeBucket', function (event, bucket) {

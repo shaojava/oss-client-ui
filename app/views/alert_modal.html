@@ -12,6 +12,10 @@
         </div>
         <div>
              <span ng-bind-html="message" style="word-break: break-all;"></span>
+             <span ng-if="errOptions.Code == 'BucketAlreadyExists'">,你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】复制以下名称创建：</span>
+             <div ng-if="errOptions.Code == 'BucketAlreadyExists'">
+               <input class="form-control text-success" style="border:0;background:transparent;box-shadow: none;padding:0;" type="text" ng-model="errOptions.newBucketName" readonly />
+             </div>
         </div>
     </section>
 </div>

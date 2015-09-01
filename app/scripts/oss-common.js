@@ -112,6 +112,11 @@ angular.module('OSSCommon', [
                         enable: 1
                     },
                     {
+                      location:'oss-ap-southeast-1',
+                      name:'新加坡',
+                      enable:1
+                    },
+                    {
                       location: 'oss-us-west-1',
                       name: '美国',
                       enable: 1
