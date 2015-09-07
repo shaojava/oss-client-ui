@@ -1883,7 +1883,7 @@ angular.module('ossClientUiApp')
         var customHost = OSS.invoke('getCurrentHost');
 
         var getExpires = function (expires) {
-            expires = angular.isUndefined(expires) ? 3000 : expires;
+            expires = angular.isUndefined(expires) ? 30 : expires;
             return parseInt(new Date().getTime() / 1000) + expires;
         };
 
