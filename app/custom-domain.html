@@ -18,12 +18,12 @@
     <div class="section-wrapper">
         <section class="current form-horizontal" >
             <div class="form-group">
-                <input type="text" ng-model="host" class="form-control" placeholder="自定义服务器地址"/>
+                <input type="text" ng-model="host" class="form-control" placeholder="{{'自定义服务器地址'|translate}}"/>
             </div>
             <div class="form-group">
                 <div class="btn-wrapper">
-                    <button class="btn btn-primary" ng-click="customDomain(host)">确 定</button>
-                    <button class="btn btn-default" ng-click="cancel()">关闭</button>
+                    <button class="btn btn-primary" ng-click="customDomain(host)" translate>确定</button>
+                    <button class="btn btn-default" ng-click="cancel()" translate>关闭</button>
                 </div>
             </div>
         </section>
@@ -34,6 +34,7 @@
 <script src="scripts/interface.js"></script>
 <script src="scripts/oss-common.js"></script>
 <script src="scripts/custom-domain.js"></script>
+<script src="po/translations.js"></script>
 <!-- endbuild -->
 </body>
 </html>

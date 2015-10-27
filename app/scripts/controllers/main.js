@@ -8,7 +8,7 @@
  * Controller of the ossClientUiApp
  */
 angular.module('ossClientUiApp')
-    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu','$interval','OSSDownloadQueue','SpeedService', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu,$interval,OSSDownloadQueue,SpeedService) {
+    .controller('MainCtrl', ['$scope','usSpinnerService', 'OSSApi', 'OSSModal', 'Bucket', 'Bread', 'OSSLocationHistory', '$rootScope', '$filter', 'OSSDialog', 'OSSAlert', 'OSSLocation', '$location','OSSConfig','OSSMenu','$interval','OSSDownloadQueue','SpeedService','gettext','gettextCatalog', function ($scope, usSpinnerService,OSSApi, OSSModal, Bucket, Bread, OSSLocationHistory, $rootScope, $filter, OSSDialog, OSSAlert, OSSLocation, $location,OSSConfig,OSSMenu,$interval,OSSDownloadQueue,SpeedService,gettext,gettextCatalog) {
         /**
          * 是否定制客户端
          * @type {boolean|*}
@@ -92,7 +92,7 @@ angular.module('ossClientUiApp')
 
         //下载整个bucket
         $scope.downloadBucket = function (bucket){
-          OSSAlert.confirm('确定要下载整个Bucket吗？').result.then(function() {
+          OSSAlert.confirm(gettextCatalog.getString(gettext('确定要下载整个Bucket吗？'))).result.then(function() {
             OSSMenu.getMenu("bucketdownload").execute(bucket);
           });
         }
@@ -141,9 +141,9 @@ angular.module('ossClientUiApp')
              if(_index >= 0){
                _path = _path.substring(_index+1)
              }
-             return "返回到 "+_path;
+             return gettextCatalog.getString(gettext("返回到 {{path}}"),{path:_path});
            }
-           return "返回";
+           return gettextCatalog.getString(gettext("返回"));
         };
         //前进
         $scope.forward = function () {
@@ -161,9 +161,9 @@ angular.module('ossClientUiApp')
             if(_index >= 0){
               _path = _path.substring(_index+1)
             }
-            return "前进到 "+_path;
+            return gettextCatalog.getString(gettext("前进到 {{path}}"),{path:_path});
           }
-          return "前进";
+          return gettextCatalog.getString(gettext("前进"));
         };
         //获取所有bucket列表
         var loadBuckets = function(){
@@ -270,13 +270,13 @@ angular.module('ossClientUiApp')
         $scope.currentLocation = 'OSS'
         var _loginLocation = OSS.invoke('getCurrentLocation');
         if(_loginLocation) {
-          $scope.currentLocation = 'OSS-当前选择区域：' + $filter('getLocationName')(OSS.invoke('getCurrentLocation'));
+          $scope.currentLocation = gettextCatalog.getString(gettext('OSS-当前选择区域：')) + $filter('getLocationName')(OSS.invoke('getCurrentLocation'));
         }
     }])
 /**
  * 传输队列
  */
-    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope) {
+    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope','gettext','gettextCatalog', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope,gettext,gettextCatalog) {
 
         //上传的操作菜单
         $scope.uploadQueueMenus = OSSQueueMenu.getUploadMenu();
@@ -416,17 +416,17 @@ angular.module('ossClientUiApp')
         $scope.tabs = [
             {
                 name: 'upload',
-                title: '上传队列'
+                title: gettext('上传队列')
                 //title: '上传队列' + ($scope.OSSUploadQueue.totalCount ? '(' + $scope.OSSUploadQueue.doneCount + '/' + $scope.OSSUploadQueue.totalCount + ')' : '')
             },
             {
                 name: 'download',
-                title: '下载队列'
+                title: gettext('下载队列')
                 //title: '下载队列' + ($scope.OSSDownloadQueue.doneCount ? '(' + $scope.OSSDownloadQueue.doneCount + '/' + $scope.OSSDownloadQueue.totalCount + ')' : '')
             },
             {
                 name: 'log',
-                title: '错误日志'
+                title: gettext('错误日志')
             }
         ];
 
@@ -531,7 +531,7 @@ angular.module('ossClientUiApp')
 /**
  * 文件列表
  */
-    .controller('FileListCtrl', ['$scope', '$routeParams','localStorageService', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException','$timeout', function ($scope, $routeParams, localStorageService,OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException,$timeout) {
+    .controller('FileListCtrl', ['$scope', '$routeParams','localStorageService', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException','$timeout','gettext','gettextCatalog', function ($scope, $routeParams, localStorageService,OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException,$timeout,gettext,gettextCatalog) {
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -544,7 +544,7 @@ angular.module('ossClientUiApp')
 
         $scope.showTip = localStorageService.get('hide-tip') == 1 ?  false: true;
         //console.log('$scope.showTip',localStorageService.get('hide-tip'));
-        $scope.tipContent = '<i class="fa fa-info-circle"></i> <span>小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。</span>';
+        $scope.tipContent = '<i class="fa fa-info-circle"></i> <span>'+gettextCatalog.getString(gettext('小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。'))+'</span>';
         $scope.disableTip = function(){
             $scope.showTip = false;
             localStorageService.set('hide-tip',1);
@@ -594,7 +594,7 @@ angular.module('ossClientUiApp')
 
             }, function (res,status) {
                 //$scope.$emit('showError',OSSException.getError(res,status).msg);
-                $scope.$emit('showError','无法访问该Bucket');
+                $scope.$emit('showError',gettextCatalog.getString(gettext('无法访问该Bucket')));
                 $scope.loadingFile = false;
                 usSpinnerService.stop('file-list-spinner');
             });

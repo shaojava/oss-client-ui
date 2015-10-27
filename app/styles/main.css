@@ -9398,7 +9398,7 @@ input:focus {
 /* line 93, ../../app/styles/_common.scss */
 .oss-dialog h1 {
   text-align: center;
-  margin: 30px 0;
+  margin: 20px 0;
 }
 /* line 98, ../../app/styles/_common.scss */
 .oss-dialog .section-wrapper {
@@ -10650,4 +10650,9 @@ body {
 /* line 51, ../../app/styles/_login.scss */
 .custom-client.oss-dialog .form-group .btn-login {
   width: 95%;
+}
+
+/* line 55, ../../app/styles/_login.scss */
+.oss-dialog .login-container div.form-group {
+  margin-bottom: 5px;
 }

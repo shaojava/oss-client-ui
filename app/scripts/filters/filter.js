@@ -25,7 +25,7 @@ angular.module('ossClientUiApp')
 
         }
     })
-    .filter('getRemainTime', function ($filter) {
+    .filter('getRemainTime','gettext','gettextCatalog', function ($filter,gettext,gettextCatalog) {
         return function (speed, filesize, offset) {
             if (!speed) {
                 return '--:--:--';
@@ -44,7 +44,7 @@ angular.module('ossClientUiApp')
             var m = parseInt((parseInt(second)/60) % 60);
             var s = parseInt(parseInt(second) % 60)
             if(d>0){
-              return '大于' + d +"天"
+              return gettextCatalog.getString(gettext('大于{{dateLen}}天'),{dateLen: d});
             }else {
               if (h < 10) {
                 h = '0' + h
@@ -63,7 +63,7 @@ angular.module('ossClientUiApp')
 
         }
     })
-    .filter('getQueueState', function ($filter) {
+    .filter('getQueueState', ['$filter','gettext','gettextCatalog',function ($filter,gettext,gettextCatalog) {
         return function (type, status, speed, filesize, offset, errormsg) {
             var state = '';
             switch (status) {
@@ -71,21 +71,27 @@ angular.module('ossClientUiApp')
                     state = $filter('getRemainTime')(speed, filesize, offset);
                     break;
                 case 2:
-                    state = '等待' + (type == 'upload' ? '上传' : '下载');
+                    state = ''
+                    if (type == 'upload'){
+                      state = gettextCatalog.getString(gettext('等待上传'));
+                    }else{
+                      state = gettextCatalog.getString(gettext('等待下载'))
+                    }
+
                     break;
                 case 3:
-                    state = '暂停';
+                    state = gettextCatalog.getString(gettext('暂停'));
                     break
                 case 4:
-                    state = '完成';
+                    state = gettextCatalog.getString(gettext('完成'));
                     break;
                 case 5:
-                    state = '错误：' + errormsg;
+                    state = gettextCatalog.getString(gettext('错误：')) + errormsg;
                     break;
             }
             return state;
         }
-    })
+    }])
     .filter('getLocation', ['OSSLocation',function (OSSLocation) {
         return OSSLocation.getUrl;
     }])

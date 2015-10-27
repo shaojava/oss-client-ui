@@ -382,6 +382,7 @@ module.exports = function (grunt) {
                             '*.html',
                             'views/{,*/}*.html',
                             'images/{,*/}*.{webp}',
+                            'po/{,*/}*',
                             'fonts/*',
                             'test/*'
                         ]
@@ -453,9 +454,24 @@ module.exports = function (grunt) {
                 configFile: 'test/karma.conf.js',
                 singleRun: true
             }
+        },
+        nggettext_extract: {
+          pot: {
+            files: {
+              'app/po/template.pot': ['app/**/*.html','app/scripts/**/*.js']
+            }
+          }
+        },
+        nggettext_compile: {
+          all: {
+            files: {
+              'app/po/translations.js': ['app/po/*.po']
+            }
+          }
         }
     });
 
+    grunt.loadNpmTasks('grunt-angular-gettext');
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
         if (target === 'dist') {
@@ -495,6 +511,8 @@ module.exports = function (grunt) {
         //'ngmin',
         'copy:dist',
         //'cdnify',
+        'nggettext_extract:pot',
+        'nggettext_compile:all',
         'cssmin',
         'uglify',
         'filerev',

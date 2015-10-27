@@ -1,13 +1,13 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="cancel()">&times;</button>
-    <h4>获取Object的地址</h4>
+    <h4 translate>获取Object的地址</h4>
 </div>
 <div class="modal-body min-height-200">
     <section ng-show="!loading">
         <ul class="form-horizontal">
             <li>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">文件名：</label>
+                    <label class="col-sm-3 control-label" translate>文件名：</label>
                     <div class="col-sm-9 input-wrapper">
                         <span ng-bind="filename" title="{{filename}}"></span>
                     </div>
@@ -16,15 +16,15 @@
             <li >
                 <form name="getURIForm">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">地址：</label>
+                        <label class="col-sm-3 control-label" translate>地址：</label>
                         <div class="col-sm-9" style="margin-left: -15px;" ng-show="!uri">
-                            <label class="col-xs-5 control-label" style="text-align: left">请输入链接的有效期：</label>
+                            <label class="col-xs-5 control-label" style="text-align: left" translate>请输入链接的有效期：</label>
                             <div class="col-xs-3" style="margin-left: -40px">
                                 <input type="text" class="form-control" ng-model="expire" name="expire" ng-pattern="/^[1-9]{1}[\d]*$/"/>
                             </div>
-                            <div class="col-xs-1" style="margin-left: -20px"><span>秒</span></div>
+                            <div class="col-xs-1" style="margin-left: -20px"><span translate>秒</span></div>
                             <div class="col-xs-2">
-                                <button class="btn btn-primary" ng-click="getUri(expire)" ng-disabled="getURIForm.expire.$error.pattern">获取</button>
+                                <button class="btn btn-primary" ng-click="getUri(expire)" ng-disabled="getURIForm.expire.$error.pattern" translate>获取</button>
                             </div>
                         </div>
                         <div class="col-sm-9 input-wrapper" style="margin-left: -15px" ng-show="uri">
@@ -32,11 +32,11 @@
                                 <input type="text" auto-select="true" class="form-control" ng-model="uri" readonly>
                             </div>
                            <div class="col-sm-2" style="margin-left: -15px">
-                               <button class="btn btn-primary" ng-click="copyToClipborad(uri)">复制</button>
+                               <button class="btn btn-primary" ng-click="copyToClipborad(uri)" translate>复制</button>
                            </div>
                         </div>
                     </div>
-                    <span class="error-msg text-danger" ng-show="getURIForm.expire.$error.pattern">请输入大于0的整数</span>
+                    <span class="error-msg text-danger" ng-show="getURIForm.expire.$error.pattern" translate>请输入大于0的整数</span>
                 </form>
             </li>
         </ul>
@@ -44,5 +44,5 @@
     <span us-spinner="{radius:10, length: 0}" spinner-key="get-acl-spinner"  spinner-start-active="1"></span>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" ng-click="cancel()">确定</button>
+    <button type="button" class="btn btn-primary" ng-click="cancel()" translate>确定</button>
 </div>

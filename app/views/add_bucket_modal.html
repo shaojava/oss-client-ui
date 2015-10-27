@@ -1,13 +1,13 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="cancel()">&times;</button>
-    <h4 ng-if="!bucket">新建Bucket</h4>
-    <h4 ng-if="bucket"><span class="text-primary">{{ ::bucket.Name}}</span>的属性</h4>
+    <h4 ng-if="!bucket" translate>新建Bucket</h4>
+    <h4 ng-if="bucket"><span class="text-primary">{{ ::bucket.Name}}</span><span translate>的属性</span></h4>
 </div>
 <div class="modal-body min-height-100">
     <form class="form-horizontal" name="bucketForm" role="form" ng-show="!getingBucketInfo">
        <!--<span class="error-msg text-danger" ng-show="bucketForm.bucket_name.$error.pattern">Bucket名称格式错误</span>-->
         <div class="form-group">
-            <label for="bucket_name" class="col-sm-3 control-label">Bucket名称：</label>
+            <label for="bucket_name" class="col-sm-3 control-label" translate>Bucket名称：</label>
             <div class="col-sm-5">
                 <div class="bucket-name">
                     <span ng-show="bucket" title="{{bucket.Name}}">{{bucket.Name}}</span>
@@ -15,31 +15,31 @@
                 <input ng-show="!bucket" type="text" class="form-control" ng-model="cBucket.name" name="bucket_name" id="bucket_name" placeholder="" />
             </div>
             <div class="tip text-muted" ng-if="!bucket">
-                <p>·只能包含小写字母、数字和横线</p>
-                <p>·必须以小写字母和数字开头和结尾</p>
-                <p>·长度限制在3-63之间</p>
+                <p translate>·只能包含小写字母、数字和横线</p>
+                <p translate>·必须以小写字母和数字开头和结尾</p>
+                <p translate>·长度限制在3-63之间</p>
             </div>
         </div>
         <div class="form-group" ng-if="bucket">
-            <label for="location" class="col-sm-3 control-label">所属地区：</label>
+            <label for="location" class="col-sm-3 control-label" translate>所属地区：</label>
             <div class="col-sm-5">
-                <span>{{cBucket.region.name}}</span>
+                <span>{{cBucket.region.name |translate}}</span>
             </div>
         </div>
         <div class="form-group" ng-if="!bucket && !isDisableLocationSelect">
-            <label for="location" class="col-sm-3 control-label">所属地区：</label>
+            <label for="location" class="col-sm-3 control-label" translate>所属地区：</label>
             <div class="col-sm-5">
-                <span ng-if="bucket">{{region.name}}</span>
+                <span ng-if="bucket">{{region.name |translate}}</span>
                 <location-select search-disabled="true" ng-if="!bucket" select-location="cBucket.region" name="location"/>
             </div>
         </div>
         <div class="form-group">
-            <label for="permission" class="col-sm-3 control-label">读写权限：</label>
+            <label for="permission" class="col-sm-3 control-label" translate>读写权限：</label>
             <div class="col-sm-5">
                 <ui-select ng-model="acls.selected"  search-enabled="false">
-                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                    <ui-select-match>{{$select.selected.name|translate}}</ui-select-match>
                     <ui-select-choices repeat="acl in acls">
-                        <span ng-bind="acl.name | highlight: $select.search"></span>
+                        <span ng-bind="acl.name | highlight: $select.search|translate"></span>
                     </ui-select-choices>
                 </ui-select>
 
@@ -50,10 +50,10 @@
     <span us-spinner="{radius:10, length: 0}"  spinner-key="get-bucket-spinner"  spinner-start-active="1"></span>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger pull-left" ng-show="bucket" ng-click="delBucket(bucket)">删除Bucket</button>
-    <button type="button" class="btn btn-default pull-right" ng-click="cancel()">取消</button>
-    <button type="button" class="btn btn-primary pull-right"  ng-show="!bucket" ng-disabled="loading" ng-click="createBucket(cBucket.name,cBucket.region,acls.selected)">确定</button>
-    <button type="button" class="btn btn-primary pull-right"  ng-show="bucket" ng-disabled="loading" ng-click="editBucket(acls.selected)" ng-disabled="loading">确定</button>
+    <button type="button" class="btn btn-danger pull-left" ng-show="bucket" ng-click="delBucket(bucket)" translate>删除Bucket</button>
+    <button type="button" class="btn btn-default pull-right" ng-click="cancel()" translate>取消</button>
+    <button type="button" class="btn btn-primary pull-right"  ng-show="!bucket" ng-disabled="loading" ng-click="createBucket(cBucket.name,cBucket.region,acls.selected)" translate>确定</button>
+    <button type="button" class="btn btn-primary pull-right"  ng-show="bucket" ng-disabled="loading" ng-click="editBucket(acls.selected)" ng-disabled="loading" translate>确定</button>
     <div class="pull-right spinner-wrapper">
         <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"  spinner-key="add-bucket-spinner"  spinner-start-active="1"></span>
     </div>

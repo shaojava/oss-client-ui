@@ -10,18 +10,47 @@ angular
         'ui.bootstrap',
         'angularSpinner',
         'OSSCommon',
-        'LocalStorageModule'
+        'LocalStorageModule',
+        'gettext'
     ])
+    .run(function(gettextCatalog){
+      gettextCatalog.currentLanguage = 'zh_CN';
+      gettextCatalog.debug = true;
+    })
+
     .config([function(){
         //localStorageServiceProvider.setPrefix('OSSClient');
     }])
-    .controller('MainCtrl', ['$scope','localStorageService','usSpinnerService', '$http','OSSException', 'OSSRegion','OSSConfig', '$timeout',function ($scope,localStorageService,usSpinnerService, $http,OSSException, OSSRegion,OSSConfig,$timeout) {
+    .controller('MainCtrl', ['$scope','localStorageService','usSpinnerService', '$http','OSSException', 'OSSRegion','OSSConfig', '$timeout','gettext','gettextCatalog',function ($scope,localStorageService,usSpinnerService, $http,OSSException, OSSRegion,OSSConfig,$timeout,gettext,gettextCatalog) {
 
         /**
          * 是否定制客户端
          * @type {boolean|*}
          */
         $scope.isCustomClient = OSSConfig.isCustomClient();
+        /**
+         * 语言国际化
+         * @type {{lan: string}[]}
+         */
+
+        $scope.lanLists = [{name:'简体中文',lan:'zh_CN'},{name:'繁体中文',lan:'zh_TW'},{name:'English',lan:'en_US'}]
+        var initLan = function () {
+          var currLan = localStorageService.get('oss-login-lan');
+          if (currLan && currLan.lan) {
+            var selectLan = _.find($scope.lanLists,function(item){
+               return item.lan === currLan.lan;
+            })
+            $scope.lanLists.selected = selectLan;
+          }else{
+            $scope.lanLists.selected = $scope.lanLists[0];
+          }
+        }
+        initLan();
+        $scope.selectLan = function ($item){
+          localStorageService.set('oss-login-lan',$item)
+          gettextCatalog.setCurrentLanguage($item.lan)
+          //$cookieStore.put('oss-login-lan',$item.lan)
+        }
 
         /**
          * 登录到主界面
@@ -43,16 +72,16 @@ angular
         $scope.customHost = OSS.invoke('getCurrentHost');
         //提交自定义的服务器地址
         $scope.customDomain = function (host) {
-          if (!host || !host.length) {
-            alert('请输入服务器地址');
-            return;
-          }
+          //if (!host || !host.length) {
+          //  alert(gettextCatalog.getString(gettext('请输入服务器地址')));
+          //  return;
+          //}
           OSS.invoke('setServerLocation', {
             location: host
           }, function (res) {
             if (!res.error) {
               $scope.customHost = host;
-              alert('设置成功');
+              alert(gettextCatalog.getString(gettext('设置成功')));
             } else {
               alert(OSSException.getClientErrorMsg(res));
             }
@@ -61,7 +90,7 @@ angular
 
         $scope.deviceCode = OSS.invoke('getDeviceEncoding');
 
-        $scope.regionSelectTip = '选择区域';
+        $scope.regionSelectTip = gettextCatalog.getString(gettext('选择区域'));
 
         //提交登录
 
@@ -69,12 +98,12 @@ angular
             console.info("login oss argument:",arguments)
             var location = undefined;
             if (!accessKeyId || !accessKeyId.length) {
-                alert('请输入 Access Key ID');
+                alert(gettextCatalog.getString(gettext('请输入 Access Key ID')));
                 return;
             }
 
             if (!accessKeySecret || !accessKeySecret.length) {
-                alert('请输入 Access Key Secret');
+                alert(gettextCatalog.getString(gettext('请输入 Access Key Secret')));
                 return;
             }
             if(region && region.location){
@@ -83,7 +112,7 @@ angular
             //如果是云主机
             if (!$scope.isCustomClient && isCloudHost) {
                 if(!location){
-                    alert('请选择区域');
+                    alert(gettextCatalog.getString(gettext('请选择区域')));
                     return;
                 }
                 location += '-internal';
@@ -95,7 +124,7 @@ angular
 
             if(OSSConfig.isCustomClient()){
                 if(!location){
-                    alert('请选择区域');
+                    alert(gettextCatalog.getString(gettext('请选择区域')));
                     return;
                 }
                 //如果配置了自定义服务器地址，则设在自定义服务器地址
@@ -131,20 +160,20 @@ angular
 
         $scope.setPassword = function (password, rePassword) {
             if (!password || !password.length) {
-                alert('请输入安全密码');
+                alert(gettextCatalog.getString(gettext('请输入安全密码')));
                 return;
             }
             if(password.length < 6){
-                alert('密码长度最少6位');
+                alert(gettextCatalog.getString(gettext('密码长度最少6位')));
                 return;
             }
             if (!rePassword || !rePassword.length) {
-                alert('请确认安全密码');
+                alert(gettextCatalog.getString(gettext('请确认安全密码')));
                 return;
             }
 
             if (password !== rePassword) {
-                alert('两次输入的密码不一致');
+                alert(gettextCatalog.getString(gettext('两次输入的密码不一致')));
                 return;
             }
             $scope.setting = true;
@@ -170,7 +199,7 @@ angular
 
         $scope.copy = function (deviceCode) {
             OSS.invoke('setClipboardData', deviceCode);
-            alert('复制成功');
+            alert(gettextCatalog.getString(gettext('复制成功')));
         };
 
 
@@ -196,7 +225,7 @@ angular
         var loginErrorCount = localStorageService.get('login-error-count') ? parseInt(localStorageService.get('login-error-count')) : 0;
         $scope.loginByPassword = function (password) {
             if (!password || !password.length) {
-                alert('请输入安全密码');
+                alert(gettextCatalog.getString(gettext('请输入安全密码')));
                 return;
             }
             $scope.loging = true;
@@ -213,7 +242,8 @@ angular
                         loginErrorCount++;
                         localStorageService.set('login-error-count',loginErrorCount);
                         if(loginErrorCount>allowErrorCount){
-                            alert('你连续密码输入错误已超过' + allowErrorCount + '次,请重新使用Access Key ID 和 Access Key Secret登录');
+                            var str = gettextCatalog.getString(gettext('你连续密码输入错误已超过{{allowErrorCount}}次,请重新使用Access Key ID 和 Access Key Secret登录'),{'allowErrorCount':allowErrorCount});
+                            alert(str);
                             OSS.invoke('clearPassword');
                             $scope.step = 'loginById';
                         }else{
@@ -227,7 +257,7 @@ angular
 
         //清除安全密码
         $scope.clearPassword = function () {
-            if(!confirm('确定要清除安全密码？')){
+            if(!confirm(gettextCatalog.getString(gettext('确定要清除安全密码？')))){
                 return;
             }
             OSS.invoke('clearPassword');

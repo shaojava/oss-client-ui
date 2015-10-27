@@ -7,7 +7,7 @@
  * # directive
  */
 angular.module('ossClientUiApp')
-    .directive('createFile', ['$parse', function ($parse) {
+    .directive('createFile', ['$parse','gettext','gettextCatalog', function ($parse,gettext,gettextCatalog) {
         return {
             restrict: 'A',
             link: function postLink(scope, element, attrs) {
@@ -16,10 +16,10 @@ angular.module('ossClientUiApp')
                 scope.$watch(attrs.createFile, function (value, oldValue) {
                     if (value) {
                         element.scrollTop(0);
-                        var defaultFilename = '新建文件夹';
+                        var defaultFilename = gettextCatalog.getString(gettext('新建文件夹'));
                         var $input = angular.element('<input name="folder-name" class="form-control" value="' + defaultFilename + '" />'),
-                            $okBtn = angular.element('<button class="btn btn-primary">确定</button>'),
-                            $cancelBtn = angular.element('<button class="btn btn-default">取消</button>');
+                            $okBtn = angular.element('<button class="btn btn-primary">'+gettextCatalog.getString(gettext('确定'))+'</button>'),
+                            $cancelBtn = angular.element('<button class="btn btn-default">'+gettextCatalog.getString(gettext('取消'))+'</button>');
 
                         createFileItem = angular.element('<div class="clearfix file-item new-file-item"><div class="pull-left filename"><i class="file-icon-32 icon-folder"></i></div></div>');
                         createFileItem.find('.filename').append($input).append($okBtn).append($cancelBtn);
@@ -67,7 +67,7 @@ angular.module('ossClientUiApp')
             }
         };
     }])
-    .directive('smartSearch', ['$location', '$rootScope', '$filter', 'OSSObject', 'Bucket','OSSLocation', function ($location, $rootScope, $filter, OSSObject, Bucket,OSSLocation) {
+    .directive('smartSearch', ['$location', '$rootScope', '$filter', 'OSSObject', 'Bucket','OSSLocation','gettextCatalog','gettext', function ($location, $rootScope, $filter, OSSObject, Bucket,OSSLocation,gettextCatalog,gettext) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -120,7 +120,7 @@ angular.module('ossClientUiApp')
                     var searchScopeName = currentObj.path ? $filter('getPrefixName')(currentObj.path, 1) : currentBucket.Name;
                     var $removeIcon = $('<a href="javascript:;" class="fa fa-remove fa-lg"></a>');
                     var $searchDomain = $('<a style="color:#fff;text-decoration: underline !important;cursor:pointer">' + searchScopeName + '</a>');
-                    var $searchScope = $('<div class="search-scope"> 在 <span id="searchdomain"></span> 中搜索</div>');
+                    var $searchScope = $('<div class="search-scope">'+gettextCatalog.getString(gettext('在'))+'<span id="searchdomain"></span>'+gettextCatalog.getString(gettext('中搜索'))+'</div>');
                     $searchScope.find("span[id='searchdomain']").append($searchDomain);
                     element.next('.fa').hide();
                     element.after($searchScope).after($removeIcon);

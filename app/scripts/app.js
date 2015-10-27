@@ -21,8 +21,18 @@ angular
         'angularSpinner',
         'ng-context-menu',
         'ui.select',
-        'LocalStorageModule'
+        'LocalStorageModule',
+        'gettext'
     ])
+    .run(function(gettextCatalog,localStorageService){
+      var _lan = 'zh_CN'
+      var _currLan = localStorageService.get('oss-login-lan')
+      if (_currLan && _currLan.lan) {
+        _lan = _currLan.lan
+      }
+      gettextCatalog.currentLanguage = _lan;
+      gettextCatalog.debug = true;
+    })
     .config(['$routeProvider', '$httpProvider','uiSelectConfig', function ($routeProvider, $httpProvider,uiSelectConfig) {
         //设置ui-select的默认样式
         uiSelectConfig.theme = 'bootstrap';

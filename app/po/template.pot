@@ -1,0 +1,1098 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+
+#: app/login.html:124
+msgid "(最少6位)"
+msgstr ""
+
+#: app/views/alert_modal.html:15
+msgid ",你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】复制以下名称创建："
+msgstr ""
+
+#: app/index.html:129
+#: app/index.html:139
+msgid "/秒"
+msgstr ""
+
+#: app/scripts/services/service.js:947
+msgid "1. 只能包含字母，数字，中文，下划线（_）和短横线（-）,小数点（.）"
+msgstr ""
+
+#: app/scripts/services/service.js:948
+msgid "2. 只能以字母、数字或者中文开头"
+msgstr ""
+
+#: app/scripts/services/service.js:949
+msgid "3. 文件夹的长度限制在1-254之间"
+msgstr ""
+
+#: app/scripts/services/service.js:950
+msgid "4. Object总长度必须在1-1023之间"
+msgstr ""
+
+#: app/scripts/oss-common.js:323
+msgid "Access Key ID不存在"
+msgstr ""
+
+#: app/index.html:78
+msgid "Bucket下载"
+msgstr ""
+
+#: app/scripts/oss-common.js:316
+msgid "Bucket不为空"
+msgstr ""
+
+#: app/scripts/oss-common.js:335
+msgid "Bucket不存在"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:10
+msgid "Bucket名称："
+msgstr ""
+
+#: app/scripts/oss-common.js:315
+msgid "Bucket已经存在"
+msgstr ""
+
+#: app/scripts/oss-common.js:343
+msgid "Bucket数目超过限制"
+msgstr ""
+
+#: app/scripts/services/service.js:2523
+msgid "Bucket的名称不能为空"
+msgstr ""
+
+#: app/scripts/services/service.js:2527
+msgid "Bucket的名称格式错误"
+msgstr ""
+
+#: app/scripts/services/service.js:2714
+msgid "Content-Type是必填字段"
+msgstr ""
+
+#: app/scripts/services/service.js:2713
+#: app/scripts/services/service.js:2719
+msgid "HTTP属性值格式错误"
+msgstr ""
+
+#: app/scripts/oss-common.js:329
+msgid "Logging操作中有无效的目标bucket"
+msgstr ""
+
+#: app/scripts/oss-common.js:337
+msgid "Multipart Upload ID不存在"
+msgstr ""
+
+#: app/scripts/controllers/main.js:273
+msgid "OSS-当前选择区域："
+msgstr ""
+
+#: app/scripts/oss-common.js:330
+msgid "OSS内部发生错误"
+msgstr ""
+
+#: app/index.html:76
+#: app/scripts/services/service.js:1236
+#: app/views/set_refer_modal.html:3
+msgid "Refer设置"
+msgstr ""
+
+#: app/views/set_refer_modal.html:9
+msgid "Refer设置："
+msgstr ""
+
+#: app/views/set_image_server_modal.html:50
+msgid "Style设置："
+msgstr ""
+
+#: app/scripts/oss-common.js:331
+msgid "XML格式非法"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:18
+msgid "·只能包含小写字母、数字和横线"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:19
+msgid "·必须以小写字母和数字开头和结尾"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:20
+msgid "·长度限制在3-63之间"
+msgstr ""
+
+#: app/scripts/services/service.js:909
+msgid "上传"
+msgstr ""
+
+#: app/views/set_speed_modal.html:25
+msgid "上传加速是一项增值服务，可以在复杂的网络环境下为您提供稳定高速的上传速度，立即"
+msgstr ""
+
+#: app/views/upload_detail_modal.html:9
+msgid "上传时间"
+msgstr ""
+
+#: app/views/setting_modal.html:8
+msgid "上传设置"
+msgstr ""
+
+#: app/index.html:125
+msgid "上传速度："
+msgstr ""
+
+#: app/scripts/controllers/main.js:419
+msgid "上传队列"
+msgstr ""
+
+#: app/scripts/oss-common.js:111
+msgid "上海"
+msgstr ""
+
+#: app/scripts/services/service.js:1032
+#: app/scripts/services/service.js:1064
+msgid "下载"
+msgstr ""
+
+#: app/scripts/services/service.js:998
+msgid "下载当前目录"
+msgstr ""
+
+#: app/views/setting_modal.html:25
+msgid "下载设置"
+msgstr ""
+
+#: app/index.html:135
+msgid "下载速度："
+msgstr ""
+
+#: app/scripts/controllers/main.js:424
+msgid "下载队列"
+msgstr ""
+
+#: app/views/set_refer_modal.html:27
+msgid "不允许为空"
+msgstr ""
+
+#: app/views/filelist.html:23
+msgid "不再提示"
+msgstr ""
+
+#: app/scripts/services/service.js:1140
+msgid "不同区域的Bucket之间不能复制"
+msgstr ""
+
+#: app/scripts/oss-common.js:332
+msgid "不支持的方法"
+msgstr ""
+
+#: app/scripts/login.js:176
+msgid "两次输入的密码不一致"
+msgstr ""
+
+#: app/index.html:236
+msgid "个文件，请稍候..."
+msgstr ""
+
+#: app/scripts/directives/directive.js:123
+msgid "中搜索"
+msgstr ""
+
+#: app/scripts/oss-common.js:68
+msgid "互联网"
+msgstr ""
+
+#: app/scripts/services/service.js:606
+msgid "你确定要取消所有上传？"
+msgstr ""
+
+#: app/scripts/services/service.js:823
+msgid "你确定要取消所有下载？"
+msgstr ""
+
+#: app/scripts/services/service.js:505
+msgid "你确定要取消这{{fileLen}}个文件的上传？"
+msgstr ""
+
+#: app/scripts/services/service.js:728
+msgid "你确定要取消这{{fileLen}}文件的下载？"
+msgstr ""
+
+#: app/scripts/services/service.js:503
+msgid "你确定要取消这个文件的上传？"
+msgstr ""
+
+#: app/scripts/services/service.js:726
+msgid "你确定要取消这个文件的下载？"
+msgstr ""
+
+#: app/scripts/login.js:245
+msgid "你连续密码输入错误已超过{{allowErrorCount}}次,请重新使用Access Key ID 和 Access Key Secret登录"
+msgstr ""
+
+#: app/login.html:112
+msgid "保&nbsp;&nbsp;&nbsp;&nbsp;存"
+msgstr ""
+
+#: app/scripts/services/service.js:85
+msgid "信息"
+msgstr ""
+
+#: app/views/set_speed_modal.html:21
+msgid "停止加速"
+msgstr ""
+
+#: app/views/set_refer_modal.html:21
+msgid "允许为空"
+msgstr ""
+
+#: app/scripts/services/service.js:604
+#: app/scripts/services/service.js:821
+msgid "全部取消"
+msgstr ""
+
+#: app/scripts/services/service.js:588
+#: app/scripts/services/service.js:807
+msgid "全部开始"
+msgstr ""
+
+#: app/scripts/services/service.js:572
+#: app/scripts/services/service.js:790
+msgid "全部暂停"
+msgstr ""
+
+#: app/scripts/services/service.js:1808
+msgid "公共读"
+msgstr ""
+
+#: app/scripts/services/service.js:1809
+msgid "公共读写"
+msgstr ""
+
+#: app/custom-domain.html:26
+#: app/export-authorization.html:29
+#: app/scripts/services/service.js:102
+#: app/scripts/services/service.js:112
+#: app/scripts/services/service.js:122
+#: app/scripts/services/service.js:88
+#: app/views/callback-setting.html:31
+#: app/views/callback-setting.html:49
+#: app/views/set_image_server_modal.html:26
+#: app/views/set_image_server_modal.html:43
+#: app/views/set_image_server_modal.html:60
+#: app/views/set_speed_modal.html:33
+msgid "关闭"
+msgstr ""
+
+#: app/login.html:131
+msgid "再输一次"
+msgstr ""
+
+#: app/views/set_speed_modal.html:13
+msgid "分"
+msgstr ""
+
+#: app/views/filelist.html:27
+#: app/views/uploadlist.html:10
+msgid "创建时间"
+msgstr ""
+
+#: app/scripts/services/service.js:1165
+#: app/scripts/services/service.js:1295
+#: app/views/set_http_header_modal.html:38
+msgid "删除"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:53
+msgid "删除Bucket"
+msgstr ""
+
+#: app/index.html:38
+#: app/index.html:40
+msgid "刷新"
+msgstr ""
+
+#: app/scripts/controllers/main.js:166
+msgid "前进"
+msgstr ""
+
+#: app/scripts/controllers/main.js:164
+msgid "前进到 {{path}}"
+msgstr ""
+
+#: app/views/set_speed_modal.html:9
+msgid "剩余加速时长:"
+msgstr ""
+
+#: app/views/filelist.html:69
+msgid "加载中..."
+msgstr ""
+
+#: app/index.html:25
+#: app/views/set_speed_modal.html:3
+msgid "加速服务"
+msgstr ""
+
+#: app/scripts/oss-common.js:96
+msgid "北京"
+msgstr ""
+
+#: app/views/callback-setting.html:8
+msgid "匹配正则:"
+msgstr ""
+
+#: app/scripts/services/service.js:2372
+msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
+msgstr ""
+
+#: app/views/setting_modal.html:17
+#: app/views/setting_modal.html:34
+msgid "单任务线程数："
+msgstr ""
+
+#: app/scripts/oss-common.js:322
+msgid "参数格式错误"
+msgstr ""
+
+#: app/scripts/oss-common.js:340
+msgid "发起请求的时间和服务器时间超出15分钟"
+msgstr ""
+
+#: app/scripts/directives/directive.js:22
+#: app/scripts/services/service.js:499
+#: app/scripts/services/service.js:722
+#: app/scripts/services/service.js:75
+#: app/views/add_bucket_modal.html:54
+#: app/views/del_bucket_confirm_modal.html:23
+#: app/views/set_http_header_modal.html:55
+#: app/views/set_image_server_modal.html:72
+#: app/views/set_refer_modal.html:42
+#: app/views/setting_modal.html:59
+msgid "取消"
+msgstr ""
+
+#: app/scripts/services/service.js:2374
+msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
+msgstr ""
+
+#: app/views/setting_modal.html:10
+#: app/views/setting_modal.html:27
+msgid "同时任务数："
+msgstr ""
+
+#: app/views/set_image_server_modal.html:9
+msgid "名&nbsp;&nbsp;&nbsp;&nbsp;称："
+msgstr ""
+
+#: app/views/callback-setting.html:15
+msgid "回调地址:"
+msgstr ""
+
+#: app/index.html:74
+#: app/views/callback-setting.html:3
+msgid "回调设置"
+msgstr ""
+
+#: app/views/callback-setting.html:42
+msgid "回调设置功能是当前bucket的文件或文件夹上传完成后，若文件或文件夹名称匹配到正则的规则，则去调设置的回调地址，注意回调地址是以\"PUT\"方法进行请求的！"
+msgstr ""
+
+#: app/views/set_image_server_modal.html:3
+msgid "图片服务器设置"
+msgstr ""
+
+#: app/index.html:77
+msgid "图片设置"
+msgstr ""
+
+#: app/scripts/directives/directive.js:123
+msgid "在"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:19
+msgid "地址："
+msgstr ""
+
+#: app/scripts/services/service.js:1104
+#: app/views/get_object_uri_modal.html:35
+msgid "复制"
+msgstr ""
+
+#: app/scripts/login.js:202
+msgid "复制成功"
+msgstr ""
+
+#: app/login.html:78
+msgid "复制机器码"
+msgstr ""
+
+#: app/scripts/filters/filter.js:47
+msgid "大于{{dateLen}}天"
+msgstr ""
+
+#: app/views/filelist.html:28
+#: app/views/upload_detail_modal.html:10
+msgid "大小"
+msgstr ""
+
+#: app/views/filelist.html:7
+msgid "存储区域："
+msgstr ""
+
+#: app/login.html:128
+#: app/login.html:149
+msgid "安全密码"
+msgstr ""
+
+#: app/scripts/filters/filter.js:86
+msgid "完成"
+msgstr ""
+
+#: app/scripts/oss-common.js:317
+msgid "实体过大"
+msgstr ""
+
+#: app/scripts/oss-common.js:318
+msgid "实体过小"
+msgstr ""
+
+#: app/scripts/login.js:167
+msgid "密码长度最少6位"
+msgstr ""
+
+#: app/login.html:66
+msgid "导入授权"
+msgstr ""
+
+#: app/scripts/export-authorization.js:66
+msgid "导出成功"
+msgstr ""
+
+#: app/export-authorization.html:14
+#: app/export-authorization.html:28
+#: app/views/setting_modal.html:58
+msgid "导出授权"
+msgstr ""
+
+#: app/scripts/controllers/main.js:547
+#: app/views/filelist.html:18
+msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
+msgstr ""
+
+#: app/views/set_http_header_modal.html:32
+msgid "属性内容"
+msgstr ""
+
+#: app/views/set_http_header_modal.html:25
+msgid "属性名称"
+msgstr ""
+
+#: app/scripts/services/service.js:2720
+msgid "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号"
+msgstr ""
+
+#: app/scripts/services/service.js:2727
+msgid "属性名称只能包含英文、数子或横线"
+msgstr ""
+
+#: app/scripts/services/service.js:2726
+msgid "属性名称格式错误"
+msgstr ""
+
+#: app/index.html:73
+msgid "属性管理"
+msgstr ""
+
+#: app/scripts/services/service.js:3050
+msgid "已复制到剪切板"
+msgstr ""
+
+#: app/scripts/services/service.js:2535
+msgid "已存在相同名称的Bucket"
+msgstr ""
+
+#: app/scripts/services/service.js:971
+msgid "已存在相同名称的文件夹"
+msgstr ""
+
+#: app/views/callback-setting.html:26
+#: app/views/set_image_server_modal.html:21
+#: app/views/set_image_server_modal.html:38
+#: app/views/set_image_server_modal.html:55
+msgid "开启"
+msgstr ""
+
+#: app/scripts/services/service.js:429
+#: app/scripts/services/service.js:650
+msgid "开始"
+msgstr ""
+
+#: app/views/set_speed_modal.html:20
+msgid "开始加速"
+msgstr ""
+
+#: app/index.html:237
+msgid "当前加载队列已超出客户端下载能力，请使用OSS提供的API下载。"
+msgstr ""
+
+#: app/views/callback-setting.html:22
+msgid "当前状态:"
+msgstr ""
+
+#: app/scripts/services/service.js:119
+msgid "成功"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:24
+#: app/views/add_bucket_modal.html:30
+msgid "所属地区："
+msgstr ""
+
+#: app/index.html:209
+msgid "打开日志文件夹"
+msgstr ""
+
+#: app/scripts/oss-common.js:314
+msgid "拒绝访问"
+msgstr ""
+
+#: app/index.html:92
+msgid "按钮，开始创建你的Bucket"
+msgstr ""
+
+#: app/scripts/oss-common.js:74
+#: app/scripts/oss-common.js:80
+msgid "政务外网"
+msgstr ""
+
+#: app/scripts/oss-common.js:298
+msgid "数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
+msgstr ""
+
+#: app/scripts/oss-common.js:299
+msgid "数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
+msgstr ""
+
+#: app/scripts/services/service.js:1678
+msgid "数据请求失败，如果你自定义了服务器地址，请检查是否正常。"
+msgstr ""
+
+#: app/scripts/oss-common.js:320
+msgid "文件Part不存在"
+msgstr ""
+
+#: app/scripts/oss-common.js:321
+msgid "文件Part过时"
+msgstr ""
+
+#: app/scripts/services/service.js:2770
+msgid "文件{{fileName}}设置http头的错误信息:"
+msgstr ""
+
+#: app/scripts/oss-common.js:336
+msgid "文件不存在"
+msgstr ""
+
+#: app/views/filelist.html:26
+#: app/views/uploadlist.html:9
+msgid "文件名"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:10
+msgid "文件名："
+msgstr ""
+
+#: app/scripts/services/service.js:945
+msgid "文件夹名称格式错误"
+msgstr ""
+
+#: app/scripts/oss-common.js:319
+msgid "文件组过大"
+msgstr ""
+
+#: app/scripts/oss-common.js:116
+msgid "新加坡"
+msgstr ""
+
+#: app/index.html:28
+#: app/index.html:30
+#: app/index.html:91
+msgid "新建"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:3
+msgid "新建Bucket"
+msgstr ""
+
+#: app/scripts/directives/directive.js:19
+#: app/scripts/services/service.js:939
+msgid "新建文件夹"
+msgstr ""
+
+#: app/scripts/oss-common.js:324
+msgid "无效的Bucket名字"
+msgstr ""
+
+#: app/scripts/oss-common.js:326
+msgid "无效的Object名字"
+msgstr ""
+
+#: app/scripts/oss-common.js:327
+msgid "无效的Part"
+msgstr ""
+
+#: app/scripts/oss-common.js:328
+msgid "无效的part顺序"
+msgstr ""
+
+#: app/scripts/oss-common.js:325
+msgid "无效的摘要"
+msgstr ""
+
+#: app/scripts/oss-common.js:338
+msgid "无法处理的方法"
+msgstr ""
+
+#: app/scripts/controllers/main.js:597
+msgid "无法访问该Bucket"
+msgstr ""
+
+#: app/views/set_speed_modal.html:11
+msgid "时"
+msgstr ""
+
+#: app/views/set_image_server_modal.html:63
+msgid "是否只允许通过 Style 来访问图像处理接口"
+msgstr ""
+
+#: app/scripts/filters/filter.js:83
+#: app/scripts/services/service.js:460
+#: app/scripts/services/service.js:681
+msgid "暂停"
+msgstr ""
+
+#: app/login.html:36
+#: app/login.html:84
+msgid "本机是ECS云主机"
+msgstr ""
+
+#: app/export-authorization.html:24
+msgid "机器码"
+msgstr ""
+
+#: app/scripts/oss-common.js:86
+msgid "杭州"
+msgstr ""
+
+#: app/index.html:88
+msgid "欢迎使用OSS客户端"
+msgstr ""
+
+#: app/index.html:234
+msgid "正在加载下载列表，当前已加载了"
+msgstr ""
+
+#: app/index.html:160
+msgid "没有上传"
+msgstr ""
+
+#: app/index.html:187
+msgid "没有下载"
+msgstr ""
+
+#: app/views/upload_detail_modal.html:12
+msgid "没有数据"
+msgstr ""
+
+#: app/views/filelist.html:50
+msgid "没有文件"
+msgstr ""
+
+#: app/index.html:216
+msgid "没有日志"
+msgstr ""
+
+#: app/views/uploadlist.html:25
+msgid "没有碎片"
+msgstr ""
+
+#: app/views/set_refer_modal.html:34
+msgid "注：多个refer以换行分隔，支持通配符(*,?)"
+msgstr ""
+
+#: app/index.html:245
+msgid "注：如果下载队列已加载完成,则删除已加载列表选项无效"
+msgstr ""
+
+#: app/scripts/oss-common.js:106
+msgid "深圳"
+msgstr ""
+
+#: app/views/set_http_header_modal.html:42
+msgid "添加输入框"
+msgstr ""
+
+#: app/scripts/services/service.js:621
+#: app/scripts/services/service.js:838
+msgid "清空已完成"
+msgstr ""
+
+#: app/login.html:155
+msgid "清除安全密码"
+msgstr ""
+
+#: app/index.html:90
+msgid "点击左侧栏的"
+msgstr ""
+
+#: app/views/set_image_server_modal.html:16
+msgid "状&nbsp;&nbsp;&nbsp;&nbsp;态："
+msgstr ""
+
+#: app/login.html:63
+msgid "登&nbsp;&nbsp;&nbsp;&nbsp;录"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:4
+msgid "的属性"
+msgstr ""
+
+#: app/custom-domain.html:25
+#: app/scripts/directives/directive.js:21
+#: app/scripts/services/service.js:68
+#: app/views/add_bucket_modal.html:55
+#: app/views/add_bucket_modal.html:56
+#: app/views/callback-setting.html:48
+#: app/views/del_bucket_confirm_modal.html:22
+#: app/views/get_object_uri_modal.html:47
+#: app/views/set_http_header_modal.html:54
+#: app/views/set_image_server_modal.html:71
+#: app/views/set_refer_modal.html:41
+#: app/views/setting_modal.html:60
+#: app/views/upload_detail_modal.html:25
+msgid "确定"
+msgstr ""
+
+#: app/scripts/controllers/main.js:95
+msgid "确定要下载整个Bucket吗？"
+msgstr ""
+
+#: app/scripts/services/service.js:3148
+msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
+msgstr ""
+
+#: app/scripts/services/service.js:1304
+msgid "确定要删除选择的碎片？"
+msgstr ""
+
+#: app/scripts/services/service.js:1174
+msgid "确定要删除？"
+msgstr ""
+
+#: app/scripts/login.js:260
+msgid "确定要清除安全密码？"
+msgstr ""
+
+#: app/scripts/services/service.js:98
+msgid "确认"
+msgstr ""
+
+#: app/login.html:135
+msgid "确认设置"
+msgstr ""
+
+#: app/index.html:75
+#: app/scripts/services/service.js:1558
+msgid "碎片管理"
+msgstr ""
+
+#: app/views/upload_detail_modal.html:3
+msgid "碎片详细"
+msgstr ""
+
+#: app/views/set_image_server_modal.html:33
+msgid "禁止访问原图："
+msgstr ""
+
+#: app/scripts/services/service.js:1810
+msgid "私有"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:25
+#: app/views/set_speed_modal.html:15
+msgid "秒"
+msgstr ""
+
+#: app/scripts/services/service.js:544
+#: app/scripts/services/service.js:761
+msgid "移除"
+msgstr ""
+
+#: app/views/set_refer_modal.html:16
+msgid "空Refer："
+msgstr ""
+
+#: app/scripts/filters/filter.js:76
+msgid "等待上传"
+msgstr ""
+
+#: app/scripts/filters/filter.js:78
+msgid "等待下载"
+msgstr ""
+
+#: app/scripts/oss-common.js:342
+msgid "签名错误"
+msgstr ""
+
+#: app/scripts/services/service.js:1123
+msgid "粘贴"
+msgstr ""
+
+#: app/index.html:243
+msgid "终止操作"
+msgstr ""
+
+#: app/views/upload_detail_modal.html:8
+msgid "编号"
+msgstr ""
+
+#: app/scripts/oss-common.js:334
+msgid "缺少内容长度"
+msgstr ""
+
+#: app/scripts/oss-common.js:333
+msgid "缺少参数"
+msgstr ""
+
+#: app/scripts/oss-common.js:357
+msgid "网络请求错误"
+msgstr ""
+
+#: app/scripts/oss-common.js:121
+msgid "美国"
+msgstr ""
+
+#: app/views/set_http_header_modal.html:21
+msgid "自定义属性"
+msgstr ""
+
+#: app/custom-domain.html:21
+#: app/login.html:108
+#: app/login.html:48
+msgid "自定义服务器地址"
+msgstr ""
+
+#: app/login.html:103
+msgid "自定义服务地址设置后只有设置了登录密码才能一直保存，否则下次登录时将自动清空。"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:27
+msgid "获取"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:3
+msgid "获取Object的地址"
+msgstr ""
+
+#: app/scripts/services/service.js:1197
+msgid "获取地址"
+msgstr ""
+
+#: app/scripts/services/service.js:95
+msgid "警告"
+msgstr ""
+
+#: app/index.html:33
+#: app/index.html:35
+#: app/views/setting_modal.html:3
+msgid "设置"
+msgstr ""
+
+#: app/scripts/services/service.js:1212
+msgid "设置HTTP头"
+msgstr ""
+
+#: app/views/set_http_header_modal.html:3
+msgid "设置HTTP头属性"
+msgstr ""
+
+#: app/login.html:123
+msgid "设置一个安全密码，下次打开客户端时只需要输入这个安全密码就能使用客户端"
+msgstr ""
+
+#: app/scripts/custom-domain.js:37
+#: app/scripts/login.js:84
+msgid "设置成功"
+msgstr ""
+
+#: app/scripts/services/service.js:2370
+msgid "设置的值必须是正整数"
+msgstr ""
+
+#: app/scripts/services/service.js:1317
+msgid "详细"
+msgstr ""
+
+#: app/views/setting_modal.html:42
+msgid "语言设置"
+msgstr ""
+
+#: app/views/setting_modal.html:44
+msgid "语言设置："
+msgstr ""
+
+#: app/scripts/oss-common.js:341
+msgid "请求超时"
+msgstr ""
+
+#: app/scripts/services/service.js:65
+msgid "请确认"
+msgstr ""
+
+#: app/scripts/login.js:171
+msgid "请确认安全密码"
+msgstr ""
+
+#: app/scripts/export-authorization.js:46
+#: app/scripts/login.js:101
+#: app/scripts/services/service.js:3140
+msgid "请输入 Access Key ID"
+msgstr ""
+
+#: app/scripts/export-authorization.js:51
+#: app/scripts/login.js:106
+#: app/scripts/services/service.js:3144
+msgid "请输入 Access Key Secret"
+msgstr ""
+
+#: app/views/del_bucket_confirm_modal.html:3
+msgid "请输入Access Key 和Access Secret确认"
+msgstr ""
+
+#: app/views/set_speed_modal.html:19
+msgid "请输入加速卡号"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:39
+msgid "请输入大于0的整数"
+msgstr ""
+
+#: app/scripts/login.js:163
+#: app/scripts/login.js:228
+msgid "请输入安全密码"
+msgstr ""
+
+#: app/scripts/custom-domain.js:30
+msgid "请输入服务器地址"
+msgstr ""
+
+#: app/scripts/export-authorization.js:56
+msgid "请输入要授权的机器码"
+msgstr ""
+
+#: app/views/set_refer_modal.html:11
+msgid "请输入要设置的refer"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:21
+msgid "请输入链接的有效期："
+msgstr ""
+
+#: app/scripts/login.js:115
+#: app/scripts/login.js:127
+msgid "请选择区域"
+msgstr ""
+
+#: app/views/add_bucket_modal.html:37
+msgid "读写权限："
+msgstr ""
+
+#: app/views/set_speed_modal.html:26
+msgid "购买"
+msgstr ""
+
+#: app/login.html:136
+msgid "跳过设置"
+msgstr ""
+
+#: app/login.html:145
+msgid "输入您设置的安全密码即可快速登录管理器"
+msgstr ""
+
+#: app/login.html:113
+#: app/login.html:95
+msgid "返&nbsp;&nbsp;&nbsp;&nbsp;回"
+msgstr ""
+
+#: app/scripts/controllers/main.js:146
+msgid "返回"
+msgstr ""
+
+#: app/scripts/controllers/main.js:144
+msgid "返回到 {{path}}"
+msgstr ""
+
+#: app/index.html:49
+msgid "还未创建Bucket"
+msgstr ""
+
+#: app/login.html:153
+msgid "进&nbsp;&nbsp;&nbsp;&nbsp;入"
+msgstr ""
+
+#: app/scripts/export-authorization.js:36
+#: app/scripts/login.js:93
+msgid "选择区域"
+msgstr ""
+
+#: app/login.html:94
+msgid "选择文件并导入"
+msgstr ""
+
+#: app/login.html:53
+#: app/views/setting_modal.html:47
+msgid "选择语言"
+msgstr ""
+
+#: app/views/callback-setting.html:36
+msgid "重连次数:"
+msgstr ""
+
+#: app/scripts/services/service.js:109
+msgid "错误"
+msgstr ""
+
+#: app/scripts/controllers/main.js:429
+msgid "错误日志"
+msgstr ""
+
+#: app/scripts/filters/filter.js:89
+msgid "错误："
+msgstr ""
+
+#: app/views/callback-setting.html:40
+#: app/views/setting_modal.html:14
+#: app/views/setting_modal.html:21
+#: app/views/setting_modal.html:31
+#: app/views/setting_modal.html:38
+msgid "限制数字范围："
+msgstr ""
+
+#: app/scripts/oss-common.js:91
+msgid "青岛"
+msgstr ""
+
+#: app/scripts/oss-common.js:339
+msgid "预处理错误"
+msgstr ""
+
+#: app/scripts/oss-common.js:101
+msgid "香港"
+msgstr ""
+
+#: app/scripts/oss-common.js:359
+msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
+msgstr ""

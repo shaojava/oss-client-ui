@@ -10,9 +10,19 @@ angular
         'ui.bootstrap',
         'angularSpinner',
         'OSSCommon',
-        'LocalStorageModule'
+        'LocalStorageModule',
+        'gettext'
     ])
-    .controller('MainCtrl', ['$scope', 'OSSException', 'OSSRegion', function ($scope, OSSException, OSSRegion) {
+    .run(function(gettextCatalog,localStorageService){
+      var _lan = 'zh_CN'
+      var _currLan = localStorageService.get('oss-login-lan')
+      if (_currLan && _currLan.lan) {
+        _lan = _currLan.lan
+      }
+      gettextCatalog.currentLanguage = _lan;
+      gettextCatalog.debug = true;
+    })
+    .controller('MainCtrl', ['$scope', 'OSSException', 'OSSRegion','gettext','gettextCatalog', function ($scope, OSSException, OSSRegion,gettext,gettextCatalog) {
 
         var regions = [];
         angular.forEach(OSSRegion.list(), function (val, key) {
@@ -23,7 +33,7 @@ angular
         });
 
         $scope.region = {
-            name: '选择区域',
+            name: gettextCatalog.getString(gettext('选择区域')),
             value: ''
         };
 
@@ -33,17 +43,17 @@ angular
         //导出授权
         $scope.exportAuthorization = function (accessKeyId, accessKeySecret, deviceCode) {
             if (!accessKeyId || !accessKeyId.length) {
-                alert('请输入 Access Key ID');
+                alert(gettextCatalog.getString(gettext('请输入 Access Key ID')));
                 return;
             }
 
             if (!accessKeySecret || !accessKeySecret.length) {
-                alert('请输入 Access Key Secret');
+                alert(gettextCatalog.getString(gettext('请输入 Access Key Secret')));
                 return;
             }
 
             if (!deviceCode) {
-                alert('请输入要授权的机器码');
+                alert(gettextCatalog.getString(gettext('请输入要授权的机器码')));
                 return;
             }
 
@@ -53,7 +63,7 @@ angular
                 encoding: deviceCode
             }, function (res) {
                 if (!res.error) {
-                    alert('导出成功');
+                    alert(gettextCatalog.getString(gettext('导出成功')));
                 } else if(res.error != 5) {
                     alert(OSSException.getClientErrorMsg(res));
                 }

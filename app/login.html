@@ -23,7 +23,7 @@
 
 <div class="section-wrapper">
     <!--ak as 登录-->
-    <section class="form-horizontal" ng-class="getSectionClass('loginById')" >
+    <section class="form-horizontal login-container" ng-class="getSectionClass('loginById')" >
         <div class="form-group">
             <input type="text" ng-model="accessKeyId" class="form-control" placeholder="Access Key ID"/>
         </div>
@@ -32,23 +32,38 @@
         </div>
         <div class="form-group" ng-show="!isCustomClient">
           <div class="checkbox pull-left">
-            <label><input type="checkbox" ng-model="isCloudHost"/>本机是ECS云主机</label>
+            <label><input type="checkbox" ng-model="isCloudHost"/>
+              <span translate>本机是ECS云主机</span></label>
           </div>
-          <div class="pull-right set-http-server">
-            <a class="set-http-server" ng-click="step = 'setHttpServer';host = customHost;">
-              <i class="fa button-icon button-setting-icon" style="{{customHost&&customHost.length?'color:rgb(45,146,255);':''}}" ng-class="{'fa-check-square-o':customHost && customHost.length,'fa-cog':!customHost || !customHost.length}" style="font-size: 14px;margin-right:5px;"></i>自定义服务器地址</a>
+          <div class="pull-right" style="width:120px;">
+              <location-select select-location="region" login-networktype="netWorkType" default-location="{{defaultLocation}}" disable-select="checkingLocation||(!isCloudHost && !isCustomClient)"
+                               place-holder="{{regionSelectTip}}"/>
+
           </div>
         </div>
         <div class="form-group" >
-            <location-select select-location="region" login-networktype="netWorkType" default-location="{{defaultLocation}}" disable-select="checkingLocation||(!isCloudHost && !isCustomClient)"
-                             place-holder="{{regionSelectTip}}"/>
+          <div class="pull-left set-http-server">
+            <a ng-click="step = 'setHttpServer';host = customHost;">
+              <i class="fa button-icon button-setting-icon" style="{{customHost&&customHost.length?'color:rgb(45,146,255);':''}}" ng-class="{'fa-check-square-o':customHost && customHost.length,'fa-cog':!customHost || !customHost.length}" style="font-size: 14px;margin-right:5px;"></i>
+              <span translate>自定义服务器地址</span>
+            </a>
+          </div>
+          <div class="pull-right" style="width:120px;">
+            <ui-select ng-model="lanLists.selected" search-enabled="true" on-select="selectLan($item)">
+              <ui-select-match placeholder="{{'选择语言'|translate}}">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="lanItem in lanLists">
+                <span ng-bind="lanItem.name| highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
         </div>
-        <div class="form-group">
+
+        <div class="form-group" style="margin-top:15px;">
             <div class="btn-wrapper">
                 <button ng-disabled="loging" class="btn btn-primary btn-login"
-                        ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region)">登&nbsp;&nbsp;&nbsp;&nbsp;录
+                        ng-click="login(accessKeyId,accessKeySecret,isCloudHost,region)" translate>登&nbsp;&nbsp;&nbsp;&nbsp;录
                 </button>
-                <button class="btn btn-default" ng-click="step='importAuthorization'" ng-show="!isCustomClient">导入授权
+                <button class="btn btn-default" ng-click="step='importAuthorization'" ng-show="!isCustomClient" translate>导入授权
                 </button>
             </div>
         </div>
@@ -60,22 +75,24 @@
             <div class="input-group">
                 <input type="text" ng-model="deviceCode" ng-disabled="true" class="form-control"/>
 
-                <div class="input-group-addon"><a href="javascript:void(0)" ng-click="copy(deviceCode)">复制机器码</a></div>
+                <div class="input-group-addon"><a href="javascript:void(0)" ng-click="copy(deviceCode)" translate>复制机器码</a></div>
             </div>
         </div>
         <div class="form-group" ng-show="!isCustomClient">
             <div class="checkbox">
-                <label><input type="checkbox" ng-model="isImportCloudHost"/>本机是ECS云主机</label>
+                <label><input type="checkbox" ng-model="isImportCloudHost"/>
+                  <span translate>本机是ECS云主机</span></label>
             </div>
         </div>
         <div class="form-group">
             <location-select select-location="importRegion" disable-select="!isImportCloudHost && !isCustomClient"
                              place-holder="{{regionSelectTip}}"/>
         </div>
+
         <div class="form-group">
             <div class="btn-wrapper">
-                <button class="btn btn-primary" ng-disabled="loging" ng-click="import(isCloudHost,importRegion.location)">选择文件并导入</button>
-                <button class="btn btn-default" ng-click="step='loginById'">返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
+                <button class="btn btn-primary" ng-disabled="loging" ng-click="import(isCloudHost,importRegion.location)" translate>选择文件并导入</button>
+                <button class="btn btn-default" ng-click="step='loginById'" translate>返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
             </div>
         </div>
     </section>
@@ -83,17 +100,17 @@
     <section class="form-horizontal" ng-class="getSectionClass('setHttpServer')">
       <div class="form-group">
         <i class="fa fa-info-circle pull-left" style="margin-top:3px;"></i>
-        <div style="padding-left:20px;">
+        <div style="padding-left:20px;" translate>
           自定义服务地址设置后只有设置了登录密码才能一直保存，否则下次登录时将自动清空。
         </div>
       </div>
       <div class="form-group">
-        <input type="text" ng-model="host" class="form-control" placeholder="自定义服务器地址"/>
+        <input type="text" ng-model="host" class="form-control" placeholder="{{'自定义服务器地址'|translate}}"/>
       </div>
       <div class="form-group">
         <div class="btn-wrapper">
-          <button class="btn btn-primary" ng-click="customDomain(host);">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
-          <button class="btn btn-default" ng-click="step = 'loginById'">返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
+          <button class="btn btn-primary" ng-click="customDomain(host);" translate>保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
+          <button class="btn btn-default" ng-click="step = 'loginById'" translate>返&nbsp;&nbsp;&nbsp;&nbsp;回</button>
         </div>
       </div>
 
@@ -103,20 +120,20 @@
         <div class="form-group">
             <div class="tip">
                 <i class="fa fa-info-circle"></i>
-                <span>设置一个安全密码，下次打开客户端时只需要输入这个安全密码就能使用客户端</span>
-                <span class="text-muted">(最少6位)</span>
+                <span translate>设置一个安全密码，下次打开客户端时只需要输入这个安全密码就能使用客户端</span>
+                <span class="text-muted" translate>(最少6位)</span>
             </div>
         </div>
         <div class="form-group">
-            <input type="password" ng-model="secretPassword" class="form-control" placeholder="安全密码"/>
+            <input type="password" ng-model="secretPassword" class="form-control" placeholder="{{'安全密码'|translate}}"/>
         </div>
         <div class="form-group">
-            <input type="password" ng-model="reSecretPassword" class="form-control" placeholder="再输一次"/>
+            <input type="password" ng-model="reSecretPassword" class="form-control" placeholder="{{'再输一次'|translate}}"/>
         </div>
         <div class="form-group">
             <div class="btn-wrapper">
-            <button class="btn btn-primary" ng-disabled="setting" ng-click="setPassword(secretPassword,reSecretPassword)">确认设置</button>
-            <button class="btn btn-default" ng-click="skipSetPassword()">跳过设置</button>
+            <button class="btn btn-primary" ng-disabled="setting" ng-click="setPassword(secretPassword,reSecretPassword)" translate>确认设置</button>
+            <button class="btn btn-default" ng-click="skipSetPassword()" translate>跳过设置</button>
             </div>
         </div>
     </section>
@@ -125,17 +142,17 @@
         <div class="form-group">
             <div class="tip">
                 <i class="fa fa-info-circle fa-lg"></i>
-                <span>输入您设置的安全密码即可快速登录管理器</span>
+                <span translate>输入您设置的安全密码即可快速登录管理器</span>
             </div>
         </div>
         <div class="form-group">
-            <input type="password" ng-model="secretPasswordSet" class="form-control" placeholder="安全密码"/>
+            <input type="password" ng-model="secretPasswordSet" class="form-control" placeholder="{{'安全密码'|translate}}"/>
         </div>
         <div class="form-group">
             <div class="btn-wrapper">
-            <button class="btn btn-primary" ng-disabled="loging" ng-click="loginByPassword(secretPasswordSet)">进&nbsp;&nbsp;&nbsp;&nbsp;入
+            <button class="btn btn-primary" ng-disabled="loging" ng-click="loginByPassword(secretPasswordSet)" translate>进&nbsp;&nbsp;&nbsp;&nbsp;入
             </button>
-            <button class="btn btn-default"  ng-click="clearPassword()">清除安全密码</button>
+            <button class="btn btn-default"  ng-click="clearPassword()" translate>清除安全密码</button>
             </div>
         </div>
     </section>
@@ -145,12 +162,12 @@
 </div>
 
 <script src="scripts/vendor.js"></script>
-
 <!-- build:js({.tmp,app}) scripts/login-script.js -->
 <!--<script src="scripts/oss-client.js"></script>-->
 <script src="scripts/interface.js"></script>
 <script src="scripts/oss-common.js"></script>
 <script src="scripts/login.js"></script>
+<script src="po/translations.js"></script>
 <!-- endbuild -->
 </body>
 </html>

@@ -55,7 +55,7 @@ angular.module('OSSCommon', [
 /**
  *   客户端配置的相关信息（定制时用）
  */
-    .factory('OSSConfig', [function () {
+    .factory('OSSConfig', ['gettext',function (gettext) {
         var config = OSS.invoke('configInfo');
         if (!config) {
             config = {
@@ -65,60 +65,60 @@ angular.module('OSSCommon', [
                 locations: [
                     {
                       "location": "oss-cn-guizhou-a",
-                      "name": "互联网",
+                      "name": gettext("互联网"),
                       "enable": 0,
                       "network":"internet"
                     },
                     {
                       "location": "oss-cn-guizhou-a-internal",
-                      "name": "政务外网",
+                      "name": gettext("政务外网"),
                       "enable": 0,
                       "network":"internet"
                     },
                     {
                       "location": "oss-cn-gzzwy-a-internal",
-                      "name": "政务外网",
+                      "name": gettext("政务外网"),
                       "enable": 0,
                       "network":"intranet"
                     },
                     {
                         location: 'oss-cn-hangzhou',
-                        name: '杭州',
+                        name: gettext('杭州'),
                         enable: 1
                     },
                     {
                         location: 'oss-cn-qingdao',
-                        name: '青岛',
+                        name: gettext('青岛'),
                         enable: 1
                     },
                     {
                         location: 'oss-cn-beijing',
-                        name: '北京',
+                        name: gettext('北京'),
                         enable: 1
                     },
                     {
                         location: 'oss-cn-hongkong',
-                        name: '香港',
+                        name: gettext('香港'),
                         enable: 1
                     },
                     {
                         location: 'oss-cn-shenzhen',
-                        name: '深圳',
+                        name: gettext('深圳'),
                         enable: 1
                     },
                     {
                         location: 'oss-cn-shanghai',
-                        name: '上海',
+                        name: gettext('上海'),
                         enable: 1
                     },
                     {
                       location:'oss-ap-southeast-1',
-                      name:'新加坡',
+                      name:gettext('新加坡'),
                       enable:1
                     },
                     {
                       location: 'oss-us-west-1',
-                      name: '美国',
+                      name: gettext('美国'),
                       enable: 1
                     }
                 ]
@@ -284,7 +284,7 @@ angular.module('OSSCommon', [
 /**
  * 抛错处理
  */
-    .factory('OSSException', ['OSSConfig', function (OSSConfig) {
+    .factory('OSSException', ['OSSConfig','gettext','gettextCatalog', function (OSSConfig,gettext,gettextCatalog) {
         var erroList = {
             getClientMessage:function(resError){
                 if(resError.Code == 'AccessDenied' && resError.Message == 'Request has expired.'){
@@ -295,64 +295,52 @@ angular.module('OSSCommon', [
                     var h = parseInt((parseInt(expiresTime)/3600) % 24);
                     var m = parseInt((parseInt(expiresTime)/60) % 60);
                     var s = parseInt(parseInt(expiresTime) % 60)
-                    var str = '数据加载失败，当前您电脑的时间比服务器时间';
+                    var str_fast_day = gettextCatalog.getString(gettext('数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。'),{d:d,h:h,m:m,s:s});
+                    var str_flow_day = gettextCatalog.getString(gettext('数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。'),{d:d,h:h,m:m,s:s});
                     if(clientTime - serverTime > 0){
-                      str += '快'
+                      return str_fast_day
                     }else if(clientTime - serverTime < 0){
-                      str += '慢'
+                      return str_flow_day
                     }else{
-                      return ;
+                      return;
                     }
-                    if(d > 0){
-                      str += d + '天'
-                    }
-                    if(h > 0){
-                      str += h + '小时'
-                    }
-                    if(m > 0){
-                      str += m + '分钟'
-                    }
-                    if(s > 0){
-                      str += s + '秒'
-                    }
-                    str += ",请调整您的电脑时间后重试。"
-                    return str;
+                    return;
                 }else if (erroList[resError.Code]) {
                     return erroList[resError.Code];
                 }else{
                     return resError.Message;
                 }
             },
-            'AccessDenied': '拒绝访问',
-            'BucketAlreadyExists': 'Bucket已经存在',
-            'BucketNotEmpty': 'Bucket不为空',
-            'EntityTooLarge': '实体过大',
-            'EntityTooSmall': '实体过小',
-            'FileGroupTooLarge': '文件组过大',
-            'FilePartNotExist': '文件Part不存在',
-            'FilePartStale': '文件Part过时',
-            'InvalidArgument': '参数格式错误',
-            'InvalidAccessKeyId': 'Access Key ID不存在',
-            'InvalidBucketName': '无效的Bucket名字',
-            'InvalidDigest': '无效的摘要',
-            'InvalidObjectName': '无效的Object名字',
-            'InvalidPart': '无效的Part',
-            'InvalidPartOrder': '无效的part顺序',
-            'InvalidTargetBucketForLogging': 'Logging操作中有无效的目标bucket',
-            'InternalError': 'OSS内部发生错误',
-            'MalformedXML': 'XML格式非法',
-            'MethodNotAllowed': '不支持的方法',
-            'MissingArgument': '缺少参数',
-            'MissingContentLength': '缺少内容长度',
-            'NoSuchBucket': 'Bucket不存在',
-            'NoSuchKey': '文件不存在',
-            'NoSuchUpload': 'Multipart Upload ID不存在',
-            'NotImplemented': '无法处理的方法',
-            'PreconditionFailed': '预处理错误',
-            'RequestTimeTooSkewed': '发起请求的时间和服务器时间超出15分钟',
-            'RequestTimeout': '请求超时',
-            'SignatureDoesNotMatch': '签名错误',
-            'TooManyBuckets': 'Bucket数目超过限制'
+            'AccessDenied': gettextCatalog.getString(gettext('拒绝访问')),
+            'BucketAlreadyExists': gettextCatalog.getString(gettext('Bucket已经存在')),
+            'BucketNotEmpty': gettextCatalog.getString(gettext('Bucket不为空')),
+            'EntityTooLarge': gettextCatalog.getString(gettext('实体过大')),
+            'EntityTooSmall': gettextCatalog.getString(gettext('实体过小')),
+            'FileGroupTooLarge': gettextCatalog.getString(gettext('文件组过大')),
+            'FilePartNotExist': gettextCatalog.getString(gettext('文件Part不存在')),
+            'FilePartStale': gettextCatalog.getString(gettext('文件Part过时')),
+            'InvalidArgument': gettextCatalog.getString(gettext('参数格式错误')),
+            'InvalidAccessKeyId': gettextCatalog.getString(gettext('Access Key ID不存在')),
+            'InvalidBucketName': gettextCatalog.getString(gettext('无效的Bucket名字')),
+            'InvalidDigest': gettextCatalog.getString(gettext('无效的摘要')),
+            'InvalidObjectName': gettextCatalog.getString(gettext('无效的Object名字')),
+            'InvalidPart': gettextCatalog.getString(gettext('无效的Part')),
+            'InvalidPartOrder': gettextCatalog.getString(gettext('无效的part顺序')),
+            'InvalidTargetBucketForLogging': gettextCatalog.getString(gettext('Logging操作中有无效的目标bucket')),
+            'InternalError': gettextCatalog.getString(gettext('OSS内部发生错误')),
+            'MalformedXML': gettextCatalog.getString(gettext('XML格式非法')),
+            'MethodNotAllowed': gettextCatalog.getString(gettext('不支持的方法')),
+            'MissingArgument': gettextCatalog.getString(gettext('缺少参数')),
+            'MissingContentLength': gettextCatalog.getString(gettext('缺少内容长度')),
+            'NoSuchBucket': gettextCatalog.getString(gettext('Bucket不存在')),
+            'NoSuchKey': gettextCatalog.getString(gettext('文件不存在')),
+            'NoSuchUpload': gettextCatalog.getString(gettext('Multipart Upload ID不存在')),
+            'NotImplemented': gettextCatalog.getString(gettext('无法处理的方法')),
+            'PreconditionFailed': gettextCatalog.getString(gettext('预处理错误')),
+            'RequestTimeTooSkewed': gettextCatalog.getString(gettext('发起请求的时间和服务器时间超出15分钟')),
+            'RequestTimeout': gettextCatalog.getString(gettext('请求超时')),
+            'SignatureDoesNotMatch': gettextCatalog.getString(gettext('签名错误')),
+            'TooManyBuckets': gettextCatalog.getString(gettext('Bucket数目超过限制'))
         };
         return {
             getError: function (res, status) {
@@ -366,9 +354,9 @@ angular.module('OSSCommon', [
                     if (status == 403) {
                         msg = erroList['AccessDenied'];
                     } else {
-                        msg = '网络请求错误';
+                        msg = gettextCatalog.getString(gettext('网络请求错误'));
                         if (OSSConfig.isCustomClient()) {
-                            msg += '<p class="text-muted">（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）</p>';
+                            msg += '<p class="text-muted">'+gettextCatalog.getString(gettext('（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）'))+'</p>';
                         }
                     }
                     angular.extend(error, {

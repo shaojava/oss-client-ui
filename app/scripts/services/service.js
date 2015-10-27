@@ -11,7 +11,7 @@ angular.module('ossClientUiApp')
 /**
  * 信息提示框
  */
-    .factory('OSSAlert', ['$modal', function ($modal) {
+    .factory('OSSAlert', ['$modal','gettextCatalog','gettext', function ($modal,gettextCatalog,gettext) {
 
         function openAlertModal(type, message, title, buttons,errOptions) {
             var option = {
@@ -62,17 +62,17 @@ angular.module('ossClientUiApp')
 
         return {
             confirm:function(message,title){
-                title = angular.isUndefined(title) ? '请确认' : title;
+                title = angular.isUndefined(title) ? gettextCatalog.getString(gettext('请确认')) : title;
                 var buttons = [
                     {
-                        text: '确定',
+                        text: gettextCatalog.getString(gettext('确定')),
                         classes: 'btn btn-primary',
                         callback:function($modalInstance){
                             $modalInstance.close();
                         }
                     },
                     {
-                        text: '取消',
+                        text: gettextCatalog.getString(gettext('取消')),
                         classes: 'btn btn-default',
                         callback:function($modalInstance){
                             $modalInstance.dismiss('cancel');
@@ -82,44 +82,44 @@ angular.module('ossClientUiApp')
                 return openAlertModal('warning', message, title, buttons);
             },
             info: function (message, title, buttons) {
-                title = angular.isUndefined(title) ? '信息' : title;
+                title = angular.isUndefined(title) ? gettextCatalog.getString(gettext('信息')) : title;
                 buttons = angular.isUndefined(buttons) ? [
                     {
-                        text: '关闭',
+                        text: gettextCatalog.getString(gettext('关闭')),
                         classes: 'btn btn-default'
                     }
                 ] : buttons;
                 return openAlertModal('info', message, title, buttons);
             },
             warning: function (message, title, buttons) {
-                title = angular.isUndefined(title) ? '警告' : title;
+                title = angular.isUndefined(title) ? gettextCatalog.getString(gettext('警告')) : title;
                 buttons = angular.isUndefined(buttons) ? [
                     {
-                        text: '确认',
+                        text: gettextCatalog.getString(gettext('确认')),
                         classes: 'btn btn-primary'
                     },
                     {
-                        text: '关闭',
+                        text: gettextCatalog.getString(gettext('关闭')),
                         classes: 'btn btn-default'
                     }
                 ] : buttons;
                 return openAlertModal('warning', message, title, buttons);
             },
             error: function (message, title, buttons,otherOption) {
-                title = angular.isUndefined(title) || !title ? '错误' : title;
+                title = angular.isUndefined(title) || !title ? gettextCatalog.getString(gettext('错误')) : title;
                 buttons = angular.isUndefined(buttons) || !buttons ? [
                     {
-                        text: '关闭',
+                        text: gettextCatalog.getString(gettext('关闭')),
                         classes: 'btn btn-default'
                     }
                 ] : buttons;
                 return openAlertModal('error', message, title, buttons,otherOption);
             },
             success: function (message, title, buttons) {
-                title = angular.isUndefined(title) ? '成功' : title;
+                title = angular.isUndefined(title) ? gettextCatalog.getString(gettext('成功')) : title;
                 buttons = angular.isUndefined(buttons) ? [
                     {
-                        text: '关闭',
+                        text: gettextCatalog.getString(gettext('关闭')),
                         classes: 'btn btn-default'
                     }
                 ] : buttons;
@@ -355,7 +355,7 @@ angular.module('ossClientUiApp')
 /**
  * 上传、下载队列的操作菜单
  */
-    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout','OSSAlert', 'OSSDownloadQueue','OSSUploadQueue',function ($rootScope, OSSQueueItem, $timeout,OSSAlert,OSSDownloadQueue,OSSUploadQueue) {
+    .factory('OSSQueueMenu', ['$rootScope', 'OSSQueueItem', '$timeout','OSSAlert', 'OSSDownloadQueue','OSSUploadQueue','gettext','gettextCatalog',function ($rootScope, OSSQueueItem, $timeout,OSSAlert,OSSDownloadQueue,OSSUploadQueue,gettext,gettextCatalog) {
         /**
          * 检测参数的合法性
          * @param selectedItems
@@ -426,7 +426,7 @@ angular.module('ossClientUiApp')
         var uploadMenu = [
             {
                 name: 'start',
-                text: '开始',
+                text: gettext('开始'),
                 execute: function (selectedItems) {
                     if (!checkArgValid(selectedItems)) {
                         return;
@@ -457,7 +457,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'pause',
-                text: '暂停',
+                text: gettext('暂停'),
                 execute: function (selectedItems) {
                     if (!checkArgValid(selectedItems)) {
                         return;
@@ -496,9 +496,15 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'cancel',
-                text: '取消',
+                text: gettext('取消'),
                 execute: function (selectedItems) {
-                    var msg = '你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的上传？';
+                    var msg = "";
+                    if (selectedItems.length == 1){
+                      msg = gettextCatalog.getString(gettext("你确定要取消这个文件的上传？"))
+                    }else if (selectedItems.length > 1){
+                      msg = gettextCatalog.getString(gettext("你确定要取消这{{fileLen}}个文件的上传？"),{fileLen:selectedItems.length})
+                    }
+
                     OSSAlert.confirm(msg).result.then(function(){
                         if (!checkArgValid(selectedItems)) {
                             return;
@@ -535,7 +541,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'remove',
-                text: '移除',
+                text: gettext('移除'),
                 execute: function (selectedItems) {
                     if (!checkArgValid(selectedItems)) {
                         return;
@@ -563,7 +569,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'pauseAll',
-                text: '全部暂停',
+                text: gettext('全部暂停'),
                 execute: function (selectedItems, items) {
                     OSS.invoke('stopUpload', prepareUpladParam(), function () {
                         $timeout(function () {
@@ -579,7 +585,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'startAll',
-                text: '全部开始',
+                text: gettext('全部开始'),
                 execute: function (selectedItems, items) {
                     OSS.invoke('startUpload', prepareUpladParam(), function () {
                         $timeout(function () {
@@ -595,9 +601,9 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'stopAll',
-                text: '全部取消',
+                text: gettext('全部取消'),
                 execute: function (selectedItems, items) {
-                    var msg = '你确定要取消所有上传？';
+                    var msg = gettextCatalog.getString(gettext('你确定要取消所有上传？'));
                     OSSAlert.confirm(msg).result.then(function(){
                         OSS.invoke('deleteUpload', prepareUpladParam(false,0), function () {
                             $timeout(function () {
@@ -612,7 +618,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'removeAll',
-                text: '清空已完成',
+                text: gettext('清空已完成'),
                 execute: function (selectItems, items) {
                     OSS.invoke('deleteUpload', {
                         finish: 1,
@@ -641,7 +647,7 @@ angular.module('ossClientUiApp')
         var downloadMenu = [
             {
                 name: 'start',
-                text: '开始',
+                text: gettext('开始'),
                 execute: function (selectedItems) {
                     if (!checkArgValid(selectedItems)) {
                         return;
@@ -672,7 +678,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'pause',
-                text: '暂停',
+                text: gettext('暂停'),
                 execute: function (selectedItems) {
                     if (!checkArgValid(selectedItems)) {
                         return;
@@ -713,9 +719,14 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'cancel',
-                text: '取消',
+                text: gettext('取消'),
                 execute: function (selectedItems) {
-                    var msg = '你确定要取消' + (selectedItems.length == 1 ? '这个' : '这' + selectedItems.length + '个') + '文件的下载？';
+                    var msg = ""
+                    if (selectedItems.length == 1){
+                      msg = gettextCatalog.getString(gettext('你确定要取消这个文件的下载？'));
+                    }else if (selectedItems.length > 1) {
+                      msg = gettextCatalog.getString(gettext('你确定要取消这{{fileLen}}文件的下载？'), {fileLen: selectedItems.length});
+                    }
                     OSSAlert.confirm(msg).result.then(function(){
                         if (!checkArgValid(selectedItems)) {
                             return;
@@ -747,7 +758,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'remove',
-                text: '移除',
+                text: gettext('移除'),
                 execute: function (selectedItems) {
                     if (!checkArgValid(selectedItems)) {
                         return;
@@ -776,7 +787,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'pauseAll',
-                text: '全部暂停',
+                text: gettext('全部暂停'),
                 execute: function (selectItems, items) {
                     OSS.invoke('stopDownload', prepareDownloadParam(), function () {
                         $timeout(function () {
@@ -793,7 +804,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'startAll',
-                text: '全部开始',
+                text: gettext('全部开始'),
                 execute: function (selectItems, items) {
                     OSS.invoke('startDownload', prepareDownloadParam(), function () {
                         _.each(_.filter(items, function (item) {
@@ -807,9 +818,9 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'stopAll',
-                text: '全部取消',
+                text: gettext('全部取消'),
                 execute: function (selectedItems, items) {
-                    var msg = '你确定要取消所有下载？';
+                    var msg = gettextCatalog.getString(gettext('你确定要取消所有下载？'));
                     OSSAlert.confirm(msg).result.then(function(){
                         OSS.invoke('deleteDownload', prepareDownloadParam(false,0), function () {
                             $timeout(function () {
@@ -824,7 +835,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'removeAll',
-                text: '清空已完成',
+                text: gettext('清空已完成'),
                 execute: function (selectItems, items) {
                     OSS.invoke('deleteDownload', {
                         finish: 1,
@@ -888,14 +899,14 @@ angular.module('ossClientUiApp')
 /**
  * object的操作菜单
  */
-    .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException','OSSConfig', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException,OSSConfig) {
+    .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException','OSSConfig','gettext','gettextCatalog', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException,OSSConfig,gettext,gettextCatalog) {
         var currentMenus = 'upload create paste downloadcurrent'.split(' '),
             selectMenus = 'download copy del get_uri set_header paste'.split(' '),
             groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
         var allMenu = [
             {
                 name: 'upload',
-                text: '上传',
+                text: gettext('上传'),
                 getState: function () {
                     return 1;
                 },
@@ -925,18 +936,18 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'create',
-                text: '新建文件夹',
+                text: gettext('新建文件夹'),
                 getState: function () {
                     return 1;
                 },
                 execute: function (bucket, currentObject) {
                     $rootScope.$broadcast('createObject', function (filename, callback) {
-                        var msg  = '文件夹名称格式错误';
+                        var msg  = gettextCatalog.getString(gettext('文件夹名称格式错误'));
                         msg += '<p class="text-muted">';
-                        msg += '1. 只能包含字母，数字，中文，下划线（_）和短横线（-）,小数点（.）<br/>';
-                        msg += '2. 只能以字母、数字或者中文开头<br/>';
-                        msg += '3. 文件夹的长度限制在1-254之间<br/>';
-                        msg += '4. Object总长度必须在1-1023之间<br/>';
+                        msg += gettextCatalog.getString(gettext('1. 只能包含字母，数字，中文，下划线（_）和短横线（-）,小数点（.）'))+'<br/>';
+                        msg += gettextCatalog.getString(gettext('2. 只能以字母、数字或者中文开头'))+'<br/>';
+                        msg += gettextCatalog.getString(gettext('3. 文件夹的长度限制在1-254之间'))+'<br/>';
+                        msg += gettextCatalog.getString(gettext('4. Object总长度必须在1-1023之间'))+'<br/>';
                         msg += '</p>';
 
                         if(!/^[a-zA-Z0-9\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5_\-.]{0,253}$/.test(filename)){
@@ -957,7 +968,7 @@ angular.module('ossClientUiApp')
                         }
                         //新建之前先去检测是否有同名的文件夹
                         OSSApi.getObjectMeta(bucket,objectPath).success(function(){
-                            $rootScope.$broadcast('showError','已存在相同名称的文件夹');
+                            $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('已存在相同名称的文件夹')));
                             $.isFunction(callback) && callback(false);
                         }).error(function(response, statusCode){
                             var error = OSSException.getError(response, statusCode);
@@ -984,7 +995,7 @@ angular.module('ossClientUiApp')
             },
             {
               name: 'downloadcurrent',
-              text: '下载当前目录',
+              text: gettext('下载当前目录'),
               getState: function(){
                 return 1;
               },
@@ -1018,7 +1029,7 @@ angular.module('ossClientUiApp')
             },
             {
               name: 'bucketdownload',
-              text: '下载',
+              text: gettext('下载'),
               getState: function () {
                 return 1;
               },
@@ -1050,7 +1061,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'download',
-                text: '下载',
+                text: gettext('下载'),
                 getState: function (selectedFiles) {
                     var len = selectedFiles.length;
                     if (!len) {
@@ -1090,7 +1101,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'copy',
-                text: '复制',
+                text: gettext('复制'),
                 getState: function (selectedFiles) {
                     var len = selectedFiles.length;
                     if (!len) {
@@ -1109,7 +1120,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'paste',
-                text: '粘贴',
+                text: gettext('粘贴'),
                 getState: function () {
                     return Clipboard.len() ? 1 : -1;
                 },
@@ -1126,7 +1137,7 @@ angular.module('ossClientUiApp')
                             }
                         });
                         if(bucket['Location'] != targetBucket['Location']){
-                            $rootScope.$broadcast('showError','不同区域的Bucket之间不能复制');
+                            $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('不同区域的Bucket之间不能复制')));
                             return;
                         }
                         var copyToCurrent = selectedFiles.length == 1 && selectedFiles[0].dir ? false : true;
@@ -1151,7 +1162,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'del',
-                text: '删除',
+                text: gettext('删除'),
                 getState: function (selectedFiles) {
                     var len = selectedFiles.length;
                     if (!len) {
@@ -1160,7 +1171,7 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
-                    OSSAlert.confirm('确定要删除？').result.then(function(){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('确定要删除？'))).result.then(function(){
                         var list = _.map(selectedFiles, function (object) {
                             return {
                                 object: object.path
@@ -1183,7 +1194,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'get_uri',
-                text: '获取地址',
+                text: gettext('获取地址'),
                 getState: function (selectedFiles) {
                     var len = selectedFiles.length;
                     if (!len || len > 1) {
@@ -1198,7 +1209,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'set_header',
-                text: '设置HTTP头',
+                text: gettext('设置HTTP头'),
                 getState: function (selectedFiles) {
                     if (!selectedFiles || selectedFiles.length == 0)
                       return 0;
@@ -1222,7 +1233,7 @@ angular.module('ossClientUiApp')
         if(OSSConfig.showRefer()){
           var referSetting = {
               name: 'refer',
-              text: 'Refer设置',
+              text: gettext('Refer设置'),
               getState: function () {
                 return 1;
               },
@@ -1277,11 +1288,11 @@ angular.module('ossClientUiApp')
 /**
  * 碎片的的操作菜单
  */
-    .factory('OSSUploadMenu', ['Bucket','OSSAlert', 'OSSApi', '$rootScope', 'OSSModal','OSSException',function (Bucket, OSSAlert,OSSApi,$rootScope, OSSModal,OSSException) {
+    .factory('OSSUploadMenu', ['Bucket','OSSAlert', 'OSSApi', '$rootScope', 'OSSModal','OSSException','gettext','gettextCatalog',function (Bucket, OSSAlert,OSSApi,$rootScope, OSSModal,OSSException,gettext,gettextCatalog) {
         var allMenu = [
             {
                 name: 'remove',
-                text: '删除',
+                text: gettext('删除'),
                 getState: function (selectedUploads) {
                     var len = selectedUploads.length;
                     if (!len) {
@@ -1290,7 +1301,7 @@ angular.module('ossClientUiApp')
                     return 1;
                 },
                 execute: function (selectedUploads) {
-                    OSSAlert.confirm('确定要删除选择的碎片？').result.then(function(){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('确定要删除选择的碎片？'))).result.then(function(){
                         angular.forEach(selectedUploads, function (upload) {
                             OSSApi.deleteUpload(Bucket.getCurrentBucket(), upload).success(function () {
                                 $rootScope.$broadcast('removeUpload', upload);
@@ -1303,7 +1314,7 @@ angular.module('ossClientUiApp')
             },
             {
                 name: 'detail',
-                text: '详细',
+                text: gettext('详细'),
                 getState: function (selectedUploads) {
                     var len = selectedUploads.length;
                     if (!len || len > 1) {
@@ -1539,12 +1550,12 @@ angular.module('ossClientUiApp')
 /**
  * 面包屑相关
  */
-    .factory('Bread', ['OSSLocation', function (OSSLocation) {
+    .factory('Bread', ['OSSLocation','gettext','gettextCatalog', function (OSSLocation,gettext,gettextCatalog) {
         var getFilterName = function (filter) {
             var filterName = '';
             switch (filter) {
                 case 'upload':
-                    filterName = '碎片管理';
+                    filterName = gettextCatalog.getString(gettext('碎片管理'));
                     break;
 
             }
@@ -1646,7 +1657,7 @@ angular.module('ossClientUiApp')
 /**
  * bucket相关
  */
-    .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope','OSSRegion','localStorageService','OSSConfig', function (OSSApi, $q,OSSException,$rootScope,OSSRegion,localStorageService,OSSConfig) {
+    .factory('Bucket', ['OSSApi', '$q','OSSException','$rootScope','OSSRegion','localStorageService','OSSConfig','gettext','gettextCatalog', function (OSSApi, $q,OSSException,$rootScope,OSSRegion,localStorageService,OSSConfig,gettext,gettextCatalog) {
         var buckets = null;
         var deferred = $q.defer();
         var listPromise;
@@ -1664,7 +1675,7 @@ angular.module('ossClientUiApp')
                     OSSApi.getBuckets().success(function (res) {
                         $rootScope.$broadcast('bucketsLoaded');
                         if(!res['ListAllMyBucketsResult']){
-                            $rootScope.$broadcast('showError','数据请求失败，如果你自定义了服务器地址，请检查是否正常。');
+                            $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('数据请求失败，如果你自定义了服务器地址，请检查是否正常。')));
                             return;
                         }
                         var resBuckets = [];
@@ -1794,9 +1805,9 @@ angular.module('ossClientUiApp')
             },
             getAcls: function () {
                 return {
-                    "public-read": "公共读",
-                    "public-read-write": "公共读写",
-                    "private": "私有"
+                    "public-read": gettext("公共读"),
+                    "public-read-write": gettext("公共读写"),
+                    "private": gettext("私有")
                 }
             },
             getBucket: function (buckeName) {
@@ -2312,7 +2323,7 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService) {
+    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -2335,15 +2346,32 @@ angular.module('ossClientUiApp')
 
                         $scope.setting = OSS.invoke('getTransInfo');
 
+                        $scope.lanLists = [{name:'简体中文',lan:'zh_CN'},{name:'繁体中文',lan:'zh_TW'},{name:'English',lan:'en_US'}]
+                        var initLan = function () {
+                          var currLan = localStorageService.get('oss-login-lan');
+                          if (currLan && currLan.lan) {
+                            var selectLan = _.find($scope.lanLists,function(item){
+                              return item.lan === currLan.lan;
+                            })
+                            $scope.lanLists.selected = selectLan;
+                          }else{
+                            $scope.lanLists.selected = $scope.lanLists[0];
+                          }
+                        }
+                        initLan();
+                        //$scope.selectLan = function ($item){
+                        //  localStorageService.set('oss-login-lan',$item)
+                        //  gettextCatalog.setCurrentLanguage($item.lan)
+                        //}
                         var checkSetting = function(setting){
                             var unValidMsg = '';
                             angular.forEach(setting,function(val,key){
                                     if(!/^[1-9]{1}[0-9]*$/.test(val)){
-                                        unValidMsg = '设置的值必须是正整数';
+                                        unValidMsg = gettextCatalog.getString(gettext('设置的值必须是正整数'));
                                         if(_.indexOf(['upload_peer_max','download_peer_max'],key) >= 0){
-                                            unValidMsg = '单任务线程数必须是大于' +  $scope.min + '小于等于'+$scope.max+'的整数';
+                                            unValidMsg = gettextCatalog.getString(gettext('单任务线程数必须是大于{{min}}小于等于{{max}}的整数'),{min:$scope.min,max:$scope.max});
                                         }else{
-                                            unValidMsg = '同时任务数必须是大于' +  $scope.min + '小于等于'+$scope.maxTaskLimit+'的整数';
+                                            unValidMsg = gettextCatalog.getString(gettext('同时任务数必须是大于{{min}}小于等于{{max}}的整数'),{min:$scope.min,max:$scope.maxTaskLimit});
                                         }
                                         return false;
                                     }
@@ -2369,6 +2397,8 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.saveSetting = function(setting){
+                            localStorageService.set('oss-login-lan',$scope.lanLists.selected)
+                            gettextCatalog.setCurrentLanguage($scope.lanLists.selected.lan)
                             if(!checkSetting(setting)){
                                 return;
                             }
@@ -2490,11 +2520,11 @@ angular.module('ossClientUiApp')
                         $scope.loading = false;
                         $scope.createBucket = function (bucketName, region, acl) {
                             if (!bucketName || !bucketName.length) {
-                                $rootScope.$broadcast('showError','Bucket的名称不能为空');
+                                $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('Bucket的名称不能为空')));
                                 return;
                             }
                             if(!/^[a-z0-9][a-z0-9\-]{1,61}[a-z0-9]$/.test(bucketName)){
-                                $rootScope.$broadcast('showError','Bucket的名称格式错误');
+                                $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('Bucket的名称格式错误')));
                                 return;
                             }
                             if(Bucket.getBucket(bucketName)){
@@ -2502,7 +2532,7 @@ angular.module('ossClientUiApp')
                                   bucketName:bucketName,
                                   Code: "BucketAlreadyExists"
                                 }
-                                $rootScope.$broadcast('showError','已存在相同名称的Bucket',null,null,_options);
+                                $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('已存在相同名称的Bucket')),null,null,_options);
                                 return;
                             }
                             $scope.loading = true;
@@ -2680,21 +2710,21 @@ angular.module('ossClientUiApp')
                                 }
                             });
                             if(contentTypeRequired){
-                              var msg  = 'HTTP属性值格式错误';
-                              msg += '<p class="text-muted">Content-Type是必填字段</p>'
+                              var msg  = gettextCatalog.getString(gettext('HTTP属性值格式错误'));
+                              msg += '<p class="text-muted">'+gettextCatalog.getString(gettext('Content-Type是必填字段'))+'</p>'
                               $rootScope.$broadcast('showError',msg);
                               return;
                             }
                             if(unValidFieldValue){
-                                var msg  = 'HTTP属性值格式错误';
-                                msg += '<p class="text-muted">属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号</p>'
+                                var msg  = gettextCatalog.getString(gettext('HTTP属性值格式错误'));
+                                msg += '<p class="text-muted">'+gettextCatalog.getString(gettext('属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号'))+'</p>'
                                 $rootScope.$broadcast('showError',msg);
                                 return;
                             }
 
                             if(unValidField){
-                                var msg  = '属性名称格式错误';
-                                msg += '<p class="text-muted">属性名称只能包含英文、数子或横线</p>'
+                                var msg  = gettextCatalog.getString(gettext('属性名称格式错误'));
+                                msg += '<p class="text-muted">'+gettextCatalog.getString(gettext('属性名称只能包含英文、数子或横线'))+'</p>'
                                 $rootScope.$broadcast('showError',msg);
                                 return;
                             }
@@ -2737,7 +2767,7 @@ angular.module('ossClientUiApp')
                                     $scope.saving = false;
                                     var _errorMsg = '';
                                     angular.forEach(errorSetObjects,function(item){
-                                      _errorMsg += "文件"+item.filename+"设置http头的错误信息:"+item.errmsg + "<br/>"
+                                      _errorMsg += gettextCatalog.getString(gettext("文件{{fileName}}设置http头的错误信息:"),{fileName:item.filename})+item.errmsg + "<br/>"
                                     })
                                     $rootScope.$broadcast('showError', _errorMsg);
                                   }
@@ -3017,7 +3047,7 @@ angular.module('ossClientUiApp')
 
                         $scope.copyToClipborad = function (uri) {
                             OSS.invoke('setClipboardData', uri);
-                            alert('已复制到剪切板');
+                            alert(gettextCatalog.getString(gettext('已复制到剪切板')));
                         };
 
                         $scope.cancel = function () {
@@ -3107,15 +3137,15 @@ angular.module('ossClientUiApp')
 
                         $scope.delConfirm = function (accessKey, accessSecret) {
                             if (!accessKey) {
-                                $rootScope.$broadcast('showError','请输入 Access Key ID');
+                                $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('请输入 Access Key ID')));
                                 return;
                             }
                             if (!accessSecret) {
-                                $rootScope.$broadcast('showError','请输入 Access Key Secret');
+                                $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('请输入 Access Key Secret')));
                                 return;
                             }
 
-                            OSSAlert.confirm('确定要删除Bucket “' + bucket.Name + '“吗？删除后数据将无法恢复').result.then(function(){
+                            OSSAlert.confirm(gettextCatalog.getString(gettext('确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复'),{bucketName:bucket.Name})).result.then(function(){
                                 $modalInstance.close({
                                     accessKey: accessKey,
                                     accessSecret: accessSecret

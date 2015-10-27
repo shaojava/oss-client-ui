@@ -8,6 +8,7 @@ body{
 
   .ui-select-choices.dropdown-menu{
     max-height: 100px;
+    min-width:100px;
     overflow-y:auto;
   }
 
@@ -18,7 +19,7 @@ body{
       div.set-http-server{
         line-height: 35px;
         > a{
-          color:#bababa;
+          color:#bababa !important;
           cursor:pointer;
         }
       }
@@ -50,4 +51,8 @@ body{
 
 .custom-client.oss-dialog .form-group .btn-login{
   width: 95%;
+}
+
+.oss-dialog .login-container div.form-group{
+  margin-bottom:15px;
 }
