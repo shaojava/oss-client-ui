@@ -12,7 +12,7 @@ msgstr ""
 "X-Generator: Poedit 1.7.7\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: app/login.html:119
+#: app/login.html:124
 msgid "(最少6位)"
 msgstr "（最少6位）"
 
@@ -69,19 +69,19 @@ msgstr "Bucket已經存在"
 msgid "Bucket数目超过限制"
 msgstr "Bucket數目超過限制"
 
-#: app/scripts/services/service.js:2504
+#: app/scripts/services/service.js:2523
 msgid "Bucket的名称不能为空"
 msgstr "Bucket的名稱不能為空"
 
-#: app/scripts/services/service.js:2508
+#: app/scripts/services/service.js:2527
 msgid "Bucket的名称格式错误"
 msgstr "Bucket的名稱格式錯誤"
 
-#: app/scripts/services/service.js:2695
+#: app/scripts/services/service.js:2714
 msgid "Content-Type是必填字段"
 msgstr "Content-Type是必要欄位"
 
-#: app/scripts/services/service.js:2694 app/scripts/services/service.js:2700
+#: app/scripts/services/service.js:2713 app/scripts/services/service.js:2719
 msgid "HTTP属性值格式错误"
 msgstr "HTTP屬性值格式錯誤"
 
@@ -185,7 +185,7 @@ msgstr "下載佇列"
 msgid "不允许为空"
 msgstr "不允許為空"
 
-#: app/views/filelist.html:17
+#: app/views/filelist.html:23
 msgid "不再提示"
 msgstr "不再提示"
 
@@ -245,7 +245,7 @@ msgstr ""
 "你連續密碼輸入錯誤已超過 {{allowErrorCount}} 次，請重新使用Access Key ID 和 "
 "Access Key Secret登錄"
 
-#: app/login.html:107
+#: app/login.html:112
 msgid "保&nbsp;&nbsp;&nbsp;&nbsp;存"
 msgstr "保&nbsp;&nbsp;&nbsp;&nbsp;存"
 
@@ -291,7 +291,7 @@ msgstr "公共讀寫"
 msgid "关闭"
 msgstr "關閉"
 
-#: app/login.html:126
+#: app/login.html:131
 msgid "再输一次"
 msgstr "再輸一次"
 
@@ -299,7 +299,7 @@ msgstr "再輸一次"
 msgid "分"
 msgstr "分"
 
-#: app/views/filelist.html:21 app/views/uploadlist.html:10
+#: app/views/filelist.html:27 app/views/uploadlist.html:10
 msgid "创建时间"
 msgstr "創建時間"
 
@@ -328,7 +328,7 @@ msgstr "前進到 {{path}}"
 msgid "剩余加速时长:"
 msgstr "剩餘加速時長:"
 
-#: app/views/filelist.html:63
+#: app/views/filelist.html:69
 msgid "加载中..."
 msgstr "載入中..."
 
@@ -344,7 +344,7 @@ msgstr "北京"
 msgid "匹配正则:"
 msgstr "匹配正則:"
 
-#: app/scripts/services/service.js:2355
+#: app/scripts/services/service.js:2372
 msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr "單任務執行緒數必須是大於 {{min}} 小於等於 {{max}} 的整數"
 
@@ -366,11 +366,11 @@ msgstr "發起請求的時間和伺服器時間超出15分鐘"
 #: app/views/del_bucket_confirm_modal.html:23
 #: app/views/set_http_header_modal.html:55
 #: app/views/set_image_server_modal.html:72 app/views/set_refer_modal.html:42
-#: app/views/setting_modal.html:45
+#: app/views/setting_modal.html:59
 msgid "取消"
 msgstr "取消"
 
-#: app/scripts/services/service.js:2357
+#: app/scripts/services/service.js:2374
 msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr "同時任務數必須是大於 {{min}} 小於等於 {{max}} 的整數"
 
@@ -423,7 +423,7 @@ msgstr "複製"
 msgid "复制成功"
 msgstr "複製成功"
 
-#: app/login.html:73
+#: app/login.html:78
 msgid "复制机器码"
 msgstr "複製機器碼"
 
@@ -431,7 +431,7 @@ msgstr "複製機器碼"
 msgid "大于{{dateLen}}天"
 msgstr "大於{{dateLen}}天"
 
-#: app/views/filelist.html:22 app/views/upload_detail_modal.html:10
+#: app/views/filelist.html:28 app/views/upload_detail_modal.html:10
 msgid "大小"
 msgstr "大小"
 
@@ -439,7 +439,7 @@ msgstr "大小"
 msgid "存储区域："
 msgstr "存儲區域:"
 
-#: app/login.html:123 app/login.html:144
+#: app/login.html:128 app/login.html:149
 msgid "安全密码"
 msgstr "安全密碼"
 
@@ -459,7 +459,7 @@ msgstr "實體過小"
 msgid "密码长度最少6位"
 msgstr "密碼長度最少6位"
 
-#: app/login.html:61
+#: app/login.html:66
 msgid "导入授权"
 msgstr "導入授權"
 
@@ -468,11 +468,11 @@ msgid "导出成功"
 msgstr "匯出成功"
 
 #: app/export-authorization.html:14 app/export-authorization.html:28
-#: app/views/setting_modal.html:44
+#: app/views/setting_modal.html:58
 msgid "导出授权"
 msgstr "匯出授權"
 
-#: app/scripts/controllers/main.js:547
+#: app/scripts/controllers/main.js:547 app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr "小技巧:使用Shift和Ctrl鍵 (Mac下Command鍵) 可以實現多選操作。"
 
@@ -484,7 +484,7 @@ msgstr "屬性內容"
 msgid "属性名称"
 msgstr "屬性名稱"
 
-#: app/scripts/services/service.js:2701
+#: app/scripts/services/service.js:2720
 msgid ""
 "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文"
 "冒号、英文双引号和等号"
@@ -492,11 +492,11 @@ msgstr ""
 "屬性名稱只能包含英文、數子、橫線、底線、斜杠、點、英文分號、英文逗號、英文冒"
 "號、英文雙引號和等號"
 
-#: app/scripts/services/service.js:2708
+#: app/scripts/services/service.js:2727
 msgid "属性名称只能包含英文、数子或横线"
 msgstr "屬性名稱只能包含英文、數子或橫線"
 
-#: app/scripts/services/service.js:2707
+#: app/scripts/services/service.js:2726
 msgid "属性名称格式错误"
 msgstr "屬性名稱格式錯誤"
 
@@ -504,11 +504,11 @@ msgstr "屬性名稱格式錯誤"
 msgid "属性管理"
 msgstr "屬性管理"
 
-#: app/scripts/services/service.js:3031
+#: app/scripts/services/service.js:3050
 msgid "已复制到剪切板"
 msgstr "已複製到剪切板"
 
-#: app/scripts/services/service.js:2516
+#: app/scripts/services/service.js:2535
 msgid "已存在相同名称的Bucket"
 msgstr "已存在相同名稱的Bucket"
 
@@ -591,7 +591,7 @@ msgstr "檔Part不存在"
 msgid "文件Part过时"
 msgstr "檔Part過時"
 
-#: app/scripts/services/service.js:2751
+#: app/scripts/services/service.js:2770
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr "檔 {{fileName}} 設置HTTP頭的錯誤資訊:"
 
@@ -599,7 +599,7 @@ msgstr "檔 {{fileName}} 設置HTTP頭的錯誤資訊:"
 msgid "文件不存在"
 msgstr "檔不存在"
 
-#: app/views/filelist.html:20 app/views/uploadlist.html:9
+#: app/views/filelist.html:26 app/views/uploadlist.html:9
 msgid "文件名"
 msgstr "檔案名"
 
@@ -672,7 +672,7 @@ msgstr "是否只允許通過 Style 來訪問影像處理介面"
 msgid "暂停"
 msgstr "暫停"
 
-#: app/login.html:36 app/login.html:79
+#: app/login.html:36 app/login.html:84
 msgid "本机是ECS云主机"
 msgstr "本機是ECS雲主機"
 
@@ -704,7 +704,7 @@ msgstr "沒有下載"
 msgid "没有数据"
 msgstr "沒有資料"
 
-#: app/views/filelist.html:44
+#: app/views/filelist.html:50
 msgid "没有文件"
 msgstr "沒有檔案"
 
@@ -736,7 +736,7 @@ msgstr "添加輸入框"
 msgid "清空已完成"
 msgstr "清空已完成"
 
-#: app/login.html:150
+#: app/login.html:155
 msgid "清除安全密码"
 msgstr "清除安全密碼"
 
@@ -748,7 +748,7 @@ msgstr "點擊左側欄的"
 msgid "状&nbsp;&nbsp;&nbsp;&nbsp;态："
 msgstr "狀&nbsp;&nbsp;&nbsp;&nbsp;態:"
 
-#: app/login.html:58
+#: app/login.html:63
 msgid "登&nbsp;&nbsp;&nbsp;&nbsp;录"
 msgstr "登&nbsp;&nbsp;&nbsp;&nbsp;錄"
 
@@ -763,7 +763,7 @@ msgstr "的屬性"
 #: app/views/get_object_uri_modal.html:47
 #: app/views/set_http_header_modal.html:54
 #: app/views/set_image_server_modal.html:71 app/views/set_refer_modal.html:41
-#: app/views/setting_modal.html:46 app/views/upload_detail_modal.html:25
+#: app/views/setting_modal.html:60 app/views/upload_detail_modal.html:25
 msgid "确定"
 msgstr "確定"
 
@@ -771,7 +771,7 @@ msgstr "確定"
 msgid "确定要下载整个Bucket吗？"
 msgstr "確定要下載整個Bucket嗎?"
 
-#: app/scripts/services/service.js:3129
+#: app/scripts/services/service.js:3148
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr "確定要刪除Bucket\"{{bucketName}}\"嗎? 刪除後資料將無法恢復"
 
@@ -791,7 +791,7 @@ msgstr "確定要清除安全密碼?"
 msgid "确认"
 msgstr "確認"
 
-#: app/login.html:130
+#: app/login.html:135
 msgid "确认设置"
 msgstr "確認設置"
 
@@ -867,11 +867,11 @@ msgstr "美國"
 msgid "自定义属性"
 msgstr "自定義屬性"
 
-#: app/custom-domain.html:21 app/login.html:103 app/login.html:41
+#: app/custom-domain.html:21 app/login.html:108 app/login.html:48
 msgid "自定义服务器地址"
 msgstr "自定義伺服器位址"
 
-#: app/login.html:98
+#: app/login.html:103
 msgid ""
 "自定义服务地址设置后只有设置了登录密码才能一直保存，否则下次登录时将自动清"
 "空。"
@@ -906,7 +906,7 @@ msgstr "設置HTTP頭"
 msgid "设置HTTP头属性"
 msgstr "設置HTTP頭屬性"
 
-#: app/login.html:118
+#: app/login.html:123
 msgid "设置一个安全密码，下次打开客户端时只需要输入这个安全密码就能使用客户端"
 msgstr "設置一個安全密碼下次打開用戶端時只需要輸入這個安全密碼就能使用用戶端"
 
@@ -914,13 +914,21 @@ msgstr "設置一個安全密碼下次打開用戶端時只需要輸入這個安
 msgid "设置成功"
 msgstr "設置成功"
 
-#: app/scripts/services/service.js:2353
+#: app/scripts/services/service.js:2370
 msgid "设置的值必须是正整数"
 msgstr "設置的值必須是正整數"
 
 #: app/scripts/services/service.js:1317
 msgid "详细"
 msgstr "詳細"
+
+#: app/views/setting_modal.html:42
+msgid "语言设置"
+msgstr "語言設置"
+
+#: app/views/setting_modal.html:44
+msgid "语言设置："
+msgstr "語言設置："
 
 #: app/scripts/oss-common.js:341
 msgid "请求超时"
@@ -935,12 +943,12 @@ msgid "请确认安全密码"
 msgstr "請確認安全密碼"
 
 #: app/scripts/export-authorization.js:46 app/scripts/login.js:101
-#: app/scripts/services/service.js:3121
+#: app/scripts/services/service.js:3140
 msgid "请输入 Access Key ID"
 msgstr "請輸入 Access Key ID"
 
 #: app/scripts/export-authorization.js:51 app/scripts/login.js:106
-#: app/scripts/services/service.js:3125
+#: app/scripts/services/service.js:3144
 msgid "请输入 Access Key Secret"
 msgstr "請輸入 Access Key Secret"
 
@@ -960,7 +968,7 @@ msgstr "請輸入大於0的整數"
 msgid "请输入安全密码"
 msgstr "請輸入安全密碼"
 
-#: app/scripts/custom-domain.js:30 app/scripts/login.js:76
+#: app/scripts/custom-domain.js:30
 msgid "请输入服务器地址"
 msgstr "請輸入伺服器位址"
 
@@ -988,15 +996,15 @@ msgstr "讀寫許可權:"
 msgid "购买"
 msgstr "購買"
 
-#: app/login.html:131
+#: app/login.html:136
 msgid "跳过设置"
 msgstr "跳過設置"
 
-#: app/login.html:140
+#: app/login.html:145
 msgid "输入您设置的安全密码即可快速登录管理器"
 msgstr "輸入您設置的安全密碼即可快速登錄管理器"
 
-#: app/login.html:108 app/login.html:90
+#: app/login.html:113 app/login.html:95
 msgid "返&nbsp;&nbsp;&nbsp;&nbsp;回"
 msgstr "回&nbsp;&nbsp;&nbsp;&nbsp;退"
 
@@ -1012,7 +1020,7 @@ msgstr "回退到 {{path}}"
 msgid "还未创建Bucket"
 msgstr "還未創建Bucket"
 
-#: app/login.html:148
+#: app/login.html:153
 msgid "进&nbsp;&nbsp;&nbsp;&nbsp;入"
 msgstr "進&nbsp;&nbsp;&nbsp;&nbsp;入"
 
@@ -1020,11 +1028,11 @@ msgstr "進&nbsp;&nbsp;&nbsp;&nbsp;入"
 msgid "选择区域"
 msgstr "選擇區域"
 
-#: app/login.html:89
+#: app/login.html:94
 msgid "选择文件并导入"
 msgstr "選擇檔案並導入"
 
-#: app/login.html:50
+#: app/login.html:53 app/views/setting_modal.html:47
 msgid "选择语言"
 msgstr "選擇語言"
 
