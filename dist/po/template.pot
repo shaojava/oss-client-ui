@@ -33,7 +33,7 @@ msgstr ""
 msgid "4. Object总长度必须在1-1023之间"
 msgstr ""
 
-#: app/scripts/oss-common.js:351
+#: app/scripts/oss-common.js:357
 msgid "Access Key ID不存在"
 msgstr ""
 
@@ -41,11 +41,11 @@ msgstr ""
 msgid "Bucket下载"
 msgstr ""
 
-#: app/scripts/oss-common.js:344
+#: app/scripts/oss-common.js:350
 msgid "Bucket不为空"
 msgstr ""
 
-#: app/scripts/oss-common.js:363
+#: app/scripts/oss-common.js:369
 msgid "Bucket不存在"
 msgstr ""
 
@@ -53,11 +53,11 @@ msgstr ""
 msgid "Bucket名称："
 msgstr ""
 
-#: app/scripts/oss-common.js:343
+#: app/scripts/oss-common.js:349
 msgid "Bucket已经存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:371
+#: app/scripts/oss-common.js:377
 msgid "Bucket数目超过限制"
 msgstr ""
 
@@ -78,11 +78,11 @@ msgstr ""
 msgid "HTTP属性值格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:357
+#: app/scripts/oss-common.js:363
 msgid "Logging操作中有无效的目标bucket"
 msgstr ""
 
-#: app/scripts/oss-common.js:365
+#: app/scripts/oss-common.js:371
 msgid "Multipart Upload ID不存在"
 msgstr ""
 
@@ -90,7 +90,7 @@ msgstr ""
 msgid "OSS-当前选择区域："
 msgstr ""
 
-#: app/scripts/oss-common.js:358
+#: app/scripts/oss-common.js:364
 msgid "OSS内部发生错误"
 msgstr ""
 
@@ -108,7 +108,7 @@ msgstr ""
 msgid "Style设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:359
+#: app/scripts/oss-common.js:365
 msgid "XML格式非法"
 msgstr ""
 
@@ -148,7 +148,7 @@ msgstr ""
 msgid "上传队列"
 msgstr ""
 
-#: app/scripts/oss-common.js:139
+#: app/scripts/oss-common.js:145
 msgid "上海"
 msgstr ""
 
@@ -185,11 +185,11 @@ msgstr ""
 msgid "不同区域的Bucket之间不能复制"
 msgstr ""
 
-#: app/scripts/oss-common.js:360
+#: app/scripts/oss-common.js:366
 msgid "不支持的方法"
 msgstr ""
 
-#: app/scripts/login.js:165
+#: app/scripts/login.js:164
 msgid "两次输入的密码不一致"
 msgstr ""
 
@@ -201,7 +201,7 @@ msgstr ""
 msgid "中搜索"
 msgstr ""
 
-#: app/scripts/oss-common.js:96
+#: app/scripts/oss-common.js:102
 msgid "互联网"
 msgstr ""
 
@@ -229,7 +229,7 @@ msgstr ""
 msgid "你确定要取消这个文件的下载？"
 msgstr ""
 
-#: app/scripts/login.js:234
+#: app/scripts/login.js:233
 msgid "你连续密码输入错误已超过{{allowErrorCount}}次,请重新使用Access Key ID 和 Access Key Secret登录"
 msgstr ""
 
@@ -336,7 +336,7 @@ msgstr ""
 msgid "加速服务"
 msgstr ""
 
-#: app/scripts/oss-common.js:124
+#: app/scripts/oss-common.js:130
 msgid "北京"
 msgstr ""
 
@@ -353,11 +353,11 @@ msgstr ""
 msgid "单任务线程数："
 msgstr ""
 
-#: app/scripts/oss-common.js:350
+#: app/scripts/oss-common.js:356
 msgid "参数格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:368
+#: app/scripts/oss-common.js:374
 msgid "发起请求的时间和服务器时间超出15分钟"
 msgstr ""
 
@@ -421,7 +421,7 @@ msgstr ""
 msgid "复制"
 msgstr ""
 
-#: app/scripts/login.js:191
+#: app/scripts/login.js:190
 msgid "复制成功"
 msgstr ""
 
@@ -451,15 +451,15 @@ msgstr ""
 msgid "完成"
 msgstr ""
 
-#: app/scripts/oss-common.js:345
+#: app/scripts/oss-common.js:351
 msgid "实体过大"
 msgstr ""
 
-#: app/scripts/oss-common.js:346
+#: app/scripts/oss-common.js:352
 msgid "实体过小"
 msgstr ""
 
-#: app/scripts/login.js:156
+#: app/scripts/login.js:155
 msgid "密码长度最少6位"
 msgstr ""
 
@@ -555,7 +555,7 @@ msgstr ""
 msgid "打开日志文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:342
+#: app/scripts/oss-common.js:348
 msgid "拒绝访问"
 msgstr ""
 
@@ -563,16 +563,16 @@ msgstr ""
 msgid "按钮，开始创建你的Bucket"
 msgstr ""
 
-#: app/scripts/oss-common.js:102
 #: app/scripts/oss-common.js:108
+#: app/scripts/oss-common.js:114
 msgid "政务外网"
 msgstr ""
 
-#: app/scripts/oss-common.js:326
+#: app/scripts/oss-common.js:332
 msgid "数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
-#: app/scripts/oss-common.js:327
+#: app/scripts/oss-common.js:333
 msgid "数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
@@ -580,11 +580,11 @@ msgstr ""
 msgid "数据请求失败，如果你自定义了服务器地址，请检查是否正常。"
 msgstr ""
 
-#: app/scripts/oss-common.js:348
+#: app/scripts/oss-common.js:354
 msgid "文件Part不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:349
+#: app/scripts/oss-common.js:355
 msgid "文件Part过时"
 msgstr ""
 
@@ -592,7 +592,7 @@ msgstr ""
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
-#: app/scripts/oss-common.js:364
+#: app/scripts/oss-common.js:370
 msgid "文件不存在"
 msgstr ""
 
@@ -609,11 +609,11 @@ msgstr ""
 msgid "文件夹名称格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:347
+#: app/scripts/oss-common.js:353
 msgid "文件组过大"
 msgstr ""
 
-#: app/scripts/oss-common.js:144
+#: app/scripts/oss-common.js:150
 msgid "新加坡"
 msgstr ""
 
@@ -632,27 +632,27 @@ msgstr ""
 msgid "新建文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:352
+#: app/scripts/oss-common.js:358
 msgid "无效的Bucket名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:354
+#: app/scripts/oss-common.js:360
 msgid "无效的Object名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:355
+#: app/scripts/oss-common.js:361
 msgid "无效的Part"
 msgstr ""
 
-#: app/scripts/oss-common.js:356
+#: app/scripts/oss-common.js:362
 msgid "无效的part顺序"
 msgstr ""
 
-#: app/scripts/oss-common.js:353
+#: app/scripts/oss-common.js:359
 msgid "无效的摘要"
 msgstr ""
 
-#: app/scripts/oss-common.js:366
+#: app/scripts/oss-common.js:372
 msgid "无法处理的方法"
 msgstr ""
 
@@ -683,7 +683,7 @@ msgstr ""
 msgid "机器码"
 msgstr ""
 
-#: app/scripts/oss-common.js:114
+#: app/scripts/oss-common.js:120
 msgid "杭州"
 msgstr ""
 
@@ -727,7 +727,7 @@ msgstr ""
 msgid "注：如果下载队列已加载完成,则删除已加载列表选项无效"
 msgstr ""
 
-#: app/scripts/oss-common.js:134
+#: app/scripts/oss-common.js:140
 msgid "深圳"
 msgstr ""
 
@@ -792,7 +792,7 @@ msgstr ""
 msgid "确定要删除？"
 msgstr ""
 
-#: app/scripts/login.js:249
+#: app/scripts/login.js:248
 msgid "确定要清除安全密码？"
 msgstr ""
 
@@ -843,7 +843,7 @@ msgstr ""
 msgid "等待下载"
 msgstr ""
 
-#: app/scripts/oss-common.js:370
+#: app/scripts/oss-common.js:376
 msgid "签名错误"
 msgstr ""
 
@@ -859,19 +859,19 @@ msgstr ""
 msgid "编号"
 msgstr ""
 
-#: app/scripts/oss-common.js:362
+#: app/scripts/oss-common.js:368
 msgid "缺少内容长度"
 msgstr ""
 
-#: app/scripts/oss-common.js:361
+#: app/scripts/oss-common.js:367
 msgid "缺少参数"
 msgstr ""
 
-#: app/scripts/oss-common.js:385
+#: app/scripts/oss-common.js:391
 msgid "网络请求错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:149
+#: app/scripts/oss-common.js:155
 msgid "美国"
 msgstr ""
 
@@ -924,7 +924,7 @@ msgid "设置一个安全密码，下次打开客户端时只需要输入这个�
 msgstr ""
 
 #: app/scripts/custom-domain.js:32
-#: app/scripts/login.js:73
+#: app/scripts/login.js:72
 msgid "设置成功"
 msgstr ""
 
@@ -944,7 +944,7 @@ msgstr ""
 msgid "语言设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:369
+#: app/scripts/oss-common.js:375
 msgid "请求超时"
 msgstr ""
 
@@ -952,18 +952,18 @@ msgstr ""
 msgid "请确认"
 msgstr ""
 
-#: app/scripts/login.js:160
+#: app/scripts/login.js:159
 msgid "请确认安全密码"
 msgstr ""
 
 #: app/scripts/export-authorization.js:41
-#: app/scripts/login.js:90
+#: app/scripts/login.js:89
 #: app/scripts/services/service.js:3126
 msgid "请输入 Access Key ID"
 msgstr ""
 
 #: app/scripts/export-authorization.js:46
-#: app/scripts/login.js:95
+#: app/scripts/login.js:94
 #: app/scripts/services/service.js:3130
 msgid "请输入 Access Key Secret"
 msgstr ""
@@ -980,8 +980,8 @@ msgstr ""
 msgid "请输入大于0的整数"
 msgstr ""
 
-#: app/scripts/login.js:152
-#: app/scripts/login.js:217
+#: app/scripts/login.js:151
+#: app/scripts/login.js:216
 msgid "请输入安全密码"
 msgstr ""
 
@@ -1001,8 +1001,8 @@ msgstr ""
 msgid "请输入链接的有效期："
 msgstr ""
 
-#: app/scripts/login.js:104
-#: app/scripts/login.js:116
+#: app/scripts/login.js:103
+#: app/scripts/login.js:115
 msgid "请选择区域"
 msgstr ""
 
@@ -1044,7 +1044,7 @@ msgid "进&nbsp;&nbsp;&nbsp;&nbsp;入"
 msgstr ""
 
 #: app/scripts/export-authorization.js:31
-#: app/scripts/login.js:82
+#: app/scripts/login.js:81
 msgid "选择区域"
 msgstr ""
 
@@ -1081,18 +1081,18 @@ msgstr ""
 msgid "限制数字范围："
 msgstr ""
 
-#: app/scripts/oss-common.js:119
+#: app/scripts/oss-common.js:125
 msgid "青岛"
 msgstr ""
 
-#: app/scripts/oss-common.js:367
+#: app/scripts/oss-common.js:373
 msgid "预处理错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:129
+#: app/scripts/oss-common.js:135
 msgid "香港"
 msgstr ""
 
-#: app/scripts/oss-common.js:387
+#: app/scripts/oss-common.js:393
 msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""
