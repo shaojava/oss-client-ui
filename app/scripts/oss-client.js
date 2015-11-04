@@ -176,16 +176,16 @@
                 host:'aliyuncs.com',
                 showrefer:true,
                 showchannel:true,
-                custom_server_host:'',
+                custom_server_host:'http://yunsanyun.api.com',
                 locations:[
                     {
-                      "location": "oss-cn-guizhou-a",
+                      "location": "oss-cn-guizhou",
                       "name": "互联网",
                       "enable": 1,
                       "network":"internet"
                     },
                     {
-                      "location": "oss-cn-guizhou-a-internal",
+                      "location": "oss-cn-guizhou-internal",
                       "name": "政务外网",
                       "enable": 1,
                       "network":"internet"

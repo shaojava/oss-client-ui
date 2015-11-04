@@ -13,15 +13,15 @@ angular
         'LocalStorageModule',
         'gettext'
     ])
-    .run(function(gettextCatalog){
-      gettextCatalog.currentLanguage = 'zh_CN';
+    .run(function(gettextCatalog,OSSI18N){
+      gettextCatalog.currentLanguage = OSSI18N.getCurrLan().lan;
       gettextCatalog.debug = true;
     })
 
     .config([function(){
         //localStorageServiceProvider.setPrefix('OSSClient');
     }])
-    .controller('MainCtrl', ['$scope','localStorageService','usSpinnerService', '$http','OSSException', 'OSSRegion','OSSConfig', '$timeout','gettext','gettextCatalog',function ($scope,localStorageService,usSpinnerService, $http,OSSException, OSSRegion,OSSConfig,$timeout,gettext,gettextCatalog) {
+    .controller('MainCtrl', ['$scope','localStorageService','usSpinnerService', '$http','OSSException', 'OSSRegion','OSSConfig', '$timeout','gettext','gettextCatalog','OSSI18N',function ($scope,localStorageService,usSpinnerService, $http,OSSException, OSSRegion,OSSConfig,$timeout,gettext,gettextCatalog,OSSI18N) {
 
         /**
          * 是否定制客户端
@@ -33,23 +33,11 @@ angular
          * @type {{lan: string}[]}
          */
 
-        $scope.lanLists = [{name:'简体中文',lan:'zh_CN'},{name:'繁体中文',lan:'zh_TW'},{name:'English',lan:'en_US'}]
-        var initLan = function () {
-          var currLan = localStorageService.get('oss-login-lan');
-          if (currLan && currLan.lan) {
-            var selectLan = _.find($scope.lanLists,function(item){
-               return item.lan === currLan.lan;
-            })
-            $scope.lanLists.selected = selectLan;
-          }else{
-            $scope.lanLists.selected = $scope.lanLists[0];
-          }
-        }
-        initLan();
+        $scope.lanLists = angular.copy(OSSI18N.getLanLists())
+        $scope.lanLists.selected = OSSI18N.getCurrLan();
         $scope.selectLan = function ($item){
-          localStorageService.set('oss-login-lan',$item)
           gettextCatalog.setCurrentLanguage($item.lan)
-          //$cookieStore.put('oss-login-lan',$item.lan)
+          OSSI18N.setCurrLan($item.key);
         }
 
         /**

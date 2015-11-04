@@ -14,6 +14,34 @@ angular.module('OSSCommon', [
     .config(['uiSelectConfig', function (uiSelectConfig) {
         uiSelectConfig.theme = 'bootstrap';
     }])
+  .factory('OSSI18N',[function(){
+
+    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'繁体中文',lan:'zh_TW',key:3},{name:'English',lan:'en_US',key:2}]
+    return {
+      getLanLists:function(){
+        return _lanArrs;
+      },
+      getLanByKey:function(_key){
+        return _.find(_lanArrs,function(item){
+          return +item.key === +_key
+        })
+      },
+      getCurrLan:function(){
+        var _lan = OSS.invoke('gGetLanguage')
+        var currLan = _.find(_lanArrs,function(item){
+          return +item.key === +_lan.type
+        })
+        if(!currLan || !currLan.lan){
+          currLan = _lanArrs[0];
+        }
+        return currLan;
+      },
+      setCurrLan:function(_lan){
+        OSS.invoke('gChangeLanguage',{type:_lan})
+      }
+    }
+
+  }])
 /**
  * 本地对话框
  */

@@ -2323,7 +2323,7 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService) {
+    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService','OSSI18N', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService,OSSI18N) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -2346,23 +2346,9 @@ angular.module('ossClientUiApp')
 
                         $scope.setting = OSS.invoke('getTransInfo');
 
-                        $scope.lanLists = [{name:'简体中文',lan:'zh_CN'},{name:'繁体中文',lan:'zh_TW'},{name:'English',lan:'en_US'}]
-                        var initLan = function () {
-                          var currLan = localStorageService.get('oss-login-lan');
-                          if (currLan && currLan.lan) {
-                            var selectLan = _.find($scope.lanLists,function(item){
-                              return item.lan === currLan.lan;
-                            })
-                            $scope.lanLists.selected = selectLan;
-                          }else{
-                            $scope.lanLists.selected = $scope.lanLists[0];
-                          }
-                        }
-                        initLan();
-                        //$scope.selectLan = function ($item){
-                        //  localStorageService.set('oss-login-lan',$item)
-                        //  gettextCatalog.setCurrentLanguage($item.lan)
-                        //}
+                        $scope.lanLists = angular.copy(OSSI18N.getLanLists())
+                        $scope.lanLists.selected = OSSI18N.getCurrLan();
+
                         var checkSetting = function(setting){
                             var unValidMsg = '';
                             angular.forEach(setting,function(val,key){
@@ -2397,8 +2383,8 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.saveSetting = function(setting){
-                            localStorageService.set('oss-login-lan',$scope.lanLists.selected)
                             gettextCatalog.setCurrentLanguage($scope.lanLists.selected.lan)
+                            OSSI18N.setCurrLan($scope.lanLists.selected.key);
                             if(!checkSetting(setting)){
                                 return;
                             }

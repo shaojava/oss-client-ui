@@ -24,13 +24,8 @@ angular
         'LocalStorageModule',
         'gettext'
     ])
-    .run(function(gettextCatalog,localStorageService){
-      var _lan = 'zh_CN'
-      var _currLan = localStorageService.get('oss-login-lan')
-      if (_currLan && _currLan.lan) {
-        _lan = _currLan.lan
-      }
-      gettextCatalog.currentLanguage = _lan;
+    .run(function(gettextCatalog,OSSI18N){
+      gettextCatalog.currentLanguage = OSSI18N.getCurrLan().lan;
       gettextCatalog.debug = true;
     })
     .config(['$routeProvider', '$httpProvider','uiSelectConfig', function ($routeProvider, $httpProvider,uiSelectConfig) {
