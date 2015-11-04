@@ -27,7 +27,10 @@ angular.module('OSSCommon', [
         })
       },
       getCurrLan:function(){
-        var _lan = OSS.invoke('gGetLanguage')
+        var _lan = "zh_CN"
+        if (OSSClient.gGetLanguage){
+          _lan = OSS.invoke('gGetLanguage')
+        }
         var currLan = _.find(_lanArrs,function(item){
           return +item.key === +_lan.type
         })
@@ -37,6 +40,9 @@ angular.module('OSSCommon', [
         return currLan;
       },
       setCurrLan:function(_lan){
+        if (!OSSClient.gChangeLanguage){
+          return false;
+        }
         OSS.invoke('gChangeLanguage',{type:_lan})
       }
     }
