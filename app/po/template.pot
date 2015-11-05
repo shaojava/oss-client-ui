@@ -756,6 +756,10 @@ msgstr ""
 msgid "登&nbsp;&nbsp;&nbsp;&nbsp;录"
 msgstr ""
 
+#: app/login.html:5
+msgid "登录"
+msgstr ""
+
 #: app/views/add_bucket_modal.html:4
 msgid "的属性"
 msgstr ""
