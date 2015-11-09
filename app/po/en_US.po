@@ -1,8 +1,16 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: \n"
+"X-Generator: Poedit 1.7.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/login.html:124
 msgid "(最少6位)"
@@ -12,8 +20,7 @@ msgstr ""
 msgid ",你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】复制以下名称创建："
 msgstr ""
 
-#: app/index.html:129
-#: app/index.html:139
+#: app/index.html:129 app/index.html:139
 msgid "/秒"
 msgstr ""
 
@@ -73,8 +80,7 @@ msgstr ""
 msgid "Content-Type是必填字段"
 msgstr ""
 
-#: app/scripts/services/service.js:2699
-#: app/scripts/services/service.js:2705
+#: app/scripts/services/service.js:2699 app/scripts/services/service.js:2705
 msgid "HTTP属性值格式错误"
 msgstr ""
 
@@ -94,8 +100,7 @@ msgstr ""
 msgid "OSS内部发生错误"
 msgstr ""
 
-#: app/index.html:76
-#: app/scripts/services/service.js:1236
+#: app/index.html:76 app/scripts/services/service.js:1236
 #: app/views/set_refer_modal.html:3
 msgid "Refer设置"
 msgstr ""
@@ -129,7 +134,9 @@ msgid "上传"
 msgstr ""
 
 #: app/views/set_speed_modal.html:25
-msgid "上传加速是一项增值服务，可以在复杂的网络环境下为您提供稳定高速的上传速度，立即"
+msgid ""
+"上传加速是一项增值服务，可以在复杂的网络环境下为您提供稳定高速的上传速度，立"
+"即"
 msgstr ""
 
 #: app/views/upload_detail_modal.html:9
@@ -152,8 +159,7 @@ msgstr ""
 msgid "上海"
 msgstr ""
 
-#: app/scripts/services/service.js:1032
-#: app/scripts/services/service.js:1064
+#: app/scripts/services/service.js:1032 app/scripts/services/service.js:1064
 msgid "下载"
 msgstr ""
 
@@ -230,7 +236,9 @@ msgid "你确定要取消这个文件的下载？"
 msgstr ""
 
 #: app/scripts/login.js:233
-msgid "你连续密码输入错误已超过{{allowErrorCount}}次,请重新使用Access Key ID 和 Access Key Secret登录"
+msgid ""
+"你连续密码输入错误已超过{{allowErrorCount}}次,请重新使用Access Key ID 和 "
+"Access Key Secret登录"
 msgstr ""
 
 #: app/login.html:112
@@ -249,18 +257,15 @@ msgstr ""
 msgid "允许为空"
 msgstr ""
 
-#: app/scripts/services/service.js:604
-#: app/scripts/services/service.js:821
+#: app/scripts/services/service.js:604 app/scripts/services/service.js:821
 msgid "全部取消"
 msgstr ""
 
-#: app/scripts/services/service.js:588
-#: app/scripts/services/service.js:807
+#: app/scripts/services/service.js:588 app/scripts/services/service.js:807
 msgid "全部开始"
 msgstr ""
 
-#: app/scripts/services/service.js:572
-#: app/scripts/services/service.js:790
+#: app/scripts/services/service.js:572 app/scripts/services/service.js:790
 msgid "全部暂停"
 msgstr ""
 
@@ -272,18 +277,13 @@ msgstr ""
 msgid "公共读写"
 msgstr ""
 
-#: app/custom-domain.html:26
-#: app/export-authorization.html:29
-#: app/scripts/services/service.js:102
-#: app/scripts/services/service.js:112
-#: app/scripts/services/service.js:122
-#: app/scripts/services/service.js:88
-#: app/views/callback-setting.html:31
-#: app/views/callback-setting.html:49
+#: app/custom-domain.html:26 app/export-authorization.html:29
+#: app/scripts/services/service.js:102 app/scripts/services/service.js:112
+#: app/scripts/services/service.js:122 app/scripts/services/service.js:88
+#: app/views/callback-setting.html:31 app/views/callback-setting.html:49
 #: app/views/set_image_server_modal.html:26
 #: app/views/set_image_server_modal.html:43
-#: app/views/set_image_server_modal.html:60
-#: app/views/set_speed_modal.html:33
+#: app/views/set_image_server_modal.html:60 app/views/set_speed_modal.html:33
 msgid "关闭"
 msgstr ""
 
@@ -295,13 +295,11 @@ msgstr ""
 msgid "分"
 msgstr ""
 
-#: app/views/filelist.html:27
-#: app/views/uploadlist.html:10
+#: app/views/filelist.html:27 app/views/uploadlist.html:10
 msgid "创建时间"
 msgstr ""
 
-#: app/scripts/services/service.js:1165
-#: app/scripts/services/service.js:1295
+#: app/scripts/services/service.js:1165 app/scripts/services/service.js:1295
 #: app/views/set_http_header_modal.html:38
 msgid "删除"
 msgstr ""
@@ -310,8 +308,7 @@ msgstr ""
 msgid "删除Bucket"
 msgstr ""
 
-#: app/index.html:38
-#: app/index.html:40
+#: app/index.html:38 app/index.html:40
 msgid "刷新"
 msgstr ""
 
@@ -331,8 +328,7 @@ msgstr ""
 msgid "加载中..."
 msgstr ""
 
-#: app/index.html:25
-#: app/views/set_speed_modal.html:3
+#: app/index.html:25 app/views/set_speed_modal.html:3
 msgid "加速服务"
 msgstr ""
 
@@ -348,8 +344,7 @@ msgstr ""
 msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
-#: app/views/setting_modal.html:17
-#: app/views/setting_modal.html:34
+#: app/views/setting_modal.html:17 app/views/setting_modal.html:34
 msgid "单任务线程数："
 msgstr ""
 
@@ -361,15 +356,12 @@ msgstr ""
 msgid "发起请求的时间和服务器时间超出15分钟"
 msgstr ""
 
-#: app/scripts/directives/directive.js:22
-#: app/scripts/services/service.js:499
-#: app/scripts/services/service.js:722
-#: app/scripts/services/service.js:75
+#: app/scripts/directives/directive.js:22 app/scripts/services/service.js:499
+#: app/scripts/services/service.js:722 app/scripts/services/service.js:75
 #: app/views/add_bucket_modal.html:54
 #: app/views/del_bucket_confirm_modal.html:23
 #: app/views/set_http_header_modal.html:55
-#: app/views/set_image_server_modal.html:72
-#: app/views/set_refer_modal.html:42
+#: app/views/set_image_server_modal.html:72 app/views/set_refer_modal.html:42
 #: app/views/setting_modal.html:59
 msgid "取消"
 msgstr ""
@@ -378,8 +370,7 @@ msgstr ""
 msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
-#: app/views/setting_modal.html:10
-#: app/views/setting_modal.html:27
+#: app/views/setting_modal.html:10 app/views/setting_modal.html:27
 msgid "同时任务数："
 msgstr ""
 
@@ -391,13 +382,14 @@ msgstr ""
 msgid "回调地址:"
 msgstr ""
 
-#: app/index.html:74
-#: app/views/callback-setting.html:3
+#: app/index.html:74 app/views/callback-setting.html:3
 msgid "回调设置"
 msgstr ""
 
 #: app/views/callback-setting.html:42
-msgid "回调设置功能是当前bucket的文件或文件夹上传完成后，若文件或文件夹名称匹配到正则的规则，则去调设置的回调地址，注意回调地址是以\"PUT\"方法进行请求的！"
+msgid ""
+"回调设置功能是当前bucket的文件或文件夹上传完成后，若文件或文件夹名称匹配到正"
+"则的规则，则去调设置的回调地址，注意回调地址是以\"PUT\"方法进行请求的！"
 msgstr ""
 
 #: app/views/set_image_server_modal.html:3
@@ -433,8 +425,7 @@ msgstr ""
 msgid "大于{{dateLen}}天"
 msgstr ""
 
-#: app/views/filelist.html:28
-#: app/views/upload_detail_modal.html:10
+#: app/views/filelist.html:28 app/views/upload_detail_modal.html:10
 msgid "大小"
 msgstr ""
 
@@ -442,8 +433,7 @@ msgstr ""
 msgid "存储区域："
 msgstr ""
 
-#: app/login.html:128
-#: app/login.html:149
+#: app/login.html:128 app/login.html:149
 msgid "安全密码"
 msgstr ""
 
@@ -471,14 +461,12 @@ msgstr ""
 msgid "导出成功"
 msgstr ""
 
-#: app/export-authorization.html:14
-#: app/export-authorization.html:28
+#: app/export-authorization.html:14 app/export-authorization.html:28
 #: app/views/setting_modal.html:58
 msgid "导出授权"
 msgstr ""
 
-#: app/scripts/controllers/main.js:547
-#: app/views/filelist.html:18
+#: app/scripts/controllers/main.js:547 app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr ""
 
@@ -491,7 +479,9 @@ msgid "属性名称"
 msgstr ""
 
 #: app/scripts/services/service.js:2706
-msgid "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号"
+msgid ""
+"属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文"
+"冒号、英文双引号和等号"
 msgstr ""
 
 #: app/scripts/services/service.js:2713
@@ -525,8 +515,7 @@ msgstr ""
 msgid "开启"
 msgstr ""
 
-#: app/scripts/services/service.js:429
-#: app/scripts/services/service.js:650
+#: app/scripts/services/service.js:429 app/scripts/services/service.js:650
 msgid "开始"
 msgstr ""
 
@@ -546,8 +535,7 @@ msgstr ""
 msgid "成功"
 msgstr ""
 
-#: app/views/add_bucket_modal.html:24
-#: app/views/add_bucket_modal.html:30
+#: app/views/add_bucket_modal.html:24 app/views/add_bucket_modal.html:30
 msgid "所属地区："
 msgstr ""
 
@@ -563,17 +551,20 @@ msgstr ""
 msgid "按钮，开始创建你的Bucket"
 msgstr ""
 
-#: app/scripts/oss-common.js:108
-#: app/scripts/oss-common.js:114
+#: app/scripts/oss-common.js:108 app/scripts/oss-common.js:114
 msgid "政务外网"
 msgstr ""
 
 #: app/scripts/oss-common.js:332
-msgid "数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
+msgid ""
+"数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}"
+"秒,请调整您的电脑时间后重试。"
 msgstr ""
 
 #: app/scripts/oss-common.js:333
-msgid "数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
+msgid ""
+"数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}"
+"秒,请调整您的电脑时间后重试。"
 msgstr ""
 
 #: app/scripts/services/service.js:1678
@@ -596,8 +587,7 @@ msgstr ""
 msgid "文件不存在"
 msgstr ""
 
-#: app/views/filelist.html:26
-#: app/views/uploadlist.html:9
+#: app/views/filelist.html:26 app/views/uploadlist.html:9
 msgid "文件名"
 msgstr ""
 
@@ -617,9 +607,7 @@ msgstr ""
 msgid "新加坡"
 msgstr ""
 
-#: app/index.html:28
-#: app/index.html:30
-#: app/index.html:91
+#: app/index.html:28 app/index.html:30 app/index.html:91
 msgid "新建"
 msgstr ""
 
@@ -627,8 +615,7 @@ msgstr ""
 msgid "新建Bucket"
 msgstr ""
 
-#: app/scripts/directives/directive.js:19
-#: app/scripts/services/service.js:939
+#: app/scripts/directives/directive.js:19 app/scripts/services/service.js:939
 msgid "新建文件夹"
 msgstr ""
 
@@ -668,14 +655,12 @@ msgstr ""
 msgid "是否只允许通过 Style 来访问图像处理接口"
 msgstr ""
 
-#: app/scripts/filters/filter.js:83
-#: app/scripts/services/service.js:460
+#: app/scripts/filters/filter.js:83 app/scripts/services/service.js:460
 #: app/scripts/services/service.js:681
 msgid "暂停"
 msgstr ""
 
-#: app/login.html:36
-#: app/login.html:84
+#: app/login.html:36 app/login.html:84
 msgid "本机是ECS云主机"
 msgstr ""
 
@@ -735,8 +720,7 @@ msgstr ""
 msgid "添加输入框"
 msgstr ""
 
-#: app/scripts/services/service.js:621
-#: app/scripts/services/service.js:838
+#: app/scripts/services/service.js:621 app/scripts/services/service.js:838
 msgid "清空已完成"
 msgstr ""
 
@@ -760,19 +744,14 @@ msgstr ""
 msgid "的属性"
 msgstr ""
 
-#: app/custom-domain.html:25
-#: app/scripts/directives/directive.js:21
-#: app/scripts/services/service.js:68
-#: app/views/add_bucket_modal.html:55
-#: app/views/add_bucket_modal.html:56
-#: app/views/callback-setting.html:48
+#: app/custom-domain.html:25 app/scripts/directives/directive.js:21
+#: app/scripts/services/service.js:68 app/views/add_bucket_modal.html:55
+#: app/views/add_bucket_modal.html:56 app/views/callback-setting.html:48
 #: app/views/del_bucket_confirm_modal.html:22
 #: app/views/get_object_uri_modal.html:47
 #: app/views/set_http_header_modal.html:54
-#: app/views/set_image_server_modal.html:71
-#: app/views/set_refer_modal.html:41
-#: app/views/setting_modal.html:60
-#: app/views/upload_detail_modal.html:25
+#: app/views/set_image_server_modal.html:71 app/views/set_refer_modal.html:41
+#: app/views/setting_modal.html:60 app/views/upload_detail_modal.html:25
 msgid "确定"
 msgstr ""
 
@@ -804,8 +783,7 @@ msgstr ""
 msgid "确认设置"
 msgstr ""
 
-#: app/index.html:75
-#: app/scripts/services/service.js:1558
+#: app/index.html:75 app/scripts/services/service.js:1558
 msgid "碎片管理"
 msgstr ""
 
@@ -821,13 +799,11 @@ msgstr ""
 msgid "私有"
 msgstr ""
 
-#: app/views/get_object_uri_modal.html:25
-#: app/views/set_speed_modal.html:15
+#: app/views/get_object_uri_modal.html:25 app/views/set_speed_modal.html:15
 msgid "秒"
 msgstr ""
 
-#: app/scripts/services/service.js:544
-#: app/scripts/services/service.js:761
+#: app/scripts/services/service.js:544 app/scripts/services/service.js:761
 msgid "移除"
 msgstr ""
 
@@ -879,14 +855,14 @@ msgstr ""
 msgid "自定义属性"
 msgstr ""
 
-#: app/custom-domain.html:21
-#: app/login.html:108
-#: app/login.html:48
+#: app/custom-domain.html:21 app/login.html:108 app/login.html:48
 msgid "自定义服务器地址"
 msgstr ""
 
 #: app/login.html:103
-msgid "自定义服务地址设置后只有设置了登录密码才能一直保存，否则下次登录时将自动清空。"
+msgid ""
+"自定义服务地址设置后只有设置了登录密码才能一直保存，否则下次登录时将自动清"
+"空。"
 msgstr ""
 
 #: app/views/get_object_uri_modal.html:27
@@ -905,9 +881,7 @@ msgstr ""
 msgid "警告"
 msgstr ""
 
-#: app/index.html:33
-#: app/index.html:35
-#: app/views/setting_modal.html:3
+#: app/index.html:33 app/index.html:35 app/views/setting_modal.html:3
 msgid "设置"
 msgstr ""
 
@@ -923,8 +897,7 @@ msgstr ""
 msgid "设置一个安全密码，下次打开客户端时只需要输入这个安全密码就能使用客户端"
 msgstr ""
 
-#: app/scripts/custom-domain.js:32
-#: app/scripts/login.js:72
+#: app/scripts/custom-domain.js:32 app/scripts/login.js:72
 msgid "设置成功"
 msgstr ""
 
@@ -956,14 +929,12 @@ msgstr ""
 msgid "请确认安全密码"
 msgstr ""
 
-#: app/scripts/export-authorization.js:41
-#: app/scripts/login.js:89
+#: app/scripts/export-authorization.js:41 app/scripts/login.js:89
 #: app/scripts/services/service.js:3126
 msgid "请输入 Access Key ID"
 msgstr ""
 
-#: app/scripts/export-authorization.js:46
-#: app/scripts/login.js:94
+#: app/scripts/export-authorization.js:46 app/scripts/login.js:94
 #: app/scripts/services/service.js:3130
 msgid "请输入 Access Key Secret"
 msgstr ""
@@ -980,8 +951,7 @@ msgstr ""
 msgid "请输入大于0的整数"
 msgstr ""
 
-#: app/scripts/login.js:151
-#: app/scripts/login.js:216
+#: app/scripts/login.js:151 app/scripts/login.js:216
 msgid "请输入安全密码"
 msgstr ""
 
@@ -1001,8 +971,7 @@ msgstr ""
 msgid "请输入链接的有效期："
 msgstr ""
 
-#: app/scripts/login.js:103
-#: app/scripts/login.js:115
+#: app/scripts/login.js:103 app/scripts/login.js:115
 msgid "请选择区域"
 msgstr ""
 
@@ -1022,8 +991,7 @@ msgstr ""
 msgid "输入您设置的安全密码即可快速登录管理器"
 msgstr ""
 
-#: app/login.html:113
-#: app/login.html:95
+#: app/login.html:113 app/login.html:95
 msgid "返&nbsp;&nbsp;&nbsp;&nbsp;回"
 msgstr ""
 
@@ -1043,8 +1011,7 @@ msgstr ""
 msgid "进&nbsp;&nbsp;&nbsp;&nbsp;入"
 msgstr ""
 
-#: app/scripts/export-authorization.js:31
-#: app/scripts/login.js:81
+#: app/scripts/export-authorization.js:31 app/scripts/login.js:81
 msgid "选择区域"
 msgstr ""
 
@@ -1052,8 +1019,7 @@ msgstr ""
 msgid "选择文件并导入"
 msgstr ""
 
-#: app/login.html:53
-#: app/views/setting_modal.html:47
+#: app/login.html:53 app/views/setting_modal.html:47
 msgid "选择语言"
 msgstr ""
 
@@ -1073,10 +1039,8 @@ msgstr ""
 msgid "错误："
 msgstr ""
 
-#: app/views/callback-setting.html:40
-#: app/views/setting_modal.html:14
-#: app/views/setting_modal.html:21
-#: app/views/setting_modal.html:31
+#: app/views/callback-setting.html:40 app/views/setting_modal.html:14
+#: app/views/setting_modal.html:21 app/views/setting_modal.html:31
 #: app/views/setting_modal.html:38
 msgid "限制数字范围："
 msgstr ""
@@ -1094,5 +1058,6 @@ msgid "香港"
 msgstr ""
 
 #: app/scripts/oss-common.js:393
-msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
+msgid ""
+"（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""

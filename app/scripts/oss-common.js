@@ -15,8 +15,8 @@ angular.module('OSSCommon', [
         uiSelectConfig.theme = 'bootstrap';
     }])
   .factory('OSSI18N',[function(){
-
-    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'繁体中文',lan:'zh_TW',key:3},{name:'English',lan:'en_US',key:2}]
+    //,{name:'English',lan:'en_US',key:2}
+    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'繁體中文',lan:'zh_TW',key:3}]
     return {
       getLanLists:function(){
         return _lanArrs;
@@ -27,7 +27,7 @@ angular.module('OSSCommon', [
         })
       },
       getCurrLan:function(){
-        var _lan = "zh_CN"
+        var _lan = {type:"zh_TW"}
         if (OSSClient.gGetLanguage){
           _lan = OSS.invoke('gGetLanguage')
         }
@@ -35,7 +35,7 @@ angular.module('OSSCommon', [
           return +item.key === +_lan.type
         })
         if(!currLan || !currLan.lan){
-          currLan = _lanArrs[0];
+          currLan = _lanArrs[1];
         }
         return currLan;
       },

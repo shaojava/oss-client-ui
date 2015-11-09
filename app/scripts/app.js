@@ -26,7 +26,7 @@ angular
     ])
     .run(function(gettextCatalog,OSSI18N){
       gettextCatalog.currentLanguage = OSSI18N.getCurrLan().lan;
-      gettextCatalog.debug = true;
+      gettextCatalog.debug = false;
     })
     .config(['$routeProvider', '$httpProvider','uiSelectConfig', function ($routeProvider, $httpProvider,uiSelectConfig) {
         //设置ui-select的默认样式

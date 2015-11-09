@@ -15,7 +15,7 @@ angular
     ])
     .run(function(gettextCatalog,OSSI18N){
       gettextCatalog.currentLanguage = OSSI18N.getCurrLan().lan;
-      gettextCatalog.debug = true;
+      gettextCatalog.debug = false;
     })
     .controller('MainCtrl', ['$scope', 'OSSException','gettext','gettextCatalog', function ($scope, OSSException,gettext,gettextCatalog) {
 

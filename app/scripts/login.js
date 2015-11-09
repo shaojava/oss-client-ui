@@ -15,7 +15,7 @@ angular
     ])
     .run(function(gettextCatalog,OSSI18N){
       gettextCatalog.currentLanguage = OSSI18N.getCurrLan().lan;
-      gettextCatalog.debug = true;
+      gettextCatalog.debug = false;
     })
 
     .config([function(){
