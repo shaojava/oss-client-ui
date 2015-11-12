@@ -14,10 +14,8 @@
                 </div>
                 <input ng-show="!bucket" type="text" class="form-control" ng-model="cBucket.name" name="bucket_name" id="bucket_name" placeholder="" />
             </div>
-            <div class="tip text-muted" ng-if="!bucket">
-                <p translate>·只能包含小写字母、数字和横线</p>
-                <p translate>·必须以小写字母和数字开头和结尾</p>
-                <p translate>·长度限制在3-63之间</p>
+            <div ng-if="!bucket" style="line-height:30px;">
+              <i class="glyphicon glyphicon-info-sign" tooltip-placement="right" tooltip="{{'以小写字母和数字开头及结尾并且只能包含小写字母、数字及横线的长度限制在3-63之间的字符'|translate}}"></i>
             </div>
         </div>
         <div class="form-group" ng-if="bucket">

@@ -15,8 +15,7 @@ angular.module('OSSCommon', [
         uiSelectConfig.theme = 'bootstrap';
     }])
   .factory('OSSI18N',[function(){
-    //,{name:'English',lan:'en_US',key:2}
-    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'繁體中文',lan:'zh_TW',key:3}]
+    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'繁體中文',lan:'zh_TW',key:3},{name:'English',lan:'en_US',key:2}]
     return {
       getLanLists:function(){
         return _lanArrs;
