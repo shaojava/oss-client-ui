@@ -1058,7 +1058,7 @@ msgstr "Select a region:"
 
 #: app/login.html:94
 msgid "选择文件并导入"
-msgstr "Please select and import the file"
+msgstr "select & import"
 
 #: app/login.html:53 app/views/setting_modal.html:47
 msgid "选择语言"
