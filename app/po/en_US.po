@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.7\n"
+"X-Generator: Poedit 1.8.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: app/login.html:124
@@ -468,7 +468,7 @@ msgstr "Password at least 6 characters"
 
 #: app/login.html:66
 msgid "导入授权"
-msgstr "Import authorization"
+msgstr "Authorization"
 
 #: app/scripts/export-authorization.js:61
 msgid "导出成功"
@@ -770,7 +770,7 @@ msgstr "Status:"
 
 #: app/login.html:63
 msgid "登&nbsp;&nbsp;&nbsp;&nbsp;录"
-msgstr "Login:"
+msgstr "Login"
 
 #: app/views/add_bucket_modal.html:4
 msgid "的属性"
@@ -924,7 +924,7 @@ msgstr "Setting"
 
 #: app/scripts/services/service.js:1212
 msgid "设置HTTP头"
-msgstr "Set HTTP header"
+msgstr "HTTP header"
 
 #: app/views/set_http_header_modal.html:3
 msgid "设置HTTP头属性"
@@ -1054,7 +1054,7 @@ msgstr "Enter"
 
 #: app/scripts/export-authorization.js:31 app/scripts/login.js:81
 msgid "选择区域"
-msgstr "Select a region:"
+msgstr "select a region"
 
 #: app/login.html:94
 msgid "选择文件并导入"

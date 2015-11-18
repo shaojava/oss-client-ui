@@ -14,9 +14,11 @@ angular.module('OSSCommon', [
     .config(['uiSelectConfig', function (uiSelectConfig) {
         uiSelectConfig.theme = 'bootstrap';
     }])
-  .factory('OSSI18N',[function(){
+  .factory('OSSI18N',['OSSConfig',function(OSSConfig){
     var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'繁體中文',lan:'zh_TW',key:3},{name:'English',lan:'en_US',key:2}]
     return {
+      setDefaultLan:function(){
+      },
       getLanLists:function(){
         return _lanArrs;
       },
@@ -26,16 +28,25 @@ angular.module('OSSCommon', [
         })
       },
       getCurrLan:function(){
-        var _lan = {type:"zh_TW"}
-        if (OSSClient.gGetLanguage){
-          _lan = OSS.invoke('gGetLanguage')
+        var _lan = {type:1}
+        if(OSSConfig.isTaiWanClient()){
+          _lan = {type:3}
         }
+        console.log("=========1=========",_lan,OSSConfig.isTaiWanClient())
+        if (OSSClient.gGetLanguage){
+          var _l = OSS.invoke('gGetLanguage')
+          var _cl = _.find(_lanArrs,function(item){
+            return +item.key === +_l.type
+          })
+          if(_cl && _cl.lan){
+            _lan = _l
+          }
+        }
+        console.log("==================",_lan)
         var currLan = _.find(_lanArrs,function(item){
           return +item.key === +_lan.type
         })
-        if(!currLan || !currLan.lan){
-          currLan = _lanArrs[1];
-        }
+        console.log("==================",currLan)
         return currLan;
       },
       setCurrLan:function(_lan){
@@ -171,6 +182,9 @@ angular.module('OSSCommon', [
              */
             isGuiZhouClient: function () {
                 return config.source == 'guizhou';
+            },
+            isTaiWanClient: function() {
+              return config.source == 'taiwan';
             },
             /**
              * 是否显示白名单设置

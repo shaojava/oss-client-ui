@@ -268,9 +268,11 @@ angular.module('ossClientUiApp')
 
         //当前区域
         $scope.currentLocation = 'OSS'
+        $scope.currentNetType = ""
         var _loginLocation = OSS.invoke('getCurrentLocation');
         if(_loginLocation) {
-          $scope.currentLocation = gettextCatalog.getString(gettext('OSS-当前选择区域：')) + $filter('getLocationName')(OSS.invoke('getCurrentLocation'));
+          $scope.currentLocation = gettext('OSS-当前选择区域：');
+          $scope.currentNetType = $filter('getLocationName')(OSS.invoke('getCurrentLocation'));
         }
     }])
 /**

@@ -14,6 +14,7 @@ angular
         'gettext'
     ])
     .run(function(gettextCatalog,OSSI18N){
+      OSSI18N.setDefaultLan();
       gettextCatalog.currentLanguage = OSSI18N.getCurrLan().lan;
       gettextCatalog.debug = false;
     })
