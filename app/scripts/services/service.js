@@ -1908,6 +1908,7 @@ angular.module('ossClientUiApp')
               requestUrl = requestUrl.replace(region,region.replace("oss",'img'))
             }
             //如果设置了自定义服务器，则以自定义服务器的host进行请求
+            console.log("=====custom host====",customHost)
             if(customHost){
                 var _imgServer = null
                 var _customHost = customHost
@@ -1935,6 +1936,8 @@ angular.module('ossClientUiApp')
                     else{
                         var internetLocation = OSSRegion.getInternetLocationItem();
                         _imgServer = internetLocation.imghost
+                        requestUrl = 'http://' + (bucket ? bucket + "." : "") + internetLocation.customhost;
+                        _customHost = internetLocation.customhost
                     }
                 }else {
                   requestUrl = 'http://' + (bucket ? bucket + "." : "") + _customHost;
