@@ -1711,6 +1711,9 @@ angular.module('ossClientUiApp')
                                 }
                             }else{
                                 angular.forEach(_list,function(bucket){
+                                    if (bucket.Location.toLowerCase().indexOf("tw")>=0){
+                                      bucket.Location = 'oss-tw-kaohsiung'
+                                    }
                                     var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
                                     if (region) {
                                         buckets.push(bucket);
@@ -1908,7 +1911,6 @@ angular.module('ossClientUiApp')
               requestUrl = requestUrl.replace(region,region.replace("oss",'img'))
             }
             //如果设置了自定义服务器，则以自定义服务器的host进行请求
-            console.log("=====custom host====",customHost)
             if(customHost){
                 var _imgServer = null
                 var _customHost = customHost

@@ -33,7 +33,7 @@ msgstr ""
 msgid "4. Object总长度必须在1-1023之间"
 msgstr ""
 
-#: app/scripts/oss-common.js:370
+#: app/scripts/oss-common.js:379
 msgid "Access Key ID不存在"
 msgstr ""
 
@@ -41,11 +41,11 @@ msgstr ""
 msgid "Bucket下载"
 msgstr ""
 
-#: app/scripts/oss-common.js:363
+#: app/scripts/oss-common.js:372
 msgid "Bucket不为空"
 msgstr ""
 
-#: app/scripts/oss-common.js:382
+#: app/scripts/oss-common.js:391
 msgid "Bucket不存在"
 msgstr ""
 
@@ -53,23 +53,23 @@ msgstr ""
 msgid "Bucket名称："
 msgstr ""
 
-#: app/scripts/oss-common.js:362
+#: app/scripts/oss-common.js:371
 msgid "Bucket已经存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:390
+#: app/scripts/oss-common.js:399
 msgid "Bucket数目超过限制"
 msgstr ""
 
-#: app/scripts/services/service.js:2512
+#: app/scripts/services/service.js:2514
 msgid "Bucket的名称不能为空"
 msgstr ""
 
-#: app/scripts/services/service.js:2516
+#: app/scripts/services/service.js:2518
 msgid "Bucket的名称格式错误"
 msgstr ""
 
-#: app/scripts/services/service.js:2703
+#: app/scripts/services/service.js:2705
 msgid "Content-Type是必填字段"
 msgstr ""
 
@@ -77,24 +77,24 @@ msgstr ""
 msgid "HTTP头"
 msgstr ""
 
-#: app/scripts/services/service.js:2702
-#: app/scripts/services/service.js:2708
+#: app/scripts/services/service.js:2704
+#: app/scripts/services/service.js:2710
 msgid "HTTP属性值格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:376
+#: app/scripts/oss-common.js:385
 msgid "Logging操作中有无效的目标bucket"
 msgstr ""
 
-#: app/scripts/oss-common.js:384
+#: app/scripts/oss-common.js:393
 msgid "Multipart Upload ID不存在"
 msgstr ""
 
-#: app/scripts/controllers/main.js:274
+#: app/scripts/controllers/main.js:275
 msgid "OSS-当前选择区域："
 msgstr ""
 
-#: app/scripts/oss-common.js:377
+#: app/scripts/oss-common.js:386
 msgid "OSS内部发生错误"
 msgstr ""
 
@@ -112,7 +112,7 @@ msgstr ""
 msgid "Style设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:378
+#: app/scripts/oss-common.js:387
 msgid "XML格式非法"
 msgstr ""
 
@@ -136,11 +136,11 @@ msgstr ""
 msgid "上传速度："
 msgstr ""
 
-#: app/scripts/controllers/main.js:421
+#: app/scripts/controllers/main.js:422
 msgid "上传队列"
 msgstr ""
 
-#: app/scripts/oss-common.js:155
+#: app/scripts/oss-common.js:156
 msgid "上海"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "下载速度："
 msgstr ""
 
-#: app/scripts/controllers/main.js:426
+#: app/scripts/controllers/main.js:427
 msgid "下载队列"
 msgstr ""
 
@@ -177,7 +177,7 @@ msgstr ""
 msgid "不同区域的Bucket之间不能复制"
 msgstr ""
 
-#: app/scripts/oss-common.js:379
+#: app/scripts/oss-common.js:388
 msgid "不支持的方法"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr ""
 msgid "中搜索"
 msgstr ""
 
-#: app/scripts/oss-common.js:112
+#: app/scripts/oss-common.js:113
 msgid "互联网"
 msgstr ""
 
@@ -260,11 +260,11 @@ msgstr ""
 msgid "全部暂停"
 msgstr ""
 
-#: app/scripts/services/service.js:1808
+#: app/scripts/services/service.js:1811
 msgid "公共读"
 msgstr ""
 
-#: app/scripts/services/service.js:1809
+#: app/scripts/services/service.js:1812
 msgid "公共读写"
 msgstr ""
 
@@ -311,11 +311,11 @@ msgstr ""
 msgid "刷新"
 msgstr ""
 
-#: app/scripts/controllers/main.js:166
+#: app/scripts/controllers/main.js:167
 msgid "前进"
 msgstr ""
 
-#: app/scripts/controllers/main.js:164
+#: app/scripts/controllers/main.js:165
 msgid "前进到 {{path}}"
 msgstr ""
 
@@ -332,7 +332,7 @@ msgstr ""
 msgid "加速服务"
 msgstr ""
 
-#: app/scripts/oss-common.js:140
+#: app/scripts/oss-common.js:141
 msgid "北京"
 msgstr ""
 
@@ -340,7 +340,7 @@ msgstr ""
 msgid "匹配正则:"
 msgstr ""
 
-#: app/scripts/services/service.js:2361
+#: app/scripts/services/service.js:2363
 msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
@@ -349,11 +349,11 @@ msgstr ""
 msgid "单任务线程数："
 msgstr ""
 
-#: app/scripts/oss-common.js:369
+#: app/scripts/oss-common.js:378
 msgid "参数格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:387
+#: app/scripts/oss-common.js:396
 msgid "发起请求的时间和服务器时间超出15分钟"
 msgstr ""
 
@@ -370,7 +370,11 @@ msgstr ""
 msgid "取消"
 msgstr ""
 
-#: app/scripts/services/service.js:2363
+#: app/scripts/oss-common.js:171
+msgid "台湾高雄"
+msgstr ""
+
+#: app/scripts/services/service.js:2365
 msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
@@ -447,11 +451,11 @@ msgstr ""
 msgid "完成"
 msgstr ""
 
-#: app/scripts/oss-common.js:364
+#: app/scripts/oss-common.js:373
 msgid "实体过大"
 msgstr ""
 
-#: app/scripts/oss-common.js:365
+#: app/scripts/oss-common.js:374
 msgid "实体过小"
 msgstr ""
 
@@ -473,7 +477,7 @@ msgstr ""
 msgid "导出授权"
 msgstr ""
 
-#: app/scripts/controllers/main.js:549
+#: app/scripts/controllers/main.js:550
 #: app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr ""
@@ -486,15 +490,15 @@ msgstr ""
 msgid "属性名称"
 msgstr ""
 
-#: app/scripts/services/service.js:2709
+#: app/scripts/services/service.js:2711
 msgid "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号"
 msgstr ""
 
-#: app/scripts/services/service.js:2716
+#: app/scripts/services/service.js:2718
 msgid "属性名称只能包含英文、数子或横线"
 msgstr ""
 
-#: app/scripts/services/service.js:2715
+#: app/scripts/services/service.js:2717
 msgid "属性名称格式错误"
 msgstr ""
 
@@ -502,11 +506,11 @@ msgstr ""
 msgid "属性管理"
 msgstr ""
 
-#: app/scripts/services/service.js:3039
+#: app/scripts/services/service.js:3041
 msgid "已复制到剪切板"
 msgstr ""
 
-#: app/scripts/services/service.js:2524
+#: app/scripts/services/service.js:2526
 msgid "已存在相同名称的Bucket"
 msgstr ""
 
@@ -551,7 +555,7 @@ msgstr ""
 msgid "打开日志文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:361
+#: app/scripts/oss-common.js:370
 msgid "拒绝访问"
 msgstr ""
 
@@ -559,16 +563,16 @@ msgstr ""
 msgid "按钮，开始创建你的Bucket"
 msgstr ""
 
-#: app/scripts/oss-common.js:118
-#: app/scripts/oss-common.js:124
+#: app/scripts/oss-common.js:119
+#: app/scripts/oss-common.js:125
 msgid "政务外网"
 msgstr ""
 
-#: app/scripts/oss-common.js:345
+#: app/scripts/oss-common.js:354
 msgid "数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
-#: app/scripts/oss-common.js:346
+#: app/scripts/oss-common.js:355
 msgid "数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
@@ -576,19 +580,19 @@ msgstr ""
 msgid "数据请求失败，如果你自定义了服务器地址，请检查是否正常。"
 msgstr ""
 
-#: app/scripts/oss-common.js:367
+#: app/scripts/oss-common.js:376
 msgid "文件Part不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:368
+#: app/scripts/oss-common.js:377
 msgid "文件Part过时"
 msgstr ""
 
-#: app/scripts/services/service.js:2759
+#: app/scripts/services/service.js:2761
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
-#: app/scripts/oss-common.js:383
+#: app/scripts/oss-common.js:392
 msgid "文件不存在"
 msgstr ""
 
@@ -605,11 +609,11 @@ msgstr ""
 msgid "文件夹名称格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:366
+#: app/scripts/oss-common.js:375
 msgid "文件组过大"
 msgstr ""
 
-#: app/scripts/oss-common.js:160
+#: app/scripts/oss-common.js:161
 msgid "新加坡"
 msgstr ""
 
@@ -628,31 +632,31 @@ msgstr ""
 msgid "新建文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:371
+#: app/scripts/oss-common.js:380
 msgid "无效的Bucket名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:373
+#: app/scripts/oss-common.js:382
 msgid "无效的Object名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:374
+#: app/scripts/oss-common.js:383
 msgid "无效的Part"
 msgstr ""
 
-#: app/scripts/oss-common.js:375
+#: app/scripts/oss-common.js:384
 msgid "无效的part顺序"
 msgstr ""
 
-#: app/scripts/oss-common.js:372
+#: app/scripts/oss-common.js:381
 msgid "无效的摘要"
 msgstr ""
 
-#: app/scripts/oss-common.js:385
+#: app/scripts/oss-common.js:394
 msgid "无法处理的方法"
 msgstr ""
 
-#: app/scripts/controllers/main.js:599
+#: app/scripts/controllers/main.js:600
 msgid "无法访问该Bucket"
 msgstr ""
 
@@ -679,7 +683,7 @@ msgstr ""
 msgid "机器码"
 msgstr ""
 
-#: app/scripts/oss-common.js:130
+#: app/scripts/oss-common.js:131
 msgid "杭州"
 msgstr ""
 
@@ -723,7 +727,7 @@ msgstr ""
 msgid "注：如果下载队列已加载完成,则删除已加载列表选项无效"
 msgstr ""
 
-#: app/scripts/oss-common.js:150
+#: app/scripts/oss-common.js:151
 msgid "深圳"
 msgstr ""
 
@@ -772,11 +776,11 @@ msgstr ""
 msgid "确定"
 msgstr ""
 
-#: app/scripts/controllers/main.js:95
+#: app/scripts/controllers/main.js:96
 msgid "确定要下载整个Bucket吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:3137
+#: app/scripts/services/service.js:3139
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr ""
 
@@ -813,7 +817,7 @@ msgstr ""
 msgid "禁止访问原图："
 msgstr ""
 
-#: app/scripts/services/service.js:1810
+#: app/scripts/services/service.js:1813
 msgid "私有"
 msgstr ""
 
@@ -839,7 +843,7 @@ msgstr ""
 msgid "等待下载"
 msgstr ""
 
-#: app/scripts/oss-common.js:389
+#: app/scripts/oss-common.js:398
 msgid "签名错误"
 msgstr ""
 
@@ -855,19 +859,19 @@ msgstr ""
 msgid "编号"
 msgstr ""
 
-#: app/scripts/oss-common.js:381
+#: app/scripts/oss-common.js:390
 msgid "缺少内容长度"
 msgstr ""
 
-#: app/scripts/oss-common.js:380
+#: app/scripts/oss-common.js:389
 msgid "缺少参数"
 msgstr ""
 
-#: app/scripts/oss-common.js:404
+#: app/scripts/oss-common.js:413
 msgid "网络请求错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:165
+#: app/scripts/oss-common.js:166
 msgid "美国"
 msgstr ""
 
@@ -924,7 +928,7 @@ msgstr ""
 msgid "设置成功"
 msgstr ""
 
-#: app/scripts/services/service.js:2359
+#: app/scripts/services/service.js:2361
 msgid "设置的值必须是正整数"
 msgstr ""
 
@@ -940,7 +944,7 @@ msgstr ""
 msgid "语言设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:388
+#: app/scripts/oss-common.js:397
 msgid "请求超时"
 msgstr ""
 
@@ -954,13 +958,13 @@ msgstr ""
 
 #: app/scripts/export-authorization.js:42
 #: app/scripts/login.js:91
-#: app/scripts/services/service.js:3129
+#: app/scripts/services/service.js:3131
 msgid "请输入 Access Key ID"
 msgstr ""
 
 #: app/scripts/export-authorization.js:47
 #: app/scripts/login.js:96
-#: app/scripts/services/service.js:3133
+#: app/scripts/services/service.js:3135
 msgid "请输入 Access Key Secret"
 msgstr ""
 
@@ -1023,11 +1027,11 @@ msgstr ""
 msgid "返&nbsp;&nbsp;&nbsp;&nbsp;回"
 msgstr ""
 
-#: app/scripts/controllers/main.js:146
+#: app/scripts/controllers/main.js:147
 msgid "返回"
 msgstr ""
 
-#: app/scripts/controllers/main.js:144
+#: app/scripts/controllers/main.js:145
 msgid "返回到 {{path}}"
 msgstr ""
 
@@ -1061,7 +1065,7 @@ msgstr ""
 msgid "错误"
 msgstr ""
 
-#: app/scripts/controllers/main.js:431
+#: app/scripts/controllers/main.js:432
 msgid "错误日志"
 msgstr ""
 
@@ -1077,18 +1081,18 @@ msgstr ""
 msgid "限制数字范围："
 msgstr ""
 
-#: app/scripts/oss-common.js:135
+#: app/scripts/oss-common.js:136
 msgid "青岛"
 msgstr ""
 
-#: app/scripts/oss-common.js:386
+#: app/scripts/oss-common.js:395
 msgid "预处理错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:145
+#: app/scripts/oss-common.js:146
 msgid "香港"
 msgstr ""
 
-#: app/scripts/oss-common.js:406
+#: app/scripts/oss-common.js:415
 msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""

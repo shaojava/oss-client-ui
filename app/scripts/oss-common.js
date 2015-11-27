@@ -105,6 +105,7 @@ angular.module('OSSCommon', [
             config = {
                 source: "",
                 disable_location_select: 0,
+                hideLogo:true,
                 host: "aliyuncs.com",
                 locations: [
                     {
@@ -126,49 +127,57 @@ angular.module('OSSCommon', [
                       "network":"intranet"
                     },
                     {
-                        location: 'oss-cn-hangzhou',
-                        name: gettext('杭州'),
-                        enable: 1
+                      "location": "oss-cn-hangzhou",
+                      "name": gettext('杭州'),
+                      "enable": 0
                     },
                     {
                         location: 'oss-cn-qingdao',
                         name: gettext('青岛'),
-                        enable: 1
+                        enable: 0
                     },
                     {
                         location: 'oss-cn-beijing',
                         name: gettext('北京'),
-                        enable: 1
+                        enable: 0
                     },
                     {
                         location: 'oss-cn-hongkong',
                         name: gettext('香港'),
-                        enable: 1
+                        enable: 0
                     },
                     {
                         location: 'oss-cn-shenzhen',
                         name: gettext('深圳'),
-                        enable: 1
+                        enable: 0
                     },
                     {
                         location: 'oss-cn-shanghai',
                         name: gettext('上海'),
-                        enable: 1
+                        enable: 0
                     },
                     {
                       location:'oss-ap-southeast-1',
                       name:gettext('新加坡'),
-                      enable:1
+                      enable:0
                     },
                     {
                       location: 'oss-us-west-1',
                       name: gettext('美国'),
+                      enable: 0
+                    },
+                    {
+                      location: 'oss-tw-kaohsiung',
+                      name: gettext('台湾高雄'),
                       enable: 1
                     }
                 ]
             };
         }
         return {
+            isHideLogo:function (){
+              return config.hideLogo
+            },
             /**
              * 是否是定制客户端
              * @returns {boolean}

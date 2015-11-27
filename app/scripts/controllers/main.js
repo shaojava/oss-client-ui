@@ -14,6 +14,7 @@ angular.module('ossClientUiApp')
          * @type {boolean|*}
          */
         $scope.isCustomClient = OSSConfig.isCustomClient();
+        $scope.isHideLogo = OSSConfig.isHideLogo();
         /**
          * 是否显示白名单
          */

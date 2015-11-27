@@ -41,7 +41,7 @@
           </a>
 
         </div>
-        <div class="scrollbar dark bucket-list">
+        <div class="scrollbar dark bucket-list" style="{{isHideLogo?'bottom:0px;':'bottom:40px;'}}">
           <div class="no-bucket-left" ng-if="loading">
             <span us-spinner="{radius:10, length: 0}" class="bucket-loading"  spinner-start-active="1"></span>
           </div>
@@ -65,7 +65,7 @@
               </li>
           </ul>
         </div>
-        <div class="left-footer">
+        <div class="left-footer" ng-if="!isHideLogo">
             <img src="images/zy_powerby.png" />
         </div>
         <div class="dropdown position-fixed" id="bucket-menu">
