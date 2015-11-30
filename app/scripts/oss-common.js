@@ -28,11 +28,7 @@ angular.module('OSSCommon', [
         })
       },
       getCurrLan:function(){
-        var _lan = {type:1}
-        if(OSSConfig.isTaiWanClient()){
-          _lan = {type:3}
-        }
-        console.log("=========1=========",_lan,OSSConfig.isTaiWanClient())
+        var _lan = {type:3}
         if (OSSClient.gGetLanguage){
           var _l = OSS.invoke('gGetLanguage')
           var _cl = _.find(_lanArrs,function(item){
@@ -42,11 +38,9 @@ angular.module('OSSCommon', [
             _lan = _l
           }
         }
-        console.log("==================",_lan)
         var currLan = _.find(_lanArrs,function(item){
           return +item.key === +_lan.type
         })
-        console.log("==================",currLan)
         return currLan;
       },
       setCurrLan:function(_lan){
