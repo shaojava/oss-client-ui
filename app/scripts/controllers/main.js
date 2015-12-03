@@ -279,7 +279,7 @@ angular.module('ossClientUiApp')
 /**
  * 传输队列
  */
-    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope','gettext','gettextCatalog', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope,gettext,gettextCatalog) {
+    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope','gettext','gettextCatalog','OSSNews','OSSVersionLogs','OSSDialog', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope,gettext,gettextCatalog,OSSNews,OSSVersionLogs,OSSDialog) {
 
         //上传的操作菜单
         $scope.uploadQueueMenus = OSSQueueMenu.getUploadMenu();
@@ -430,6 +430,11 @@ angular.module('ossClientUiApp')
             {
                 name: 'log',
                 title: gettext('错误日志')
+            },
+            {
+              name: 'news',
+              title: gettext('最新资讯'),
+              active:true
             }
         ];
 
@@ -444,7 +449,16 @@ angular.module('ossClientUiApp')
                     $scope.scrollToUploadIndex = $scope.uploadList.length - 1;
                 } else if (tab === 'download') {
                     $scope.scrollToDownloadIndex = $scope.downloadList.length - 1;
+                } else if (tab.name == 'news') {
+                  OSSNews.setIsTabNewsNew();
+                  $scope.tabsNews.isNew = false;
                 }
+            }else{
+              var tab = _.findWhere($scope.tabs,{active:true})
+              if (tab.name == 'news') {
+                OSSNews.setIsTabNewsNew();
+                $scope.tabsNews.isNew = false;
+              }
             }
         });
 
@@ -482,6 +496,10 @@ angular.module('ossClientUiApp')
                 //if ($scope.OSSDownloadQueue.isStoped()) {
                 //    $scope.OSSDownloadQueue.refresh();
                 //}
+            }else if (tab.name == 'news') {
+               OSSNews.setIsTabNewsNew();
+               $scope.tabsNews.isNew = false;
+
             }
             if (!$rootScope.showTransQueue && selectCount > 0) {
                 $scope.$emit('toggleTransQueue', true);
@@ -529,6 +547,76 @@ angular.module('ossClientUiApp')
                 menu.execute(list);
             }
         };
+
+        //===============Start 资讯模块==============//
+        $rootScope.winNews = {
+          data:null,
+          isNew:false
+        }
+        //打开新闻窗口
+        $rootScope.exportNewsWin = function(){
+          OSSNews.setIsWinNewsNew();
+          $rootScope.winNews.isNew = false;
+          OSSDialog.exportNewsWindow();
+        };
+        $scope.tabsNews = {
+          data:null,
+          loading:true,
+          isNew:false
+        }
+        //加载消息
+        var loadNewsFun = function () {
+          OSSNews.getAllNews('aliyun').then(function(res){
+            $scope.tabsNews.loading = false;
+            var activeTabItem = null
+            angular.forEach($scope.tabs,function(item){
+              if (item.active) {
+                activeTabItem = item
+              }
+            });
+            angular.forEach(res,function(item){
+              if(!item.err){
+                item.imgs = item.image.split(",");
+                if(OSSNews.isTabNews(item.loc)){
+                  $scope.tabsNews.data = item
+                  if ((activeTabItem.name != 'news' && $scope.showTransQueue && OSSNews.getIsTabNewsNew()) || (!$scope.showTransQueue && OSSNews.getIsTabNewsNew())){
+                    $scope.tabsNews.isNew = true;
+                  }
+                }else if (OSSNews.isWinNews(item.loc)){
+                  $rootScope.winNews.data = item
+                  if (OSSNews.getIsWinNewsNew()){
+                    $rootScope.winNews.isNew = true;
+                  }
+                }
+              }else{
+                if(OSSNews.isTabNews(item.loc)){
+                  $scope.tabsNews.data = null
+                  OSSVersionLogs.getVersionLogs().then(function(res){
+                    $scope.versionLogs = res;
+                  })
+                }else if (OSSNews.isWinNews(item.loc)){
+                  $scope.winNews.data = null
+                }
+              }
+            })
+          })
+        }
+        loadNewsFun()
+        $scope.clickNews = function (aid,index) {
+          OSS.invoke('openUrl',{"url":OSSNews.clickNews(aid,index)})
+        }
+        /*定时器，每晚上12点更新*/
+        $interval(function(){
+          var currentDate = new Date();
+          var _hours = currentDate.getHours();
+          var _minutes = currentDate.getMinutes();
+          var _second = currentDate.getSeconds();
+          //console.log("================",_hours,_minutes,_second);
+          if(_hours == 23 && _minutes == 59 && _second == 59){
+            loadNewsFun();
+          }
+        },1000)
+        //===============End 资讯模块==============//
 
     }])
 /**

@@ -3150,4 +3150,4 @@ angular.module('ossClientUiApp')
                 return $modal.open(option);
             }
         };
-    }]);
+    }])

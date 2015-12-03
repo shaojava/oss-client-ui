@@ -1,0 +1,32 @@
+<!doctype html>
+<html class="no-js" ng-app="WindowNews">
+<head>
+    <meta charset="utf-8">
+    <title>OSS</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.css" />
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+</head>
+<body ng-controller="MainCtrl" class="oss-dialog">
+    <div ng-if="winNews.loading" class="loading-page">
+      <span us-spinner="{radius:10, length: 0}" class="bucket-loading"  spinner-start-active="1"></span>
+    </div>
+    <carousel class="win news-carousel" interval="3000" ng-if="!winNews.loading">
+      <slide ng-repeat="img in winNews.data.imgs">
+        <img ng-src="{{img}}" ng-click="clickNews(winNews.data.aid,$index)">
+      </slide>
+    </carousel>
+    <script src="scripts/vendor.js"></script>
+
+    <!-- build:js({.tmp,app}) scripts/window-news-script.js -->
+    <!--<script src="scripts/oss-client.js"></script>-->
+    <script src="scripts/interface.js"></script>
+    <script src="scripts/oss-common.js"></script>
+    <script src="scripts/window-news.js"></script>
+    <script src="po/translations.js"></script>
+    <!-- endbuild -->
+</body>
+</html>

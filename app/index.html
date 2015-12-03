@@ -13,11 +13,13 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 </head>
 <body  id="index-page">
 <div ng-if="!bucketsLoaded" class="loading-page"></div>
+<a ng-if="winNews.data" ng-click="exportNewsWin();" class="news-tooltip">News!</a>
 <div class="wrapper" ng-show="bucketsLoaded">
     <div class="left-sidebar" ng-class="{'has-current-locaiton':currentLocation,'custom-client':isCustomClient}">
         <div class="left-header">
@@ -145,8 +147,33 @@
             <a href="javascript:void(0)" class="slide_queue" ng-click="toggleSlideQueue()">
               <i class="fa fa-lg" ng-class="{'fa-angle-double-up':!showTransQueue,'fa-angle-double-down':showTransQueue}"></i></a>
             <tabset>
-                <tab heading="{{tab.title|translate}}{{tab.name == 'upload' ?(OSSUploadQueue.totalCount > 0 ? '(' + OSSUploadQueue.doneCount+ '/' + OSSUploadQueue.totalCount + ')':''):tab.name == 'download'?(OSSDownloadQueue.totalCount?'(' + OSSDownloadQueue.doneCount + '/' + OSSDownloadQueue.totalCount + ')' : ''):''}}" active="tab.active" ng-repeat="tab in tabs" select="selectTab(tab)">
+                <tab  active="tab.active" ng-repeat="tab in tabs" select="selectTab(tab)">
+                    <tab-heading>
+                      <i ng-if="tab.name == 'news' && tabsNews.isNew" class="news-message"></i>
+                      <span>{{tab.title|translate}}{{tab.name == 'upload' ?(OSSUploadQueue.totalCount > 0 ? '(' + OSSUploadQueue.doneCount+ '/' + OSSUploadQueue.totalCount + ')':''):tab.name == 'download'?(OSSDownloadQueue.totalCount?'(' + OSSDownloadQueue.doneCount + '/' + OSSDownloadQueue.totalCount + ')' : ''):''}}</span>
+                    </tab-heading>
                     <div ng-switch on="tab.name">
+                        <!-- 最新资讯 -->
+                        <div ng-switch-when="news">
+                          <div ng-if="tabsNews.loading" class="loading-page">
+                            <span us-spinner="{radius:10, length: 0}" class="bucket-loading"  spinner-start-active="1"></span>
+                          </div>
+                          <div class="version-tabs" ng-if="!tabsNews.loading && !tabsNews.data">
+                            <div>
+                              <div><span translate>OSS控制台客户端</span></div>
+                              <div>{{'版本号：'|translate}}{{versionLogs.version}}，{{'更新时间：'|translate}}{{versionLogs.updateTime}}</div>
+                            </div>
+                            <div ng-if="versionLogs.logs" style="">
+                              <p ng-repeat="log in versionLogs.logs">{{log}}</p>
+                            </div>
+                          </div>
+                          <carousel class="news-carousel" interval="3000" ng-if="!tabsNews.loading && tabsNews.data">
+                            <slide ng-repeat="img in tabsNews.data.imgs">
+                              <img ng-src="{{img}}" ng-click="clickNews(tabsNews.data.aid,$index)">
+                            </slide>
+                          </carousel>
+
+                        </div>
                         <!--上传队列Tab-->
                         <div ng-switch-when="upload">
                             <div class="opt-bar">

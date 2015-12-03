@@ -28,7 +28,7 @@ angular.module('OSSCommon', [
         })
       },
       getCurrLan:function(){
-        var _lan = {type:3}
+        var _lan = {type:1}
         if (OSSClient.gGetLanguage){
           var _l = OSS.invoke('gGetLanguage')
           var _cl = _.find(_lanArrs,function(item){
@@ -63,6 +63,22 @@ angular.module('OSSCommon', [
             height: 420
         };
         return {
+          /**
+           *
+           */
+            exportNewsWindow: function (data) {
+                var winParams = {
+                  type: 'normal',
+                  resize: 0,
+                  width: 490,
+                  height: 300
+                };
+                var UIPath = OSS.invoke('getUIPath');
+                OSS.invoke('showWnd', angular.extend(data||{}, winParams, {
+                  url: UIPath + '/window-news.html'
+                }));
+            },
+
             /**
              * 导出授权窗口
              */
@@ -89,6 +105,160 @@ angular.module('OSSCommon', [
             }
         };
     }])
+/**
+ * 消息服务
+ * clientType:客户端类型，取值：“aliyun”，“guizhou“
+ * newsLocation:广告类型，取值：”AD0121"->弹出框广告，“AD0122”->标签广告
+ * lan:当前语言,取值：“chs“->简体，”cht“->繁体，”eng“->英语
+ */
+  .factory('OSSNews',['OSSI18N','OSSConfig','$http','$q',function(OSSI18N,OSSConfig,$http,$q){
+    var tabNews = null,winNews = null,isTabNewsNew = false,isWinNewsNew = false,times = 0;
+    var getCurrentLan = function getCurrentLan(){
+      var lans = {"zh_CN":"chs","zh_TW":"cht","en_US":"eng"}
+      var _currentLan = OSSI18N.getCurrLan();
+      return lans[_currentLan.lan]
+    }
+    var getNewsSign = function getNewsSign(params){
+      var paramsStr = "";
+      for(var i=0;i<params.length;i++){
+        paramsStr = paramsStr + params[i];
+        if(i<params.length - 1){
+          paramsStr = paramsStr + "\n";
+        }
+      }
+      var signStr = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(paramsStr, OSSConfig.getConfig().news.key));
+      return signStr.replace(/\//g, "-");
+    }
+    return {
+      getNews:function(clientType,newsLocation){
+        var params = {
+          "res":clientType,
+          "loc":newsLocation,
+          "lan":getCurrentLan()
+        }
+        var _keyArr = ["res","loc","lan"].sort()
+        var paramsVal = []
+        for(var i=0;i<_keyArr.length;i++){
+          paramsVal.push(params[_keyArr[i]]);
+        }
+        var sign = encodeURIComponent(getNewsSign(paramsVal));
+        var url = OSSConfig.getConfig().news.baseUri + OSSConfig.getConfig().news.getUri + "/res/"+clientType+"/loc/"+newsLocation+"/lan/"+getCurrentLan()+"/sign/"+sign
+        return $http.get(url,{timeout:3000});
+      },
+      getTabsNews:function (clientType){
+        return this.getNews(clientType,'AD0122')
+      },
+      getWinNews:function (clientType){
+        return this.getNews(clientType,'AD0121')
+      },
+      isTabNews:function (loc){
+        return loc.toUpperCase() === 'AD0122'
+      },
+      isWinNews:function (loc){
+        return loc.toUpperCase() === 'AD0121'
+      },
+      getIsTabNewsNew:function () {
+        return isTabNewsNew
+      },
+      setIsTabNewsNew:function () {
+        isTabNewsNew = false;
+      },
+      getIsWinNewsNew:function () {
+        return isWinNewsNew
+      },
+      setIsWinNewsNew:function () {
+        isWinNewsNew = false;
+      },
+      getNewsData:function (_news) {
+        if (_news && !_news.err) {
+           if (this.isTabNews(_news.loc) && (!tabNews || tabNews.aid != _news.aid)){
+             tabNews = _news;
+             isTabNewsNew = true;
+             return tabNews;
+           }else if(this.isTabNews(_news.loc) && tabNews && tabNews.aid == _news.aid){
+             return tabNews;
+           } else if (this.isWinNews(_news.loc) && (!winNews || winNews.aid != _news.aid)){
+             winNews = _news;
+             isWinNewsNew = true;
+             return winNews;
+           }else if (this.isWinNews(_news.loc) && winNews && winNews.aid == _news.aid){
+             return winNews;
+           }
+        }
+        return {loc:_news.loc,err:1};
+      },
+      getWinNewsData:function (clientType) {
+        var _this = this
+        var winDefer = $q.defer();
+        _this.getWinNews(clientType).then(function success(res){
+          res.data = angular.extend(res.data,{loc:'AD0121',image:decodeURIComponent(res.data.image)})
+          winDefer.resolve(_this.getNewsData(res.data));
+        },function error(msg){
+          winDefer.resolve(_this.getNewsData({err:1,loc:'AD0121'}));
+        });
+        return winDefer.promise;
+      },
+      getAllNews:function (clientType) {
+        times += 1;
+        var _this = this
+        var promises = [];
+        var tabDefer = $q.defer()
+        _this.getTabsNews(clientType).then(function success(res){
+          res.data = angular.extend(res.data,{loc:'AD0122',image:decodeURIComponent(res.data.image)})
+          tabDefer.resolve(_this.getNewsData(res.data));
+        },function error(msg){
+          tabDefer.resolve(_this.getNewsData({err:1,loc:'AD0122'}));
+        });
+        var winDefer = $q.defer()
+        _this.getWinNews(clientType).then(function success(res){
+          res.data = angular.extend(res.data,{loc:'AD0121',image:decodeURIComponent(res.data.image)})
+          winDefer.resolve(_this.getNewsData(res.data));
+        },function error(msg){
+          winDefer.resolve(_this.getNewsData({err:1,loc:'AD0121'}));
+        });
+        promises.push(tabDefer.promise);
+        promises.push(winDefer.promise);
+        return $q.all(promises);
+      },
+      clickNews:function(aid,ord){
+        var params = {
+          "aid":aid,
+          "ord":ord
+        }
+        var _keyArr = ["aid","ord"].sort()
+        var paramsVal = []
+        for(var i=0;i<_keyArr.length;i++){
+          paramsVal.push(params[_keyArr[i]]);
+        }
+        var sign = encodeURIComponent(getNewsSign(paramsVal));
+        var url = OSSConfig.getConfig().news.baseUri + OSSConfig.getConfig().news.clickUri + "/aid/"+aid+"/ord/"+ord+"/sign/"+sign
+        return url;
+      }
+    }
+  }])
+  .factory('OSSVersionLogs',['OSSI18N','$http','$q',function(OSSI18N,$http,$q){
+    var versionLogs = null
+    return {
+      getVersionLogs:function(){
+        var defer = $q.defer()
+        if(!versionLogs) {
+          $http.get("version-change-log.txt").then(function (res) {
+            versionLogs = {
+              version:res.data.version,
+              updateTime:res.data.updateTime,
+              logs:res.data.logs[OSSI18N.getCurrLan().lan]
+            }
+            defer.resolve(versionLogs)
+          },function (res) {
+            defer.resolve({err:1})
+          })
+        }else{
+          defer.resolve(versionLogs)
+        }
+        return defer.promise;
+      }
+    }
+  }])
 
 /**
  *   客户端配置的相关信息（定制时用）
@@ -99,8 +269,14 @@ angular.module('OSSCommon', [
             config = {
                 source: "",
                 disable_location_select: 0,
-                hideLogo:true,
+                hideLogo:false,
                 host: "aliyuncs.com",
+                news:{
+                  key:'staycloud',
+                  baseUri:'http://10.0.0.63',
+                  getUri:'/Interface/getNewAd',
+                  clickUri:'/Interface/onAdClick'
+                },
                 locations: [
                     {
                       "location": "oss-cn-guizhou-a",
@@ -123,47 +299,47 @@ angular.module('OSSCommon', [
                     {
                       "location": "oss-cn-hangzhou",
                       "name": gettext('杭州'),
-                      "enable": 0
+                      "enable": 1
                     },
                     {
                         location: 'oss-cn-qingdao',
                         name: gettext('青岛'),
-                        enable: 0
+                        enable: 1
                     },
                     {
                         location: 'oss-cn-beijing',
                         name: gettext('北京'),
-                        enable: 0
+                        enable: 1
                     },
                     {
                         location: 'oss-cn-hongkong',
                         name: gettext('香港'),
-                        enable: 0
+                        enable: 1
                     },
                     {
                         location: 'oss-cn-shenzhen',
                         name: gettext('深圳'),
-                        enable: 0
+                        enable: 1
                     },
                     {
                         location: 'oss-cn-shanghai',
                         name: gettext('上海'),
-                        enable: 0
+                        enable: 1
                     },
                     {
                       location:'oss-ap-southeast-1',
                       name:gettext('新加坡'),
-                      enable:0
+                      enable:1
                     },
                     {
                       location: 'oss-us-west-1',
                       name: gettext('美国'),
-                      enable: 0
+                      enable: 1
                     },
                     {
                       location: 'oss-tw-kaohsiung',
                       name: gettext('台湾高雄'),
-                      enable: 1
+                      enable: 0
                     }
                 ]
             };
@@ -186,8 +362,8 @@ angular.module('OSSCommon', [
             isGuiZhouClient: function () {
                 return config.source == 'guizhou';
             },
-            isTaiWanClient: function() {
-              return config.source == 'taiwan';
+            getConfig: function() {
+              return config;
             },
             /**
              * 是否显示白名单设置

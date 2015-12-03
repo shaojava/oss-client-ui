@@ -686,6 +686,19 @@
       right: 0;
       overflow: auto;
     }
+
+    i.news-message{
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 8px;
+      position: absolute;
+      background: red;
+      z-index: 1;
+      right: 5px;
+      top: 5px;
+    }
+
   }
 
   &.show-trans-queue{
@@ -699,5 +712,80 @@
     }
 
   }
+  .version-tabs{
+    width:100%;
+    height:230px;
+    overflow-y:auto;
+    padding:15px 30px;
+    background:#f6f6f6 url(../images/oss-version-log.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    font-size:14px;
+    >div:first-child{
+      >div:first-child{
+        font-size: 24px;
+      }
+      >div:nth-child(2){
+        color:#77A7E7;
+      }
+    }
+    >div:nth-child(2){
+      line-height:20px;
+      margin-top:10px;
+      margin-right:385px;
+      >p{
+        padding-left:25px;
+        text-indent:-25px;
+      }
+    }
+  }
 }
 
+a.news-tooltip {
+  background: #EEBE2E;
+  padding: 5px;
+  position: absolute;
+  width: 50px;
+  height: 35px;
+  left:160px;
+  z-index: 10;
+  text-align: center;
+  color:#fff;
+  cursor: pointer;
+}
+/*背景  在上面*/
+a.news-tooltip:after {
+  position: absolute;
+  display: inline-block;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 10px solid #24272b;
+  left: -0px;
+  bottom: 0px;
+  content: '';
+}
+
+
+/*
+   消息新闻样式
+*/
+.news-carousel{
+  img{
+    width:100%;
+    margin:0;
+  }
+  .carousel-indicators {
+    top: 200px;
+  }
+  .left.carousel-control{
+    display: none;
+  }
+  .right.carousel-control{
+    display: none;
+  }
+}
+.win.news-carousel{
+  .carousel-indicators {
+    top: 280px;
+  }
+}
