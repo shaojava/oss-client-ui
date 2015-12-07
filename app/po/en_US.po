@@ -702,7 +702,7 @@ msgstr "pause"
 
 #: app/index.html:164
 msgid "更新时间："
-msgstr "Upload Tme:"
+msgstr "Upload Tme："
 
 #: app/scripts/controllers/main.js:436
 msgid "最新资讯"

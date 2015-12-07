@@ -10392,21 +10392,22 @@ i.fa.button-setting-icon {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003741}}
 .main .version-tabs > div:nth-child(3) {
   font-size: 18px;
-  color: #77A7E7;
+  color: blue;
+  color: blue;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003745}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003746}}
 .main .version-tabs > div:nth-child(4) {
   line-height: 20px;
   margin-top: 10px;
   margin-right: 385px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003749}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003750}}
 .main .version-tabs > div:nth-child(4) > p {
   padding-left: 25px;
   text-indent: -25px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003757}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003758}}
 a.news-tooltip {
   background: #EEBE2E;
   padding: 5px;
@@ -10421,7 +10422,7 @@ a.news-tooltip {
 }
 
 /*背景  在上面*/
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003770}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003771}}
 a.news-tooltip:after {
   position: absolute;
   display: inline-block;
@@ -10436,26 +10437,26 @@ a.news-tooltip:after {
 /*
    消息新闻样式
 */
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003786}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003787}}
 .news-carousel img {
   width: 100%;
   margin: 0;
   cursor: pointer;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003791}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003792}}
 .news-carousel .carousel-indicators {
   top: 200px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003794}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003795}}
 .news-carousel .left.carousel-control {
   display: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003797}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003798}}
 .news-carousel .right.carousel-control {
   display: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003802}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003803}}
 .win.news-carousel .carousel-indicators {
   top: 280px;
 }
