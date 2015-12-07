@@ -163,8 +163,12 @@
                               <div><span translate>OSS控制台客户端</span></div>
                               <div>{{'版本号：'|translate}}{{versionLogs.version}}，{{'更新时间：'|translate}}{{versionLogs.updateTime}}</div>
                             </div>
-                            <div ng-if="versionLogs.logs" style="">
-                              <p ng-repeat="log in versionLogs.logs">{{log}}</p>
+                            <div ng-if="versionLogs.currentLogs" style="">
+                              <p ng-repeat="log in versionLogs.currentLogs">{{log}}</p>
+                            </div>
+                            <div>下一期功能：</div>
+                            <div ng-if="versionLogs.nextLogs" style="">
+                              <p ng-repeat="log in versionLogs.nextLogs">{{log}}</p>
                             </div>
                           </div>
                           <carousel class="news-carousel" interval="3000" ng-if="!tabsNews.loading && tabsNews.data">

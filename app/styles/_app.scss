@@ -738,6 +738,19 @@
         text-indent:-25px;
       }
     }
+    >div:nth-child(3){
+      font-size: 18px;
+      color:#77A7E7;
+    }
+    >div:nth-child(4){
+      line-height:20px;
+      margin-top:10px;
+      margin-right:385px;
+      >p{
+        padding-left:25px;
+        text-indent:-25px;
+      }
+    }
   }
 }
 
@@ -773,6 +786,7 @@ a.news-tooltip:after {
   img{
     width:100%;
     margin:0;
+    cursor: pointer;
   }
   .carousel-indicators {
     top: 200px;

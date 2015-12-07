@@ -246,7 +246,8 @@ angular.module('OSSCommon', [
             versionLogs = {
               version:res.data.version,
               updateTime:res.data.updateTime,
-              logs:res.data.logs[OSSI18N.getCurrLan().lan]
+              currentLogs:res.data.logs.current[OSSI18N.getCurrLan().lan],
+              nextLogs:res.data.logs.next[OSSI18N.getCurrLan().lan]
             }
             defer.resolve(versionLogs)
           },function (res) {

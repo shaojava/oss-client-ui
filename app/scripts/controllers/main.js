@@ -592,6 +592,7 @@ angular.module('ossClientUiApp')
                 if(OSSNews.isTabNews(item.loc)){
                   $scope.tabsNews.data = null
                   OSSVersionLogs.getVersionLogs().then(function(res){
+                    console.log("===logs===",res)
                     $scope.versionLogs = res;
                   })
                 }else if (OSSNews.isWinNews(item.loc)){

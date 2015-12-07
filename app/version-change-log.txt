@@ -2,8 +2,15 @@
   "version":"1.1.3.0",
   "updateTime":"2015-12-07",
   "logs":{
-    "zh_CN":["增加了国际化功能。"],
-    "zh_TW":["增加了國際化功能。"],
-    "en_US":["Increased internationalization features。"]
+    "current":{
+      "zh_CN":["1、增加了繁体中文语言。","2、增加了英语语言。"],
+      "zh_TW":["1、增加了繁體中文語言。","2、增加了英語語言。"],
+      "en_US":["1、Increasing the Traditional Chinese language。","1、Increasing the English language。"]
+    },
+    "next":{
+      "zh_CN":["1、RAM子帐号。"],
+      "zh_TW":["1、RAM子賬號功能"],
+      "en_US":["1、RAM sub-account function。"]
+    }
   }
 }
