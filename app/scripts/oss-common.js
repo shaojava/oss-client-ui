@@ -273,7 +273,7 @@ angular.module('OSSCommon', [
                 host: "aliyuncs.com",
                 news:{
                   key:'staycloud',
-                  baseUri:'http://10.0.0.63',
+                  baseUri:'http://ossupdate.jiagouyun.com',
                   getUri:'/Interface/getNewAd',
                   clickUri:'/Interface/onAdClick'
                 },
