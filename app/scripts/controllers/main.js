@@ -279,7 +279,7 @@ angular.module('ossClientUiApp')
 /**
  * 传输队列
  */
-    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope','gettext','gettextCatalog','OSSNews','OSSVersionLogs','OSSDialog', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope,gettext,gettextCatalog,OSSNews,OSSVersionLogs,OSSDialog) {
+    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope','gettext','gettextCatalog','OSSNews','OSSVersionLogs','OSSDialog','OSSI18N', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope,gettext,gettextCatalog,OSSNews,OSSVersionLogs,OSSDialog,OSSI18N) {
 
         //上传的操作菜单
         $scope.uploadQueueMenus = OSSQueueMenu.getUploadMenu();
@@ -564,6 +564,7 @@ angular.module('ossClientUiApp')
           loading:true,
           isNew:false
         }
+
         //加载消息
         var loadNewsFun = function () {
           OSSNews.getAllNews('aliyun').then(function(res){
@@ -592,8 +593,7 @@ angular.module('ossClientUiApp')
                 if(OSSNews.isTabNews(item.loc)){
                   $scope.tabsNews.data = null
                   OSSVersionLogs.getVersionLogs().then(function(res){
-                    console.log("===logs===",res)
-                    $scope.versionLogs = res;
+                    $rootScope.versionLogs = res;
                   })
                 }else if (OSSNews.isWinNews(item.loc)){
                   $scope.winNews.data = null

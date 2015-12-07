@@ -241,21 +241,17 @@ angular.module('OSSCommon', [
     return {
       getVersionLogs:function(){
         var defer = $q.defer()
-        if(!versionLogs) {
-          $http.get("version-change-log.txt").then(function (res) {
-            versionLogs = {
-              version:res.data.version,
-              updateTime:res.data.updateTime,
-              currentLogs:res.data.logs.current[OSSI18N.getCurrLan().lan],
-              nextLogs:res.data.logs.next[OSSI18N.getCurrLan().lan]
-            }
-            defer.resolve(versionLogs)
-          },function (res) {
-            defer.resolve({err:1})
-          })
-        }else{
+        $http.get("version-change-log.txt").then(function (res) {
+          versionLogs = {
+            version:res.data.version,
+            updateTime:res.data.updateTime,
+            currentLogs:res.data.logs.current[OSSI18N.getCurrLan().lan],
+            nextLogs:res.data.logs.next[OSSI18N.getCurrLan().lan]
+          }
           defer.resolve(versionLogs)
-        }
+        },function (res) {
+          defer.resolve({err:1})
+        })
         return defer.promise;
       }
     }

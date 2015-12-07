@@ -2328,7 +2328,7 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService','OSSI18N', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService,OSSI18N) {
+    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService','OSSI18N','OSSVersionLogs', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService,OSSI18N,OSSVersionLogs) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -2388,8 +2388,11 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.saveSetting = function(setting){
-                            gettextCatalog.setCurrentLanguage($scope.lanLists.selected.lan)
+                            gettextCatalog.setCurrentLanguage($scope.lanLists.selected.lan);
                             OSSI18N.setCurrLan($scope.lanLists.selected.key);
+                            OSSVersionLogs.getVersionLogs().then(function(res){
+                              $rootScope.versionLogs = res;
+                            })
                             if(!checkSetting(setting)){
                                 return;
                             }

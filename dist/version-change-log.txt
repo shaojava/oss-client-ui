@@ -3,14 +3,14 @@
   "updateTime":"2015-12-07",
   "logs":{
     "current":{
-      "zh_CN":["1、增加了繁体中文语言。","2、增加了英语语言。"],
-      "zh_TW":["1、增加了繁體中文語言。","2、增加了英語語言。"],
-      "en_US":["1、Increasing the Traditional Chinese language。","1、Increasing the English language。"]
+      "zh_CN":["1、增加英文、繁体语言，请在\"设置\"中进行选择。"],
+      "zh_TW":["1、增加英文、繁體語言，請在\"設置\"中進行選擇。"],
+      "en_US":["1、add English and traditional Chinese version, please set it in \"Setting\""]
     },
     "next":{
-      "zh_CN":["1、RAM子帐号。"],
-      "zh_TW":["1、RAM子賬號功能"],
-      "en_US":["1、RAM sub-account function。"]
+      "zh_CN":["1、支持阿里云资源访问控制服务（RAM）。"],
+      "zh_TW":["1、支持阿里云資源訪問控制服務（RAM）。"],
+      "en_US":["1、support aliyun resource access control service (RAM)。"]
     }
   }
 }
