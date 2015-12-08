@@ -279,7 +279,7 @@ angular.module('ossClientUiApp')
 /**
  * 传输队列
  */
-    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope','gettext','gettextCatalog','OSSNews','OSSVersionLogs','OSSDialog','OSSI18N', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope,gettext,gettextCatalog,OSSNews,OSSVersionLogs,OSSDialog,OSSI18N) {
+    .controller('TransQueueCtrl', ['$scope', '$interval', 'OSSQueueMenu', 'OSSUploadQueue', 'OSSDownloadQueue', '$rootScope','gettext','gettextCatalog','OSSNews','OSSVersionLogs','OSSDialog','OSSI18N','localStorageService', function ($scope, $interval, OSSQueueMenu, OSSUploadQueue, OSSDownloadQueue, $rootScope,gettext,gettextCatalog,OSSNews,OSSVersionLogs,OSSDialog,OSSI18N,localStorageService) {
 
         //上传的操作菜单
         $scope.uploadQueueMenus = OSSQueueMenu.getUploadMenu();
@@ -557,7 +557,21 @@ angular.module('ossClientUiApp')
         $rootScope.exportNewsWin = function(){
           OSSNews.setIsWinNewsNew();
           $rootScope.winNews.isNew = false;
-          OSSDialog.exportNewsWindow();
+          OSSNews.getWinNewsData('aliyun').then(function(data){
+            if (data && !data.err){
+              data.imgs = data.image.split(",");
+              localStorageService.set('window-news-json',data);
+              OSSDialog.exportNewsWindow();
+            }else{
+              localStorageService.remove('window-news-json');
+              $rootScope.winNews.data = null;
+              $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('没有找到最新消息!')));
+            }
+          },function(err){
+            localStorageService.remove('window-news-json');
+            $rootScope.winNews.data = null;
+            $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('没有找到最新消息!')));
+          })
         };
         $scope.tabsNews = {
           data:null,

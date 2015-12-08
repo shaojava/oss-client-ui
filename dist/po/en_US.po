@@ -491,7 +491,7 @@ msgstr "Export success"
 msgid "导出授权"
 msgstr "Export Authorization"
 
-#: app/scripts/controllers/main.js:639 app/views/filelist.html:18
+#: app/scripts/controllers/main.js:653 app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr ""
 "Tips: You can implement multi-select operation by pressing “Shift” and "
@@ -681,7 +681,7 @@ msgstr "Invaild abstract"
 msgid "无法处理的方法"
 msgstr "Unknown processing methods"
 
-#: app/scripts/controllers/main.js:689
+#: app/scripts/controllers/main.js:703
 msgid "无法访问该Bucket"
 msgstr "Bucket access denied"
 
@@ -735,6 +735,10 @@ msgstr "No upload"
 #: app/index.html:218
 msgid "没有下载"
 msgstr "No downloads"
+
+#: app/scripts/controllers/main.js:568 app/scripts/controllers/main.js:573
+msgid "没有找到最新消息!"
+msgstr "Not find the message!"
 
 #: app/views/upload_detail_modal.html:12
 msgid "没有数据"

@@ -483,7 +483,7 @@ msgstr "匯出成功"
 msgid "导出授权"
 msgstr "匯出授權"
 
-#: app/scripts/controllers/main.js:639 app/views/filelist.html:18
+#: app/scripts/controllers/main.js:653 app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr "小技巧：使用Shift和Ctrl鍵(Mac下Command鍵)可以作多重選取操作。"
 
@@ -665,7 +665,7 @@ msgstr "無效的摘要"
 msgid "无法处理的方法"
 msgstr "無法處理的方法"
 
-#: app/scripts/controllers/main.js:689
+#: app/scripts/controllers/main.js:703
 msgid "无法访问该Bucket"
 msgstr "無法訪問該Bucket"
 
@@ -717,6 +717,10 @@ msgstr "沒有上傳"
 #: app/index.html:218
 msgid "没有下载"
 msgstr "沒有下載"
+
+#: app/scripts/controllers/main.js:568 app/scripts/controllers/main.js:573
+msgid "没有找到最新消息!"
+msgstr "沒有找到最新消息！"
 
 #: app/views/upload_detail_modal.html:12
 msgid "没有数据"

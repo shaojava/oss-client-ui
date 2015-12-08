@@ -485,7 +485,7 @@ msgstr ""
 msgid "导出授权"
 msgstr ""
 
-#: app/scripts/controllers/main.js:639
+#: app/scripts/controllers/main.js:653
 #: app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr ""
@@ -664,7 +664,7 @@ msgstr ""
 msgid "无法处理的方法"
 msgstr ""
 
-#: app/scripts/controllers/main.js:689
+#: app/scripts/controllers/main.js:703
 msgid "无法访问该Bucket"
 msgstr ""
 
@@ -717,6 +717,11 @@ msgstr ""
 
 #: app/index.html:218
 msgid "没有下载"
+msgstr ""
+
+#: app/scripts/controllers/main.js:568
+#: app/scripts/controllers/main.js:573
+msgid "没有找到最新消息!"
 msgstr ""
 
 #: app/views/upload_detail_modal.html:12
