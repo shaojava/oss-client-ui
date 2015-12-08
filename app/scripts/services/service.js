@@ -2390,6 +2390,7 @@ angular.module('ossClientUiApp')
                         $scope.saveSetting = function(setting){
                             gettextCatalog.setCurrentLanguage($scope.lanLists.selected.lan);
                             OSSI18N.setCurrLan($scope.lanLists.selected.key);
+                            $rootScope.$emit('loadAllNews');
                             OSSVersionLogs.getVersionLogs().then(function(res){
                               $rootScope.versionLogs = res;
                             })

@@ -61,15 +61,15 @@ msgstr ""
 msgid "Bucket数目超过限制"
 msgstr ""
 
-#: app/scripts/services/service.js:2517
+#: app/scripts/services/service.js:2518
 msgid "Bucket的名称不能为空"
 msgstr ""
 
-#: app/scripts/services/service.js:2521
+#: app/scripts/services/service.js:2522
 msgid "Bucket的名称格式错误"
 msgstr ""
 
-#: app/scripts/services/service.js:2708
+#: app/scripts/services/service.js:2709
 msgid "Content-Type是必填字段"
 msgstr ""
 
@@ -77,8 +77,8 @@ msgstr ""
 msgid "HTTP头"
 msgstr ""
 
-#: app/scripts/services/service.js:2707
-#: app/scripts/services/service.js:2713
+#: app/scripts/services/service.js:2708
+#: app/scripts/services/service.js:2714
 msgid "HTTP属性值格式错误"
 msgstr ""
 
@@ -485,7 +485,7 @@ msgstr ""
 msgid "导出授权"
 msgstr ""
 
-#: app/scripts/controllers/main.js:653
+#: app/scripts/controllers/main.js:656
 #: app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr ""
@@ -498,15 +498,15 @@ msgstr ""
 msgid "属性名称"
 msgstr ""
 
-#: app/scripts/services/service.js:2714
+#: app/scripts/services/service.js:2715
 msgid "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号"
 msgstr ""
 
-#: app/scripts/services/service.js:2721
+#: app/scripts/services/service.js:2722
 msgid "属性名称只能包含英文、数子或横线"
 msgstr ""
 
-#: app/scripts/services/service.js:2720
+#: app/scripts/services/service.js:2721
 msgid "属性名称格式错误"
 msgstr ""
 
@@ -514,11 +514,11 @@ msgstr ""
 msgid "属性管理"
 msgstr ""
 
-#: app/scripts/services/service.js:3044
+#: app/scripts/services/service.js:3045
 msgid "已复制到剪切板"
 msgstr ""
 
-#: app/scripts/services/service.js:2529
+#: app/scripts/services/service.js:2530
 msgid "已存在相同名称的Bucket"
 msgstr ""
 
@@ -596,7 +596,7 @@ msgstr ""
 msgid "文件Part过时"
 msgstr ""
 
-#: app/scripts/services/service.js:2764
+#: app/scripts/services/service.js:2765
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
@@ -664,7 +664,7 @@ msgstr ""
 msgid "无法处理的方法"
 msgstr ""
 
-#: app/scripts/controllers/main.js:703
+#: app/scripts/controllers/main.js:706
 msgid "无法访问该Bucket"
 msgstr ""
 
@@ -805,7 +805,7 @@ msgstr ""
 msgid "确定要下载整个Bucket吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:3142
+#: app/scripts/services/service.js:3143
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr ""
 
@@ -983,13 +983,13 @@ msgstr ""
 
 #: app/scripts/export-authorization.js:42
 #: app/scripts/login.js:91
-#: app/scripts/services/service.js:3134
+#: app/scripts/services/service.js:3135
 msgid "请输入 Access Key ID"
 msgstr ""
 
 #: app/scripts/export-authorization.js:47
 #: app/scripts/login.js:96
-#: app/scripts/services/service.js:3138
+#: app/scripts/services/service.js:3139
 msgid "请输入 Access Key Secret"
 msgstr ""
 

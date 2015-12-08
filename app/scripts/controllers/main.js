@@ -616,7 +616,15 @@ angular.module('ossClientUiApp')
             })
           })
         }
-        loadNewsFun()
+        loadNewsFun();
+        $rootScope.$on('loadAllNews',function(){
+          loadNewsFun();
+          var activeTab = _.findWhere($scope.tabs, {active:true});
+          activeTab.active = false;
+          var tab = _.findWhere($scope.tabs, {name: 'news'});
+          tab.active = true;
+          $scope.selectTab(tab);
+        })
         $scope.clickNews = function (aid,index) {
           OSS.invoke('openUrl',{"url":OSSNews.clickNews(aid,index)})
         }
