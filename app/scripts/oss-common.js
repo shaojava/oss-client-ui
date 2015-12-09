@@ -191,7 +191,18 @@ angular.module('OSSCommon', [
         var _this = this
         var winDefer = $q.defer();
         _this.getWinNews(clientType).then(function success(res){
-          res.data = angular.extend(res.data,{loc:'AD0121',image:decodeURIComponent(res.data.image)})
+          var _image = "",_color = "",_title = "",_desc = "";
+          if(res.data.image){
+            _image = decodeURIComponent(res.data.image);
+          }
+          _color = res.data.bgcolor || "";
+          if(res.data.title){
+            _title = decodeURIComponent(res.data.title);
+          }
+          if(res.data.description){
+            _desc = decodeURIComponent(res.data.description);
+          }
+          res.data = angular.extend(res.data,{loc:'AD0121',image:_image,title:_title,description:_desc,imgs:_image.split(","),bgColors:_color.split(","),titles:_title.split(","),descs:_desc.split(",")})
           winDefer.resolve(_this.getNewsData(res.data));
         },function error(msg){
           winDefer.resolve(_this.getNewsData({err:1,loc:'AD0121'}));
@@ -204,14 +215,36 @@ angular.module('OSSCommon', [
         var promises = [];
         var tabDefer = $q.defer()
         _this.getTabsNews(clientType).then(function success(res){
-          res.data = angular.extend(res.data,{loc:'AD0122',image:decodeURIComponent(res.data.image)})
+          var _image = "",_color = "",_title = "",_desc = "";
+          if(res.data.image){
+             _image = decodeURIComponent(res.data.image);
+          }
+          _color = res.data.bgcolor || "";
+          if(res.data.title){
+            _title = decodeURIComponent(res.data.title);
+          }
+          if(res.data.description){
+            _desc = decodeURIComponent(res.data.description);
+          }
+          res.data = angular.extend(res.data,{loc:'AD0122',image:_image,title:_title,description:_desc,imgs:_image.split(","),bgColors:_color.split(","),titles:_title.split(","),descs:_desc.split(",")})
           tabDefer.resolve(_this.getNewsData(res.data));
         },function error(msg){
           tabDefer.resolve(_this.getNewsData({err:1,loc:'AD0122'}));
         });
         var winDefer = $q.defer()
         _this.getWinNews(clientType).then(function success(res){
-          res.data = angular.extend(res.data,{loc:'AD0121',image:decodeURIComponent(res.data.image)})
+          var _image = "",_color = "",_title = "",_desc = "";
+          if(res.data.image){
+            _image = decodeURIComponent(res.data.image);
+          }
+          _color = res.data.bgcolor || "";
+          if(res.data.title){
+            _title = decodeURIComponent(res.data.title);
+          }
+          if(res.data.description){
+            _desc = decodeURIComponent(res.data.description);
+          }
+          res.data = angular.extend(res.data,{loc:'AD0121',image:_image,title:_title,description:_desc,imgs:_image.split(","),bgColors:_color.split(","),titles:_title.split(","),descs:_desc.split(",")})
           winDefer.resolve(_this.getNewsData(res.data));
         },function error(msg){
           winDefer.resolve(_this.getNewsData({err:1,loc:'AD0121'}));

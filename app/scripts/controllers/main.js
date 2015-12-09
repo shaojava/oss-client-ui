@@ -591,7 +591,8 @@ angular.module('ossClientUiApp')
             });
             angular.forEach(res,function(item){
               if(!item.err){
-                item.imgs = item.image.split(",");
+                //item.imgs = item.image.split(",");
+                console.log("===all news===",item)
                 if(OSSNews.isTabNews(item.loc)){
                   $scope.tabsNews.data = item
                   if ((activeTabItem.name != 'news' && $scope.showTransQueue && OSSNews.getIsTabNewsNew()) || (!$scope.showTransQueue && OSSNews.getIsTabNewsNew())){

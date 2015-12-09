@@ -10444,19 +10444,44 @@ a.news-tooltip:after {
   cursor: pointer;
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003792}}
+.news-carousel .img-container {
+  text-align: left;
+  color: #fff;
+  padding: 40px;
+  padding-right: 250px;
+  font-size: 16px;
+  line-height: 38px;
+  width: 100%;
+  height: 230px;
+  cursor: pointer;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003802}}
+.news-carousel .img-container > div:nth-child(1) {
+  font-size: 30px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003805}}
+.news-carousel .img-container > div:nth-child(3) {
+  text-align: center;
+  line-height: 32px;
+  border: 1px solid #fff;
+  width: 200px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003814}}
 .news-carousel .carousel-indicators {
   top: 200px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003795}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003817}}
 .news-carousel .left.carousel-control {
   display: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003798}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003820}}
 .news-carousel .right.carousel-control {
   display: none;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003803}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_app\.scss}line{font-family:\00003825}}
 .win.news-carousel .carousel-indicators {
   top: 280px;
 }
