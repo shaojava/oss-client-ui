@@ -28,7 +28,14 @@ angular.module('OSSCommon', [
         })
       },
       getCurrLan:function(){
-        var _lan = {type:1}
+        var _defaultLanKey = OSSConfig.getConfig().defaultLan;
+        if (!_defaultLanKey){
+          _defaultLanKey = 'zh_CN';
+        }
+        var _defaultLan = _.find(_lanArrs,function(item){
+          return item.lan === _defaultLanKey
+        })
+        var _lan = {type:_defaultLan.key}
         if (OSSClient.gGetLanguage){
           var _l = OSS.invoke('gGetLanguage')
           var _cl = _.find(_lanArrs,function(item){
@@ -107,7 +114,7 @@ angular.module('OSSCommon', [
     }])
 /**
  * 消息服务
- * clientType:客户端类型，取值：“aliyun”，“guizhou“
+ * clientType:客户端类型，取值：“aliyun”，“guizhou“，“taiwan”
  * newsLocation:广告类型，取值：”AD0121"->弹出框广告，“AD0122”->标签广告
  * lan:当前语言,取值：“chs“->简体，”cht“->繁体，”eng“->英语
  */
@@ -145,10 +152,18 @@ angular.module('OSSCommon', [
         var url = OSSConfig.getConfig().news.baseUri + OSSConfig.getConfig().news.getUri + "/res/"+clientType+"/loc/"+newsLocation+"/lan/"+getCurrentLan()+"/sign/"+sign
         return $http.get(url,{timeout:3000});
       },
-      getTabsNews:function (clientType){
+      getTabsNews:function (){
+        var clientType = 'aliyun';
+        if(OSSConfig.getConfig().news && OSSConfig.getConfig().news.clientType){
+          clientType = OSSConfig.getConfig().news.clientType;
+        }
         return this.getNews(clientType,'AD0122')
       },
-      getWinNews:function (clientType){
+      getWinNews:function (){
+        var clientType = 'aliyun';
+        if(OSSConfig.getConfig().news && OSSConfig.getConfig().news.clientType){
+          clientType = OSSConfig.getConfig().news.clientType;
+        }
         return this.getNews(clientType,'AD0121')
       },
       isTabNews:function (loc){
@@ -187,10 +202,10 @@ angular.module('OSSCommon', [
         }
         return {loc:_news.loc,err:1};
       },
-      getWinNewsData:function (clientType) {
+      getWinNewsData:function () {
         var _this = this
         var winDefer = $q.defer();
-        _this.getWinNews(clientType).then(function success(res){
+        _this.getWinNews().then(function success(res){
           var _image = "",_color = "",_title = "",_desc = "";
           if(res.data.image){
             _image = decodeURIComponent(res.data.image);
@@ -209,12 +224,12 @@ angular.module('OSSCommon', [
         });
         return winDefer.promise;
       },
-      getAllNews:function (clientType) {
+      getAllNews:function () {
         times += 1;
         var _this = this
         var promises = [];
         var tabDefer = $q.defer()
-        _this.getTabsNews(clientType).then(function success(res){
+        _this.getTabsNews().then(function success(res){
           var _image = "",_color = "",_title = "",_desc = "";
           if(res.data.image){
              _image = decodeURIComponent(res.data.image);
@@ -232,7 +247,7 @@ angular.module('OSSCommon', [
           tabDefer.resolve(_this.getNewsData({err:1,loc:'AD0122'}));
         });
         var winDefer = $q.defer()
-        _this.getWinNews(clientType).then(function success(res){
+        _this.getWinNews().then(function success(res){
           var _image = "",_color = "",_title = "",_desc = "";
           if(res.data.image){
             _image = decodeURIComponent(res.data.image);
@@ -300,8 +315,11 @@ angular.module('OSSCommon', [
                 source: "",
                 disable_location_select: 0,
                 hideLogo:false,
+                showchannel:false,
+                defaultLan:"zh_CN",
                 host: "aliyuncs.com",
                 news:{
+                  clientType:'aliyun',
                   key:'staycloud',
                   baseUri:'http://ossupdate.jiagouyun.com',
                   getUri:'/Interface/getNewAd',
@@ -383,7 +401,7 @@ angular.module('OSSCommon', [
              * @returns {boolean}
              */
             isCustomClient: function () {
-                return config.source && config.source != '';
+                return config.source && config.source != '' && config.source != 'taiwan';
             },
             /**
              * 是否是贵州的定制客户端

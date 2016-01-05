@@ -25,7 +25,7 @@ angular.module('ossClientUiApp')
 
         }
     })
-    .filter('getRemainTime','gettext','gettextCatalog', function ($filter,gettext,gettextCatalog) {
+    .filter('getRemainTime',['gettext','gettextCatalog', function ($filter,gettext,gettextCatalog) {
         return function (speed, filesize, offset) {
             if (!speed) {
                 return '--:--:--';
@@ -62,7 +62,7 @@ angular.module('ossClientUiApp')
             }
 
         }
-    })
+    }])
     .filter('getQueueState', ['$filter','gettext','gettextCatalog',function ($filter,gettext,gettextCatalog) {
         return function (type, status, speed, filesize, offset, errormsg) {
             var state = '';

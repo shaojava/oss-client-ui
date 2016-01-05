@@ -557,7 +557,7 @@ angular.module('ossClientUiApp')
         $rootScope.exportNewsWin = function(){
           OSSNews.setIsWinNewsNew();
           $rootScope.winNews.isNew = false;
-          OSSNews.getWinNewsData('aliyun').then(function(data){
+          OSSNews.getWinNewsData().then(function(data){
             if (data && !data.err){
               data.imgs = data.image.split(",");
               localStorageService.set('window-news-json',data);
@@ -581,7 +581,7 @@ angular.module('ossClientUiApp')
 
         //加载消息
         var loadNewsFun = function () {
-          OSSNews.getAllNews('aliyun').then(function(res){
+          OSSNews.getAllNews().then(function(res){
             $scope.tabsNews.loading = false;
             var activeTabItem = null
             angular.forEach($scope.tabs,function(item){
@@ -591,8 +591,6 @@ angular.module('ossClientUiApp')
             });
             angular.forEach(res,function(item){
               if(!item.err){
-                //item.imgs = item.image.split(",");
-                console.log("===all news===",item)
                 if(OSSNews.isTabNews(item.loc)){
                   $scope.tabsNews.data = item
                   if ((activeTabItem.name != 'news' && $scope.showTransQueue && OSSNews.getIsTabNewsNew()) || (!$scope.showTransQueue && OSSNews.getIsTabNewsNew())){
