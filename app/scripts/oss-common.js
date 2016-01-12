@@ -151,7 +151,7 @@ angular.module('OSSCommon', [
         }
         var sign = encodeURIComponent(getNewsSign(paramsVal));
         var url = OSSConfig.getConfig().news.baseUri + OSSConfig.getConfig().news.getUri + "/res/"+clientType+"/loc/"+newsLocation+"/lan/"+getCurrentLan()+"/sign/"+sign
-        return $http.get(url,{timeout:3000});
+        return $http.get(url,{timeout:5000});
       },
       getTabsNews:function (){
         var clientType = 'aliyun';
@@ -488,6 +488,7 @@ angular.module('OSSCommon', [
                 var _region = _.find(locations, function (item) {
                     return location.indexOf(item.location.replace('-internal', '')) === 0;
                 });
+
                 if (currentLocation && !_region) {
                   _region = _.find(locations, function (item) {
                     return currentLocation.indexOf(item.location) === 0;

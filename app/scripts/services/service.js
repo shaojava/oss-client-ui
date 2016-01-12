@@ -2624,9 +2624,9 @@ angular.module('ossClientUiApp')
                                 usSpinnerService.stop('get-bucket-spinner');
                             }
                         });
-
+                        var currentLocation = OSS.invoke('getCurrentLocation');
                         //创建bucket时是否不允许选择区域
-                        $scope.isDisableLocationSelect = OSSConfig.isDisableLocationSelect();
+                        $scope.isDisableLocationSelect = OSSConfig.isDisableLocationSelect() || currentLocation;
 
                         if (!$scope.isDisableLocationSelect) {
                             //bucket区域
@@ -2637,7 +2637,6 @@ angular.module('ossClientUiApp')
                             if (!$scope.isDisableLocationSelect) {
                                 $scope.cBucket.region = $scope.regions[0];
                             } else {
-                                var currentLocation = OSS.invoke('getCurrentLocation');
                                 if (!currentLocation) {
                                     return;
                                 }

@@ -61,15 +61,15 @@ msgstr ""
 msgid "Bucket数目超过限制"
 msgstr ""
 
-#: app/scripts/services/service.js:2676
+#: app/scripts/services/service.js:2675
 msgid "Bucket的名称不能为空"
 msgstr ""
 
-#: app/scripts/services/service.js:2680
+#: app/scripts/services/service.js:2679
 msgid "Bucket的名称格式错误"
 msgstr ""
 
-#: app/scripts/services/service.js:2867
+#: app/scripts/services/service.js:2866
 msgid "Content-Type是必填字段"
 msgstr ""
 
@@ -77,8 +77,8 @@ msgstr ""
 msgid "HTTP头"
 msgstr ""
 
-#: app/scripts/services/service.js:2866
-#: app/scripts/services/service.js:2872
+#: app/scripts/services/service.js:2865
+#: app/scripts/services/service.js:2871
 msgid "HTTP属性值格式错误"
 msgstr ""
 
@@ -530,15 +530,15 @@ msgstr ""
 msgid "属性名称"
 msgstr ""
 
-#: app/scripts/services/service.js:2873
+#: app/scripts/services/service.js:2872
 msgid "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号"
 msgstr ""
 
-#: app/scripts/services/service.js:2880
+#: app/scripts/services/service.js:2879
 msgid "属性名称只能包含英文、数子或横线"
 msgstr ""
 
-#: app/scripts/services/service.js:2879
+#: app/scripts/services/service.js:2878
 msgid "属性名称格式错误"
 msgstr ""
 
@@ -546,11 +546,11 @@ msgstr ""
 msgid "属性管理"
 msgstr ""
 
-#: app/scripts/services/service.js:3337
+#: app/scripts/services/service.js:3336
 msgid "已复制到剪切板"
 msgstr ""
 
-#: app/scripts/services/service.js:2688
+#: app/scripts/services/service.js:2687
 msgid "已存在相同名称的Bucket"
 msgstr ""
 
@@ -658,7 +658,7 @@ msgstr ""
 msgid "文件Part过时"
 msgstr ""
 
-#: app/scripts/services/service.js:2923
+#: app/scripts/services/service.js:2922
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
@@ -901,7 +901,7 @@ msgstr ""
 msgid "确定要下载整个Bucket吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:3435
+#: app/scripts/services/service.js:3434
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr ""
 
@@ -1103,13 +1103,13 @@ msgstr ""
 
 #: app/scripts/export-authorization.js:42
 #: app/scripts/login.js:91
-#: app/scripts/services/service.js:3427
+#: app/scripts/services/service.js:3426
 msgid "请输入 Access Key ID"
 msgstr ""
 
 #: app/scripts/export-authorization.js:47
 #: app/scripts/login.js:96
-#: app/scripts/services/service.js:3431
+#: app/scripts/services/service.js:3430
 msgid "请输入 Access Key Secret"
 msgstr ""
 
