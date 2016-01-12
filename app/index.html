@@ -174,10 +174,10 @@
                           <carousel class="news-carousel" interval="3000" ng-if="!tabsNews.loading && tabsNews.data">
                             <slide ng-repeat="img in tabsNews.data.imgs">
                               <!--<img ng-src="{{img}}" ng-click="clickNews(tabsNews.data.aid,$index)">-->
-                              <div class="img-container" ng-click="clickNews(tabsNews.data.aid,$index)" style="background: {{'#'+tabsNews.data.bgColors[$index]}} url({{img}}) center right no-repeat">
+                              <div class="img-container" ng-click="clickNews(tabsNews.data.aid,$index)" style="color:{{tabsNews.data.titleColors[$index]?'#'+tabsNews.data.titleColors[$index]:'#fff'}};background: {{'#'+tabsNews.data.bgColors[$index]}} url({{img}}) center right no-repeat">
                                 <div ng-bind="tabsNews.data.titles[$index]"></div>
                                 <div ng-bind="tabsNews.data.descs[$index]"></div>
-                                <div translate>了解详情</div>
+                                <div style="border-color:{{tabsNews.data.titleColors[$index]?'#'+tabsNews.data.titleColors[$index]:'#fff'}}" translate>了解详情</div>
                               </div>
                             </slide>
                           </carousel>

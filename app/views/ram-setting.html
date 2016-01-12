@@ -56,6 +56,32 @@
           </table>
         </div>
       </tab>
+      <tab heading="{{'授权'|translate}}" active="policy.tabActive" select="selectTabs('policy');">
+        <div ng-if="policy.tabActive" style="padding:10px;max-height: 400px;overflow-y:auto;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th width="20%" translate>策略名称</th>
+                <th width="40%" translate>描述</th>
+                <th width="20%" translate>引用次数</th>
+                <th width="10%" translate>类型</th>
+                <th width="10%" translate>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="policy in policy.list">
+                <td>{{policy.PolicyName}}</td>
+                <td>{{policy.Description}}</td>
+                <td>{{policy.AttachmentCount}}</td>
+                <td>{{policy.PolicyType}}</td>
+                <td>
+                  <a ng-click="" translate>查看</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </tab>
     </tabset>
   </form>
 </div>

@@ -902,7 +902,7 @@ angular.module('ossClientUiApp')
     .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException','OSSConfig','gettext','gettextCatalog', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException,OSSConfig,gettext,gettextCatalog) {
         var currentMenus = 'upload create paste downloadcurrent'.split(' '),
             selectMenus = 'download copy del get_uri set_header paste'.split(' '),
-            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];//,'set_ram'.split(' ')
+            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
         var allMenu = [
 
             {
@@ -1228,19 +1228,8 @@ angular.module('ossClientUiApp')
                 execute: function (bucket, currentObject, selectedFiles) {
                     OSSModal.setObjectHttpHeader(bucket, selectedFiles);
                 }
-            }//,
-            //{
-            //  name:'set_ram',
-            //  text:gettext('RAM授权'),
-            //  getState: function (selectedFiles) {
-            //    if (!selectedFiles || selectedFiles.length == 0)
-            //      return 0;
-            //    return 1;
-            //  },
-            //  execute: function (bucket, currentObject, selectedFiles){
-            //    OSSModal.setRam();
-            //  }
-            //}
+            }
+
         ];
         if(OSSConfig.showRefer()){
           var referSetting = {
@@ -1259,7 +1248,19 @@ angular.module('ossClientUiApp')
           groupMenu[0].push('refer');
         }
         if(false){
+          var ramSetting = {
+            name:'set_ram',
+            text:gettext('RAM授权'),
+            getState: function (selectedFiles) {
+              return 1;
+            },
+            execute: function (bucket, currentObject, selectedFiles){
+              OSSModal.setRam();
+            }
+          }
+          allMenu.push(ramSetting);
           currentMenus = currentMenus.concat(['set_ram']);
+          groupMenu.push(['set_ram']);
         }
         return {
             getAllMenu: function () {
@@ -2026,9 +2027,9 @@ angular.module('ossClientUiApp')
         })
         return defer.promise;
       },
-      getPloicys:function () {
+      getPolicies:function () {
         var defer = $q.defer();
-        var url= getRamRequestUrl('ListUsers');
+        var url= getRamRequestUrl('ListPolicies');
         $http.get(url).then(function(res){
           defer.resolve(res.data)
         },function(res){
@@ -3181,11 +3182,34 @@ angular.module('ossClientUiApp')
                   OSSRam.getUserGroups().then(function(res){
                     $scope.group.list = res.Groups.Group;
                   });
+                  OSSRam.getPolicies().then(function(res){
+                    $scope.policy.list = res.Policies.Policy
+                  })
                   $scope.createUser = function(){
                     OSSModal.createRamItemsModal('user');
                   }
                   $scope.createGroup = function(){
                     OSSModal.createRamItemsModal('group');
+                  }
+                  $scope.createPloicy = function(){
+                    OSSModal.createRamItemsModal('ploicy');
+                  }
+                  $scope.selectTabs = function(type){
+                    if(type == 'user'){
+                      $scope.group.tabActive = false
+                      $scope.policy.tabActive = false
+                      $scope.user.tabActive = true
+                    }
+                    if(type == 'groulp'){
+                      $scope.user.tabActive = false
+                      $scope.policy.tabActive = false
+                      $scope.group.tabActive = true
+                    }
+                    if(type == 'policy'){
+                      $scope.user.tabActive = false
+                      $scope.group.tabActive = false
+                      $scope.policy.tabActive = true
+                    }
                   }
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
@@ -3247,11 +3271,18 @@ angular.module('ossClientUiApp')
                   $scope.selectTabs = function(type){
                     if(type == 'user'){
                       $scope.group.tabActive = false
+                      $scope.policy.tabActive = false
                       $scope.user.tabActive = true
                     }
                     if(type == 'groulp'){
                       $scope.user.tabActive = false
+                      $scope.policy.tabActive = false
                       $scope.group.tabActive = true
+                    }
+                    if(type == 'policy'){
+                      $scope.user.tabActive = false
+                      $scope.group.tabActive = false
+                      $scope.policy.tabActive = true
                     }
                   }
                   $scope.save = function(){

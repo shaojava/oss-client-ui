@@ -142,15 +142,16 @@ angular.module('OSSCommon', [
         var params = {
           "res":clientType,
           "loc":newsLocation,
-          "lan":getCurrentLan()
+          "lan":getCurrentLan(),
+          "sta":OSSConfig.getConfig().news.isPreview?'preview':'standard'
         }
-        var _keyArr = ["res","loc","lan"].sort()
+        var _keyArr = ["res","loc","lan","sta"].sort()
         var paramsVal = []
         for(var i=0;i<_keyArr.length;i++){
           paramsVal.push(params[_keyArr[i]]);
         }
         var sign = encodeURIComponent(getNewsSign(paramsVal));
-        var url = OSSConfig.getConfig().news.baseUri + OSSConfig.getConfig().news.getUri + "/res/"+clientType+"/loc/"+newsLocation+"/lan/"+getCurrentLan()+"/sign/"+sign
+        var url = OSSConfig.getConfig().news.baseUri + OSSConfig.getConfig().news.getUri + "/sta/" + (OSSConfig.getConfig().news.isPreview?'preview':'standard') + "/res/"+clientType+"/loc/"+newsLocation+"/lan/"+getCurrentLan()+"/sign/"+sign
         return $http.get(url,{timeout:5000});
       },
       getTabsNews:function (){
@@ -231,36 +232,38 @@ angular.module('OSSCommon', [
         var promises = [];
         var tabDefer = $q.defer()
         _this.getTabsNews().then(function success(res){
-          var _image = "",_color = "",_title = "",_desc = "";
+          var _image = "",_color = "",_titleColor = "",_title = "",_desc = "";
           if(res.data.image){
              _image = decodeURIComponent(res.data.image);
           }
           _color = res.data.bgcolor || "";
+          _titleColor = res.data.titlecolor || "";
           if(res.data.title){
             _title = decodeURIComponent(res.data.title);
           }
           if(res.data.description){
             _desc = decodeURIComponent(res.data.description);
           }
-          res.data = angular.extend(res.data,{loc:'AD0122',image:_image,title:_title,description:_desc,imgs:_image.split(","),bgColors:_color.split(","),titles:_title.split(","),descs:_desc.split(",")})
+          res.data = angular.extend(res.data,{loc:'AD0122',image:_image,title:_title,description:_desc,imgs:_image.split(","),bgColors:_color.split(","),titleColors:_titleColor.split(","),titles:_title.split(","),descs:_desc.split(",")})
           tabDefer.resolve(_this.getNewsData(res.data));
         },function error(msg){
           tabDefer.resolve(_this.getNewsData({err:1,loc:'AD0122'}));
         });
         var winDefer = $q.defer()
         _this.getWinNews().then(function success(res){
-          var _image = "",_color = "",_title = "",_desc = "";
+          var _image = "",_color = "",_titleColor = "", _title = "",_desc = "";
           if(res.data.image){
             _image = decodeURIComponent(res.data.image);
           }
           _color = res.data.bgcolor || "";
+          _titleColor = res.data.titlecolor || "";
           if(res.data.title){
             _title = decodeURIComponent(res.data.title);
           }
           if(res.data.description){
             _desc = decodeURIComponent(res.data.description);
           }
-          res.data = angular.extend(res.data,{loc:'AD0121',image:_image,title:_title,description:_desc,imgs:_image.split(","),bgColors:_color.split(","),titles:_title.split(","),descs:_desc.split(",")})
+          res.data = angular.extend(res.data,{loc:'AD0121',image:_image,title:_title,description:_desc,imgs:_image.split(","),bgColors:_color.split(","),titleColors:_titleColor.split(","),titles:_title.split(","),descs:_desc.split(",")})
           winDefer.resolve(_this.getNewsData(res.data));
         },function error(msg){
           winDefer.resolve(_this.getNewsData({err:1,loc:'AD0121'}));
@@ -322,6 +325,7 @@ angular.module('OSSCommon', [
                 defaultLan:"zh_CN",
                 host: "aliyuncs.com",
                 news:{
+                  isPreview:false,
                   clientType:'aliyun',
                   key:'staycloud',
                   baseUri:'http://ossupdate.jiagouyun.com',
