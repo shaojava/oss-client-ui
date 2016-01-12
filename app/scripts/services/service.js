@@ -902,8 +902,9 @@ angular.module('ossClientUiApp')
     .factory('OSSMenu', ['Clipboard', 'OSSAlert','OSSModal', '$rootScope', 'OSSApi', 'OSSException','OSSConfig','gettext','gettextCatalog', function (Clipboard,OSSAlert, OSSModal, $rootScope, OSSApi, OSSException,OSSConfig,gettext,gettextCatalog) {
         var currentMenus = 'upload create paste downloadcurrent'.split(' '),
             selectMenus = 'download copy del get_uri set_header paste'.split(' '),
-            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];
+            groupMenu = ['upload create'.split(' '), 'download copy del'.split(' '), 'get_uri set_header'.split(' ') , 'paste'.split(' ')];//,'set_ram'.split(' ')
         var allMenu = [
+
             {
                 name: 'upload',
                 text: gettext('上传'),
@@ -1227,24 +1228,38 @@ angular.module('ossClientUiApp')
                 execute: function (bucket, currentObject, selectedFiles) {
                     OSSModal.setObjectHttpHeader(bucket, selectedFiles);
                 }
-            }
-
+            }//,
+            //{
+            //  name:'set_ram',
+            //  text:gettext('RAM授权'),
+            //  getState: function (selectedFiles) {
+            //    if (!selectedFiles || selectedFiles.length == 0)
+            //      return 0;
+            //    return 1;
+            //  },
+            //  execute: function (bucket, currentObject, selectedFiles){
+            //    OSSModal.setRam();
+            //  }
+            //}
         ];
         if(OSSConfig.showRefer()){
           var referSetting = {
-              name: 'refer',
-              text: gettext('Refer设置'),
-              getState: function () {
-                return 1;
-              },
-              execute: function (bucket) {
-                OSSModal.setRefer(bucket);
-              }
+            name: 'refer',
+            text: gettext('Refer设置'),
+            getState: function () {
+              return 1;
+            },
+            execute: function (bucket) {
+              OSSModal.setRefer(bucket);
+            }
           }
 
           allMenu.splice(0,0,referSetting);
           currentMenus = currentMenus.concat(['refer']);
           groupMenu[0].push('refer');
+        }
+        if(false){
+          currentMenus = currentMenus.concat(['set_ram']);
         }
         return {
             getAllMenu: function () {
@@ -1714,9 +1729,16 @@ angular.module('ossClientUiApp')
                                     if (bucket.Location.toLowerCase().indexOf("tw")>=0){
                                       bucket.Location = 'oss-tw-kaohsiung'
                                     }
-                                    var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
-                                    if (region) {
+
+                                    if (currentLocation){
+                                      if (currentLocation.indexOf(bucket.Location) === 0){
                                         buckets.push(bucket);
+                                      }
+                                    }else{
+                                      var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
+                                      if (region) {
+                                        buckets.push(bucket);
+                                      }
                                     }
                                 })
                             }
@@ -1777,10 +1799,16 @@ angular.module('ossClientUiApp')
                             }
                         }else{
                             angular.forEach(_list,function(bucket){
+                              if (currentLocation){
+                                if (currentLocation.indexOf(bucket.Location) === 0){
+                                  bucketList.push(bucket);
+                                }
+                              }else {
                                 var region = OSSRegion.getEnableRegionByLocation(bucket.Location);
                                 if (region) {
-                                    bucketList.push(bucket);
+                                  bucketList.push(bucket);
                                 }
+                              }
                             })
                         }
                     }else{
@@ -1880,6 +1908,137 @@ angular.module('ossClientUiApp')
       return SpeedService;
     }])
 /**
+ * RAM授权
+ */
+  .factory('OSSRam',['$http','$q',function($http,$q){
+    var OSSAccessKeyId = OSS.invoke('getAccessID');
+    var ramCommonParams = {
+      Format:'JSON',
+      Version:'2015-05-01',
+      SignatureMethod:'HMAC-SHA1',
+      SignatureVersion:'1.0'
+    }
+    var getSign = function (method,_params){
+      var params = angular.copy(_params)
+      var _keyArr = []
+      for(var key in params){
+        _keyArr.push(key);
+      }
+      //排序
+      _keyArr.sort();
+      var _paramStr = ""
+      for(var i=0;i<_keyArr.length;i++){
+        if (i != 0)
+          _paramStr += "&"
+        _paramStr += encodeURIComponent(_keyArr[i]) + "="+ encodeURIComponent(params[_keyArr[i]]).replace(/\+/g, "%20").replace(/\*/g, "%2A").replace(/%7E/g, "~")
+      }
+      console.log("=========_paramStr=======",_paramStr)
+      var signString = method + "&"+encodeURIComponent("/")+"&"+encodeURIComponent(_paramStr)
+      console.log("=========signString=======",signString)
+      var signStr = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(signString, "EV472gOxdVVhGxhJOq5sI2S12oUKCN&"));
+      return signStr;
+    };
+    var getRamRequestUrl = function(action,options){
+      var _date = new Date();
+      var _utcYear = _date.getUTCFullYear();
+      var _utcMonth = _date.getUTCMonth() > 8 ? (_date.getUTCMonth() + 1) : '0' + (_date.getUTCMonth() + 1);
+      var _utcDate = _date.getUTCDate() > 9 ? _date.getUTCDate() : '0' + _date.getUTCDate();
+      var _utcHours = _date.getUTCHours() > 9 ? _date.getUTCHours() : '0' + _date.getUTCHours();
+      var _utcMinutes = _date.getUTCMinutes() > 9 ? _date.getUTCMinutes() : '0' + _date.getUTCMinutes();
+      var _utcSeconds = _date.getUTCSeconds() > 9 ? _date.getUTCSeconds() : '0' + _date.getUTCSeconds();
+      var _utcTime =  _utcYear + '-' + _utcMonth + '-' + _utcDate + "T" + _utcHours + ":" + _utcMinutes + ":" + _utcSeconds +"Z"
+      var params = angular.extend(angular.copy(ramCommonParams),{
+        SignatureNonce:''+new Date().getTime(),
+        Timestamp:_utcTime,
+        AccessKeyId:OSSAccessKeyId,
+        Action:action
+      })
+      if (options){
+        params = angular.extend(params,options);
+      }
+      params.Signature = getSign('GET',params)
+      return 'https://ram.aliyuncs.com/?'+ $.param(params)
+    };
+    return{
+      createUser:function (_userName,_displayName,_phone,_email,_desc){
+        var defer = $q.defer();
+        var params = {
+          UserName:_userName,
+          DisplayName:_displayName,
+          MobilePhone:_phone,
+          Email:_email,
+          Comments:_desc
+        }
+        var url= getRamRequestUrl('CreateUser',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      createGroup:function (_groupName,_groupDesc) {
+        var defer = $q.defer();
+        var params = {
+          GroupName:_groupName,
+          Comments:_groupDesc
+        }
+        var url= getRamRequestUrl('CreateGroup',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      createPolicy:function (_policyName,_policyDoc,_desc) {
+        var defer = $q.defer();
+        var params = {
+          PolicyName:_policyName,
+          PolicyDocument:_policyDoc,
+          Description:_desc
+        }
+        var url= getRamRequestUrl('CreatePolicy',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getUserGroups:function (){
+        var defer = $q.defer();
+        var url= getRamRequestUrl('ListGroups');
+        $http.get(url).then(function(res){
+            defer.resolve(res.data)
+        },function(res){
+            defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getUsers:function () {
+        var defer = $q.defer();
+        var url= getRamRequestUrl('ListUsers');
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getPloicys:function () {
+        var defer = $q.defer();
+        var url= getRamRequestUrl('ListUsers');
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      }
+    }
+  }])
+/**
  * api相关
  */
     .factory('OSSApi', ['$http', 'RequestXML', 'OSSConfig', 'OSSRegion','localStorageService','$q',function ($http, RequestXML, OSSConfig,OSSRegion,localStorageService,$q) {
@@ -1900,7 +2059,6 @@ angular.module('ossClientUiApp')
             expires = angular.isUndefined(expires) ? 30 : expires;
             return parseInt(new Date().getTime() / 1000) + expires;
         };
-
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam,isImgServer) {
             region = OSSRegion.changeLocation(region);
             //默认发送请求地址
@@ -2328,11 +2486,11 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService','OSSI18N','OSSVersionLogs', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService,OSSI18N,OSSVersionLogs) {
+    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi','OSSRam', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService','OSSI18N','OSSVersionLogs', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi,OSSRam, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService,OSSI18N,OSSVersionLogs) {
         var defaultOption = {
             backdrop: 'static'
         };
-        return {
+        var OSSModal = {
             setting:function(){
                 var option = {
                     templateUrl: 'views/setting_modal.html',
@@ -3001,6 +3159,140 @@ angular.module('ossClientUiApp')
               option = angular.extend({}, defaultOption, option);
               return $modal.open(option);
             },
+            setRam:function (bucket, objects){
+              var option = {
+                templateUrl: 'views/ram-setting.html',
+                windowClass: 'ram-setting-modal',
+                controller: function ($scope, $modalInstance) {
+                  $scope.user = {
+                    tabActive:false,
+                    list:null
+                  }
+                  $scope.group = {
+                    tabActive:true,
+                    list:null
+                  }
+                  $scope.policy = {
+                    tabActive:false,
+                    list:null
+                  }
+                  OSSRam.getUsers().then(function(res){
+                    $scope.user.list = res.Users.User;
+                  });
+                  OSSRam.getUserGroups().then(function(res){
+                    $scope.group.list = res.Groups.Group;
+                  });
+                  $scope.createUser = function(){
+                    OSSModal.createRamItemsModal('user');
+                  }
+                  $scope.createGroup = function(){
+                    OSSModal.createRamItemsModal('group');
+                  }
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
+            createRamItemsModal: function (_type){
+              var option = {
+                templateUrl: 'views/create-ram-items.html',
+                windowClass: 'create-ram-items-modal',
+                controller: function ($scope, $modalInstance) {
+                  _type = _type?_type:'user'
+                  $scope.userGroups = []
+                  $scope.user = {
+                    tabActive:_type == 'user',
+                    pattern:{
+                      name:/^[a-zA-Z0-9\u4e00-\u9fa5\.@\-_]{1,64}$/,
+                      display:/^[a-zA-Z0-9\.@\-\u4e00-\u9fa5]{0,12}$/,
+                      phone:/^([0-9]+\-){0,1}[0-9]{11}$/,
+                      email:/^[a-zA-Z0-9]+\@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
+                      desc:/^\S{0,128}$/
+                    },
+                    userName:'',
+                    displayName:'',
+                    phone:'',
+                    email:'',
+                    groupName:'',
+                    desc:''
+                  }
+                  $scope.group = {
+                    tabActive:_type == 'group',
+                    pattern:{
+                      name:/^[a-zA-Z0-9\u4e00-\u9fa5\-]{1,64}$/,
+                      desc:/^\S{0,128}$/
+                    },
+                    groupName:'',
+                    desc:''
+                  }
+                  $scope.policy = {
+                    tabActive:_type == 'policy',
+                    pattern:{
+                      name:/^[a-zA-Z0-9\u4e00-\u9fa5\-]{1,128}$/,
+                      doc:/^[\S\s]{1,2048}$/,
+                      desc:/^\S{0,1024}$/
+                    },
+                    policyName:'',
+                    policyDocument:'',
+                    desc:''
+                  }
+                  OSSRam.getUserGroups().then(function(res){
+                    $scope.userGroups = res.Groups.Group
+                    if ($scope.userGroups.length){
+                      $scope.userGroups.selected = $scope.userGroups[0];
+                    }
+                  });
+                  $scope.selectTabs = function(type){
+                    if(type == 'user'){
+                      $scope.group.tabActive = false
+                      $scope.user.tabActive = true
+                    }
+                    if(type == 'groulp'){
+                      $scope.user.tabActive = false
+                      $scope.group.tabActive = true
+                    }
+                  }
+                  $scope.save = function(){
+                    if($scope.user.tabActive){
+                      OSSRam.createUser($scope.user.userName,$scope.user.displayName,$scope.user.phone,$scope.user.email,$scope.user.desc).then(function(res){
+                        alert("用户创建成功！")
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      })
+                    }else if($scope.group.tabActive){
+                      OSSRam.createGroup($scope.group.groupName,$scope.group.desc).then(function(res){
+                        alert("用户组创建成功！")
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      })
+                    }else if($scope.policy.tabActive){
+                      OSSRam.createPolicy($scope.policy.policyName,$scope.policy.policyDocument,$scope.policy.desc).then(function(res){
+                        alert("授权策略创建成功！")
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      })
+                    }
+                  }
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
             getObjectURI: function (bucket, object) {
                 var option = {
                     templateUrl: 'views/get_object_uri_modal.html',
@@ -3154,4 +3446,5 @@ angular.module('ossClientUiApp')
                 return $modal.open(option);
             }
         };
+        return OSSModal;
     }])

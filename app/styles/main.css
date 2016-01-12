@@ -10726,6 +10726,28 @@ a.news-tooltip:after {
   margin: 0 auto;
 }
 
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\00003255}}
+.ram-setting-modal .modal-body,
+.create-ram-items-modal .modal-body {
+  padding: 10px 0 !important;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\00003257}}
+.ram-setting-modal .modal-body ul.nav.nav-tabs,
+.create-ram-items-modal .modal-body ul.nav.nav-tabs {
+  padding: 0 10px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\00003260}}
+.ram-setting-modal .modal-body .row,
+.create-ram-items-modal .modal-body .row {
+  line-height: 30px;
+  margin: 5px -15px !important;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_modal\.scss}line{font-family:\00003264}}
+.ram-setting-modal .modal-body .desc-test,
+.create-ram-items-modal .modal-body .desc-test {
+  color: #aaa;
+}
+
 @media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/huangzhibiao\/soft\/worksoft\/oss-client-ui\/app\/styles\/_login\.scss}line{font-family:\000031}}
 html,
 body {

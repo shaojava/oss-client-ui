@@ -249,3 +249,20 @@
     margin:0 auto;
   }
 }
+
+.ram-setting-modal,
+.create-ram-items-modal{
+  .modal-body{
+    padding:10px 0 !important;
+    ul.nav.nav-tabs{
+      padding:0 10px;
+    }
+    .row{
+      line-height: 30px;
+      margin:5px -15px !important;
+    }
+    .desc-test{
+      color:#aaa;
+    }
+  }
+}

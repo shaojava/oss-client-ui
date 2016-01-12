@@ -112,6 +112,7 @@ angular.module('OSSCommon', [
             }
         };
     }])
+
 /**
  * 消息服务
  * clientType:客户端类型，取值：“aliyun”，“guizhou“，“taiwan”
@@ -305,6 +306,7 @@ angular.module('OSSCommon', [
     }
   }])
 
+
 /**
  *   客户端配置的相关信息（定制时用）
  */
@@ -316,6 +318,7 @@ angular.module('OSSCommon', [
                 disable_location_select: 0,
                 hideLogo:false,
                 showchannel:false,
+                showrefer:false,
                 defaultLan:"zh_CN",
                 host: "aliyuncs.com",
                 news:{
@@ -401,7 +404,7 @@ angular.module('OSSCommon', [
              * @returns {boolean}
              */
             isCustomClient: function () {
-                return config.source && config.source != '' && config.source != 'taiwan';
+                return config.source && config.source != '' && config.source != 'taiwan' && config.source != 'jinrongyun';
             },
             /**
              * 是否是贵州的定制客户端
@@ -474,13 +477,23 @@ angular.module('OSSCommon', [
                     return location.indexOf(item.location) === 0||
                            location.indexOf(item.location.replace('-a-internal', '')) === 0 ||
                            location.indexOf(item.location.replace('-a', '')) === 0 ||
-                           location.indexOf(item.location.replace('-internal', '')) === 0;
+                           location.indexOf(item.location.replace('-internal', '')) === 0 ||
+                           location.indexOf(item.location.replace('-b-internal', '')) === 0 ||
+                           location.indexOf(item.location.replace('-b', '')) === 0 ||
+                           location.indexOf(item.location.replace('-finance', '')) === 0 ||
+                            location.indexOf(item.location.replace('-finance-1', ''))
                 });
             },
             getRegionByLocation: function (location) {
-                return _.find(locations, function (item) {
+                var _region = _.find(locations, function (item) {
                     return location.indexOf(item.location.replace('-internal', '')) === 0;
                 });
+                if (currentLocation && !_region) {
+                  _region = _.find(locations, function (item) {
+                    return currentLocation.indexOf(item.location) === 0;
+                  });
+                }
+                return _region
             },
             changeLocation: function (location) {
                 //是否是政务外网环境下
@@ -515,6 +528,18 @@ angular.module('OSSCommon', [
                 }
                 if (currentLocation && location + '-a-internal' == currentLocation) {
                     return location + '-a-internal';
+                }
+                if (currentLocation && location + '-b' == currentLocation) {
+                  return location + '-b';
+                }
+                if (currentLocation && location + '-b-internal' == currentLocation) {
+                  return location + '-b-internal';
+                }
+                if (currentLocation && location + '-finance' == currentLocation) {
+                  return location + '-finance';
+                }
+                if (currentLocation && location + '-finance-1' == currentLocation) {
+                  return location + '-finance-1';
                 }
                 return location;
             },
