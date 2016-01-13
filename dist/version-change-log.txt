@@ -1,11 +1,11 @@
 {
-  "version":"1.1.3.0",
-  "updateTime":"2015-12-07",
+  "version":"1.1.4.0",
+  "updateTime":"2016-01-13",
   "logs":{
     "current":{
-      "zh_CN":["1、增加英文、繁体语言，请在\"设置\"中进行选择。"],
-      "zh_TW":["1、增加英文、繁體語言，請在\"設置\"中進行選擇。"],
-      "en_US":["1、add English and traditional Chinese version, please set it in \"Setting\""]
+      "zh_CN":["1、支持金融云节点。"],
+      "zh_TW":["1、支撐金融雲節點。"],
+      "en_US":["1、support the financial cloud nodes."]
     },
     "next":{
       "zh_CN":["1、支持阿里云资源访问控制服务（RAM）。"],
