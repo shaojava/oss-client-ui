@@ -395,6 +395,21 @@ angular.module('OSSCommon', [
                       location: 'oss-tw-kaohsiung',
                       name: gettext('台湾高雄'),
                       enable: 0
+                    },
+                    {
+                      location:"oss-cn-qdjbp-a",
+                      name: "青岛-金融云",
+                      enable: 1
+                    },
+                    {
+                      location:"oss-cn-shenzhen-finance-1",
+                      name: "深圳-金融云",
+                      enable: 1
+                    },
+                    {
+                      location:"oss-cn-hzjbp-b",
+                      name: "杭州-金融云",
+                      enable: 1
                     }
                 ]
             };
