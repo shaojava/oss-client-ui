@@ -10726,26 +10726,49 @@ a.news-tooltip:after {
   margin: 0 auto;
 }
 
-/* line 255, ../../app/styles/_modal.scss */
+/* line 256, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body,
-.create-ram-items-modal .modal-body {
+.create-ram-items-modal .modal-body,
+.ram-user-manage-modal .modal-body {
   padding: 10px 0 0 0 !important;
 }
-/* line 257, ../../app/styles/_modal.scss */
+/* line 258, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body ul.nav.nav-tabs,
-.create-ram-items-modal .modal-body ul.nav.nav-tabs {
+.create-ram-items-modal .modal-body ul.nav.nav-tabs,
+.ram-user-manage-modal .modal-body ul.nav.nav-tabs {
   padding: 0 10px;
 }
-/* line 260, ../../app/styles/_modal.scss */
+/* line 261, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body .row,
-.create-ram-items-modal .modal-body .row {
+.create-ram-items-modal .modal-body .row,
+.ram-user-manage-modal .modal-body .row {
   line-height: 30px;
   margin: 5px -15px !important;
 }
-/* line 264, ../../app/styles/_modal.scss */
+/* line 265, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body .desc-test,
-.create-ram-items-modal .modal-body .desc-test {
+.create-ram-items-modal .modal-body .desc-test,
+.ram-user-manage-modal .modal-body .desc-test {
   color: #aaa;
+}
+/* line 269, ../../app/styles/_modal.scss */
+.ram-setting-modal .modal-body .dropdown .dropdown-toogle, .ram-setting-modal .modal-body .dropdown .caret,
+.create-ram-items-modal .modal-body .dropdown .dropdown-toogle,
+.create-ram-items-modal .modal-body .dropdown .caret,
+.ram-user-manage-modal .modal-body .dropdown .dropdown-toogle,
+.ram-user-manage-modal .modal-body .dropdown .caret {
+  color: #000;
+}
+/* line 273, ../../app/styles/_modal.scss */
+.ram-setting-modal .modal-body .dropdown-menu,
+.create-ram-items-modal .modal-body .dropdown-menu,
+.ram-user-manage-modal .modal-body .dropdown-menu {
+  min-width: 80px;
+}
+
+/* line 279, ../../app/styles/_modal.scss */
+.table {
+  margin-bottom: 0;
 }
 
 /* line 1, ../../app/styles/_login.scss */

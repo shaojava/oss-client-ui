@@ -251,7 +251,8 @@
 }
 
 .ram-setting-modal,
-.create-ram-items-modal{
+.create-ram-items-modal,
+.ram-user-manage-modal{
   .modal-body{
     padding:10px 0 0 0 !important;
     ul.nav.nav-tabs{
@@ -264,5 +265,17 @@
     .desc-test{
       color:#aaa;
     }
+    .dropdown{
+      .dropdown-toogle,.caret{
+        color:#000;
+      }
+    }
+    .dropdown-menu{
+      min-width: 80px;
+    }
   }
+}
+
+.table{
+  margin-bottom:0;
 }

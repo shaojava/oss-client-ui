@@ -2017,9 +2017,12 @@ angular.module('ossClientUiApp')
         })
         return defer.promise;
       },
-      getUsers:function () {
+      getUser:function(_userName){
         var defer = $q.defer();
-        var url= getRamRequestUrl('ListUsers');
+        var params = {
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('GetUser',params);
         $http.get(url).then(function(res){
           defer.resolve(res.data)
         },function(res){
@@ -2027,9 +2030,34 @@ angular.module('ossClientUiApp')
         })
         return defer.promise;
       },
-      getPolicies:function () {
+      getUsers:function (_max,_marker) {
         var defer = $q.defer();
-        var url= getRamRequestUrl('ListPolicies');
+        var params = {
+          MaxItems:_max
+        }
+        if(_marker){
+          params.Marker = _marker;
+        }
+        var url= getRamRequestUrl('ListUsers',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getPolicies:function (_max,_marker,_type) {
+        var defer = $q.defer();
+        var params = {
+          MaxItems:_max
+        }
+        if(_marker){
+          params.Marker = _marker;
+        }
+        if(_type && (_type === 'Custom' || _type === 'System')){
+          params.PolicyType = _type;
+        }
+        var url= getRamRequestUrl('ListPolicies',params);
         $http.get(url).then(function(res){
           defer.resolve(res.data)
         },function(res){
@@ -3159,6 +3187,58 @@ angular.module('ossClientUiApp')
               option = angular.extend({}, defaultOption, option);
               return $modal.open(option);
             },
+            ramUserManage:function (user){
+              var option = {
+                templateUrl: 'views/ram-user-manage.html',
+                windowClass: 'ram-user-manage-modal',
+                controller: function ($scope, $modalInstance) {
+                  console.log("====user info====",user)
+                  $scope.info = {
+                    active:true,
+                    data:null,
+                    loading:true
+                  }
+
+                  var getUserInfo = function(){
+                    OSSRam.getUser(user.UserName).then(function(res){
+                      console.log("===user info===",res)
+                    });
+                  }
+                  getUserInfo()
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
+            ramGroupManage:function (user){
+              var option = {
+                templateUrl: 'views/ram-user-manage.html',
+                windowClass: 'ram-user-manage-modal',
+                controller: function ($scope, $modalInstance) {
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
+            ramPolicyManage:function (user){
+              var option = {
+                templateUrl: 'views/ram-user-manage.html',
+                windowClass: 'ram-user-manage-modal',
+                controller: function ($scope, $modalInstance) {
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
             setRam:function (bucket, objects){
               var option = {
                 templateUrl: 'views/ram-setting.html',
@@ -3166,33 +3246,112 @@ angular.module('ossClientUiApp')
                 controller: function ($scope, $modalInstance) {
                   $scope.user = {
                     tabActive:false,
-                    list:null
+                    list:[],
+                    max:20,
+                    marker:null,
+                    loading:true,
+                    hasMore:false
                   }
                   $scope.group = {
                     tabActive:true,
-                    list:null
+                    list:[],
+                    max:20,
+                    marker:null,
+                    loading:true,
+                    hasMore:false
                   }
                   $scope.policy = {
                     tabActive:false,
-                    list:null
+                    list:[],
+                    max:20,
+                    marker:null,
+                    loading:true,
+                    hasMore:false,
+                    type:null
                   }
-                  OSSRam.getUsers().then(function(res){
-                    $scope.user.list = res.Users.User;
-                  });
-                  OSSRam.getUserGroups().then(function(res){
-                    $scope.group.list = res.Groups.Group;
-                  });
-                  OSSRam.getPolicies().then(function(res){
-                    $scope.policy.list = res.Policies.Policy
-                  })
+                  var getUsers = function(_max,_marker){
+                    _max = _max || 50;
+                    OSSRam.getUsers(_max,_marker).then(function(res){
+                      if(res.IsTruncated){
+                        $scope.user.marker = res.Marker
+                        $scope.user.hasMore = true
+                      }else{
+                        $scope.user.marker = null;
+                        $scope.user.hasMore = false;
+                      }
+                      $scope.user.list = $scope.user.list.concat(res.Users.User);
+                      $scope.user.loading = false;
+                    });
+                  }
+                  var getGroups = function(_max,_marker){
+                    _max = _max || 50;
+                    OSSRam.getUserGroups(_max,_marker).then(function(res){
+                      if(res.IsTruncated){
+                        $scope.group.marker = res.Marker
+                        $scope.group.hasMore = true
+                      }else{
+                        $scope.group.marker = null;
+                        $scope.group.hasMore = false;
+                      }
+                      $scope.group.list = res.Groups.Group;
+                      $scope.group.loading = false;
+                    });
+                  }
+                  var getPolicies = function(_max,_marker,_type){
+                    _max = _max || 50;
+                    OSSRam.getPolicies(_max,_marker,_type).then(function(res){
+                      if(res.IsTruncated){
+                        $scope.policy.marker = res.Marker
+                        $scope.policy.hasMore = true
+                      }else{
+                        $scope.policy.marker = null;
+                        $scope.policy.hasMore = false;
+                      }
+                      $scope.policy.list =  $scope.policy.list.concat(res.Policies.Policy);
+                      $scope.policy.loading = false;
+                    });
+                  }
+
+                  getUsers($scope.user.max,$scope.user.marker);
+                  getGroups($scope.group.max,$scope.group.marker);
+                  getPolicies($scope.policy.max,$scope.policy.marker,$scope.policy.type);
+
+                  $scope.loadMoreUsers = function () {
+                    $scope.user.loading = true;
+                    getUsers($scope.user.max,$scope.user.marker);
+                  }
+                  $scope.loadMoreGroups = function () {
+                    $scope.group.loading = true;
+                    getGroups($scope.group.max,$scope.group.marker);
+                  }
+                  $scope.loadMorePolicies = function () {
+                    $scope.policy.loading = true;
+                    getPolicies($scope.policy.max,$scope.policy.marker,$scope.policy.type);
+                  }
+                  $scope.changePolicyType = function (_type){
+                    $scope.policy.type = _type;
+                    $scope.policy.marker = null;
+                    $scope.policy.list = [];
+                    $scope.policy.loading = true;
+                    getPolicies($scope.policy.max,$scope.policy.marker,$scope.policy.type);
+                  }
                   $scope.createUser = function(){
                     OSSModal.createRamItemsModal('user');
                   }
                   $scope.createGroup = function(){
                     OSSModal.createRamItemsModal('group');
                   }
-                  $scope.createPloicy = function(){
-                    OSSModal.createRamItemsModal('ploicy');
+                  $scope.createPolicy = function(){
+                    OSSModal.createRamItemsModal('policy');
+                  }
+                  $scope.manageUser = function(_user){
+                    OSSModal.ramUserManage(_user)
+                  }
+                  $scope.manageGroup = function(_group){
+                    OSSModal.ramGroupManage(_group)
+                  }
+                  $scope.managePolicy = function(_policy){
+                    OSSModal.ramPolicyManage(_policy)
                   }
                   $scope.selectTabs = function(type){
                     if(type == 'user'){
