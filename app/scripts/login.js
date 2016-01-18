@@ -195,9 +195,12 @@ angular
 
         $scope.import = function (isCloudHost, location) {
             $scope.loging = true;
+            if(isCloudHost){
+              location = location +'-internal';
+            }
             OSS.invoke('loginByFile', {
                 ishost: isCloudHost ? 1 : 0,
-                location: location
+                location:location
             }, function (res) {
                 $timeout(function () {
                     $scope.loging = false;

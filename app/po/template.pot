@@ -270,7 +270,7 @@ msgstr ""
 msgid "你确定要取消这个文件的下载？"
 msgstr ""
 
-#: app/scripts/login.js:235
+#: app/scripts/login.js:238
 msgid "你连续密码输入错误已超过{{allowErrorCount}}次,请重新使用Access Key ID 和 Access Key Secret登录"
 msgstr ""
 
@@ -1019,7 +1019,7 @@ msgstr ""
 msgid "确定要删除？"
 msgstr ""
 
-#: app/scripts/login.js:250
+#: app/scripts/login.js:253
 msgid "确定要清除安全密码？"
 msgstr ""
 
@@ -1249,7 +1249,7 @@ msgid "请输入大于0的整数"
 msgstr ""
 
 #: app/scripts/login.js:153
-#: app/scripts/login.js:218
+#: app/scripts/login.js:221
 msgid "请输入安全密码"
 msgstr ""
 
