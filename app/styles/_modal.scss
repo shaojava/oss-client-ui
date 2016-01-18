@@ -255,6 +255,33 @@
 .ram-user-manage-modal{
   .modal-body{
     padding:10px 0 0 0 !important;
+    .secret-container{
+      position: absolute;
+      margin-top: -35px;
+      margin-left: 180px;
+      background: orange;
+      height: 40px;
+      color: #fff;
+      padding: 4px;
+      border-radius: 4px;
+      width:380px;
+      input.form-control[readonly]{
+        background: orange;
+        color:#ffffff;
+      }
+    }
+    .table.table-hover{
+      tr:hover{
+        input.form-control[readonly]{
+          background: #f5f5f5;
+        }
+      }
+      input.form-control[readonly]{
+        background: #ffffff;
+        border: 0 !important;
+        box-shadow: none;
+      }
+    }
     ul.nav.nav-tabs{
       padding:0 10px;
     }
@@ -278,4 +305,16 @@
 
 .table{
   margin-bottom:0;
+}
+
+.news-carousel{
+  .carousel-indicators {
+    top: 200px;
+  }
+  .left.carousel-control{
+    display: none;
+  }
+  .right.carousel-control{
+    display: none;
+  }
 }

@@ -10733,25 +10733,60 @@ a.news-tooltip:after {
   padding: 10px 0 0 0 !important;
 }
 /* line 258, ../../app/styles/_modal.scss */
+.ram-setting-modal .modal-body .secret-container,
+.create-ram-items-modal .modal-body .secret-container,
+.ram-user-manage-modal .modal-body .secret-container {
+  position: absolute;
+  margin-top: -35px;
+  margin-left: 180px;
+  background: orange;
+  height: 40px;
+  color: #fff;
+  padding: 4px;
+  border-radius: 4px;
+  width: 380px;
+}
+/* line 268, ../../app/styles/_modal.scss */
+.ram-setting-modal .modal-body .secret-container input.form-control[readonly],
+.create-ram-items-modal .modal-body .secret-container input.form-control[readonly],
+.ram-user-manage-modal .modal-body .secret-container input.form-control[readonly] {
+  background: orange;
+  color: #ffffff;
+}
+/* line 275, ../../app/styles/_modal.scss */
+.ram-setting-modal .modal-body .table.table-hover tr:hover input.form-control[readonly],
+.create-ram-items-modal .modal-body .table.table-hover tr:hover input.form-control[readonly],
+.ram-user-manage-modal .modal-body .table.table-hover tr:hover input.form-control[readonly] {
+  background: #f5f5f5;
+}
+/* line 279, ../../app/styles/_modal.scss */
+.ram-setting-modal .modal-body .table.table-hover input.form-control[readonly],
+.create-ram-items-modal .modal-body .table.table-hover input.form-control[readonly],
+.ram-user-manage-modal .modal-body .table.table-hover input.form-control[readonly] {
+  background: #ffffff;
+  border: 0 !important;
+  box-shadow: none;
+}
+/* line 285, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body ul.nav.nav-tabs,
 .create-ram-items-modal .modal-body ul.nav.nav-tabs,
 .ram-user-manage-modal .modal-body ul.nav.nav-tabs {
   padding: 0 10px;
 }
-/* line 261, ../../app/styles/_modal.scss */
+/* line 288, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body .row,
 .create-ram-items-modal .modal-body .row,
 .ram-user-manage-modal .modal-body .row {
   line-height: 30px;
   margin: 5px -15px !important;
 }
-/* line 265, ../../app/styles/_modal.scss */
+/* line 292, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body .desc-test,
 .create-ram-items-modal .modal-body .desc-test,
 .ram-user-manage-modal .modal-body .desc-test {
   color: #aaa;
 }
-/* line 269, ../../app/styles/_modal.scss */
+/* line 296, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body .dropdown .dropdown-toogle, .ram-setting-modal .modal-body .dropdown .caret,
 .create-ram-items-modal .modal-body .dropdown .dropdown-toogle,
 .create-ram-items-modal .modal-body .dropdown .caret,
@@ -10759,16 +10794,29 @@ a.news-tooltip:after {
 .ram-user-manage-modal .modal-body .dropdown .caret {
   color: #000;
 }
-/* line 273, ../../app/styles/_modal.scss */
+/* line 300, ../../app/styles/_modal.scss */
 .ram-setting-modal .modal-body .dropdown-menu,
 .create-ram-items-modal .modal-body .dropdown-menu,
 .ram-user-manage-modal .modal-body .dropdown-menu {
   min-width: 80px;
 }
 
-/* line 279, ../../app/styles/_modal.scss */
+/* line 306, ../../app/styles/_modal.scss */
 .table {
   margin-bottom: 0;
+}
+
+/* line 311, ../../app/styles/_modal.scss */
+.news-carousel .carousel-indicators {
+  top: 200px;
+}
+/* line 314, ../../app/styles/_modal.scss */
+.news-carousel .left.carousel-control {
+  display: none;
+}
+/* line 317, ../../app/styles/_modal.scss */
+.news-carousel .right.carousel-control {
+  display: none;
 }
 
 /* line 1, ../../app/styles/_login.scss */

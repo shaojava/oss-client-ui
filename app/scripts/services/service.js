@@ -2007,7 +2007,91 @@ angular.module('ossClientUiApp')
         })
         return defer.promise;
       },
-      getUserGroups:function (){
+      updateUser:function (_user){
+        var defer = $q.defer();
+        var params = {
+          UserName:_user.oldUserName,
+          NewUserName:_user.userName,
+          NewDisplayName:_user.displayName,
+          NewMobilePhone:_user.phone,
+          NewEmail:_user.email,
+          NewComments:_user.desc
+        }
+        var url= getRamRequestUrl('UpdateUser',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      deleteUser:function(_userName){
+        var defer = $q.defer();
+        var params = {
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('DeleteUser',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      createAccessKey:function(_userName){
+        var defer = $q.defer();
+        var params = {
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('CreateAccessKey',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      deleteAccessKey:function(_keyId,_userName){
+        var defer = $q.defer();
+        var params = {
+          UserAccessKeyId:_keyId,
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('DeleteAccessKey',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      listUserAccessKey:function(_userName){
+        var defer = $q.defer();
+        var params = {
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('ListAccessKeys',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getUserGroups:function(_userName){
+        var defer = $q.defer();
+        var params = {
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('ListGroupsForUser',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getGroups:function (){
         var defer = $q.defer();
         var url= getRamRequestUrl('ListGroups');
         $http.get(url).then(function(res){
@@ -3192,19 +3276,171 @@ angular.module('ossClientUiApp')
                 templateUrl: 'views/ram-user-manage.html',
                 windowClass: 'ram-user-manage-modal',
                 controller: function ($scope, $modalInstance) {
-                  console.log("====user info====",user)
                   $scope.info = {
+                    pattern:{
+                      name:/^[a-zA-Z0-9\u4e00-\u9fa5\.@\-_]{1,64}$/,
+                      display:/^[a-zA-Z0-9\.@\-\u4e00-\u9fa5]{0,12}$/,
+                      phone:/^([0-9]+\-){0,1}[0-9]{11}$/,
+                      email:/^[a-zA-Z0-9]+\@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
+                      desc:/^\S{0,128}$/
+                    },
+                    edit:false,
                     active:true,
                     data:null,
+                    editData:null,
                     loading:true
-                  }
-
+                  };
+                  $scope.accessKey = {
+                    active:false,
+                    list:null,
+                    loading:true
+                  };
+                  $scope.group = {
+                    active:false,
+                    hasGroup:{
+                      list:null,
+                      loading:true,
+                      active:true
+                    },
+                    listGroup:{
+                      list:null,
+                      loading:false,
+                      active:false
+                    }
+                  };
                   var getUserInfo = function(){
                     OSSRam.getUser(user.UserName).then(function(res){
-                      console.log("===user info===",res)
+                      $scope.info.data = {
+                        UserId:user.UserId,
+                        oldUserName:user.UserName,
+                        userName:res.User.UserName,
+                        displayName:res.User.DisplayName,
+                        phone:res.User.MobilePhone,
+                        id:res.User.UserId,
+                        email:res.User.Email,
+                        desc:res.User.Comments,
+                        createDate:res.User.CreateDate,
+                        lastLoginDate:res.User.LastLoginDate,
+                        updateDate:res.User.UpdateDate
+                      }
+                      $scope.info.editData = angular.copy($scope.info.data);
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                     });
                   }
-                  getUserInfo()
+                  var getAccessKeyList = function(){
+                    OSSRam.listUserAccessKey(user.UserName).then(function(res){
+                      $scope.accessKey.list = res.AccessKeys.AccessKey;
+                      $scope.accessKey.loading = false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  };
+                  var getUserGroups = function(){
+                    OSSRam.getUserGroups(user.UserName).then(function(res){
+                      $scope.group.hasGroup.list = res.Groups.Group;
+                      $scope.group.hasGroup.loading = false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  };
+                  getUserInfo();
+                  $scope.changeEditModel = function (){
+                    $scope.info.edit = !$scope.info.edit;
+                    if (!$scope.info.edit) {
+                      $scope.info.editData = angular.copy($scope.info.data);
+                    }
+                  }
+                  $scope.updateUser = function(){
+                    OSSRam.updateUser($scope.info.editData).then(function(res){
+                      $scope.info.data = angular.copy($scope.info.editData);
+                      user = angular.extend(user,res.User);
+                      $scope.info.edit = false;
+                      alert(gettextCatalog.getString(gettext("用户信息修改成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  };
+                  $scope.deleteUser = function(){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('确定要删除当前用户吗？'))).result.then(function() {
+                      OSSRam.deleteUser(user.UserName).then(function(res){
+                        alert(gettextCatalog.getString(gettext("用户删除成功！")));
+                        $rootScope.$broadcast('UpdateRamListData','delete-user')
+                        $modalInstance.dismiss('cancel');
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      })
+                    });
+                  };
+                  $scope.createKey = function(){
+                    OSSRam.createAccessKey(user.UserName).then(function(res){
+                      alert(gettextCatalog.getString(gettext("创建AccessKey成功！")));
+                      $scope.accessKey.list.push(res.AccessKey);
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  };
+                  $scope.delAccessKey = function(_ak){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('确定要删除当前用户的AccessKey吗？'))).result.then(function() {
+                      OSSRam.deleteAccessKey(_ak.AccessKeyId,user.UserName).then(function(res){
+                        alert(gettextCatalog.getString(gettext("删除AccessKey成功！")));
+                        getAccessKeyList();
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      });
+                    })
+                  };
+                  $scope.selectTabs = function(_type){
+                    if(_type == 'info'){
+                      $scope.accessKey.active = false;
+                      $scope.group.active = false;
+                      $scope.info.active = true;
+                      $scope.info.loading = true;
+                      getUserInfo();
+                    }else if(_type == 'accessKey'){
+                      $scope.accessKey.active = true;
+                      $scope.info.active = false;
+                      $scope.group.active = false;
+                      $scope.accessKey.loading = true;
+                      getAccessKeyList();
+                    }else if(_type == 'group'){
+                      $scope.accessKey.active = false;
+                      $scope.info.active = false;
+                      $scope.group.active = true;
+                      $scope.group.loading = true;
+                      getUserGroups();
+                    }
+                  };
+                  $scope.groupModalChange = function(){
+                    if($scope.group.listGroup.active){
+                      $scope.group.listGroup.active = false;
+                      $scope.group.hasGroup.active = true;
+                    }else{
+                      $scope.group.hasGroup.active = false;
+                      $scope.group.listGroup.active = true;
+                    }
+                  };
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                   };
@@ -3285,7 +3521,7 @@ angular.module('ossClientUiApp')
                   }
                   var getGroups = function(_max,_marker){
                     _max = _max || 50;
-                    OSSRam.getUserGroups(_max,_marker).then(function(res){
+                    OSSRam.getGroups(_max,_marker).then(function(res){
                       if(res.IsTruncated){
                         $scope.group.marker = res.Marker
                         $scope.group.hasMore = true
@@ -3369,7 +3605,16 @@ angular.module('ossClientUiApp')
                       $scope.group.tabActive = false
                       $scope.policy.tabActive = true
                     }
-                  }
+                  };
+                  $rootScope.$on("UpdateRamListData",function(event,type,option){
+                    if(type == 'delete-user'){
+                      $scope.user.list = [];
+                      $scope.user.marker = null;
+                      $scope.user.loading = true;
+                      $scope.user.hasMore = false;
+                      getUsers($scope.user.max,$scope.user.marker);
+                    }
+                  });
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                   };
@@ -3421,12 +3666,12 @@ angular.module('ossClientUiApp')
                     policyDocument:'',
                     desc:''
                   }
-                  OSSRam.getUserGroups().then(function(res){
-                    $scope.userGroups = res.Groups.Group
-                    if ($scope.userGroups.length){
-                      $scope.userGroups.selected = $scope.userGroups[0];
-                    }
-                  });
+                  //OSSRam.getGroups().then(function(res){
+                  //  $scope.userGroups = res.Groups.Group
+                  //  if ($scope.userGroups.length){
+                  //    $scope.userGroups.selected = $scope.userGroups[0];
+                  //  }
+                  //});
                   $scope.selectTabs = function(type){
                     if(type == 'user'){
                       $scope.group.tabActive = false

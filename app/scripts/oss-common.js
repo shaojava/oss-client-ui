@@ -505,12 +505,11 @@ angular.module('OSSCommon', [
             },
             getRegionByLocation: function (location) {
                 var _region = _.find(locations, function (item) {
-                    return location.indexOf(item.location.replace('-internal', '')) === 0;
+                    return location == item.location.replace('-internal', '');
                 });
-
                 if (currentLocation && !_region) {
                   _region = _.find(locations, function (item) {
-                    return currentLocation.indexOf(item.location) === 0;
+                    return currentLocation.replace('-internal', '') == item.location;
                   });
                 }
                 return _region

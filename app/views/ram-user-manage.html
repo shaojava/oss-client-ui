@@ -3,51 +3,52 @@
     <tabset>
       <button type="button" class="close" ng-click="cancel()">&times;</button>
       <tab heading="{{'用户信息'|translate}}" active="info.active" select="selectTabs('info');">
-        <div ng-if="info.active" class="scrollbar" style="padding:10px;max-height: 400px;overflow-y:auto;">
+        <div ng-if="info.active" class="scrollbar" style="padding:10px;">
           <div ng-if="!info.edit">
             <div class="row">
               <div class="col-sm-3 text-right" translate>用户名：</div>
               <div class="col-sm-7">
-                {{info.userName}}
+                {{info.data.userName}}
+              </div>
+              <div class="col-sm-2">
+                <a ng-click="changeEditModel();">编辑</a>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-3 text-right" translate>显示名：</div>
               <div class="col-sm-7">
-                {{info.displayName}}
+                {{info.data.displayName}}
               </div>
-              <div class="col-sm-3"></div>
-              <div class="col-sm-9 desc-test" translate>可包含大小写字母、数字、"."、"@"、"-"或中文且长度在0~12之间的字符</div>
+
             </div>
             <div class="row">
               <div class="col-sm-3 text-right" translate>手机号：</div>
               <div class="col-sm-7">
-                <input class="form-control" placeholder="{{'请输入手机号'|translate}}" ng-pattern="user.pattern.phone" ng-model="user.phone">
+                {{info.data.phone}}
               </div>
-              <div class="col-sm-3"></div>
-              <div class="col-sm-9 desc-test" translate>格式：国际区号-号码或11位手机号码，默认国际区号：86</div>
             </div>
             <div class="row">
               <div class="col-sm-3 text-right" translate>邮箱：</div>
               <div class="col-sm-7">
-                <input class="form-control" placeholder="{{'请输入邮箱'|translate}}" ng-pattern="user.pattern.email" ng-model="user.email">
+                {{info.data.email}}
               </div>
             </div>
             <div class="row">
               <div class="col-sm-3 text-right" translate>描述：</div>
               <div class="col-sm-7">
-                <textarea rows="3" style="resize: none;" class="form-control" ng-pattern="user.pattern.desc" placeholder="{{'请输入描述信息'|translate}}" ng-model="user.desc">
-                </textarea>
+                {{info.data.desc}}
               </div>
-              <div class="col-sm-3"></div>
-              <div class="col-sm-9 desc-test" translate>长度在0~128之间的任意字符</div>
+
             </div>
           </div>
           <div ng-if="info.edit">
             <div class="row">
               <div class="col-sm-3 text-right" translate>用户名：</div>
               <div class="col-sm-7">
-                <input class="form-control" placeholder="{{'请输入用户名'|translate}}" ng-required="true" ng-pattern="user.pattern.name" ng-model="user.userName">
+                <input class="form-control" placeholder="{{'请输入用户名'|translate}}" ng-required="true" ng-pattern="info.pattern.name" ng-model="info.editData.userName">
+              </div>
+              <div class="col-sm-2">
+                <a ng-click="changeEditModel();">关闭编辑</a>
               </div>
               <div class="col-sm-3"></div>
               <div class="col-sm-9 desc-test" translate>可包含大小写字母、数字、"."、"@"或中文且长度在1~64之间的字符</div>
@@ -55,7 +56,7 @@
             <div class="row">
               <div class="col-sm-3 text-right" translate>显示名：</div>
               <div class="col-sm-7">
-                <input class="form-control" placeholder="{{'请输入显示名'|translate}}" ng-pattern="user.pattern.display" ng-model="user.displayName">
+                <input class="form-control" placeholder="{{'请输入显示名'|translate}}" ng-pattern="info.pattern.display" ng-model="info.editData.displayName">
               </div>
               <div class="col-sm-3"></div>
               <div class="col-sm-9 desc-test" translate>可包含大小写字母、数字、"."、"@"、"-"或中文且长度在0~12之间的字符</div>
@@ -63,7 +64,7 @@
             <div class="row">
               <div class="col-sm-3 text-right" translate>手机号：</div>
               <div class="col-sm-7">
-                <input class="form-control" placeholder="{{'请输入手机号'|translate}}" ng-pattern="user.pattern.phone" ng-model="user.phone">
+                <input class="form-control" placeholder="{{'请输入手机号'|translate}}" ng-pattern="info.pattern.phone" ng-model="info.editData.phone">
               </div>
               <div class="col-sm-3"></div>
               <div class="col-sm-9 desc-test" translate>格式：国际区号-号码或11位手机号码，默认国际区号：86</div>
@@ -71,13 +72,13 @@
             <div class="row">
               <div class="col-sm-3 text-right" translate>邮箱：</div>
               <div class="col-sm-7">
-                <input class="form-control" placeholder="{{'请输入邮箱'|translate}}" ng-pattern="user.pattern.email" ng-model="user.email">
+                <input class="form-control" placeholder="{{'请输入邮箱'|translate}}" ng-pattern="info.pattern.email" ng-model="info.editData.email">
               </div>
             </div>
             <div class="row">
               <div class="col-sm-3 text-right" translate>描述：</div>
               <div class="col-sm-7">
-                <textarea rows="3" style="resize: none;" class="form-control" ng-pattern="user.pattern.desc" placeholder="{{'请输入描述信息'|translate}}" ng-model="user.desc">
+                <textarea rows="3" style="resize: none;" class="form-control" ng-pattern="info.pattern.desc" placeholder="{{'请输入描述信息'|translate}}" ng-model="info.editData.desc">
                 </textarea>
               </div>
               <div class="col-sm-3"></div>
@@ -86,14 +87,80 @@
           </div>
         </div>
       </tab>
-      <tab heading="{{'AccessKey管理'|translate}}" active="group.tabActive" select="selectTabs('group');">
-        <div ng-if="group.tabActive" class="scrollbar" style="padding:10px;max-height: 400px;overflow-y:auto;">
-
+      <tab heading="{{'AccessKey管理'|translate}}" active="accessKey.active" select="selectTabs('accessKey');">
+        <div ng-if="accessKey.active" class="scrollbar" style="padding:10px;max-height: 400px;overflow-y:auto;">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th width="50%" translate>AccessKeyId</th>
+              <th width="10%" translate>状态</th>
+              <th width="20%" translate>创建时间</th>
+              <th width="20%" translate>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ak in accessKey.list">
+              <td>
+                <input readonly="readonly" class="form-control" type="text" ng-model="ak.AccessKeyId" style="width: 180px;display: inline-block;">
+                <a style="cursor:pointer;" ng-click="ak.showSecret = true;">Secret</a>
+                <div ng-show="ak.showSecret" class="secret-container">
+                   <input readonly="readonly" class="form-control" type="text" ng-model="ak.AccessKeySecret" style="width: 350px;display: inline-block;">
+                   <button type="button" class="close" ng-click="ak.showSecret = false;" style="margin-top:4px;">&times;</button>
+                </div>
+              </td>
+              <td>{{ak.Status == 'Active' ? ('启用'|translate) : ('禁用'|translate)}}</td>
+              <td>{{ak.CreateDate|formatTime}}</td>
+              <td>
+                <a ng-if="ak.Status == 'Inactive'" class="btn btn-link" ng-click="activeAccessKey(ak);" translate>启用</a>
+                <a ng-if="ak.Status == 'Active'" class="btn btn-link" ng-click="disabeldAccessKey(ak);" translate>禁用</a>
+                <a ng-click="delAccessKey(ak);" translate>删除</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </tab>
-      <tab heading="{{'加入的组管理'|translate}}" active="policy.tabActive" select="selectTabs('policy');">
-        <div ng-if="policy.tabActive" class="scrollbar" style="padding:10px;max-height: 400px;overflow-y:auto;">
-
+      <tab heading="{{'加入的组管理'|translate}}" active="group.active" select="selectTabs('group');">
+        <div ng-if="group.active" class="scrollbar" style="padding:10px;height: 400px;overflow-y:auto;">
+          <carousel class="news-carousel">
+            <slide active="group.hasGroup.active">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th translate>组名称</th>
+                  <th translate>描述</th>
+                  <th translate>创建时间</th>
+                  <th translate>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-if="group.hasGroup.loading" >
+                  <td colspan="4" height="60px">
+                    <div style="position:absolute;width:30px;margin:15px auto;left:50%;">
+                      <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"  spinner-key="ram-user-manage-group"  spinner-start-active="1"></span>
+                    </div>
+                  </td>
+                </tr>
+                <tr ng-if="!group.hasGroup.loading && !group.hasGroup.list.length">
+                  <td colspan="4" align="center" translate>暂无数据</td>
+                </tr>
+                <tr ng-if="!group.hasGroup.loading && group.hasGroup.list.length" ng-repeat="group in group.hasGroup.list">
+                  <td>{{group.GroupName}}</td>
+                  <td>{{group.Comments}}</td>
+                  <td>{{group.JoinDate|formatTime}}</td>
+                  <td>
+                    <a ng-click="" translate>管理</a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </slide>
+            <slide active="group.listGroup.active">
+              <div>
+                12111111111
+              </div>
+            </slide>
+          </carousel>
         </div>
       </tab>
       <tab heading="{{'其他设置'|translate}}" active="setting.tabActive" select="selectTabs('setting');">
@@ -105,9 +172,9 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button ng-if="user.tabActive" ng-click="createUser();" class="btn btn-default pull-left">创建用户</button>
-  <button ng-if="group.tabActive" ng-click="createGroup();" class="btn btn-default pull-left">创建用户组</button>
-  <button ng-if="policy.tabActive" ng-click="createPolicy();" class="btn btn-default pull-left">创建授权策略</button>
-  <button type="button" class="btn btn-primary" ng-click="save()" ng-disabled="user_group_modal.$pristine || user_group_modal.$invalid" translate>确定</button>
+  <button ng-if="info.active" ng-click="deleteUser();" class="btn btn-danger pull-left">删除用户</button>
+  <button ng-if="accessKey.active" ng-click="createKey();" class="btn btn-success pull-left">创建AccessKey</button>
+  <a ng-if="group.active" ng-click="groupModalChange();" class="btn btn-success pull-left">加入用户组</a>
+  <button ng-if="info.edit" type="button" class="btn btn-primary" ng-click="updateUser()" ng-disabled="user_group_modal.$pristine || user_group_modal.$invalid" translate>确定</button>
   <button type="button" class="btn btn-default" ng-click="cancel()" translate>取消</button>
 </div>
