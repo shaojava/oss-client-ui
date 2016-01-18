@@ -505,7 +505,12 @@ angular.module('OSSCommon', [
             },
             getRegionByLocation: function (location) {
                 var _region = _.find(locations, function (item) {
-                    return location == item.location.replace('-internal', '');
+                  return item.enable && (
+                  location == item.location.replace('-internal', '') ||
+                  location + '-a' == item.location.replace('-internal', '') ||
+                  location + '-b' == item.location.replace('-internal', '') ||
+                  location + '-finance-1' == item.location.replace('-internal', '')
+                  );
                 });
                 if (currentLocation && !_region) {
                   _region = _.find(locations, function (item) {
@@ -539,26 +544,41 @@ angular.module('OSSCommon', [
                 if (location.indexOf('-internal') > 0) {
                     return location;
                 }
-                if (currentLocation && location + '-a' == currentLocation) {
+                if(currentLocation){
+                  if (currentLocation && location + '-a' == currentLocation) {
                     return location + '-a';
-                }
-                if (currentLocation && location + '-internal' == currentLocation) {
+                  }
+                  if (currentLocation && location + '-internal' == currentLocation) {
                     return location + '-internal';
-                }
-                if (currentLocation && location + '-a-internal' == currentLocation) {
+                  }
+                  if (currentLocation && location + '-a-internal' == currentLocation) {
                     return location + '-a-internal';
-                }
-                if (currentLocation && location + '-b' == currentLocation) {
-                  return location + '-b';
-                }
-                if (currentLocation && location + '-b-internal' == currentLocation) {
-                  return location + '-b-internal';
-                }
-                if (currentLocation && location + '-finance' == currentLocation) {
-                  return location + '-finance';
-                }
-                if (currentLocation && location + '-finance-1' == currentLocation) {
-                  return location + '-finance-1';
+                  }
+                  if (currentLocation && location + '-b' == currentLocation) {
+                    return location + '-b';
+                  }
+                  if (currentLocation && location + '-b-internal' == currentLocation) {
+                    return location + '-b-internal';
+                  }
+                  if (currentLocation && location + '-finance' == currentLocation) {
+                    return location + '-finance';
+                  }
+                  if (currentLocation && location + '-finance-1' == currentLocation) {
+                    return location + '-finance-1';
+                  }
+                }else{
+                  console.log("locations:",locations,location)
+                  var _region = _.find(locations, function (item) {
+                    return item.enable && (
+                      location == item.location.replace('-internal', '') ||
+                      location + '-a' == item.location.replace('-internal', '') ||
+                      location + '-b' == item.location.replace('-internal', '') ||
+                      location + '-finance-1' == item.location.replace('-internal', '')
+                    );
+                  });
+                  if (_region){
+                    return _region.location
+                  }
                 }
                 return location;
             },
