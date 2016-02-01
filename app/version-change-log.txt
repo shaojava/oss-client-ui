@@ -1,16 +1,16 @@
 {
   "version":"1.1.4.0",
-  "updateTime":"2016-01-13",
+  "updateTime":"2016-02-01",
   "logs":{
     "current":{
-      "zh_CN":["1、支持青岛金融云节点。","2、支持杭州金融云节点。","3、支持深圳金融云节点。"],
-      "zh_TW":["1、支撐青島金融雲節點。","2、支撐杭州金融雲節點。","3、支撐深圳金融雲節點。"],
-      "en_US":["1、support the financial cloud nodes."]
+      "zh_CN":[],
+      "zh_TW":[],
+      "en_US":[]
     },
     "next":{
-      "zh_CN":["1、支持阿里云资源访问控制服务（RAM）。"],
-      "zh_TW":["1、支持阿里云資源訪問控制服務（RAM）。"],
-      "en_US":["1、support aliyun resource access control service (RAM)。"]
+      "zh_CN":[],
+      "zh_TW":[],
+      "en_US":[]
     }
   }
 }

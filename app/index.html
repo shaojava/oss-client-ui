@@ -166,8 +166,8 @@
                             <div ng-if="versionLogs.currentLogs" style="">
                               <p ng-repeat="log in versionLogs.currentLogs">{{log}}</p>
                             </div>
-                            <div translate>下一期功能预告</div>
-                            <div ng-if="versionLogs.nextLogs" style="">
+                            <div ng-if="versionLogs.nextLogs.length" translate>下一期功能预告</div>
+                            <div ng-if="versionLogs.nextLogs.length" style="">
                               <p ng-repeat="log in versionLogs.nextLogs">{{log}}</p>
                             </div>
                           </div>
