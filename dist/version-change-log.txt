@@ -1,11 +1,11 @@
 {
   "version":"1.1.4.0",
-  "updateTime":"2016-02-25",
+  "updateTime":"2016-02-26",
   "logs":{
     "current":{
-      "zh_CN":["1、添加英文国际化。","2、添加繁体中文国际化。","3、设置HTTP头的Content-Disposition允许设置中文。","4、解决文件下载后带目录名称的问题。"],
-      "zh_TW":["1、增加英文國際化。","2、增加繁體中文國際化。","3、設置HTTP頭的Content-Disposition允許設置中文。","4、解決文件下載后帶目錄名稱的問題。"],
-      "en_US":["1、Add English international.","2、Add Traditional Chinese internationalization.","3、HTTP Content-Disposition header is set to allow Chinese.","4、Resolving the problem with the download file's name contain the directory name."]
+      "zh_CN":["1、设置HTTP头的Content-Disposition允许设置中文。","2、解决文件下载后带目录名称的问题。"],
+      "zh_TW":[],
+      "en_US":[]
     },
     "next":{
       "zh_CN":[],

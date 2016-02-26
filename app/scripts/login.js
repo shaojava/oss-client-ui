@@ -30,11 +30,12 @@ angular
          * @type {boolean|*}
          */
         $scope.isCustomClient = OSSConfig.isCustomClient();
+
         /**
          * 语言国际化
          * @type {{lan: string}[]}
          */
-
+        $scope.showLanSetting = OSSConfig.showLanSetting();
         $scope.lanLists = angular.copy(OSSI18N.getLanLists())
         $scope.lanLists.selected = OSSI18N.getCurrLan();
         $scope.selectLan = function ($item){

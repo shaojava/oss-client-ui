@@ -35,6 +35,7 @@ angular.module('OSSCommon', [
         var _defaultLan = _.find(_lanArrs,function(item){
           return item.lan === _defaultLanKey
         })
+        console.log("---current lan---",_defaultLan,_defaultLan.key)
         var _lan = {type:_defaultLan.key}
         if (OSSClient.gGetLanguage){
           var _l = OSS.invoke('gGetLanguage')
@@ -322,6 +323,7 @@ angular.module('OSSCommon', [
                 hideLogo:false,
                 showchannel:false,
                 showrefer:false,
+                showLanSetting:true,
                 defaultLan:"zh_CN",
                 host: "aliyuncs.com",
                 news:{
@@ -434,6 +436,13 @@ angular.module('OSSCommon', [
             },
             getConfig: function() {
               return config;
+            },
+            /**
+             *
+             * @returns {boolean}
+             */
+            showLanSetting:function () {
+              return !!config.showLanSetting;
             },
             /**
              * 是否显示白名单设置

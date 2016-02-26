@@ -2621,7 +2621,7 @@ angular.module('ossClientUiApp')
                         $scope.isCustomClient = OSSConfig.isCustomClient();
 
                         $scope.setting = OSS.invoke('getTransInfo');
-
+                        $scope.showLanSetting = OSSConfig.showLanSetting();
                         $scope.lanLists = angular.copy(OSSI18N.getLanLists())
                         $scope.lanLists.selected = OSSI18N.getCurrLan();
 

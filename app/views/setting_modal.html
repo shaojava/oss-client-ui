@@ -38,7 +38,7 @@
               <div class="col-xs-5 control-errormsg" ng-show="showDownloadThreadError"><span class="text-danger"><span translate>限制数字范围：</span>{{min}} - {{max}}</span></div>
             </div>
         </fieldset>
-        <fieldset>
+        <fieldset ng-if="showLanSetting">
           <legend translate>语言设置</legend>
           <div class="form-group">
             <label for="lanSetting" class="col-xs-5 control-label" translate>语言设置：</label>

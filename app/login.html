@@ -48,7 +48,7 @@
               <span translate>自定义服务器地址</span>
             </a>
           </div>
-          <div class="pull-right" style="{{isCustomClient?'width:100%;':'width:120px;'}}">
+          <div ng-if="showLanSetting" class="pull-right" style="{{isCustomClient?'width:100%;':'width:120px;'}}">
             <ui-select ng-model="lanLists.selected" search-enabled="true" on-select="selectLan($item)">
               <ui-select-match placeholder="{{'选择语言'|translate}}">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices repeat="lanItem in lanLists">
