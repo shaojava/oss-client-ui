@@ -506,6 +506,7 @@ angular.module('OSSCommon', [
             getRegionByLocation: function (location) {
                 var _region = _.find(locations, function (item) {
                   return item.enable && (
+                  location == item.location ||
                   location == item.location.replace('-internal', '') ||
                   location + '-a' == item.location.replace('-internal', '') ||
                   location + '-b' == item.location.replace('-internal', '') ||
@@ -767,8 +768,7 @@ angular.module('OSSCommon', [
         return function (location) {
             if (!location) {
                 return '';
-            }
-            ;
+            };
             var region = OSSRegion.getRegionByLocation(location);
             if (!region) {
                 return '';

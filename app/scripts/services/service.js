@@ -2126,7 +2126,7 @@ angular.module('ossClientUiApp')
         $http.get(url).then(function(res){
           defer.resolve(res.data)
         },function(res){
-          defer.reject(res)
+          defer.resolve({err:1})
         })
         return defer.promise;
       },
@@ -2918,6 +2918,9 @@ angular.module('ossClientUiApp')
                             $scope.loading = false;
                             angular.forEach($scope.headers, function (header) {
                               header.model = getHeader(header.name);
+                              if(header.name == 'Content-Disposition' && header.model){
+                                header.model = decodeURIComponent(header.model)
+                              }
                             })
                             angular.forEach(getHeader(), function (val, key) {
                               if (key.indexOf('x-oss-meta-') === 0) {
@@ -2950,7 +2953,26 @@ angular.module('ossClientUiApp')
                                     return false;
                                 }
                                 if (val.model) {
-                                    if(!checkFieldValueIsValid(val.model)){
+                                    if(val.name == 'Content-Disposition'){
+                                      var valid = /^[\u4e00-\u9fa5a-zA-Z0-9\-_/.;,:="]+$/.test(val.model);
+                                      if(!valid){
+                                        unValidFieldValue = true;
+                                        return false;
+                                      }else{
+                                        var _modelVal = val.model.match(/filename=\S+/g);
+                                        if(_modelVal && _modelVal.length > 0){
+                                          var _str = _modelVal[0].substring('filename='.length);
+                                          if(_str.indexOf("\"") != 0){
+                                            _str = "\"" + _str
+                                          }
+                                          if(_str.lastIndexOf("\"") != _str.length - 1){
+                                            _str = _str + "\""
+                                          }
+                                          _modelVal = _str.substring(1,_str.length - 1);
+                                        }
+                                        val.model = val.model.replace(/filename=\S+/g,"filename=\""+encodeURIComponent(_modelVal)+"\"")
+                                      }
+                                    }else if(!checkFieldValueIsValid(val.model)){
                                         unValidFieldValue = true;
                                         return false;
                                     }
@@ -3508,14 +3530,16 @@ angular.module('ossClientUiApp')
                   var getUsers = function(_max,_marker){
                     _max = _max || 50;
                     OSSRam.getUsers(_max,_marker).then(function(res){
-                      if(res.IsTruncated){
-                        $scope.user.marker = res.Marker
-                        $scope.user.hasMore = true
-                      }else{
-                        $scope.user.marker = null;
-                        $scope.user.hasMore = false;
+                      if(res && !res.err){
+                        if(res.IsTruncated){
+                          $scope.user.marker = res.Marker
+                          $scope.user.hasMore = true
+                        }else{
+                          $scope.user.marker = null;
+                          $scope.user.hasMore = false;
+                        }
+                        $scope.user.list = $scope.user.list.concat(res.Users.User);
                       }
-                      $scope.user.list = $scope.user.list.concat(res.Users.User);
                       $scope.user.loading = false;
                     });
                   }
@@ -3644,7 +3668,8 @@ angular.module('ossClientUiApp')
                     phone:'',
                     email:'',
                     groupName:'',
-                    desc:''
+                    desc:'',
+                    defaultKey:false
                   }
                   $scope.group = {
                     tabActive:_type == 'group',
@@ -3691,8 +3716,12 @@ angular.module('ossClientUiApp')
                   }
                   $scope.save = function(){
                     if($scope.user.tabActive){
+                      console.log("==========",$scope.user)
                       OSSRam.createUser($scope.user.userName,$scope.user.displayName,$scope.user.phone,$scope.user.email,$scope.user.desc).then(function(res){
-                        alert("用户创建成功！")
+                        alert("用户创建成功！");
+                        if($scope.user.defaultKey){
+
+                        }
                       },function(res){
                         res = {
                           Error:res.data

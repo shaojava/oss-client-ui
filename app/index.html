@@ -172,7 +172,7 @@
                             </div>
                           </div>
                           <carousel class="news-carousel" interval="3000" ng-if="!tabsNews.loading && tabsNews.data">
-                            <slide ng-repeat="img in tabsNews.data.imgs">
+                            <slide ng-repeat="img in tabsNews.data.imgs track by $index">
                               <!--<img ng-src="{{img}}" ng-click="clickNews(tabsNews.data.aid,$index)">-->
                               <div class="img-container" ng-click="clickNews(tabsNews.data.aid,$index)" style="color:{{tabsNews.data.titleColors[$index]?'#'+tabsNews.data.titleColors[$index]:'#fff'}};background: {{'#'+tabsNews.data.bgColors[$index]}} url({{img}}) center right no-repeat">
                                 <div ng-bind="tabsNews.data.titles[$index]"></div>

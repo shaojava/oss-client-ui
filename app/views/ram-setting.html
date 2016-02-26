@@ -18,7 +18,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="user in user.list">
+              <tr ng-if="user.loading">
+                <td colspan="5">
+                  <div style="line-height: 30px;height: 30px;position: relative;">
+                    <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"   spinner-start-active="1">
+                    </span>
+                  </div>
+                </td>
+              </tr>
+              <tr ng-if="!user.loading && user.list.length == 0">
+                <td colspan="5">
+                  没有数据
+                </td>
+              </tr>
+              <tr ng-if="!user.loading && user.list.length > 0" ng-repeat="user in user.list">
                 <td>{{user.UserName}}</td>
                 <td>{{user.DisplayName}}</td>
                 <td>{{user.Comments}}</td>

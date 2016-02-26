@@ -267,7 +267,7 @@ angular
             $http.get(requestUrl,{
                 timeout:3000
             }).error(function(req,status){
-                if(!req && !status){
+                if(!req && (!status || +status == -1)){
                     region = OSSRegion.getInternetLocationItem();
                     $scope.netWorkType = region.network;
                     callback(region.location);
