@@ -3008,7 +3008,7 @@ angular.module('ossClientUiApp')
                         $scope.showLanSetting = OSSConfig.showLanSetting();
                         $scope.lanLists = angular.copy(OSSI18N.getLanLists())
                         $scope.lanLists.selected = OSSI18N.getCurrLan();
-
+                        $scope.showRam = OSSConfig.showRam();
                         var checkSetting = function(setting){
                             var unValidMsg = '';
                             angular.forEach(setting,function(val,key){

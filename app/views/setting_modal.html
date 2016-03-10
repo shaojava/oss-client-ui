@@ -47,9 +47,9 @@
           </fieldset>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-6">
-          <fieldset ng-if="showLanSetting">
+      <div class="row" ng-if="showLanSetting || showRam">
+        <div class="col-xs-6" ng-if="showLanSetting">
+          <fieldset>
             <legend translate>语言设置</legend>
             <div class="row">
               <label for="lanSetting" class="col-xs-6 text-right control-label" translate>当前语言：</label>
@@ -64,11 +64,11 @@
             </div>
           </fieldset>
         </div>
-        <div class="col-xs-6">
-          <fieldset ng-if="true">
+        <div class="col-xs-6" ng-if="showRam">
+          <fieldset>
             <legend translate>RAM设置</legend>
             <div class="row">
-              <label for="lanSetting" class="col-xs-6 text-right control-label" translate>功能开关：</label>
+              <label for="ram-setting" class="col-xs-6 text-right control-label" translate>功能开关：</label>
               <div class="col-xs-6">
                 <label style="margin-right: 15px">
                   <input name="ram-setting" value="true" type="radio" /> 开
