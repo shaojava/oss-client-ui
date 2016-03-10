@@ -1,9 +1,9 @@
 {
-  "version":"1.1.4.0",
-  "updateTime":"2016-02-26",
+  "version":"1.1.5.0",
+  "updateTime":"2016-03-11",
   "logs":{
     "current":{
-      "zh_CN":["1、设置HTTP头的Content-Disposition允许设置中文。","2、解决文件下载后带目录名称的问题。"],
+      "zh_CN":["1、文件上传时默认设置Content-Disposition字段，解决下载带文件目录名的问题"],
       "zh_TW":[],
       "en_US":[]
     },
