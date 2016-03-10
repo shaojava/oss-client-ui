@@ -324,6 +324,7 @@ angular.module('OSSCommon', [
                 showchannel:false,
                 showrefer:false,
                 showLanSetting:true,
+                showRam:true,
                 defaultLan:"zh_CN",
                 host: "aliyuncs.com",
                 news:{
@@ -450,6 +451,13 @@ angular.module('OSSCommon', [
              */
             showRefer: function () {
                 return !!config.showrefer;
+            },
+            /**
+             * 是否开启RAM功能
+             * @returns {boolean}
+             */
+            showRam:function(){
+              return !!config.showRam;
             },
             /**
              * 是否显示图片服务器设置
@@ -688,7 +696,11 @@ angular.module('OSSCommon', [
             'RequestTimeTooSkewed': gettextCatalog.getString(gettext('发起请求的时间和服务器时间超出15分钟')),
             'RequestTimeout': gettextCatalog.getString(gettext('请求超时')),
             'SignatureDoesNotMatch': gettextCatalog.getString(gettext('签名错误')),
-            'TooManyBuckets': gettextCatalog.getString(gettext('Bucket数目超过限制'))
+            'TooManyBuckets': gettextCatalog.getString(gettext('Bucket数目超过限制')),
+            'DeleteConflict.User.Group':gettextCatalog.getString(gettext('用户还有加入的组')),
+            'DeleteConflict.User.Policy':gettextCatalog.getString(gettext('用户还有加入的授权')),
+            'DeleteConflict.Group.Policy':gettextCatalog.getString(gettext('用户组还有加入的授权')),
+            'DeleteConflict.Group.User':gettextCatalog.getString(gettext('用户组下面还有用户'))
         };
         return {
             getError: function (res, status) {

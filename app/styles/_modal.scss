@@ -200,6 +200,12 @@
   }
 }
 .setting_modal {
+  .modal-body{
+    padding:15px 20px;
+  }
+  .row{
+    margin:10px auto;
+  }
    .control-errormsg{
      padding-top:6px;
    }
@@ -252,9 +258,19 @@
 
 .ram-setting-modal,
 .create-ram-items-modal,
-.ram-user-manage-modal{
+.ram-user-manage-modal,
+.ram-group-manage-modal,
+.ram-policy-manage-modal,
+.ram-role-manage-modal,
+.ram-service-modal{
   .modal-body{
     padding:10px 0 0 0 !important;
+    a{
+      cursor: pointer;
+    }
+    .carousel-indicators{
+      display: none;
+    }
     .secret-container{
       position: absolute;
       margin-top: -35px;
@@ -281,6 +297,7 @@
         border: 0 !important;
         box-shadow: none;
       }
+
     }
     ul.nav.nav-tabs{
       padding:0 10px;

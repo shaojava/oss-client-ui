@@ -42,13 +42,13 @@
             </div>
             <div class="col-sm-3"></div>
             <div class="col-sm-9 desc-test" translate>长度在0~128之间的任意字符</div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-9">
-              <label style="line-height: 20px;">
-                <input type="checkbox" ng-model="user.defaultKey">
-                <span style="display: inline-block;position: relative;top:-2px;">为该用户自动生成AccessKey</span>
-              </label>
-            </div>
+            <!--<div class="col-sm-3"></div>-->
+            <!--<div class="col-sm-9">-->
+              <!--<label style="line-height: 20px;">-->
+                <!--<input type="checkbox" ng-model="user.defaultKey">-->
+                <!--<span style="display: inline-block;position: relative;top:-2px;">为该用户自动生成AccessKey</span>-->
+              <!--</label>-->
+            <!--</div>-->
           </div>
         </div>
       </tab>
@@ -73,6 +73,39 @@
           </div>
         </div>
       </tab>
+
+      <tab heading="{{'创建角色'|translate}}" active="role.tabActive" select="selectTabs('role');">
+        <div ng-if="role.tabActive" style="padding:30px;">
+          <div class="row">
+            <div class="col-sm-3 text-right" translate>角色名称：</div>
+            <div class="col-sm-7">
+              <input class="form-control" ng-required="true" placeholder="{{'请输入名称'|translate}}" ng-pattern="role.pattern.name"  ng-model="role.roleName">
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9 desc-test" translate>可包含大小写字母、数字、'@'、-'或中文且长度在1~128之间的字符</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3 text-right" translate>规则：</div>
+            <div class="col-sm-7">
+              <textarea rows="5" ng-required="true" style="resize: none;" ng-pattern="role.pattern.doc" class="form-control" placeholder="{{'请输入策略规则'|translate}}" ng-model="role.doc">
+              </textarea>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9 desc-test" translate>必填，长度在1~2048之间的任意字符</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3 text-right" translate>描述：</div>
+            <div class="col-sm-7">
+              <textarea rows="3" style="resize: none;" ng-pattern="role.pattern.desc" class="form-control" placeholder="{{'请输入描述信息'|translate}}" ng-model="role.desc">
+              </textarea>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9 desc-test" translate>长度在0~1024之间的任意字符</div>
+          </div>
+
+        </div>
+      </tab>
+
       <tab heading="{{'创建授权策略'|translate}}" active="policy.tabActive" select="selectTabs('policy');">
         <div ng-if="policy.tabActive" style="padding:30px;">
           <div class="row">

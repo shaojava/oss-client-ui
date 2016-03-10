@@ -94,26 +94,39 @@
             <tr>
               <th width="50%" translate>AccessKeyId</th>
               <th width="10%" translate>状态</th>
-              <th width="20%" translate>创建时间</th>
-              <th width="20%" translate>操作</th>
+              <th width="15%" translate>创建时间</th>
+              <th width="25%" translate>操作</th>
             </tr>
             </thead>
             <tbody>
+            <tr ng-if="accessKey.loading">
+              <td colspan="5">
+                <div style="line-height: 30px;height: 30px;position: relative;">
+                    <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"   spinner-start-active="1">
+                    </span>
+                </div>
+              </td>
+            </tr>
+            <tr ng-if="!accessKey.loading && +accessKey.list.length == 0">
+              <td colspan="5" align="center">
+                没有数据
+              </td>
+            </tr>
             <tr ng-repeat="ak in accessKey.list">
               <td>
                 <input readonly="readonly" class="form-control" type="text" ng-model="ak.AccessKeyId" style="width: 180px;display: inline-block;">
-                <a style="cursor:pointer;" ng-click="ak.showSecret = true;">Secret</a>
+                <a class="btn btn-link" ng-click="showAkSecret(ak);" ng-disabled="ak.Status == 'Inactive'">Secret</a>
                 <div ng-show="ak.showSecret" class="secret-container">
-                   <input readonly="readonly" class="form-control" type="text" ng-model="ak.AccessKeySecret" style="width: 350px;display: inline-block;">
+                   <input readonly="readonly" class="form-control" type="text" ng-model="ak.AccessKeySecret" style="color:orange;width: 350px;display: inline-block;">
                    <button type="button" class="close" ng-click="ak.showSecret = false;" style="margin-top:4px;">&times;</button>
                 </div>
               </td>
-              <td>{{ak.Status == 'Active' ? ('启用'|translate) : ('禁用'|translate)}}</td>
+              <td style="vertical-align: middle;">{{ak.Status == 'Active' ? ('启用'|translate) : ('禁用'|translate)}}</td>
               <td>{{ak.CreateDate|formatTime}}</td>
               <td>
-                <a ng-if="ak.Status == 'Inactive'" class="btn btn-link" ng-click="activeAccessKey(ak);" translate>启用</a>
-                <a ng-if="ak.Status == 'Active'" class="btn btn-link" ng-click="disabeldAccessKey(ak);" translate>禁用</a>
-                <a ng-click="delAccessKey(ak);" translate>删除</a>
+                <a ng-if="ak.Status == 'Inactive'" class="btn btn-link" ng-click="updateAccessKey(ak);" translate>启用</a>
+                <a ng-if="ak.Status == 'Active'" class="btn btn-link" ng-click="updateAccessKey(ak);" translate>禁用</a>
+                <a class="btn btn-link" ng-click="delAccessKey(ak);" translate>删除</a>
               </td>
             </tr>
             </tbody>
@@ -121,20 +134,21 @@
         </div>
       </tab>
       <tab heading="{{'加入的组管理'|translate}}" active="group.active" select="selectTabs('group');">
-        <div ng-if="group.active" class="scrollbar" style="padding:10px;height: 400px;overflow-y:auto;">
+        <div ng-if="group.active">
           <carousel class="news-carousel">
             <slide active="group.hasGroup.active">
+              <div class="scrollbar" style="padding:10px;height:300px;overflow-y:auto;">
               <table class="table table-hover">
                 <thead>
                 <tr>
-                  <th translate>组名称</th>
-                  <th translate>描述</th>
-                  <th translate>创建时间</th>
-                  <th translate>操作</th>
+                  <th width="30%" translate>组名称</th>
+                  <th width="30%" translate>描述</th>
+                  <th width="25%" translate>加入时间</th>
+                  <th width="15%" translate>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-if="group.hasGroup.loading" >
+                <tr ng-if="group.hasGroup.loading">
                   <td colspan="4" height="60px">
                     <div style="position:absolute;width:30px;margin:15px auto;left:50%;">
                       <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"  spinner-key="ram-user-manage-group"  spinner-start-active="1"></span>
@@ -144,37 +158,181 @@
                 <tr ng-if="!group.hasGroup.loading && !group.hasGroup.list.length">
                   <td colspan="4" align="center" translate>暂无数据</td>
                 </tr>
-                <tr ng-if="!group.hasGroup.loading && group.hasGroup.list.length" ng-repeat="group in group.hasGroup.list">
-                  <td>{{group.GroupName}}</td>
-                  <td>{{group.Comments}}</td>
-                  <td>{{group.JoinDate|formatTime}}</td>
-                  <td>
-                    <a ng-click="" translate>管理</a>
+                <tr ng-repeat="group in group.hasGroup.list">
+                  <td align="left">{{group.GroupName}}</td>
+                  <td align="left">{{group.Comments}}</td>
+                  <td align="left">{{group.JoinDate|formatTime}}</td>
+                  <td align="left">
+                    <a ng-click="removeUserToGroups(group,$index)" translate>退出</a>
                   </td>
                 </tr>
                 </tbody>
               </table>
+                </div>
             </slide>
             <slide active="group.listGroup.active">
-              <div>
-                12111111111
+              <div class="scrollbar"scroll-load="loadMoreGroups()"
+                   disable-scroll="group.listGroup.loading || !group.listGroup.hasMore" style="padding:10px;height:300px;overflow-y:auto;">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th width="30%" translate>组名称</th>
+                      <th width="30%" translate>描述</th>
+                      <th width="25%" translate>创建时间</th>
+                      <th width="15%" translate>策略</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="group.listGroup.loading">
+                      <td colspan="5">
+                        <div style="line-height: 30px;height: 30px;position: relative;">
+                          <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"   spinner-start-active="1">
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  <tr ng-if="!group.listGroup.loading && +group.listGroup.list.length == 0">
+                    <td colspan="5" align="center">
+                      没有数据
+                    </td>
+                  </tr>
+                  <tr ng-repeat="group in group.listGroup.list">
+                    <td align="left">{{group.GroupName}}</td>
+                    <td align="left">{{group.Comments}}</td>
+                    <td align="left">{{group.CreateDate|formatTime}}</td>
+                    <td align="left">
+                      <a ng-if="!group.exist" ng-click="addUserToGroup(group);" translate>加入</a>
+                      <span ng-if="group.exist" class="text-success">已加入</span>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </slide>
           </carousel>
         </div>
       </tab>
-      <tab heading="{{'其他设置'|translate}}" active="setting.tabActive" select="selectTabs('setting');">
-        <div ng-if="setting.tabActive" class="scrollbar" style="padding:10px;max-height: 400px;overflow-y:auto;">
+      <tab heading="{{'授权策略'|translate}}" active="policies.active" select="selectTabs('policy');">
+        <div ng-if="policies.active">
+          <carousel class="news-carousel">
+            <slide active="policies.hasPolicies.active">
+              <div class="scrollbar" style="padding:10px;height:300px;overflow-y:auto;">
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th width="18%" translate>策略名称</th>
+                    <th width="16%" translate>策略类型</th>
+                    <th width="16%" translate>默认版本</th>
+                    <th width="20%" translate>描述</th>
+                    <th width="20%" translate>授权时间</th>
+                    <th width="10%" translate>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-if="policies.hasPolicies.loading">
+                    <td colspan="6">
+                      <div style="line-height: 30px;height: 30px;position: relative;">
+                      <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"   spinner-start-active="1">
+                      </span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr ng-if="!policies.hasPolicies.loading && +policies.hasPolicies.list.length == 0">
+                    <td colspan="6" align="center">
+                      没有数据
+                    </td>
+                  </tr>
+                  <tr ng-repeat="policy in policies.hasPolicies.list">
+                    <td align="left">{{policy.PolicyName}}</td>
+                    <td align="left">{{policy.PolicyType}}</td>
+                    <td align="left">{{policy.DefaultVersion}}</td>
+                    <td align="left">{{policy.Description}}</td>
+                    <td align="left">{{policy.AttachDate|formatTime}}</td>
+                    <td>
+                      <a ng-click="removePolicy(policy,$index)" translate>移除</a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </slide>
+            <slide active="policies.listPolicies.active">
+              <div class="scrollbar"scroll-load="loadMorePolicies()"
+                   disable-scroll="policies.listPolicies.loading || !policies.listPolicies.hasMore" style="padding:10px;height:300px;overflow-y:auto;">
 
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th width="20%" translate>策略名称</th>
+                    <th width="30%" translate>描述</th>
+                    <th width="18%" translate>引用次数</th>
+                    <th width="18%" translate>
+                  <span dropdown>
+                    <a data-toggle="dropdown" class="dropdown-toogle">
+                      <span ng-if="policies.listPolicies.type == null">全部类型</span>
+                      <span ng-if="policies.listPolicies.type == 'Custom'">自定义</span>
+                      <span ng-if="policies.listPolicies.type == 'System'">系统</span>
+                      <span class="caret"></span>
+                    </a>
+                    <ul dropdown-menu class="dropdown-menu">
+                      <li>
+                        <a ng-click="changePolicyType(null)">全部类型</a>
+                      </li>
+                      <li>
+                        <a ng-click="changePolicyType('Custom')">自定义</a>
+                      </li>
+                      <li>
+                        <a ng-click="changePolicyType('System')">系统</a>
+                      </li>
+                    </ul>
+                  </span>
+                    </th>
+                    <th width="14%" translate>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-if="policies.listPolicies.loading">
+                    <td colspan="5">
+                      <div style="line-height: 30px;height: 30px;position: relative;">
+                      <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"   spinner-start-active="1">
+                      </span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr ng-if="!policies.listPolicies.loading && +policies.listPolicies.list.length == 0">
+                    <td colspan="5" align="center">
+                      没有数据
+                    </td>
+                  </tr>
+                  <tr ng-repeat="policy in policies.listPolicies.list">
+                    <td align="left">{{policy.PolicyName}}</td>
+                    <td align="left">{{policy.Description}}</td>
+                    <td align="left">{{policy.AttachmentCount}}</td>
+                    <td align="left">{{policy.PolicyType}}</td>
+                    <td align="left">
+                      <a ng-if="!policy.exist" ng-click="setPolicy(policy)" translate>授权</a>
+                      <span ng-if="policy.exist" class="text-success">已授权</span>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </slide>
+          </carousel>
         </div>
       </tab>
+
     </tabset>
   </form>
 </div>
 <div class="modal-footer">
   <button ng-if="info.active" ng-click="deleteUser();" class="btn btn-danger pull-left">删除用户</button>
   <button ng-if="accessKey.active" ng-click="createKey();" class="btn btn-success pull-left">创建AccessKey</button>
-  <a ng-if="group.active" ng-click="groupModalChange();" class="btn btn-success pull-left">加入用户组</a>
+  <a ng-if="group.active && group.hasGroup.active" ng-disabled="group.hasGroup.loading" ng-click="groupModalChange();" class="btn btn-success pull-left">加入用户组</a>
+  <a ng-if="group.active && group.listGroup.active" ng-disabled="group.listGroup.loading" ng-click="groupModalChange();" class="btn btn-success pull-left">返回用户组</a>
+  <a ng-if="policies.active && policies.hasPolicies.active" ng-disabled="policies.hasPolicies.loading" ng-click="policyModalChange();" class="btn btn-success pull-left">添加授权</a>
+  <a ng-if="policies.active && policies.listPolicies.active" ng-disabled="policies.listPolicies.loading" ng-click="policyModalChange();" class="btn btn-success pull-left">返回授权</a>
   <button ng-if="info.edit" type="button" class="btn btn-primary" ng-click="updateUser()" ng-disabled="user_group_modal.$pristine || user_group_modal.$invalid" translate>确定</button>
   <button type="button" class="btn btn-default" ng-click="cancel()" translate>取消</button>
 </div>

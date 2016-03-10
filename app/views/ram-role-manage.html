@@ -1,0 +1,192 @@
+<div class="modal-body min-height-200">
+  <form name="user_group_modal" novalidate="novalidate">
+    <tabset>
+      <button type="button" class="close" ng-click="cancel()">&times;</button>
+      <tab heading="{{'角色信息'|translate}}" active="info.active" select="selectTabs('info');">
+        <div ng-if="info.active" class="scrollbar" style="padding:10px;">
+          <div ng-if="!info.edit">
+            <div class="row">
+              <div class="col-sm-3 text-right" translate>角色名称：</div>
+              <div class="col-sm-7">
+                {{info.data.RoleName}}
+              </div>
+              <div class="col-sm-2">
+                <a ng-click="changeEditModel();">编辑</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 text-right" translate>Arn：</div>
+              <div class="col-sm-7">
+                {{info.data.Arn}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 text-right" translate>策略规则：</div>
+              <div class="col-sm-7">
+                {{info.data.AssumeRolePolicyDocument}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 text-right" translate>描述：</div>
+              <div class="col-sm-7">
+                {{info.data.Description}}
+              </div>
+            </div>
+          </div>
+          <div ng-if="info.edit">
+            <div class="row">
+              <div class="col-sm-3 text-right" translate>角色名称：</div>
+              <div class="col-sm-7">
+                {{info.data.RoleName}}
+              </div>
+              <div class="col-sm-2">
+                <a ng-click="changeEditModel();">关闭编辑</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 text-right" translate>Arn：</div>
+              <div class="col-sm-7">
+                {{info.data.Arn}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 text-right" translate>策略规则：</div>
+              <div class="col-sm-7">
+                <textarea rows="8" ng-required="true" style="resize: none;" ng-pattern="info.pattern.doc" class="form-control" placeholder="{{'请输入策略规则'|translate}}" ng-model="info.editData.AssumeRolePolicyDocument">
+                </textarea>
+              </div>
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 desc-test" translate>必填，长度在1~2048之间的任意字符</div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3 text-right" translate>描述：</div>
+              <div class="col-sm-7">
+                {{info.data.Description}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+
+      <tab heading="{{'授权策略'|translate}}" active="policies.active" select="selectTabs('policy');">
+        <div ng-if="policies.active">
+          <carousel class="news-carousel">
+            <slide active="policies.hasPolicies.active">
+              <div class="scrollbar" style="padding:10px;height:300px;overflow-y:auto;">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th width="18%" translate>策略名称</th>
+                      <th width="16%" translate>策略类型</th>
+                      <th width="16%" translate>默认版本</th>
+                      <th width="20%" translate>描述</th>
+                      <th width="20%" translate>授权时间</th>
+                      <th width="10%" translate>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-if="policies.hasPolicies.loading">
+                    <td colspan="6">
+                      <div style="line-height: 30px;height: 30px;position: relative;">
+                        <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"   spinner-start-active="1">
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr ng-if="!policies.hasPolicies.loading && +policies.hasPolicies.list.length == 0">
+                    <td colspan="6" align="center">
+                      没有数据
+                    </td>
+                  </tr>
+                  <tr ng-repeat="policy in policies.hasPolicies.list">
+                    <td align="left">{{policy.PolicyName}}</td>
+                    <td align="left">{{policy.PolicyType}}</td>
+                    <td align="left">{{policy.DefaultVersion}}</td>
+                    <td align="left">{{policy.Description}}</td>
+                    <td align="left">{{policy.AttachDate|formatTime}}</td>
+                    <td>
+                      <a ng-click="removePolicy(policy,$index)" translate>移除</a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </slide>
+            <slide active="policies.listPolicies.active">
+              <div class="scrollbar"scroll-load="loadMorePolicies()"
+                   disable-scroll="policies.listPolicies.loading || !policies.listPolicies.hasMore" style="padding:10px;height:300px;overflow-y:auto;">
+
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th width="20%" translate>策略名称</th>
+                    <th width="30%" translate>描述</th>
+                    <th width="18%" translate>引用次数</th>
+                    <th width="18%" translate>
+                  <span dropdown>
+                    <a data-toggle="dropdown" class="dropdown-toogle">
+                      <span ng-if="policies.listPolicies.type == null">全部类型</span>
+                      <span ng-if="policies.listPolicies.type == 'Custom'">自定义</span>
+                      <span ng-if="policies.listPolicies.type == 'System'">系统</span>
+                      <span class="caret"></span>
+                    </a>
+                    <ul dropdown-menu class="dropdown-menu">
+                      <li>
+                        <a ng-click="changePolicyType(null)">全部类型</a>
+                      </li>
+                      <li>
+                        <a ng-click="changePolicyType('Custom')">自定义</a>
+                      </li>
+                      <li>
+                        <a ng-click="changePolicyType('System')">系统</a>
+                      </li>
+                    </ul>
+                  </span>
+                    </th>
+                    <th width="14%" translate>操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-if="policies.listPolicies.loading">
+                    <td colspan="5">
+                      <div style="line-height: 30px;height: 30px;position: relative;">
+                      <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"   spinner-start-active="1">
+                      </span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr ng-if="!policies.listPolicies.loading && +policies.listPolicies.list.length == 0">
+                    <td colspan="5" align="center">
+                      没有数据
+                    </td>
+                  </tr>
+                  <tr ng-repeat="policy in policies.listPolicies.list">
+                    <td align="left">{{policy.PolicyName}}</td>
+                    <td align="left">{{policy.Description}}</td>
+                    <td align="left">{{policy.AttachmentCount}}</td>
+                    <td align="left">{{policy.PolicyType}}</td>
+                    <td align="left">
+                      <a ng-if="!policy.exist" ng-click="setPolicy(policy)" translate>授权</a>
+                      <span ng-if="policy.exist" class="text-success">已授权</span>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </slide>
+          </carousel>
+        </div>
+      </tab>
+
+    </tabset>
+  </form>
+</div>
+<div class="modal-footer">
+  <button ng-if="info.active" ng-click="deleteRole();" class="btn btn-danger pull-left">删除角色</button>
+  <a ng-if="user.active && user.hasUser.active" ng-disabled="user.hasUser.loading" ng-click="userModalChange();" class="btn btn-success pull-left">加入用户</a>
+  <a ng-if="user.active && user.listUser.active" ng-disabled="user.listUser.loading" ng-click="userModalChange();" class="btn btn-success pull-left">返回用户</a>
+  <a ng-if="policies.active && policies.hasPolicies.active" ng-disabled="policies.hasPolicies.loading" ng-click="policyModalChange();" class="btn btn-success pull-left">添加授权</a>
+  <a ng-if="policies.active && policies.listPolicies.active" ng-disabled="policies.listPolicies.loading" ng-click="policyModalChange();" class="btn btn-success pull-left">返回授权</a>
+  <button ng-if="info.edit" type="button" class="btn btn-primary" ng-click="updateRole()" ng-disabled="user_group_modal.$pristine || user_group_modal.$invalid" translate>确定</button>
+  <button type="button" class="btn btn-default" ng-click="cancel()" translate>取消</button>
+</div>

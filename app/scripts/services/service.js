@@ -1247,7 +1247,7 @@ angular.module('ossClientUiApp')
           currentMenus = currentMenus.concat(['refer']);
           groupMenu[0].push('refer');
         }
-        if(false){
+        if(OSSConfig.showRam()){
           var ramSetting = {
             name:'set_ram',
             text:gettext('RAM授权'),
@@ -1957,10 +1957,39 @@ angular.module('ossClientUiApp')
       if (options){
         params = angular.extend(params,options);
       }
+      var _signature = OSSClient.getRamSignature('GET',JSON.stringify(params))
+      var _clientSign = getSign('GET',params);
+      console.log("=====params=====",params,_signature,_clientSign);
       params.Signature = getSign('GET',params)
       return 'https://ram.aliyuncs.com/?'+ $.param(params)
     };
     return{
+      deactivateService:function(_accountId){
+        var defer = $q.defer();
+        var params = {
+          AccountId:_accountId
+        }
+        var url= getRamRequestUrl('DeactivateService',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      activateService:function(_accountId){
+        var defer = $q.defer();
+        var params = {
+          AccountId:_accountId
+        }
+        var url= getRamRequestUrl('ActivateService',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
       createUser:function (_userName,_displayName,_phone,_email,_desc){
         var defer = $q.defer();
         var params = {
@@ -1971,6 +2000,21 @@ angular.module('ossClientUiApp')
           Comments:_desc
         }
         var url= getRamRequestUrl('CreateUser',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      createRole:function (_roleName,_doc,_desc) {
+        var defer = $q.defer();
+        var params = {
+          RoleName:_roleName,
+          AssumeRolePolicyDocument:_doc,
+          Description:_desc
+        }
+        var url= getRamRequestUrl('CreateRole',params);
         $http.get(url).then(function(res){
           defer.resolve(res.data)
         },function(res){
@@ -2019,9 +2063,9 @@ angular.module('ossClientUiApp')
         }
         var url= getRamRequestUrl('UpdateUser',params);
         $http.get(url).then(function(res){
-          defer.resolve(res.data)
+          defer.resolve(res.data);
         },function(res){
-          defer.reject(res)
+          defer.reject(res);
         })
         return defer.promise;
       },
@@ -2051,6 +2095,21 @@ angular.module('ossClientUiApp')
         })
         return defer.promise;
       },
+      updateAccessKey:function(_keyId,_userName,_status){
+        var defer = $q.defer();
+        var params = {
+          UserAccessKeyId:_keyId,
+          UserName:_userName,
+          Status:_status
+        }
+        var url= getRamRequestUrl('UpdateAccessKey',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
       deleteAccessKey:function(_keyId,_userName){
         var defer = $q.defer();
         var params = {
@@ -2059,9 +2118,9 @@ angular.module('ossClientUiApp')
         }
         var url= getRamRequestUrl('DeleteAccessKey',params);
         $http.get(url).then(function(res){
-          defer.resolve(res.data)
+          defer.resolve(res.data);
         },function(res){
-          defer.reject(res)
+          defer.reject(res);
         })
         return defer.promise;
       },
@@ -2072,9 +2131,83 @@ angular.module('ossClientUiApp')
         }
         var url= getRamRequestUrl('ListAccessKeys',params);
         $http.get(url).then(function(res){
-          defer.resolve(res.data)
+          defer.resolve(res.data);
         },function(res){
-          defer.reject(res)
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      getUserPolicies:function(_userName){
+        var defer = $q.defer();
+        var params = {
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('ListPoliciesForUser',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+
+      detachPolicyFromUser:function(_policyType,_policyName,_userName){
+        var defer = $q.defer();
+        var params = {
+          PolicyType:_policyType,
+          PolicyName:_policyName,
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('DetachPolicyFromUser',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      attachPolicyToUser:function(_policyType,_policyName,_userName){
+        var defer = $q.defer();
+        var params = {
+          PolicyType:_policyType,
+          PolicyName:_policyName,
+          UserName:_userName
+        }
+        var url= getRamRequestUrl('AttachPolicyToUser',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      detachPolicyFromRole:function(_policyType,_policyName,_roleName){
+        var defer = $q.defer();
+        var params = {
+          PolicyType:_policyType,
+          PolicyName:_policyName,
+          RoleName:_roleName
+        }
+        var url= getRamRequestUrl('DetachPolicyFromRole',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      attachPolicyToRole:function(_policyType,_policyName,_roleName){
+        var defer = $q.defer();
+        var params = {
+          PolicyType:_policyType,
+          PolicyName:_policyName,
+          RoleName:_roleName
+        }
+        var url= getRamRequestUrl('AttachPolicyToRole',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
         })
         return defer.promise;
       },
@@ -2085,15 +2218,146 @@ angular.module('ossClientUiApp')
         }
         var url= getRamRequestUrl('ListGroupsForUser',params);
         $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      removeUserToGroups:function(_userName,_groupName){
+        var defer = $q.defer();
+        var params = {
+          UserName:_userName,
+          GroupName:_groupName
+        }
+        var url= getRamRequestUrl('RemoveUserFromGroup',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      addUserToGroups:function(_userName,_groupName){
+        var defer = $q.defer();
+        var params = {
+          UserName:_userName,
+          GroupName:_groupName
+        }
+        var url= getRamRequestUrl('AddUserToGroup',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      deleteGroup:function(_groupName){
+        var defer = $q.defer();
+        var params = {
+          GroupName:_groupName
+        }
+        var url= getRamRequestUrl('DeleteGroup',params);
+        $http.get(url).then(function(res){
           defer.resolve(res.data)
         },function(res){
           defer.reject(res)
         })
         return defer.promise;
       },
-      getGroups:function (){
+      updateGroup:function(_group){
         var defer = $q.defer();
-        var url= getRamRequestUrl('ListGroups');
+        var params = {
+          GroupName:_group.oldGroupName,
+          NewGroupName:_group.GroupName,
+          NewComments:_group.Comments
+        }
+        var url= getRamRequestUrl('UpdateGroup',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      getGroupUsers:function(_groupName){
+        var defer = $q.defer();
+        var params = {
+          GroupName:_groupName
+        }
+        var url= getRamRequestUrl('ListUsersForGroup',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      getGroupPolicies:function(_groupName){
+        var defer = $q.defer();
+        var params = {
+          GroupName:_groupName
+        }
+        var url= getRamRequestUrl('ListPoliciesForGroup',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      detachPolicyFromGroup:function(_policyType,_policyName,_groupName){
+        var defer = $q.defer()
+        var params = {
+          PolicyType:_policyType,
+          PolicyName:_policyName,
+          GroupName:_groupName
+        }
+        var url= getRamRequestUrl('DetachPolicyFromGroup',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      attachPolicyToGroup:function(_policyType,_policyName,_groupName){
+        var defer = $q.defer();
+        var params = {
+          PolicyType:_policyType,
+          PolicyName:_policyName,
+          GroupName:_groupName
+        }
+        var url= getRamRequestUrl('AttachPolicyToGroup',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      getRolePolicies:function(_roleName){
+        var defer = $q.defer();
+        var params = {
+          RoleName:_roleName
+        }
+        var url= getRamRequestUrl('ListPoliciesForRole',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
+        })
+        return defer.promise;
+      },
+      getGroups:function (_max,_marker){
+        var defer = $q.defer();
+        var params = {
+          MaxItems:_max
+        }
+        if(_marker){
+          params.Marker = _marker;
+        }
+        var url= getRamRequestUrl('ListGroups',params);
         $http.get(url).then(function(res){
             defer.resolve(res.data)
         },function(res){
@@ -2126,7 +2390,57 @@ angular.module('ossClientUiApp')
         $http.get(url).then(function(res){
           defer.resolve(res.data)
         },function(res){
-          defer.resolve({err:1})
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getRole:function(_roleName){
+        var defer = $q.defer();
+        var params = {
+          RoleName:_roleName
+        }
+        var url= getRamRequestUrl('GetRole',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      deleteRole:function(_roleName){
+        var defer = $q.defer();
+        var params = {
+          RoleName:_roleName
+        }
+        var url= getRamRequestUrl('DeleteRole',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      updateRole:function(_roleName,_roleDoc){
+        var defer = $q.defer();
+        var params = {
+          RoleName:_roleName,
+          NewAssumeRolePolicyDocument:_roleDoc
+        }
+        var url= getRamRequestUrl('UpdateRole',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getRoles:function(){
+        var defer = $q.defer();
+        var url= getRamRequestUrl('ListRoles');
+        $http.get(url).then(function(res){
+          defer.resolve(res.data);
+        },function(res){
+          defer.reject(res);
         })
         return defer.promise;
       },
@@ -2142,6 +2456,76 @@ angular.module('ossClientUiApp')
           params.PolicyType = _type;
         }
         var url= getRamRequestUrl('ListPolicies',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      deletePolicy:function(_policyName){
+        var defer = $q.defer();
+        var params = {
+          PolicyName:_policyName
+        }
+        var url= getRamRequestUrl('DeletePolicy',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      getPolicieVersions:function (_type,_name) {
+        var defer = $q.defer();
+        var params = {
+          PolicyType:_type,
+          PolicyName:_name
+        }
+        var url= getRamRequestUrl('ListPolicyVersions',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      createPolicyVersion:function (_policyName,_policyDoc,_isDefault){
+        var defer = $q.defer();
+        var params = {
+          PolicyName:_policyName,
+          PolicyDocument:_policyDoc,
+          SetAsDefault:_isDefault
+        }
+        var url= getRamRequestUrl('CreatePolicyVersion',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      deletePolicyVersion:function(_policyName,_versionId){
+        var defer = $q.defer();
+        var params = {
+          PolicyName:_policyName,
+          VersionId:_versionId
+        }
+        var url= getRamRequestUrl('DeletePolicyVersion',params);
+        $http.get(url).then(function(res){
+          defer.resolve(res.data)
+        },function(res){
+          defer.reject(res)
+        })
+        return defer.promise;
+      },
+      setPolicyDefault:function(_policyName,_versionId){
+        var defer = $q.defer();
+        var params = {
+          PolicyName:_policyName,
+          VersionId:_versionId
+        }
+        var url= getRamRequestUrl('SetDefaultPolicyVersion',params);
         $http.get(url).then(function(res){
           defer.resolve(res.data)
         },function(res){
@@ -2599,7 +2983,7 @@ angular.module('ossClientUiApp')
 /**
  * 所有对话框
  */
-    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi','OSSRam', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService','OSSI18N','OSSVersionLogs', function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi,OSSRam, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService,OSSI18N,OSSVersionLogs) {
+    .factory('OSSModal', ['$modal', 'OSSAlert','OSSDialog','OSSConfig', 'Bucket', 'OSSApi','OSSRam', 'OSSObject', 'OSSException', 'OSSRegion', '$rootScope', 'usSpinnerService','SpeedService','gettext','gettextCatalog','localStorageService','OSSI18N','OSSVersionLogs', '$timeout',function ($modal, OSSAlert,OSSDialog,OSSConfig, Bucket, OSSApi,OSSRam, OSSObject, OSSException, OSSRegion, $rootScope, usSpinnerService,SpeedService,gettext,gettextCatalog,localStorageService,OSSI18N,OSSVersionLogs,$timeout) {
         var defaultOption = {
             backdrop: 'static'
         };
@@ -3293,7 +3677,36 @@ angular.module('ossClientUiApp')
               option = angular.extend({}, defaultOption, option);
               return $modal.open(option);
             },
-            ramUserManage:function (user){
+            setRamServiceModal: function (){
+              var option = {
+                templateUrl: 'views/ram-service-modal.html',
+                windowClass: 'ram-service-modal',
+                controller: function ($scope, $modalInstance) {
+                  $scope.aliyun = {
+                    uuid:'',
+                    pattern:/^[0-9]{16}$/
+                  }
+                  $scope.activeRam = function(){
+                    OSSRam.activateService($scope.aliyun.uuid).then(function(res){
+                      $modalInstance.dismiss('cancel');
+                      OSSRam.setRam();
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
+            ramUserManage:function (user,_tab){
+              _tab = _tab || 'info'
               var option = {
                 templateUrl: 'views/ram-user-manage.html',
                 windowClass: 'ram-user-manage-modal',
@@ -3307,29 +3720,91 @@ angular.module('ossClientUiApp')
                       desc:/^\S{0,128}$/
                     },
                     edit:false,
-                    active:true,
+                    active:_tab == 'info',
                     data:null,
                     editData:null,
                     loading:true
                   };
                   $scope.accessKey = {
-                    active:false,
+                    active:_tab == 'accessKey',
                     list:null,
                     loading:true
                   };
                   $scope.group = {
-                    active:false,
+                    active:_tab == 'group',
                     hasGroup:{
                       list:null,
                       loading:true,
-                      active:true
+                      active:false
                     },
                     listGroup:{
-                      list:null,
+                      list:[],
                       loading:false,
-                      active:false
+                      active:false,
+                      hasMore:false,
+                      marker:null,
+                      max:20
                     }
                   };
+
+                  $scope.policies = {
+                    active:_tab == 'policy',
+                    hasPolicies:{
+                      active:true,
+                      loading:true,
+                      list:null
+                    },
+                    listPolicies:{
+                      active:false,
+                      loading:true,
+                      list:[],
+                      marker:null,
+                      max:20,
+                      hasMore:false,
+                      type:'Custom'
+                    }
+                  }
+
+                  var getUserPolicies = function(){
+                    OSSRam.getUserPolicies(user.UserName).then(function(res){
+                      console.log("user policy:",res)
+                      $scope.policies.hasPolicies.list = res.Policies.Policy;
+                      $scope.policies.hasPolicies.loading = false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+
+                  var getAllPolicies = function(_max,_marker,_type){
+                    _max = _max || 50;
+                    OSSRam.getPolicies(_max,_marker,_type).then(function(res){
+                      if(res.IsTruncated){
+                        $scope.policies.listPolicies.marker = res.Marker;
+                        $scope.policies.listPolicies.hasMore = true;
+                      }else{
+                        $scope.policies.listPolicies.marker = null;
+                        $scope.policies.listPolicies.hasMore = false;
+                      }
+
+                      var _allPolicies = res.Policies.Policy;
+                      if($scope.policies.hasPolicies.list){
+                        for(var i=0;i<_allPolicies.length;i++){
+                          for(var j=0;j<$scope.policies.hasPolicies.list.length;j++){
+                            if(_allPolicies[i].PolicyName == $scope.policies.hasPolicies.list[j].PolicyName){
+                              _allPolicies[i].exist = true;
+                              break;
+                            }
+                          }
+                        }
+                      }
+                      $scope.policies.listPolicies.list =  $scope.policies.listPolicies.list.concat(_allPolicies);
+                      $scope.policies.listPolicies.loading = false;
+                    });
+                  }
+
                   var getUserInfo = function(){
                     OSSRam.getUser(user.UserName).then(function(res){
                       $scope.info.data = {
@@ -3364,8 +3839,10 @@ angular.module('ossClientUiApp')
                       $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                     })
                   };
+                  //查询用户已存在的组
                   var getUserGroups = function(){
                     OSSRam.getUserGroups(user.UserName).then(function(res){
+                      console.log("get user group:",res);
                       $scope.group.hasGroup.list = res.Groups.Group;
                       $scope.group.hasGroup.loading = false;
                     },function(res){
@@ -3375,6 +3852,34 @@ angular.module('ossClientUiApp')
                       $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                     })
                   };
+                  //查询用户所有的组
+                  var getAllUserGroups = function(_max,_marker){
+                    _max = _max || 50;
+                    OSSRam.getGroups(_max,_marker).then(function(res){
+                      if(res.IsTruncated){
+                        $scope.group.listGroup.marker = res.Marker;
+                        $scope.group.listGroup.hasMore = true;
+                      }else{
+                        $scope.group.listGroup.marker = null;
+                        $scope.group.listGroup.hasMore = false;
+                      }
+                      var _allGroup = res.Groups.Group;
+                      if($scope.group.hasGroup.list){
+                        for(var i=0;i<_allGroup.length;i++){
+                          for(var j=0;j<$scope.group.hasGroup.list.length;j++){
+                            if(_allGroup[i].GroupName == $scope.group.hasGroup.list[j].GroupName){
+                              _allGroup[i].exist = true;
+                              break;
+                            }
+                          }
+                        }
+                      }
+                      $scope.group.listGroup.list = $scope.group.listGroup.list.concat(_allGroup);
+                      $scope.group.listGroup.loading = false;
+                      console.log("list groups:",$scope.group.listGroup.list)
+                    });
+                  };
+
                   getUserInfo();
                   $scope.changeEditModel = function (){
                     $scope.info.edit = !$scope.info.edit;
@@ -3399,7 +3904,7 @@ angular.module('ossClientUiApp')
                     OSSAlert.confirm(gettextCatalog.getString(gettext('确定要删除当前用户吗？'))).result.then(function() {
                       OSSRam.deleteUser(user.UserName).then(function(res){
                         alert(gettextCatalog.getString(gettext("用户删除成功！")));
-                        $rootScope.$broadcast('UpdateRamListData','delete-user')
+                        $rootScope.$broadcast('UpdateRamListData','user')
                         $modalInstance.dismiss('cancel');
                       },function(res){
                         res = {
@@ -3409,9 +3914,34 @@ angular.module('ossClientUiApp')
                       })
                     });
                   };
+                  $scope.showAkSecret = function(ak){
+                    if(ak.Status == 'Inactive'){
+                      return false;
+                    }
+                    if(!ak.AccessKeySecret){
+                      if(OSSClient['gAccountAction']){
+                        var param = {
+                          subkeyid:ak.AccessKeyId
+                        }
+                        var _ak = OSSClient.gAccountAction('getram',JSON.stringify(param));
+                        if(_ak){
+                          _ak = JSON.parse(_ak);
+                          ak.AccessKeySecret = _ak.subsecret
+                        }
+                      }
+                    }
+                    ak.showSecret = true;
+                  }
                   $scope.createKey = function(){
                     OSSRam.createAccessKey(user.UserName).then(function(res){
                       alert(gettextCatalog.getString(gettext("创建AccessKey成功！")));
+                      var param = {
+                        subkeyid:res.AccessKey.AccessKeyId,
+                        subsecret:res.AccessKey.AccessKeySecret
+                      }
+                      if(OSSClient['gAccountAction']){
+                        OSSClient.gAccountAction('addram',JSON.stringify(param))
+                      }
                       $scope.accessKey.list.push(res.AccessKey);
                     },function(res){
                       res = {
@@ -3420,10 +3950,35 @@ angular.module('ossClientUiApp')
                       $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                     });
                   };
+                  $scope.updateAccessKey = function(_ak){
+                    var _status = _ak.Status == 'Active' ? 'Inactive' : 'Active';
+                    var _update = function(){
+                      OSSRam.updateAccessKey(_ak.AccessKeyId,user.UserName,_status).then(function(res){
+                        var _message = _status == 'Active' ? gettextCatalog.getString(gettext("启用AccessKey成功！")) : gettextCatalog.getString(gettext("禁用AccessKey成功！"))
+                        alert(_message);
+                        _ak.Status = _status;
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      });
+                    }
+                    if(_status == 'Inactive'){
+                      OSSAlert.confirm(gettextCatalog.getString(gettext('确定要禁用当前AccessKey吗？'))).result.then(function() {
+                        _update();
+                      });
+                    }else{
+                      _update();
+                    }
+                  }
                   $scope.delAccessKey = function(_ak){
                     OSSAlert.confirm(gettextCatalog.getString(gettext('确定要删除当前用户的AccessKey吗？'))).result.then(function() {
                       OSSRam.deleteAccessKey(_ak.AccessKeyId,user.UserName).then(function(res){
                         alert(gettextCatalog.getString(gettext("删除AccessKey成功！")));
+                        if(OSSClient['gAccountAction']){
+                          OSSClient.gAccountAction('delram',JSON.stringify({subkeyid:_ak.AccessKeyId}));
+                        }
                         getAccessKeyList();
                       },function(res){
                         res = {
@@ -3433,10 +3988,34 @@ angular.module('ossClientUiApp')
                       });
                     })
                   };
+                  $scope.removePolicy = function(_policy,_index){
+                    OSSRam.detachPolicyFromUser(_policy.PolicyType,_policy.PolicyName,user.UserName).then(function(res){
+                      $scope.policies.hasPolicies.list.splice(_index,1);
+                      alert(gettextCatalog.getString(gettext("移除授权成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+                  $scope.setPolicy = function(_policy){
+                    OSSRam.attachPolicyToUser(_policy.PolicyType,_policy.PolicyName,user.UserName).then(function(res){
+                      _policy.exist = true;
+                      alert(gettextCatalog.getString(gettext("授权成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+
                   $scope.selectTabs = function(_type){
                     if(_type == 'info'){
                       $scope.accessKey.active = false;
                       $scope.group.active = false;
+                      $scope.policies.active = false;
                       $scope.info.active = true;
                       $scope.info.loading = true;
                       getUserInfo();
@@ -3444,23 +4023,104 @@ angular.module('ossClientUiApp')
                       $scope.accessKey.active = true;
                       $scope.info.active = false;
                       $scope.group.active = false;
+                      $scope.policies.active = false;
                       $scope.accessKey.loading = true;
+                      $scope.accessKey.list = null;
                       getAccessKeyList();
                     }else if(_type == 'group'){
                       $scope.accessKey.active = false;
                       $scope.info.active = false;
-                      $scope.group.active = true;
-                      $scope.group.loading = true;
+                      $scope.policies.active = false;
+                      $scope.group.hasGroup.active = true;
+                      $scope.group.hasGroup.loading = true;
+                      $scope.group.hasGroup.list = null;
+                      $scope.group.listGroup.active = false;
+                      $scope.group.listGroup.loading = false;
+                      $scope.group.listGroup.list = [];
                       getUserGroups();
+                    }else if(_type == 'policy'){
+                      $scope.accessKey.active = false;
+                      $scope.info.active = false;
+                      $scope.group.active = false;
+                      $scope.policies.active = true;
+                      $scope.policies.hasPolicies.active = true;
+                      $scope.policies.hasPolicies.loading = true;
+                      $scope.policies.hasPolicies.list = null;
+                      $scope.policies.listPolicies.active = false;
+                      $scope.policies.listPolicies.loading = false;
+                      $scope.policies.listPolicies.list = [];
+                      getUserPolicies();
                     }
                   };
+                  $scope.loadMoreGroups = function () {
+                    $scope.group.listGroup.loading = true;
+                    $scope.group.listGroup.list = [];
+                    getAllUserGroups($scope.group.listGroup.max,$scope.group.listGroup.marker);
+                  }
+                  $scope.loadMorePolicies = function () {
+                    $scope.policies.listPolicies.loading = true;
+                    getAllPolicies($scope.policies.listPolicies.max,$scope.policies.listPolicies.marker,$scope.policies.listPolicies.type);
+                  }
+                  $scope.changePolicyType = function (_type){
+                    $scope.policies.listPolicies.type = _type;
+                    $scope.policies.listPolicies.marker = null;
+                    $scope.policies.listPolicies.list = [];
+                    $scope.policies.listPolicies.loading = true;
+                    getAllPolicies($scope.policies.listPolicies.max,$scope.policies.listPolicies.marker,$scope.policies.listPolicies.type);
+                  }
+
+                  $scope.removeUserToGroups = function(_group,_index){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('确定要移除该用户组吗？'))).result.then(function() {
+                      OSSRam.removeUserToGroups(user.UserName, _group.GroupName).then(function (res) {
+                        $scope.group.hasGroup.list.splice(_index, 1)
+                        alert(gettextCatalog.getString(gettext("移除用户组成功！")));
+                      }, function (res) {
+                        res = {
+                          Error: res.data
+                        }
+                        $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                      });
+                    });
+                  }
+                  $scope.addUserToGroup = function(_group){
+                    OSSRam.addUserToGroups(user.UserName,_group.GroupName).then(function(res){
+                      alert(gettextCatalog.getString(gettext("加入用户组成功！")));
+                      _group.exist = true;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+                  $scope.policyModalChange = function(){
+                    if($scope.policies.listPolicies.active){
+                      $scope.policies.listPolicies.active = false;
+                      $scope.policies.hasPolicies.active = true;
+                      $scope.policies.hasPolicies.loading = true;
+                      $scope.policies.hasPolicies.list = null;
+                      getUserPolicies();
+                    }else {
+                      $scope.policies.hasPolicies.active = false;
+                      $scope.policies.listPolicies.active = true;
+                      $scope.policies.listPolicies.loading = true;
+                      $scope.policies.listPolicies.list = [];
+                      getAllPolicies($scope.policies.listPolicies.max, $scope.policies.listPolicies.marker, $scope.policies.listPolicies.type);
+                    }
+                  }
                   $scope.groupModalChange = function(){
                     if($scope.group.listGroup.active){
                       $scope.group.listGroup.active = false;
                       $scope.group.hasGroup.active = true;
+                      $scope.group.hasGroup.loading = true;
+                      $scope.group.hasGroup.list = null;
+                      getUserGroups();
                     }else{
                       $scope.group.hasGroup.active = false;
                       $scope.group.listGroup.active = true;
+                      $scope.group.listGroup.loading = true;
+                      $scope.group.listGroup.list = [];
+                      getAllUserGroups($scope.group.listGroup.max,$scope.group.listGroup.marker);
                     }
                   };
                   $scope.cancel = function () {
@@ -3471,11 +4131,294 @@ angular.module('ossClientUiApp')
               option = angular.extend({}, defaultOption, option);
               return $modal.open(option);
             },
-            ramGroupManage:function (user){
+            ramGroupManage:function (group,_tab){
+              _tab = _tab || 'info';
               var option = {
-                templateUrl: 'views/ram-user-manage.html',
-                windowClass: 'ram-user-manage-modal',
+                templateUrl: 'views/ram-group-manage.html',
+                windowClass: 'ram-group-manage-modal',
                 controller: function ($scope, $modalInstance) {
+                  $scope.info = {
+                    pattern:{
+                      name:/^[a-zA-Z0-9\u4e00-\u9fa5\.@\-_]{1,64}$/,
+                      desc:/^\S{0,128}$/
+                    },
+                    edit:false,
+                    active:_tab == 'info',
+                    data:angular.copy(group),
+                    editData:angular.copy(group),
+                    loading:true
+                  };
+                  $scope.user = {
+                    active:_tab == 'user',
+                    hasUser:{
+                      list:null,
+                      loading:true,
+                      active:false
+                    },
+                    listUser:{
+                      list:[],
+                      loading:false,
+                      active:false,
+                      hasMore:false,
+                      marker:null,
+                      max:20
+                    }
+                  };
+
+                  $scope.policies = {
+                    active:_tab == 'policy',
+                    hasPolicies:{
+                      active:true,
+                      loading:true,
+                      list:null
+                    },
+                    listPolicies:{
+                      active:false,
+                      loading:true,
+                      list:[],
+                      marker:null,
+                      max:20,
+                      hasMore:false,
+                      type:'Custom'
+                    }
+                  }
+
+                  var getGroupPolicies = function(){
+                    OSSRam.getGroupPolicies(group.GroupName).then(function(res){
+                      console.log("group policy:",res)
+                      $scope.policies.hasPolicies.list = res.Policies.Policy;
+                      $scope.policies.hasPolicies.loading = false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+
+                  var getAllPolicies = function(_max,_marker,_type){
+                    _max = _max || 50;
+                    OSSRam.getPolicies(_max,_marker,_type).then(function(res){
+                      if(res.IsTruncated){
+                        $scope.policies.listPolicies.marker = res.Marker;
+                        $scope.policies.listPolicies.hasMore = true;
+                      }else{
+                        $scope.policies.listPolicies.marker = null;
+                        $scope.policies.listPolicies.hasMore = false;
+                      }
+
+                      var _allPolicies = res.Policies.Policy;
+                      if($scope.policies.hasPolicies.list){
+                        for(var i=0;i<_allPolicies.length;i++){
+                          for(var j=0;j<$scope.policies.hasPolicies.list.length;j++){
+                            if(_allPolicies[i].PolicyName == $scope.policies.hasPolicies.list[j].PolicyName){
+                              _allPolicies[i].exist = true;
+                              break;
+                            }
+                          }
+                        }
+                      }
+                      $scope.policies.listPolicies.list =  $scope.policies.listPolicies.list.concat(_allPolicies);
+                      $scope.policies.listPolicies.loading = false;
+                    });
+                  }
+
+                  var getGroupUser = function(){
+                    OSSRam.getGroupUsers(group.GroupName).then(function(res){
+                      $scope.user.hasUser.list = res.Users.User;
+                      $scope.user.hasUser.loading = false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+                  var getAllUsers = function(_max,_marker){
+                    _max = _max || 50;
+                    OSSRam.getUsers(_max,_marker).then(function(res){
+                      if(res && !res.err){
+                        if(res.IsTruncated){
+                          $scope.user.listUser.marker = res.Marker
+                          $scope.user.listUser.hasMore = true
+                        }else{
+                          $scope.user.listUser.marker = null;
+                          $scope.user.listUser.hasMore = false;
+                        }
+                        var _allUsers = res.Users.User;
+                        if($scope.user.hasUser.list){
+                          for(var i=0;i<_allUsers.length;i++){
+                            for(var j=0;j<$scope.user.hasUser.list.length;j++){
+                              if(_allUsers[i].UserName == $scope.user.hasUser.list[j].UserName){
+                                _allUsers[i].exist = true;
+                                break;
+                              }
+                            }
+                          }
+                        }
+                        $scope.user.listUser.list = $scope.user.listUser.list.concat(res.Users.User);
+                      }
+                      $scope.user.listUser.loading = false;
+                    });
+                  }
+                  $scope.loadMoreUsers = function () {
+                    $scope.user.listUser.loading = true;
+                    $scope.user.listUser.list = [];
+                    getAllUsers($scope.user.listUser.max,$scope.user.listUser.marker);
+                  }
+                  $scope.loadMorePolicies = function () {
+                    $scope.policies.listPolicies.loading = true;
+                    getAllPolicies($scope.policies.listPolicies.max,$scope.policies.listPolicies.marker,$scope.policies.listPolicies.type);
+                  }
+                  $scope.selectTabs = function(_type){
+                    if(_type == 'info'){
+                      $scope.user.active = false;
+                      $scope.policies.active = false;
+                      $scope.info.active = true;
+                    }else if(_type == 'user'){
+                      $scope.user.active = true;
+                      $scope.info.active = false;
+                      $scope.policies.active = false;
+                      $scope.user.hasUser.loading = true;
+                      $scope.user.hasUser.list = null;
+                      getGroupUser();
+                    }else if(_type == 'policy'){
+                      $scope.info.active = false;
+                      $scope.user.active = false;
+                      $scope.policies.active = true;
+                      $scope.policies.hasPolicies.active = true;
+                      $scope.policies.hasPolicies.loading = true;
+                      $scope.policies.hasPolicies.list = null;
+                      $scope.policies.listPolicies.active = false;
+                      $scope.policies.listPolicies.loading = false;
+                      $scope.policies.listPolicies.list = [];
+                      getGroupPolicies();
+                    }else if(_type == 'setting'){
+
+                    }
+                  };
+                  $scope.changePolicyType = function (_type){
+                    $scope.policies.listPolicies.type = _type;
+                    $scope.policies.listPolicies.marker = null;
+                    $scope.policies.listPolicies.list = [];
+                    $scope.policies.listPolicies.loading = true;
+                    getAllPolicies($scope.policies.listPolicies.max,$scope.policies.listPolicies.marker,$scope.policies.listPolicies.type);
+                  }
+                  $scope.policyModalChange = function(){
+                    if($scope.policies.listPolicies.active){
+                      $scope.policies.listPolicies.active = false;
+                      $scope.policies.hasPolicies.active = true;
+                      $scope.policies.hasPolicies.loading = true;
+                      $scope.policies.hasPolicies.list = null;
+                      getGroupPolicies();
+                    }else {
+                      $scope.policies.hasPolicies.active = false;
+                      $scope.policies.listPolicies.active = true;
+                      $scope.policies.listPolicies.loading = true;
+                      $scope.policies.listPolicies.list = [];
+                      getAllPolicies($scope.policies.listPolicies.max, $scope.policies.listPolicies.marker, $scope.policies.listPolicies.type);
+                    }
+                  }
+                  $scope.userModalChange = function(){
+                    if($scope.user.listUser.active){
+                      $scope.user.listUser.active = false;
+                      $scope.user.hasUser.active = true;
+                      $scope.user.hasUser.loading = true;
+                      $scope.user.hasUser.list = null;
+                      getGroupUser();
+                    }else{
+                      $scope.user.hasUser.active = false;
+                      $scope.user.listUser.active = true;
+                      $scope.user.listUser.loading = true;
+                      $scope.user.listUser.list = [];
+                      getAllUsers($scope.user.listUser.max,$scope.user.listUser.marker);
+                    }
+                  };
+
+                  $scope.removePolicy = function(_policy,_index){
+                    OSSRam.detachPolicyFromGroup(_policy.PolicyType,_policy.PolicyName,group.GroupName).then(function(res){
+                      $scope.policies.hasPolicies.list.splice(_index,1);
+                      alert(gettextCatalog.getString(gettext("移除授权成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+                  $scope.setPolicy = function(_policy){
+                    OSSRam.attachPolicyToGroup(_policy.PolicyType,_policy.PolicyName,group.GroupName).then(function(res){
+                      _policy.exist = true;
+                      alert(gettextCatalog.getString(gettext("授权成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+
+                  $scope.removeUserToGroups = function(_user,_index){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('确定要移除该用户吗？'))).result.then(function() {
+                      OSSRam.removeUserToGroups(_user.UserName, group.GroupName).then(function (res) {
+                        $scope.user.hasUser.list.splice(_index, 1)
+                        alert(gettextCatalog.getString(gettext("移除用户成功！")));
+                      }, function (res) {
+                        res = {
+                          Error: res.data
+                        }
+                        $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                      });
+                    });
+                  }
+
+                  $scope.addUserToGroup = function(_user){
+                    OSSRam.addUserToGroups(_user.UserName,group.GroupName).then(function(res){
+                      alert(gettextCatalog.getString(gettext("添加用户成功！")));
+                      _user.exist = true;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+                  $scope.deleteGroup = function(){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('确定要删除当前用户组吗？'))).result.then(function() {
+                      OSSRam.deleteGroup(group.GroupName).then(function(res){
+                        alert(gettextCatalog.getString(gettext("用户组删除成功！")));
+                        $rootScope.$broadcast('UpdateRamListData','group')
+                        $modalInstance.dismiss('cancel');
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      })
+                    });
+                  };
+                  $scope.updateGroup = function(){
+                    $scope.info.editData.oldGroupName = $scope.info.data.GroupName;
+                    OSSRam.updateGroup($scope.info.editData).then(function(res){
+                      $scope.info.data = angular.copy($scope.info.editData);
+                      group = angular.extend(group,res.Group);
+                      $scope.info.edit = false;
+                      alert(gettextCatalog.getString(gettext("组信息修改成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  };
+
+                  $scope.changeEditModel = function (){
+                    $scope.info.edit = !$scope.info.edit;
+                    if (!$scope.info.edit) {
+                      $scope.info.editData = angular.copy($scope.info.data);
+                    }
+                  }
+
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                   };
@@ -3484,11 +4427,289 @@ angular.module('ossClientUiApp')
               option = angular.extend({}, defaultOption, option);
               return $modal.open(option);
             },
-            ramPolicyManage:function (user){
+            ramRoleManage:function (role,_tab){
+              _tab = _tab || 'info'
               var option = {
-                templateUrl: 'views/ram-user-manage.html',
-                windowClass: 'ram-user-manage-modal',
+                templateUrl: 'views/ram-role-manage.html',
+                windowClass: 'ram-role-manage-modal',
                 controller: function ($scope, $modalInstance) {
+                  $scope.info = {
+                    pattern:{
+                      doc:/^[\S\s]{1,2048}$/
+                    },
+                    edit:false,
+                    active:_tab == 'info',
+                    data:angular.copy(role),
+                    editData:angular.copy(role),
+                    loading:true
+                  };
+                  $scope.policies = {
+                    active:_tab == 'policy',
+                    hasPolicies:{
+                      active:true,
+                      loading:true,
+                      list:null
+                    },
+                    listPolicies:{
+                      active:false,
+                      loading:true,
+                      list:[],
+                      marker:null,
+                      max:20,
+                      hasMore:false,
+                      type:'Custom'
+                    }
+                  }
+                  var getRole = function(){
+                    OSSRam.getRole(role.RoleName).then(function(res){
+                      $scope.info.data = res.Role;
+                      $scope.info.editData = angular.copy(res.Role);
+                      $scope.info.loading = false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+
+
+                  var getRolePolicies = function(){
+                    OSSRam.getRolePolicies(role.RoleName).then(function(res){
+                      console.log("role policy:",res)
+                      $scope.policies.hasPolicies.list = res.Policies.Policy;
+                      $scope.policies.hasPolicies.loading = false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+
+                  var getAllPolicies = function(_max,_marker,_type){
+                    _max = _max || 50;
+                    OSSRam.getPolicies(_max,_marker,_type).then(function(res){
+                      if(res.IsTruncated){
+                        $scope.policies.listPolicies.marker = res.Marker;
+                        $scope.policies.listPolicies.hasMore = true;
+                      }else{
+                        $scope.policies.listPolicies.marker = null;
+                        $scope.policies.listPolicies.hasMore = false;
+                      }
+
+                      var _allPolicies = res.Policies.Policy;
+                      if($scope.policies.hasPolicies.list){
+                        for(var i=0;i<_allPolicies.length;i++){
+                          for(var j=0;j<$scope.policies.hasPolicies.list.length;j++){
+                            if(_allPolicies[i].PolicyName == $scope.policies.hasPolicies.list[j].PolicyName){
+                              _allPolicies[i].exist = true;
+                              break;
+                            }
+                          }
+                        }
+                      }
+                      $scope.policies.listPolicies.list =  $scope.policies.listPolicies.list.concat(_allPolicies);
+                      $scope.policies.listPolicies.loading = false;
+                    });
+                  }
+
+
+                  $scope.selectTabs = function(_type){
+                    if(_type == 'info'){
+                      $scope.policies.active = false;
+                      $scope.info.active = true;
+                      getRole();
+                    }else if(_type == 'policy'){
+                      $scope.info.active = false;
+                      $scope.policies.active = true;
+                      $scope.policies.hasPolicies.active = true;
+                      $scope.policies.hasPolicies.loading = true;
+                      $scope.policies.hasPolicies.list = null;
+                      $scope.policies.listPolicies.active = false;
+                      $scope.policies.listPolicies.loading = false;
+                      $scope.policies.listPolicies.list = [];
+                      getRolePolicies();
+                    }else if(_type == 'setting'){
+
+                    }
+                  };
+
+                  $scope.changePolicyType = function (_type){
+                    $scope.policies.listPolicies.type = _type;
+                    $scope.policies.listPolicies.marker = null;
+                    $scope.policies.listPolicies.list = [];
+                    $scope.policies.listPolicies.loading = true;
+                    getAllPolicies($scope.policies.listPolicies.max,$scope.policies.listPolicies.marker,$scope.policies.listPolicies.type);
+                  }
+                  $scope.policyModalChange = function(){
+                    if($scope.policies.listPolicies.active){
+                      $scope.policies.listPolicies.active = false;
+                      $scope.policies.hasPolicies.active = true;
+                      $scope.policies.hasPolicies.loading = true;
+                      $scope.policies.hasPolicies.list = null;
+                      getRolePolicies();
+                    }else {
+                      $scope.policies.hasPolicies.active = false;
+                      $scope.policies.listPolicies.active = true;
+                      $scope.policies.listPolicies.loading = true;
+                      $scope.policies.listPolicies.list = [];
+                      getAllPolicies($scope.policies.listPolicies.max, $scope.policies.listPolicies.marker, $scope.policies.listPolicies.type);
+                    }
+                  }
+
+
+                  $scope.deleteRole = function(){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('您确定要删除该角色吗？'))).result.then(function() {
+                      OSSRam.deleteRole(role.RoleName).then(function (res) {
+                        alert(gettextCatalog.getString(gettext("角色删除成功！")));
+                        $rootScope.$broadcast('UpdateRamListData','role')
+                        $modalInstance.dismiss('cancel');
+                      })
+                    });
+                  }
+                  $scope.updateRole = function(){
+                    OSSRam.updateRole($scope.info.editData.RoleName,$scope.info.editData.AssumeRolePolicyDocument).then(function(res){
+                      $scope.info.data = angular.copy($scope.info.editData);
+                      role = angular.extend(role,res.Role);
+                      $scope.info.edit = false;
+                      alert(gettextCatalog.getString(gettext("角色信息修改成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+                  $scope.removePolicy = function(_policy,_index){
+                    OSSRam.detachPolicyFromRole(_policy.PolicyType,_policy.PolicyName,role.RoleName).then(function(res){
+                      $scope.policies.hasPolicies.list.splice(_index,1);
+                      alert(gettextCatalog.getString(gettext("移除授权成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+                  $scope.setPolicy = function(_policy){
+                    OSSRam.attachPolicyToRole(_policy.PolicyType,_policy.PolicyName,role.RoleName).then(function(res){
+                      _policy.exist = true;
+                      alert(gettextCatalog.getString(gettext("授权成功！")));
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+                  $scope.changeEditModel = function (){
+                    $scope.info.edit = !$scope.info.edit;
+                    if (!$scope.info.edit) {
+                      $scope.info.editData = angular.copy($scope.info.data);
+                    }
+                  }
+
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
+            },
+            ramPolicyManage:function (policy){
+              var option = {
+                templateUrl: 'views/ram-policy-manage.html',
+                windowClass: 'ram-policy-manage-modal',
+                controller: function ($scope, $modalInstance) {
+                  $scope.policy = policy
+                  $scope.newVersion = {
+                    active:false,
+                    pattern:{
+                      doc:/^[\S\s]{1,2048}$/
+                    },
+                    doc:null,
+                    isDefault:false
+                  }
+                  $scope.versions = {
+                    active:true,
+                    list:null,
+                    loading:true,
+                    showList:true,
+                    showPolicyDoc:null,
+                    showDoc:false
+                  }
+                  var getPolicyVersion = function(){
+                    OSSRam.getPolicieVersions(policy.PolicyType,policy.PolicyName).then(function(res){
+                      $scope.versions.list = res.PolicyVersions.PolicyVersion;
+                      $scope.versions.loading = false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    });
+                  }
+                  $scope.setPolicyDefault = function(_version,_index){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('您确定要将该版本设置为默认版本吗？'))).result.then(function() {
+                      OSSRam.setPolicyDefault(policy.PolicyName, _version.VersionId).then(function (res) {
+                        angular.forEach($scope.versions.list, function (item) {
+                          if (item.IsDefaultVersion) {
+                            item.IsDefaultVersion = false;
+                            return false;
+                          }
+                        });
+                        $scope.versions.list[_index].IsDefaultVersion = true;
+                        alert(gettextCatalog.getString(gettext("设置默认成功！")));
+                      })
+                    });
+                  }
+                  $scope.deleteVersion = function(_version,_index){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('您确定要删除该版本吗？'))).result.then(function() {
+                      OSSRam.deletePolicyVersion(policy.PolicyName, _version.VersionId).then(function (res) {
+                        $scope.versions.list.splice(_index, 1);
+                        alert(gettextCatalog.getString(gettext("删除版本成功！")));
+                      })
+                    });
+                  }
+                  $scope.saveNewVersion = function(){
+                    OSSRam.createPolicyVersion(policy.PolicyName,$scope.newVersion.doc,$scope.newVersion.isDefault).then(function(res){
+                      $scope.newVersion.doc = null;
+                      $scope.newVersion.isDefault = false;
+                      $scope.newVersion.active = false;
+                      $scope.versions.active = true;
+                      $scope.versions.showList = true;
+                      $scope.versions.showDoc=false;
+                    },function(res){
+                      res = {
+                        Error:res.data
+                      }
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+                  $scope.selectTabs = function(_type){
+                    if(_type == 'version'){
+                      $scope.versions.list = null;
+                      $scope.versions.active = true;
+                      $scope.versions.loading = true;
+                      getPolicyVersion();
+                    }else if(_type == 'user'){
+
+                    }else if(_type == 'setting'){
+
+                    }
+                  };
+                  $scope.changeVersions = function(_doc){
+                    if($scope.versions.showList){
+                      $scope.versions.showPolicyDoc = _doc.replace(/\{/g,"\n{\n").replace(/\[/g,"\n[\n").replace(/\}/g,"\n}\n").replace(/\]/g,"\n]\n")
+                      $scope.versions.showList = false;
+                      $scope.versions.showDoc = true;
+                    }else{
+                      $scope.versions.showList = true;
+                      $scope.versions.showDoc = false;
+                    }
+                  }
                   $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                   };
@@ -3507,7 +4728,7 @@ angular.module('ossClientUiApp')
                     list:[],
                     max:20,
                     marker:null,
-                    loading:true,
+                    loading:false,
                     hasMore:false
                   }
                   $scope.group = {
@@ -3515,25 +4736,34 @@ angular.module('ossClientUiApp')
                     list:[],
                     max:20,
                     marker:null,
-                    loading:true,
+                    loading:false,
                     hasMore:false
+                  }
+                  $scope.role = {
+                    tabActive:false,
+                    list:null,
+                    loading:true
                   }
                   $scope.policy = {
                     tabActive:false,
                     list:[],
                     max:20,
                     marker:null,
-                    loading:true,
+                    loading:false,
                     hasMore:false,
-                    type:null
+                    type:'Custom'
                   }
+                  //$scope.sts = {
+                  //  tabActive:false,
+                  //  list:[]
+                  //}
                   var getUsers = function(_max,_marker){
                     _max = _max || 50;
                     OSSRam.getUsers(_max,_marker).then(function(res){
                       if(res && !res.err){
                         if(res.IsTruncated){
-                          $scope.user.marker = res.Marker
-                          $scope.user.hasMore = true
+                          $scope.user.marker = res.Marker;
+                          $scope.user.hasMore = true;
                         }else{
                           $scope.user.marker = null;
                           $scope.user.hasMore = false;
@@ -3541,48 +4771,112 @@ angular.module('ossClientUiApp')
                         $scope.user.list = $scope.user.list.concat(res.Users.User);
                       }
                       $scope.user.loading = false;
-                    });
+                    }, function (res) {
+                      $scope.user.loading = false;
+                      res = {
+                        Error: res.data
+                      }
+                      var _resultErr = OSSException.getError(res, status)
+                      var _msg = _resultErr.msg
+                      if(_resultErr.code == "Inactive"){
+                        OSSModal.setRamServiceModal();
+                        $timeout(function(){
+                          $modalInstance.dismiss('cancel');
+                        })
+                      }else{
+                        $rootScope.$broadcast('showError',_msg);
+                      }
+                    })
                   }
                   var getGroups = function(_max,_marker){
                     _max = _max || 50;
                     OSSRam.getGroups(_max,_marker).then(function(res){
                       if(res.IsTruncated){
-                        $scope.group.marker = res.Marker
-                        $scope.group.hasMore = true
+                        $scope.group.marker = res.Marker;
+                        $scope.group.hasMore = true;
                       }else{
                         $scope.group.marker = null;
                         $scope.group.hasMore = false;
                       }
-                      $scope.group.list = res.Groups.Group;
+                      $scope.group.list = $scope.group.list.concat(res.Groups.Group);
                       $scope.group.loading = false;
+                    }, function (res) {
+                      $scope.group.loading = false;
+                      res = {
+                        Error: res.data
+                      }
+                      var _resultErr = OSSException.getError(res, status)
+                      var _msg = _resultErr.msg
+                      if(_resultErr.code == "Inactive"){
+                        OSSModal.setRamServiceModal();
+                        $timeout(function(){
+                          $modalInstance.dismiss('cancel');
+                        })
+                      }else{
+                        $rootScope.$broadcast('showError',_msg);
+                      }
                     });
+                  }
+                  var getRoles = function(){
+                    OSSRam.getRoles().then(function(res){
+                      $scope.role.list = res.Roles.Role;
+                      $scope.role.loading = false;
+                    }, function (res) {
+                      $scope.role.loading = false;
+                      res = {
+                        Error: res.data
+                      }
+                      var _resultErr = OSSException.getError(res, status)
+                      var _msg = _resultErr.msg
+                      if(_resultErr.code == "Inactive"){
+                        OSSModal.setRamServiceModal();
+                        $timeout(function(){
+                          $modalInstance.dismiss('cancel');
+                        })
+                      }else{
+                        $rootScope.$broadcast('showError',_msg);
+                      }
+                    })
                   }
                   var getPolicies = function(_max,_marker,_type){
                     _max = _max || 50;
                     OSSRam.getPolicies(_max,_marker,_type).then(function(res){
                       if(res.IsTruncated){
-                        $scope.policy.marker = res.Marker
-                        $scope.policy.hasMore = true
+                        $scope.policy.marker = res.Marker;
+                        $scope.policy.hasMore = true;
                       }else{
                         $scope.policy.marker = null;
                         $scope.policy.hasMore = false;
                       }
                       $scope.policy.list =  $scope.policy.list.concat(res.Policies.Policy);
                       $scope.policy.loading = false;
+                    }, function (res) {
+                      $scope.policy.loading = false;
+                      res = {
+                        Error: res.data
+                      }
+                      var _resultErr = OSSException.getError(res, status)
+                      var _msg = _resultErr.msg
+                      if(_resultErr.code == "Inactive"){
+                        OSSModal.setRamServiceModal();
+                        $timeout(function(){
+                          $modalInstance.dismiss('cancel');
+                        })
+                      }else{
+                        $rootScope.$broadcast('showError',_msg);
+                      }
                     });
                   }
-
-                  getUsers($scope.user.max,$scope.user.marker);
-                  getGroups($scope.group.max,$scope.group.marker);
-                  getPolicies($scope.policy.max,$scope.policy.marker,$scope.policy.type);
 
                   $scope.loadMoreUsers = function () {
                     $scope.user.loading = true;
                     getUsers($scope.user.max,$scope.user.marker);
                   }
                   $scope.loadMoreGroups = function () {
-                    $scope.group.loading = true;
-                    getGroups($scope.group.max,$scope.group.marker);
+                    if($scope.group.hasMore){
+                      $scope.group.loading = true;
+                      getGroups($scope.group.max,$scope.group.marker);
+                    }
                   }
                   $scope.loadMorePolicies = function () {
                     $scope.policy.loading = true;
@@ -3595,48 +4889,126 @@ angular.module('ossClientUiApp')
                     $scope.policy.loading = true;
                     getPolicies($scope.policy.max,$scope.policy.marker,$scope.policy.type);
                   }
+                  $scope.closeRamService = function(_accountId){
+                    OSSRam.deactivateService(_accountId).then(function(res){
+
+                    },function(res){
+                      res = {
+                        Error: res.data
+                      }
+                      $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                    });
+                  }
                   $scope.createUser = function(){
                     OSSModal.createRamItemsModal('user');
                   }
                   $scope.createGroup = function(){
                     OSSModal.createRamItemsModal('group');
                   }
+                  $scope.createRole = function () {
+                    OSSModal.createRamItemsModal('role');
+                  }
                   $scope.createPolicy = function(){
                     OSSModal.createRamItemsModal('policy');
                   }
-                  $scope.manageUser = function(_user){
-                    OSSModal.ramUserManage(_user)
+                  $scope.manageRam = function(_obj,_type,_tab){
+                    if(_type == 'user'){
+                      OSSModal.ramUserManage(_obj,_tab);
+                    }else if(_type == 'group'){
+                      OSSModal.ramGroupManage(_obj,_tab);
+                    }else if(_type =='role'){
+                      OSSModal.ramRoleManage(_obj,_tab);
+                    }else{
+                      OSSModal.ramPolicyManage(_obj,_tab)
+                    }
                   }
-                  $scope.manageGroup = function(_group){
-                    OSSModal.ramGroupManage(_group)
-                  }
-                  $scope.managePolicy = function(_policy){
-                    OSSModal.ramPolicyManage(_policy)
+                  $scope.deletePolicy = function(_policy,_index){
+                    OSSAlert.confirm(gettextCatalog.getString(gettext('您确定要删除该授权策略吗？'))).result.then(function() {
+                      OSSRam.deletePolicy(_policy.PolicyName).then(function (res) {
+                        $scope.policy.marker = null;
+                        $scope.policy.list = [];
+                        $scope.policy.loading = true;
+                        getPolicies($scope.policy.max,$scope.policy.marker,$scope.policy.type);
+                        alert(gettextCatalog.getString(gettext("授权策略删除成功！")));
+                      }, function (res) {
+                        res = {
+                          Error: res.data
+                        }
+                        $rootScope.$broadcast('showError', OSSException.getError(res, status).msg);
+                      })
+                    });
                   }
                   $scope.selectTabs = function(type){
                     if(type == 'user'){
-                      $scope.group.tabActive = false
-                      $scope.policy.tabActive = false
-                      $scope.user.tabActive = true
+                      $scope.group.tabActive = false;
+                      $scope.policy.tabActive = false;
+                      $scope.role.tabActive = false;
+                      $scope.policy.type = 'Custom';
+                      $scope.user.tabActive = true;
+                      $scope.user.list = [];
+                      $scope.user.loading = true;
+                      getUsers($scope.user.max,$scope.user.marker);
                     }
-                    if(type == 'groulp'){
-                      $scope.user.tabActive = false
-                      $scope.policy.tabActive = false
-                      $scope.group.tabActive = true
+                    if(type == 'group'){
+                      if($scope.group.loading){
+                        return false;
+                      }
+                      $scope.user.tabActive = false;
+                      $scope.policy.tabActive = false;
+                      $scope.role.tabActive = false;
+                      $scope.policy.type = 'Custom';
+                      $scope.group.tabActive = true;
+                      $scope.group.list = [];
+                      $scope.group.loading = true;
+                      getGroups($scope.group.max,$scope.group.marker);
+                    }
+                    if(type == 'role'){
+                      $scope.user.tabActive = false;
+                      $scope.policy.tabActive = false;
+                      $scope.policy.type = 'Custom';
+                      $scope.group.tabActive = false;
+                      $scope.role.tabActive = true;
+                      $scope.role.loading = true;
+                      getRoles();
                     }
                     if(type == 'policy'){
-                      $scope.user.tabActive = false
-                      $scope.group.tabActive = false
-                      $scope.policy.tabActive = true
+                      $scope.user.tabActive = false;
+                      $scope.group.tabActive = false;
+                      $scope.role.tabActive = false;
+                      $scope.policy.tabActive = true;
+                      $scope.policy.list = [];
+                      $scope.policy.loading = true;
+                      getPolicies($scope.policy.max,$scope.policy.marker,$scope.policy.type);
                     }
                   };
+
+                  $scope.deletePolicies = function(){
+
+                  }
+
                   $rootScope.$on("UpdateRamListData",function(event,type,option){
-                    if(type == 'delete-user'){
+                    if(type == 'user'){
                       $scope.user.list = [];
                       $scope.user.marker = null;
                       $scope.user.loading = true;
                       $scope.user.hasMore = false;
                       getUsers($scope.user.max,$scope.user.marker);
+                    }else if(type == 'group'){
+                      $scope.group.list = [];
+                      $scope.group.loading = true;
+                      $scope.group.marker = null;
+                      $scope.group.hasMore = false;
+                      getGroups($scope.group.max,$scope.group.marker);
+                    }else if(type == 'role'){
+                      $scope.role.list = null;
+                      $scope.role.loading = true;
+                      getRoles();
+                    }else if(type == 'policy'){
+                      $scope.policy.list = [];
+                      $scope.policy.loading = true;
+                      $scope.policy.marker = null;
+                      $scope.policy.hasMore = false;
+                      getPolicies($scope.policy.max,$scope.policy.marker,$scope.policy.type);
                     }
                   });
                   $scope.cancel = function () {
@@ -3691,6 +5063,17 @@ angular.module('ossClientUiApp')
                     policyDocument:'',
                     desc:''
                   }
+                  $scope.role = {
+                    tabActive:_type == 'role',
+                    pattern:{
+                      name:/^[a-zA-Z0-9\.@\-_]{1,64}$/,
+                      doc:/^[\S\s]{1,2048}$/,
+                      desc:/^\S{0,1024}$/
+                    },
+                    roleName:'',
+                    desc:'',
+                    doc:''
+                  }
                   //OSSRam.getGroups().then(function(res){
                   //  $scope.userGroups = res.Groups.Group
                   //  if ($scope.userGroups.length){
@@ -3701,17 +5084,26 @@ angular.module('ossClientUiApp')
                     if(type == 'user'){
                       $scope.group.tabActive = false
                       $scope.policy.tabActive = false
+                      $scope.role.tabActive = false
                       $scope.user.tabActive = true
                     }
-                    if(type == 'groulp'){
+                    if(type == 'group'){
                       $scope.user.tabActive = false
                       $scope.policy.tabActive = false
+                      $scope.role.tabActive = false
                       $scope.group.tabActive = true
                     }
                     if(type == 'policy'){
                       $scope.user.tabActive = false
                       $scope.group.tabActive = false
+                      $scope.role.tabActive = false
                       $scope.policy.tabActive = true
+                    }
+                    if(type == 'role'){
+                      $scope.user.tabActive = false
+                      $scope.group.tabActive = false
+                      $scope.policy.tabActive = false
+                      $scope.role.tabActive = true
                     }
                   }
                   $scope.save = function(){
@@ -3719,9 +5111,11 @@ angular.module('ossClientUiApp')
                       console.log("==========",$scope.user)
                       OSSRam.createUser($scope.user.userName,$scope.user.displayName,$scope.user.phone,$scope.user.email,$scope.user.desc).then(function(res){
                         alert("用户创建成功！");
-                        if($scope.user.defaultKey){
-
-                        }
+                        console.log("create user result:",res)
+                        $rootScope.$broadcast('UpdateRamListData','user',res.User);
+                        //if($scope.user.defaultKey){
+                        //
+                        //}
                       },function(res){
                         res = {
                           Error:res.data
@@ -3730,7 +5124,19 @@ angular.module('ossClientUiApp')
                       })
                     }else if($scope.group.tabActive){
                       OSSRam.createGroup($scope.group.groupName,$scope.group.desc).then(function(res){
+                        console.log("create group result:",res)
+                        $rootScope.$broadcast('UpdateRamListData','group');
                         alert("用户组创建成功！")
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                      })
+                    }else if($scope.role.tabActive){
+                      OSSRam.createRole($scope.role.roleName,$scope.role.doc,$scope.role.desc).then(function(res){
+                        alert("角色创建成功！")
+                        $rootScope.$broadcast('UpdateRamListData','role');
                       },function(res){
                         res = {
                           Error:res.data
@@ -3740,6 +5146,7 @@ angular.module('ossClientUiApp')
                     }else if($scope.policy.tabActive){
                       OSSRam.createPolicy($scope.policy.policyName,$scope.policy.policyDocument,$scope.policy.desc).then(function(res){
                         alert("授权策略创建成功！")
+                        $rootScope.$broadcast('UpdateRamListData','policy');
                       },function(res){
                         res = {
                           Error:res.data
