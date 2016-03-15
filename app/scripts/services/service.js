@@ -1958,9 +1958,9 @@ angular.module('ossClientUiApp')
         params = angular.extend(params,options);
       }
       var _signature = OSSClient.getRamSignature('GET',JSON.stringify(params))
-      var _clientSign = getSign('GET',params);
-      console.log("=====params=====",params,_signature,_clientSign);
-      params.Signature = getSign('GET',params)
+      //var _clientSign = getSign('GET',params);
+      //console.log("=====params=====",params,_signature,_clientSign);
+      params.Signature = $.trim(_signature.substring(1,_signature.length - 1)) //getSign('GET',params)
       return 'https://ram.aliyuncs.com/?'+ $.param(params)
     };
     return{
@@ -2352,7 +2352,7 @@ angular.module('ossClientUiApp')
       getGroups:function (_max,_marker){
         var defer = $q.defer();
         var params = {
-          MaxItems:_max
+          MaxItems:""+_max
         }
         if(_marker){
           params.Marker = _marker;
@@ -2381,7 +2381,7 @@ angular.module('ossClientUiApp')
       getUsers:function (_max,_marker) {
         var defer = $q.defer();
         var params = {
-          MaxItems:_max
+          MaxItems:""+_max
         }
         if(_marker){
           params.Marker = _marker;
@@ -2447,7 +2447,7 @@ angular.module('ossClientUiApp')
       getPolicies:function (_max,_marker,_type) {
         var defer = $q.defer();
         var params = {
-          MaxItems:_max
+          MaxItems:""+_max
         }
         if(_marker){
           params.Marker = _marker;
@@ -3338,14 +3338,14 @@ angular.module('ossClientUiApp')
                                 }
                                 if (val.model) {
                                     if(val.name == 'Content-Disposition'){
-                                      var valid = /^[\u4e00-\u9fa5a-zA-Z0-9\-_/.;,:="]+$/.test(val.model);
+                                      var valid = /^[\u4e00-\u9fa5a-zA-Z0-9\-_/.;,:=*'"]+$/.test(val.model);
                                       if(!valid){
                                         unValidFieldValue = true;
                                         return false;
                                       }else{
-                                        var _modelVal = val.model.match(/filename=\S+/g);
+                                        var _modelVal = val.model.match(/filename\*=utf-8''\S+/g);
                                         if(_modelVal && _modelVal.length > 0){
-                                          var _str = _modelVal[0].substring('filename='.length);
+                                          var _str = _modelVal[0].substring("filename*=utf-8''".length);
                                           if(_str.indexOf("\"") != 0){
                                             _str = "\"" + _str
                                           }
@@ -3354,7 +3354,7 @@ angular.module('ossClientUiApp')
                                           }
                                           _modelVal = _str.substring(1,_str.length - 1);
                                         }
-                                        val.model = val.model.replace(/filename=\S+/g,"filename=\""+encodeURIComponent(_modelVal)+"\"")
+                                        val.model = val.model.replace(/filename\*=utf-8''\S+/g,"filename*=utf-8''"+encodeURIComponent(_modelVal)+"")
                                       }
                                     }else if(!checkFieldValueIsValid(val.model)){
                                         unValidFieldValue = true;
