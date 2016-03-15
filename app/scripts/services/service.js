@@ -2630,10 +2630,10 @@ angular.module('ossClientUiApp')
             getURI: function (bucket, objectName, _expires) {
                 if (!_expires) {
                     var _location = OSSRegion.changeLocation(bucket.Location);
-                    var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURIComponent(objectName);
+                    var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURI(objectName);
                     //如果设置了自定义服务器，则以自定义服务器的host进行请求
                     if(OSSConfig.isCustomClient() && customHost){
-                        _url = 'http://' + bucket.Name + '.' + customHost + '/' + encodeURIComponent(objectName);
+                        _url = 'http://' + bucket.Name + '.' + customHost + '/' + encodeURI(objectName);
                         //当前是在政务外网环境下
                         if(isIntranetNet){
                             var intranetLocations =  []
@@ -2648,7 +2648,7 @@ angular.module('ossClientUiApp')
                             var _item = _.find(intranetLocations,function(item){
                                 return item.enable === 1 && item.location.indexOf(_location)>=0;
                             })
-                            _url = 'http://' + bucket.Name + '.' + _item.customhost + '/' + encodeURIComponent(objectName);
+                            _url = 'http://' + bucket.Name + '.' + _item.customhost + '/' + encodeURI(objectName);
                         }
                     }
                     return _url;
@@ -5168,9 +5168,9 @@ angular.module('ossClientUiApp')
                     templateUrl: 'views/get_object_uri_modal.html',
                     windowClass: 'get_object_uri_modal',
                     controller: function ($scope, $modalInstance) {
-
+                        console.log("======get object uri=====",object.path,bucket)
                         $scope.filename = Util.String.baseName(object.path);
-
+                      console.log("======get object filename=====",$scope.filename)
                         $scope.expire = 3600;
 
                         $scope.loading = true;
