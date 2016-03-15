@@ -2629,7 +2629,6 @@ angular.module('ossClientUiApp')
         return {
             getURI: function (bucket, objectName, _expires) {
                 if (!_expires) {
-
                     var _location = OSSRegion.changeLocation(bucket.Location);
                     var _url = 'http://' + bucket.Name + '.' + _location + '.' + host + '/' + encodeURI(objectName);
                     //如果设置了自定义服务器，则以自定义服务器的host进行请求
