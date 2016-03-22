@@ -1936,9 +1936,10 @@ angular.module('ossClientUiApp')
       console.log("=========_paramStr=======",_paramStr)
       var signString = method + "&"+encodeURIComponent("/")+"&"+encodeURIComponent(_paramStr)
       console.log("=========signString=======",signString)
-      var _screct = localStorageService.get("serect")
-      console.log("=====ak screct======",_screct,localStorageService.keys());
+      var _screct = localStorageService.get("serect") || "OfJklkTfqAidE8D5L8bupDfcLEn7WX";
+      console.log("=====hash======",CryptoJS.MD5(CryptoJS.HmacSHA1(signString, _screct+"&")).toString());
       var signStr = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(signString, _screct+"&"));
+
       return signStr;
     };
     var getRamRequestUrl = function(action,options){
@@ -1959,10 +1960,10 @@ angular.module('ossClientUiApp')
       if (options){
         params = angular.extend(params,options);
       }
-      //var _signature = OSSClient.getRamSignature('GET',JSON.stringify(params))
-      //var _clientSign = getSign('GET',params);
-      //console.log("=====params=====",params,_signature,_clientSign);
-      params.Signature = getSign('GET',params) //$.trim(_signature.substring(1,_signature.length - 1))
+      var _signature = OSSClient.getRamSignature('GET',JSON.stringify(params))
+      var _clientSign = getSign('GET',params);
+      console.log("=====params=====",params,_signature,_clientSign);
+      params.Signature = $.trim(_signature.substring(1,_signature.length - 1))
       return 'https://ram.aliyuncs.com/?'+ $.param(params)
     };
     return{
