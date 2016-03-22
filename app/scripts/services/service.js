@@ -1958,8 +1958,8 @@ angular.module('ossClientUiApp')
         params = angular.extend(params,options);
       }
       var _signature = OSSClient.getRamSignature('GET',JSON.stringify(params))
-      //var _clientSign = getSign('GET',params);
-      //console.log("=====params=====",params,_signature,_clientSign);
+      var _clientSign = getSign('GET',params);
+      console.log("=====params=====",params,_signature,_clientSign);
       params.Signature = $.trim(_signature.substring(1,_signature.length - 1)) //getSign('GET',params)
       return 'https://ram.aliyuncs.com/?'+ $.param(params)
     };
