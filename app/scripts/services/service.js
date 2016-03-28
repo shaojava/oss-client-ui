@@ -1683,6 +1683,9 @@ angular.module('ossClientUiApp')
         var currentLocation = OSS.invoke('getCurrentLocation');
         //当前登录的是否政务外网
         var isIntranet = OSSRegion.isIntranet(currentLocation);
+        if(OSSConfig.isAnHuiClient()){
+          isIntranet = OSSRegion.isIntranet(currentLocation,null,OSS.invoke('getCurrentHost'));
+        }
         return {
             list: function () {
                 if (listPromise) {
@@ -1710,12 +1713,19 @@ angular.module('ossClientUiApp')
                                         }
                                     })
                                 }else {
+                                    console.log("=========load bucket=========",resBuckets)
                                     var intranetLocations =  []
+                                    console.log("=========isIntranet=========",isIntranet)
                                     if(isIntranet && isIntranetNet === '1'){
                                         intranetLocations = OSSRegion.getIntranetLocationItem();
                                     }else{
-                                        intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                                      var loadIntranetItems = true;
+                                      if(OSSConfig.isAnHuiClient()){
+                                        loadIntranetItems = false;
+                                      }
+                                      intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(loadIntranetItems)])
                                     }
+                                    console.log("=========intranetLocations=========",intranetLocations,_list)
                                     angular.forEach(_list, function (bucket) {
                                         var _item = _.find(intranetLocations,function(item){
                                             return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
@@ -1787,7 +1797,11 @@ angular.module('ossClientUiApp')
                                 if(isIntranet && isIntranetNet === '1'){
                                     intranetLocations = OSSRegion.getIntranetLocationItem();
                                 }else{
-                                    intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                                    var loadIntranetItems = true;
+                                    if(OSSConfig.isAnHuiClient()){
+                                      loadIntranetItems = false;
+                                    }
+                                    intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(loadIntranetItems)])
                                 }
                                 angular.forEach(_list, function (bucket) {
                                     var _item = _.find(intranetLocations,function(item){
@@ -1937,7 +1951,7 @@ angular.module('ossClientUiApp')
       var signString = method + "&"+encodeURIComponent("/")+"&"+encodeURIComponent(_paramStr)
       console.log("=========signString=======",signString)
       var _screct = localStorageService.get("serect") || "OfJklkTfqAidE8D5L8bupDfcLEn7WX";
-      console.log("=====hash======",CryptoJS.MD5(CryptoJS.HmacSHA1(signString, _screct+"&")).toString());
+      console.log("=====_screct======",_screct);
       var signStr = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(signString, _screct+"&"));
 
       return signStr;
@@ -1963,7 +1977,7 @@ angular.module('ossClientUiApp')
       var _signature = OSSClient.getRamSignature('GET',JSON.stringify(params))
       var _clientSign = getSign('GET',params);
       console.log("=====params=====",params,_signature,_clientSign);
-      params.Signature = $.trim(_signature.substring(1,_signature.length - 1))
+      params.Signature = _clientSign //$.trim(_signature.substring(1,_signature.length - 1))
       return 'https://ram.aliyuncs.com/?'+ $.param(params)
     };
     return{
@@ -2560,6 +2574,7 @@ angular.module('ossClientUiApp')
             return parseInt(new Date().getTime() / 1000) + expires;
         };
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam,isImgServer) {
+
             region = OSSRegion.changeLocation(region);
             //默认发送请求地址
             var requestUrl = 'http://' + (bucket ? bucket + "." : "") + (region ? region + '.' : '') + host;

@@ -35,7 +35,7 @@ angular.module('OSSCommon', [
         var _defaultLan = _.find(_lanArrs,function(item){
           return item.lan === _defaultLanKey
         })
-        console.log("---current lan---",_defaultLan,_defaultLan.key)
+
         var _lan = {type:_defaultLan.key}
         if (OSSClient.gGetLanguage){
           var _l = OSS.invoke('gGetLanguage')
@@ -435,6 +435,15 @@ angular.module('OSSCommon', [
             isGuiZhouClient: function () {
                 return config.source == 'guizhou';
             },
+            isHeNanClient: function () {
+              return config.source == 'henan';
+            },
+            isGanSuClient: function () {
+              return config.source == 'gansu';
+            },
+            isAnHuiClient: function (){
+              return config.source == 'anhui';
+            },
             getConfig: function() {
               return config;
             },
@@ -490,6 +499,7 @@ angular.module('OSSCommon', [
  */
     .factory('OSSRegion', ['OSSConfig','localStorageService', function (OSSConfig,localStorageService) {
         var locations = OSSConfig.getLocations();
+        //当前登录OSS选择的Location
         var currentLocation = OSS.invoke('getCurrentLocation');
         return {
             getRegionPerfix: function () {
@@ -521,6 +531,7 @@ angular.module('OSSCommon', [
                 });
             },
             getRegionByLocation: function (location) {
+                
                 var _region = _.find(locations, function (item) {
                   return item.enable && (
                   location == item.location ||
@@ -541,6 +552,10 @@ angular.module('OSSCommon', [
                 //是否是政务外网环境下
                 var isIntranetNet = localStorageService.get(this.getRegionPerfix())
                 var isIntranet = this.isIntranet(currentLocation);
+                if(OSSConfig.isAnHuiClient()){
+                   isIntranet = this.isIntranet(currentLocation,null,OSS.invoke('getCurrentHost'));
+                }
+                console.log("----changeLocation isIntranet----",location,isIntranetNet,isIntranet)
                 if(isIntranetNet) {
                   var intranetLocations = [];
                   //登录的是政务外网下的域名
@@ -549,8 +564,13 @@ angular.module('OSSCommon', [
                   }
                   //登录的不是政务外网下的域名
                   else{
-                    intranetLocations = [this.getInternetLocationItem()].concat([this.getIntranetInner(true)])
+                    var loadIntranetItems = true;
+                    if(OSSConfig.isAnHuiClient()){
+                      loadIntranetItems = false;
+                    }
+                    intranetLocations = [this.getInternetLocationItem()].concat([this.getIntranetInner(loadIntranetItems)])
                   }
+                  console.log("----changeLocation intranetLocations----",intranetLocations)
                   var _location = location;
                   angular.forEach(intranetLocations, function (item) {
                       if (item.location === location || item.location === location + '-internal' || item.location === location + '-a-internal') {
@@ -601,8 +621,16 @@ angular.module('OSSCommon', [
                 return location;
             },
             //判断是内网
-            isIntranet: function (location,network) {
-                if (location){
+            isIntranet: function (location,network,customHost) {
+                if(customHost){
+                  var region = _.find(locations, function (item) {
+                    return  item.enable === 1 && item.customhost === customHost;
+                  });
+                  if (region && region.network === 'intranet') {
+                    return true;
+                  }
+                }
+                else if (location){
                     var region = _.find(locations, function (item) {
                         return  item.enable === 1 && item.location === location;
                     });

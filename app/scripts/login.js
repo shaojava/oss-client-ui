@@ -60,13 +60,11 @@ angular
                 'custom-client':$scope.isCustomClient
             };
         };
+        //客户端自定义的服务器地址
         $scope.customHost = OSS.invoke('getCurrentHost');
+
         //提交自定义的服务器地址
         $scope.customDomain = function (host) {
-          //if (!host || !host.length) {
-          //  alert(gettextCatalog.getString(gettext('请输入服务器地址')));
-          //  return;
-          //}
           OSS.invoke('setServerLocation', {
             location: host
           }, function (res) {
@@ -84,7 +82,6 @@ angular
         $scope.regionSelectTip = gettextCatalog.getString(gettext('选择区域'));
 
         //提交登录
-
         $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, region) {
             console.info("login oss argument:",arguments)
             var location = undefined;
@@ -259,7 +256,12 @@ angular
         };
 
         var checkCurrentLocation = function(callback){
-            var region = OSSRegion.getIntranetInner(true);
+            var region = null;
+            if(OSSConfig.isGuiZhouClient() || OSSConfig.isHeNanClient() || OSSConfig.isGanSuClient()){
+              region = OSSRegion.getIntranetInner(true);
+            }else{
+              region = OSSRegion.getIntranetInner(false);
+            }
             var host = OSSConfig.getHost();
             var requestUrl = 'http://'+region.location + '.' + host;
             if(region.customhost && region.customhost.length){
