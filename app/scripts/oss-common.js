@@ -444,6 +444,9 @@ angular.module('OSSCommon', [
             isAnHuiClient: function (){
               return config.source == 'anhui';
             },
+            isGuiYangClient:function () {
+              return config.source == 'guiyang';
+            },
             getConfig: function() {
               return config;
             },
@@ -555,10 +558,7 @@ angular.module('OSSCommon', [
                 //是否是政务外网环境下
                 var isIntranetNet = localStorageService.get(this.getRegionPerfix())
                 var isIntranet = this.isIntranet(currentLocation);
-                if(OSSConfig.isAnHuiClient()){
-                   isIntranet = this.isIntranet(currentLocation,null,OSS.invoke('getCurrentHost'));
-                }
-                console.log("----changeLocation isIntranet----",location,isIntranetNet,isIntranet)
+                //console.log("----changeLocation isIntranet----",location,isIntranetNet,isIntranet)
                 if(isIntranetNet) {
                   var intranetLocations = [];
                   //登录的是政务外网下的域名
@@ -567,13 +567,9 @@ angular.module('OSSCommon', [
                   }
                   //登录的不是政务外网下的域名
                   else{
-                    var loadIntranetItems = true;
-                    if(OSSConfig.isAnHuiClient()){
-                      loadIntranetItems = false;
-                    }
-                    intranetLocations = [this.getInternetLocationItem()].concat([this.getIntranetInner(loadIntranetItems)])
+                    intranetLocations = [this.getInternetLocationItem()].concat([this.getIntranetInner(OSSConfig.hasMoreZwLocations())])
                   }
-                  console.log("----changeLocation intranetLocations----",intranetLocations)
+                  //console.log("----changeLocation intranetLocations----",intranetLocations)
                   var _location = location;
                   angular.forEach(intranetLocations, function (item) {
                       if (item.location === location || item.location === location + '-internal' || item.location === location + '-a-internal') {
@@ -608,7 +604,7 @@ angular.module('OSSCommon', [
                     return location + '-finance-1';
                   }
                 }else{
-                  console.log("locations:",locations,location)
+                  //console.log("locations:",locations,location)
                   var _region = _.find(locations, function (item) {
                     return item.enable && (
                       location == item.location.replace('-internal', '') ||
@@ -767,6 +763,11 @@ angular.module('OSSCommon', [
                 return error;
             },
             getClientErrorMsg: function (res) {
+                if (OSSConfig.isGuiYangClient()){
+                  if(res.error == 10){
+                    return gettextCatalog.getString(gettext('登录失败，网络请求错误'));
+                  }
+                }
                 return res.message;
             }
         };
@@ -1053,7 +1054,7 @@ angular.module('OSSCommon', [
                               });
                             });
                           }else{
-                            localStorageService.remove(OSSRegion.getRegionPerfix())
+                            localStorageService.set(OSSRegion.getRegionPerfix(),'1');
                             scope.locations = OSSRegion.list(newVal);
                             $rootScope.$broadcast('unDisabledLocationSelect')
                             scope.locations.selected = _.find(scope.locations,function(region){

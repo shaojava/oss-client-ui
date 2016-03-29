@@ -1683,9 +1683,6 @@ angular.module('ossClientUiApp')
         var currentLocation = OSS.invoke('getCurrentLocation');
         //当前登录的是否政务外网
         var isIntranet = OSSRegion.isIntranet(currentLocation);
-        if(OSSConfig.isAnHuiClient()){
-          isIntranet = OSSRegion.isIntranet(currentLocation,null,OSS.invoke('getCurrentHost'));
-        }
         return {
             list: function () {
                 if (listPromise) {
@@ -1719,11 +1716,7 @@ angular.module('ossClientUiApp')
                                     if(isIntranet && isIntranetNet === '1'){
                                         intranetLocations = OSSRegion.getIntranetLocationItem();
                                     }else{
-                                      var loadIntranetItems = true;
-                                      if(OSSConfig.isAnHuiClient()){
-                                        loadIntranetItems = false;
-                                      }
-                                      intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(loadIntranetItems)])
+                                      intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(OSSConfig.hasMoreZwLocations())])
                                     }
                                     console.log("=========intranetLocations=========",intranetLocations,_list)
                                     angular.forEach(_list, function (bucket) {
@@ -1797,11 +1790,7 @@ angular.module('ossClientUiApp')
                                 if(isIntranet && isIntranetNet === '1'){
                                     intranetLocations = OSSRegion.getIntranetLocationItem();
                                 }else{
-                                    var loadIntranetItems = true;
-                                    if(OSSConfig.isAnHuiClient()){
-                                      loadIntranetItems = false;
-                                    }
-                                    intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(loadIntranetItems)])
+                                    intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(OSSConfig.hasMoreZwLocations())])
                                 }
                                 angular.forEach(_list, function (bucket) {
                                     var _item = _.find(intranetLocations,function(item){
@@ -2583,12 +2572,14 @@ angular.module('ossClientUiApp')
             if(isImgServer){
               requestUrl = requestUrl.replace(region,region.replace("oss",'img'))
             }
+            //console.log("--------get request url customHost--------",customHost)
             //如果设置了自定义服务器，则以自定义服务器的host进行请求
             if(customHost){
                 var _imgServer = null
                 var _customHost = customHost
                 //当前是自定义版本
                 if(OSSConfig.isCustomClient()){
+                  //console.log("--------get request url isIntranetNet isIntranet--------",isIntranetNet,isIntranet)
                     //当前是在政务外网环境下
                     if(isIntranetNet) {
                         var intranetLocations =  []

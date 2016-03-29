@@ -271,7 +271,7 @@ angular.module('ossClientUiApp')
         $scope.currentLocation = 'OSS'
         $scope.currentNetType = ""
         var _loginLocation = OSS.invoke('getCurrentLocation');
-        console.log("login location:",_loginLocation);
+        //console.log("login location:",_loginLocation);
         if(_loginLocation) {
           $scope.currentLocation = gettext('OSS-当前选择区域：');
           $scope.currentNetType = $filter('getLocationName')(OSS.invoke('getCurrentLocation'));
