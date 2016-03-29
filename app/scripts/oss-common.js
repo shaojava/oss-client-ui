@@ -324,7 +324,7 @@ angular.module('OSSCommon', [
                 showchannel:false,
                 showrefer:false,
                 showLanSetting:true,
-                showRam:true,
+                showRam:false,
                 defaultLan:"zh_CN",
                 host: "aliyuncs.com",
                 news:{
@@ -483,6 +483,9 @@ angular.module('OSSCommon', [
             },
             getLocations: function () {
                 return config.locations || [];
+            },
+            hasMoreZwLocations:function () {
+              return config.source == 'guizhou' || config.source == 'gansu' || config.source == 'henan'
             },
             /**
              * 获取主机
@@ -1020,31 +1023,43 @@ angular.module('OSSCommon', [
                             return;
                         }
                         if (OSSRegion.isIntranet(null,newVal)) {
+                          //如果有多个政务节点
+                          if(OSSConfig.hasMoreZwLocations()){
                             var region = OSSRegion.getIntranetInner(false);
                             var host = OSSConfig.getHost();
                             var requestUrl = 'http://'+region.location + '.' + host;
                             if(region.customhost && region.customhost.length){
-                                requestUrl = 'http://'+region.customhost;
+                              requestUrl = 'http://'+region.customhost;
                             }
                             $http.get(requestUrl,{
-                                timeout:3000
+                              timeout:3000
                             }).error(function(req,status){
-                                //走不通
-                                if(!req && !status){
-                                    localStorageService.set(OSSRegion.getRegionPerfix(),'2');
-                                    scope.locations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
-                                }
-                                //走的通
-                                else{
-                                    localStorageService.set(OSSRegion.getRegionPerfix(),'1');
-                                    scope.locations = OSSRegion.getIntranetLocationItem()
-                                }
-                                //当前可以显示的bucket
-                                $rootScope.$broadcast('unDisabledLocationSelect')
-                                scope.locations.selected = _.find(scope.locations,function(region){
-                                    return region.location.indexOf(scope.defaultLocation) == 0;
-                                });
+                              //走不通政务外网下的互联网
+                              if(!req && !status){
+                                //设置当前网络环境2代表当前要获取政务外网下的政务外网和非政务外网的互联网节点
+                                localStorageService.set(OSSRegion.getRegionPerfix(),'2');
+                                scope.locations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
+                              }
+                              //走的通政务外网下的互联网
+                              else{
+                                //设置当前网络环境1代表当前要获取政务外网下的政务外网和政务外网的互联网节点
+                                localStorageService.set(OSSRegion.getRegionPerfix(),'1');
+                                scope.locations = OSSRegion.getIntranetLocationItem()
+                              }
+                              //当前可以显示的bucket
+                              $rootScope.$broadcast('unDisabledLocationSelect')
+                              scope.locations.selected = _.find(scope.locations,function(region){
+                                return region.location.indexOf(scope.defaultLocation) == 0;
+                              });
                             });
+                          }else{
+                            localStorageService.remove(OSSRegion.getRegionPerfix())
+                            scope.locations = OSSRegion.list(newVal);
+                            $rootScope.$broadcast('unDisabledLocationSelect')
+                            scope.locations.selected = _.find(scope.locations,function(region){
+                              return region.location.indexOf(scope.defaultLocation) == 0;
+                            });
+                          }
                         }else {
                             localStorageService.remove(OSSRegion.getRegionPerfix())
                             scope.locations = OSSRegion.list(newVal);

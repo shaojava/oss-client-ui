@@ -2570,7 +2570,7 @@ angular.module('ossClientUiApp')
         var customHost = OSS.invoke('getCurrentHost');
 
         var getExpires = function (expires) {
-            expires = angular.isUndefined(expires) ? 30 : expires;
+            expires = angular.isUndefined(expires) ? 3*60*1000 : expires;
             return parseInt(new Date().getTime() / 1000) + expires;
         };
         var getRequestUrl = function (bucket, region, expires, signature, canonicalizedResource, extraParam,isImgServer) {

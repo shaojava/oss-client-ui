@@ -81,7 +81,7 @@ msgid ""
 "                  </span>"
 msgstr ""
 
-#: app/scripts/oss-common.js:707
+#: app/scripts/oss-common.js:710
 msgid "Access Key ID不存在"
 msgstr ""
 
@@ -106,11 +106,11 @@ msgstr ""
 msgid "Bucket下载"
 msgstr ""
 
-#: app/scripts/oss-common.js:700
+#: app/scripts/oss-common.js:703
 msgid "Bucket不为空"
 msgstr ""
 
-#: app/scripts/oss-common.js:719
+#: app/scripts/oss-common.js:722
 msgid "Bucket不存在"
 msgstr ""
 
@@ -118,11 +118,11 @@ msgstr ""
 msgid "Bucket名称："
 msgstr ""
 
-#: app/scripts/oss-common.js:699
+#: app/scripts/oss-common.js:702
 msgid "Bucket已经存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:727
+#: app/scripts/oss-common.js:730
 msgid "Bucket数目超过限制"
 msgstr ""
 
@@ -147,11 +147,11 @@ msgstr ""
 msgid "HTTP属性值格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:713
+#: app/scripts/oss-common.js:716
 msgid "Logging操作中有无效的目标bucket"
 msgstr ""
 
-#: app/scripts/oss-common.js:721
+#: app/scripts/oss-common.js:724
 msgid "Multipart Upload ID不存在"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 msgid "OSS-当前选择区域："
 msgstr ""
 
-#: app/scripts/oss-common.js:714
+#: app/scripts/oss-common.js:717
 msgid "OSS内部发生错误"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr ""
 msgid "Style设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:715
+#: app/scripts/oss-common.js:718
 msgid "XML格式非法"
 msgstr ""
 
@@ -262,7 +262,7 @@ msgstr ""
 msgid "不同区域的Bucket之间不能复制"
 msgstr ""
 
-#: app/scripts/oss-common.js:716
+#: app/scripts/oss-common.js:719
 msgid "不支持的方法"
 msgstr ""
 
@@ -505,11 +505,11 @@ msgstr ""
 msgid "单任务线程数："
 msgstr ""
 
-#: app/scripts/oss-common.js:706
+#: app/scripts/oss-common.js:709
 msgid "参数格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:724
+#: app/scripts/oss-common.js:727
 msgid "发起请求的时间和服务器时间超出15分钟"
 msgstr ""
 
@@ -641,11 +641,11 @@ msgstr ""
 msgid "完成"
 msgstr ""
 
-#: app/scripts/oss-common.js:701
+#: app/scripts/oss-common.js:704
 msgid "实体过大"
 msgstr ""
 
-#: app/scripts/oss-common.js:702
+#: app/scripts/oss-common.js:705
 msgid "实体过小"
 msgstr ""
 
@@ -794,7 +794,7 @@ msgstr ""
 msgid "打开日志文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:698
+#: app/scripts/oss-common.js:701
 msgid "拒绝访问"
 msgstr ""
 
@@ -882,11 +882,11 @@ msgstr ""
 msgid "政务外网"
 msgstr ""
 
-#: app/scripts/oss-common.js:682
+#: app/scripts/oss-common.js:685
 msgid "数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
-#: app/scripts/oss-common.js:683
+#: app/scripts/oss-common.js:686
 msgid "数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
@@ -894,11 +894,11 @@ msgstr ""
 msgid "数据请求失败，如果你自定义了服务器地址，请检查是否正常。"
 msgstr ""
 
-#: app/scripts/oss-common.js:704
+#: app/scripts/oss-common.js:707
 msgid "文件Part不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:705
+#: app/scripts/oss-common.js:708
 msgid "文件Part过时"
 msgstr ""
 
@@ -906,7 +906,7 @@ msgstr ""
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
-#: app/scripts/oss-common.js:720
+#: app/scripts/oss-common.js:723
 msgid "文件不存在"
 msgstr ""
 
@@ -923,7 +923,7 @@ msgstr ""
 msgid "文件夹名称格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:703
+#: app/scripts/oss-common.js:706
 msgid "文件组过大"
 msgstr ""
 
@@ -946,27 +946,27 @@ msgstr ""
 msgid "新建文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:708
+#: app/scripts/oss-common.js:711
 msgid "无效的Bucket名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:710
+#: app/scripts/oss-common.js:713
 msgid "无效的Object名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:711
+#: app/scripts/oss-common.js:714
 msgid "无效的Part"
 msgstr ""
 
-#: app/scripts/oss-common.js:712
+#: app/scripts/oss-common.js:715
 msgid "无效的part顺序"
 msgstr ""
 
-#: app/scripts/oss-common.js:709
+#: app/scripts/oss-common.js:712
 msgid "无效的摘要"
 msgstr ""
 
-#: app/scripts/oss-common.js:722
+#: app/scripts/oss-common.js:725
 msgid "无法处理的方法"
 msgstr ""
 
@@ -1160,7 +1160,7 @@ msgstr ""
 msgid "用户管理"
 msgstr ""
 
-#: app/scripts/oss-common.js:731
+#: app/scripts/oss-common.js:734
 msgid "用户组下面还有用户"
 msgstr ""
 
@@ -1172,15 +1172,15 @@ msgstr ""
 msgid "用户组授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:730
+#: app/scripts/oss-common.js:733
 msgid "用户组还有加入的授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:729
+#: app/scripts/oss-common.js:732
 msgid "用户还有加入的授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:728
+#: app/scripts/oss-common.js:731
 msgid "用户还有加入的组"
 msgstr ""
 
@@ -1375,7 +1375,7 @@ msgstr ""
 msgid "策略规则："
 msgstr ""
 
-#: app/scripts/oss-common.js:726
+#: app/scripts/oss-common.js:729
 msgid "签名错误"
 msgstr ""
 
@@ -1416,15 +1416,15 @@ msgstr ""
 msgid "编号"
 msgstr ""
 
-#: app/scripts/oss-common.js:718
+#: app/scripts/oss-common.js:721
 msgid "缺少内容长度"
 msgstr ""
 
-#: app/scripts/oss-common.js:717
+#: app/scripts/oss-common.js:720
 msgid "缺少参数"
 msgstr ""
 
-#: app/scripts/oss-common.js:745
+#: app/scripts/oss-common.js:748
 msgid "网络请求错误"
 msgstr ""
 
@@ -1539,7 +1539,7 @@ msgstr ""
 msgid "语言设置"
 msgstr ""
 
-#: app/scripts/oss-common.js:725
+#: app/scripts/oss-common.js:728
 msgid "请求超时"
 msgstr ""
 
@@ -1745,7 +1745,7 @@ msgstr ""
 msgid "青岛"
 msgstr ""
 
-#: app/scripts/oss-common.js:723
+#: app/scripts/oss-common.js:726
 msgid "预处理错误"
 msgstr ""
 
@@ -1759,6 +1759,6 @@ msgstr ""
 msgid "默认版本"
 msgstr ""
 
-#: app/scripts/oss-common.js:747
+#: app/scripts/oss-common.js:750
 msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""
