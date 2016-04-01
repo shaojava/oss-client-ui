@@ -1966,7 +1966,7 @@ angular.module('ossClientUiApp')
       var _signature = OSSClient.getRamSignature('GET',JSON.stringify(params))
       var _clientSign = getSign('GET',params);
       console.log("=====params=====",params,_signature,_clientSign);
-      params.Signature = _clientSign //$.trim(_signature.substring(1,_signature.length - 1))
+      params.Signature = $.trim(_signature.substring(1,_signature.length - 1))
       return 'https://ram.aliyuncs.com/?'+ $.param(params)
     };
     return{
@@ -2501,7 +2501,7 @@ angular.module('ossClientUiApp')
         var params = {
           PolicyName:_policyName,
           PolicyDocument:_policyDoc,
-          SetAsDefault:_isDefault
+          SetAsDefault:""+_isDefault
         }
         var url= getRamRequestUrl('CreatePolicyVersion',params);
         $http.get(url).then(function(res){
