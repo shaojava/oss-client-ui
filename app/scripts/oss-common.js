@@ -324,7 +324,7 @@ angular.module('OSSCommon', [
                 showchannel:false,
                 showrefer:false,
                 showLanSetting:true,
-                showRam:false,
+                showRam:true,
                 defaultLan:"zh_CN",
                 host: "aliyuncs.com",
                 news:{
