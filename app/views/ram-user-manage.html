@@ -192,7 +192,7 @@
                       </td>
                     </tr>
                   <tr ng-if="!group.listGroup.loading && +group.listGroup.list.length == 0">
-                    <td colspan="5" align="center">
+                    <td colspan="5" align="center" translate>
                       没有数据
                     </td>
                   </tr>
@@ -202,7 +202,7 @@
                     <td align="left">{{group.CreateDate|formatTime}}</td>
                     <td align="left">
                       <a ng-if="!group.exist" ng-click="addUserToGroup(group);" translate>加入</a>
-                      <span ng-if="group.exist" class="text-success">已加入</span>
+                      <span ng-if="group.exist" class="text-success" translate>已加入</span>
                     </td>
                   </tr>
                   </tbody>
@@ -244,7 +244,7 @@
                   </tr>
                   <tr ng-repeat="policy in policies.hasPolicies.list">
                     <td align="left">{{policy.PolicyName}}</td>
-                    <td align="left">{{policy.PolicyType}}</td>
+                    <td align="left">{{policy.PolicyType == 'Custom'?('自定义'|translate):('系统'|translate)}}</td>
                     <td align="left">{{policy.DefaultVersion}}</td>
                     <td align="left">{{policy.Description}}</td>
                     <td align="left">{{policy.AttachDate|formatTime}}</td>
@@ -266,26 +266,26 @@
                     <th width="20%" translate>策略名称</th>
                     <th width="30%" translate>描述</th>
                     <th width="18%" translate>引用次数</th>
-                    <th width="18%" translate>
-                  <span dropdown>
-                    <a data-toggle="dropdown" class="dropdown-toogle">
-                      <span ng-if="policies.listPolicies.type == null">全部类型</span>
-                      <span ng-if="policies.listPolicies.type == 'Custom'">自定义</span>
-                      <span ng-if="policies.listPolicies.type == 'System'">系统</span>
-                      <span class="caret"></span>
-                    </a>
-                    <ul dropdown-menu class="dropdown-menu">
-                      <li>
-                        <a ng-click="changePolicyType(null)">全部类型</a>
-                      </li>
-                      <li>
-                        <a ng-click="changePolicyType('Custom')">自定义</a>
-                      </li>
-                      <li>
-                        <a ng-click="changePolicyType('System')">系统</a>
-                      </li>
-                    </ul>
-                  </span>
+                    <th width="18%">
+                      <span dropdown>
+                        <a data-toggle="dropdown" class="dropdown-toogle">
+                          <span ng-show="policies.listPolicies.type == null" translate>全部类型</span>
+                          <span ng-show="policies.listPolicies.type == 'Custom'" translate>自定义</span>
+                          <span ng-show="policies.listPolicies.type == 'System'" translate>系统</span>
+                          <span class="caret"></span>
+                        </a>
+                        <ul dropdown-menu class="dropdown-menu">
+                          <li>
+                            <a ng-click="changePolicyType(null)" translate>全部类型</a>
+                          </li>
+                          <li>
+                            <a ng-click="changePolicyType('Custom')" translate>自定义</a>
+                          </li>
+                          <li>
+                            <a ng-click="changePolicyType('System')" translate>系统</a>
+                          </li>
+                        </ul>
+                      </span>
                     </th>
                     <th width="14%" translate>操作</th>
                   </tr>
@@ -308,7 +308,7 @@
                     <td align="left">{{policy.PolicyName}}</td>
                     <td align="left">{{policy.Description}}</td>
                     <td align="left">{{policy.AttachmentCount}}</td>
-                    <td align="left">{{policy.PolicyType}}</td>
+                    <td align="left">{{policy.PolicyType == 'Custom'?('自定义'|translate):('系统'|translate)}}</td>
                     <td align="left">
                       <a ng-if="!policy.exist" ng-click="setPolicy(policy)" translate>授权</a>
                       <span ng-if="policy.exist" class="text-success">已授权</span>
@@ -327,12 +327,12 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button ng-if="info.active" ng-click="deleteUser();" class="btn btn-danger pull-left">删除用户</button>
-  <button ng-if="accessKey.active" ng-click="createKey();" class="btn btn-success pull-left">创建AccessKey</button>
-  <a ng-if="group.active && group.hasGroup.active" ng-disabled="group.hasGroup.loading" ng-click="groupModalChange();" class="btn btn-success pull-left">加入用户组</a>
-  <a ng-if="group.active && group.listGroup.active" ng-disabled="group.listGroup.loading" ng-click="groupModalChange();" class="btn btn-success pull-left">返回用户组</a>
-  <a ng-if="policies.active && policies.hasPolicies.active" ng-disabled="policies.hasPolicies.loading" ng-click="policyModalChange();" class="btn btn-success pull-left">添加授权</a>
-  <a ng-if="policies.active && policies.listPolicies.active" ng-disabled="policies.listPolicies.loading" ng-click="policyModalChange();" class="btn btn-success pull-left">返回授权</a>
+  <button ng-if="info.active" ng-click="deleteUser();" class="btn btn-danger pull-left" translate>删除用户</button>
+  <button ng-if="accessKey.active" ng-click="createKey();" class="btn btn-success pull-left" translate>创建AccessKey</button>
+  <a ng-if="group.active && group.hasGroup.active" ng-disabled="group.hasGroup.loading" ng-click="groupModalChange();" class="btn btn-success pull-left" translate>加入用户组</a>
+  <a ng-if="group.active && group.listGroup.active" ng-disabled="group.listGroup.loading" ng-click="groupModalChange();" class="btn btn-success pull-left" translate>返回用户组</a>
+  <a ng-if="policies.active && policies.hasPolicies.active" ng-disabled="policies.hasPolicies.loading" ng-click="policyModalChange();" class="btn btn-success pull-left" translate>添加授权</a>
+  <a ng-if="policies.active && policies.listPolicies.active" ng-disabled="policies.listPolicies.loading" ng-click="policyModalChange();" class="btn btn-success pull-left" translate>返回授权</a>
   <button ng-if="info.edit" type="button" class="btn btn-primary" ng-click="updateUser()" ng-disabled="user_group_modal.$pristine || user_group_modal.$invalid" translate>确定</button>
   <button type="button" class="btn btn-default" ng-click="cancel()" translate>取消</button>
 </div>

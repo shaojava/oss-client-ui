@@ -796,7 +796,6 @@ angular.module('ossClientUiApp')
                             }), OSSQueueItem.setPaused);
                         });
                     });
-
                 },
                 getState: function (selectItems, items,doneCount,totalCount) {
                     return !items || !items.length ? 0 : 1;
@@ -1939,7 +1938,7 @@ angular.module('ossClientUiApp')
       console.log("=========_paramStr=======",_paramStr)
       var signString = method + "&"+encodeURIComponent("/")+"&"+encodeURIComponent(_paramStr)
       console.log("=========signString=======",signString)
-      var _screct = localStorageService.get("serect") || "OfJklkTfqAidE8D5L8bupDfcLEn7WX";
+      var _screct = localStorageService.get("serect") || "EV472gOxdVVhGxhJOq5sI2S12oUKCN";
       console.log("=====_screct======",_screct);
       var signStr = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(signString, _screct+"&"));
 
@@ -1965,7 +1964,7 @@ angular.module('ossClientUiApp')
       }
       var _signature = OSSClient.getRamSignature('GET',JSON.stringify(params))
       var _clientSign = getSign('GET',params);
-      console.log("=====params=====",params,_signature,_clientSign);
+      //console.log("=====params=====",params,_signature,_clientSign);
       params.Signature = $.trim(_signature.substring(1,_signature.length - 1))
       return 'https://ram.aliyuncs.com/?'+ $.param(params)
     };
@@ -3726,7 +3725,7 @@ angular.module('ossClientUiApp')
                       display:/^[a-zA-Z0-9\.@\-\u4e00-\u9fa5]{0,12}$/,
                       phone:/^([0-9]+\-){0,1}[0-9]{11}$/,
                       email:/^[a-zA-Z0-9]+\@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
-                      desc:/^\S{0,128}$/
+                      desc:/^[\S\s]{0,128}$/
                     },
                     edit:false,
                     active:_tab == 'info',
@@ -4149,7 +4148,7 @@ angular.module('ossClientUiApp')
                   $scope.info = {
                     pattern:{
                       name:/^[a-zA-Z0-9\u4e00-\u9fa5\.@\-_]{1,64}$/,
-                      desc:/^\S{0,128}$/
+                      desc:/^[\S\s]{0,128}$/
                     },
                     edit:false,
                     active:_tab == 'info',
@@ -4574,6 +4573,11 @@ angular.module('ossClientUiApp')
                         alert(gettextCatalog.getString(gettext("角色删除成功！")));
                         $rootScope.$broadcast('UpdateRamListData','role')
                         $modalInstance.dismiss('cancel');
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                       })
                     });
                   }
@@ -4679,6 +4683,11 @@ angular.module('ossClientUiApp')
                       OSSRam.deletePolicyVersion(policy.PolicyName, _version.VersionId).then(function (res) {
                         $scope.versions.list.splice(_index, 1);
                         alert(gettextCatalog.getString(gettext("删除版本成功！")));
+                      },function(res){
+                        res = {
+                          Error:res.data
+                        }
+                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
                       })
                     });
                   }
@@ -5042,7 +5051,7 @@ angular.module('ossClientUiApp')
                       display:/^[a-zA-Z0-9\.@\-\u4e00-\u9fa5]{0,12}$/,
                       phone:/^([0-9]+\-){0,1}[0-9]{11}$/,
                       email:/^[a-zA-Z0-9]+\@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
-                      desc:/^\S{0,128}$/
+                      desc:/^[\s\S]{0,128}$/
                     },
                     userName:'',
                     displayName:'',
@@ -5056,7 +5065,7 @@ angular.module('ossClientUiApp')
                     tabActive:_type == 'group',
                     pattern:{
                       name:/^[a-zA-Z0-9\u4e00-\u9fa5\-]{1,64}$/,
-                      desc:/^\S{0,128}$/
+                      desc:/^[\s\S]{0,128}$/
                     },
                     groupName:'',
                     desc:''
@@ -5066,7 +5075,7 @@ angular.module('ossClientUiApp')
                     pattern:{
                       name:/^[a-zA-Z0-9\u4e00-\u9fa5\-]{1,128}$/,
                       doc:/^[\S\s]{1,2048}$/,
-                      desc:/^\S{0,1024}$/
+                      desc:/^[\S\s]{0,1024}$/
                     },
                     policyName:'',
                     policyDocument:'',
@@ -5077,7 +5086,7 @@ angular.module('ossClientUiApp')
                     pattern:{
                       name:/^[a-zA-Z0-9\.@\-_]{1,64}$/,
                       doc:/^[\S\s]{1,2048}$/,
-                      desc:/^\S{0,1024}$/
+                      desc:/^[\S\s]{0,1024}$/
                     },
                     roleName:'',
                     desc:'',
@@ -5117,11 +5126,11 @@ angular.module('ossClientUiApp')
                   }
                   $scope.save = function(){
                     if($scope.user.tabActive){
-                      console.log("==========",$scope.user)
                       OSSRam.createUser($scope.user.userName,$scope.user.displayName,$scope.user.phone,$scope.user.email,$scope.user.desc).then(function(res){
-                        alert("用户创建成功！");
                         console.log("create user result:",res)
                         $rootScope.$broadcast('UpdateRamListData','user',res.User);
+                        alert("用户创建成功！");
+                        $modalInstance.dismiss('cancel');
                         //if($scope.user.defaultKey){
                         //
                         //}
@@ -5136,6 +5145,7 @@ angular.module('ossClientUiApp')
                         console.log("create group result:",res)
                         $rootScope.$broadcast('UpdateRamListData','group');
                         alert("用户组创建成功！")
+                        $modalInstance.dismiss('cancel');
                       },function(res){
                         res = {
                           Error:res.data
@@ -5144,8 +5154,10 @@ angular.module('ossClientUiApp')
                       })
                     }else if($scope.role.tabActive){
                       OSSRam.createRole($scope.role.roleName,$scope.role.doc,$scope.role.desc).then(function(res){
-                        alert("角色创建成功！")
+
                         $rootScope.$broadcast('UpdateRamListData','role');
+                        alert("角色创建成功！")
+                        $modalInstance.dismiss('cancel');
                       },function(res){
                         res = {
                           Error:res.data
@@ -5154,8 +5166,9 @@ angular.module('ossClientUiApp')
                       })
                     }else if($scope.policy.tabActive){
                       OSSRam.createPolicy($scope.policy.policyName,$scope.policy.policyDocument,$scope.policy.desc).then(function(res){
-                        alert("授权策略创建成功！")
                         $rootScope.$broadcast('UpdateRamListData','policy');
+                        alert("授权策略创建成功！")
+                        $modalInstance.dismiss('cancel');
                       },function(res){
                         res = {
                           Error:res.data
@@ -5177,9 +5190,9 @@ angular.module('ossClientUiApp')
                     templateUrl: 'views/get_object_uri_modal.html',
                     windowClass: 'get_object_uri_modal',
                     controller: function ($scope, $modalInstance) {
-                        console.log("======get object uri=====",object.path,bucket)
+                        //console.log("======get object uri=====",object.path,bucket)
                         $scope.filename = Util.String.baseName(object.path);
-                      console.log("======get object filename=====",$scope.filename)
+                      //console.log("======get object filename=====",$scope.filename)
                         $scope.expire = 3600;
 
                         $scope.loading = true;

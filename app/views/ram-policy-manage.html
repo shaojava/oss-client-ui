@@ -49,7 +49,7 @@
                   </td>
                 </tr>
                 <tr ng-if="!versions.loading && +versions.list.length == 0">
-                  <td colspan="5" align="center">
+                  <td colspan="5" align="center" translate>
                     没有数据
                   </td>
                 </tr>
@@ -86,7 +86,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  <a ng-if="versions.active && versions.showDoc"  ng-click="changeVersions();" class="btn btn-success pull-left">返回列表</a>
+  <a ng-if="versions.active && versions.showDoc"  ng-click="changeVersions();" class="btn btn-success pull-left" translate>返回列表</a>
 
   <button ng-if="newVersion.active" ng-disabled="user_group_modal.$pristine || user_group_modal.$invalid"  type="button" class="btn btn-primary" ng-click="saveNewVersion()"  translate>保存</button>
   <button type="button" class="btn btn-default" ng-click="cancel()" translate>取消</button>

@@ -106,7 +106,7 @@
               </td>
             </tr>
             <tr ng-if="!role.loading && (!role.list || role.list.length == 0)">
-              <td colspan="5" align="center">
+              <td colspan="5" align="center" translate>
                 没有数据
               </td>
             </tr>
@@ -139,23 +139,23 @@
                 <th width="20%" translate>策略名称</th>
                 <th width="30%" translate>描述</th>
                 <th width="18%" translate>引用次数</th>
-                <th width="18%" translate>
+                <th width="18%" >
                   <span dropdown>
                     <a data-toggle="dropdown" class="dropdown-toogle">
-                      <span ng-if="policy.type == null">全部类型</span>
-                      <span ng-if="policy.type == 'Custom'">自定义</span>
-                      <span ng-if="policy.type == 'System'">系统</span>
+                      <span ng-show="policy.type == null" translate>全部类型</span>
+                      <span ng-show="policy.type == 'Custom'" translate>自定义</span>
+                      <span ng-show="policy.type == 'System'" translate>系统</span>
                       <span class="caret"></span>
                     </a>
                     <ul dropdown-menu class="dropdown-menu">
                       <li>
-                        <a ng-click="changePolicyType(null)">全部类型</a>
+                        <a ng-click="changePolicyType(null)" translate>全部类型</a>
                       </li>
                       <li>
-                        <a ng-click="changePolicyType('Custom')">自定义</a>
+                        <a ng-click="changePolicyType('Custom')" translate>自定义</a>
                       </li>
                       <li>
-                        <a ng-click="changePolicyType('System')">系统</a>
+                        <a ng-click="changePolicyType('System')" translate>系统</a>
                       </li>
                     </ul>
                   </span>
@@ -181,7 +181,7 @@
                 <td>{{policy.PolicyName}}</td>
                 <td>{{policy.Description}}</td>
                 <td>{{policy.AttachmentCount}}</td>
-                <td>{{policy.PolicyType}}</td>
+                <td>{{policy.PolicyType == 'Custom'?('自定义'|translate):('系统'|translate)}}</td>
                 <td>
                   <a ng-click="manageRam(policy,'policy')" translate>管理</a>
                   <a ng-if="policy.PolicyType == 'Custom'" ng-click="deletePolicy(policy,$index)" translate>删除</a>
@@ -195,11 +195,11 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button ng-if="false" ng-click="closeRamService();" class="btn btn-default pull-left">关闭RAM服务</button>
-  <button ng-if="user.tabActive" ng-click="createUser();" class="btn btn-default pull-left">创建用户</button>
-  <button ng-if="group.tabActive" ng-click="createGroup();" class="btn btn-default pull-left">创建用户组</button>
-  <button ng-if="role.tabActive" ng-click="createRole();" class="btn btn-default pull-left">创建角色</button>
-  <button ng-if="policy.tabActive" ng-click="createPolicy();" class="btn btn-default pull-left">创建授权策略</button>
+  <button ng-if="false" ng-click="closeRamService();" class="btn btn-default pull-left" translate>关闭RAM服务</button>
+  <button ng-if="user.tabActive" ng-click="createUser();" class="btn btn-default pull-left" translate>创建用户</button>
+  <button ng-if="group.tabActive" ng-click="createGroup();" class="btn btn-default pull-left" translate>创建用户组</button>
+  <button ng-if="role.tabActive" ng-click="createRole();" class="btn btn-default pull-left" translate>创建角色</button>
+  <button ng-if="policy.tabActive" ng-click="createPolicy();" class="btn btn-default pull-left" translate>创建授权策略</button>
   <button ng-if="false" type="button" class="btn btn-primary" ng-click="save()" ng-disabled="user_group_modal.$pristine || user_group_modal.$invalid" translate>确定</button>
   <button type="button" class="btn btn-default" ng-click="cancel()" translate>取消</button>
 </div>
