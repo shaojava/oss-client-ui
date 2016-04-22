@@ -268,13 +268,12 @@ angular.module('ossClientUiApp')
         });
 
         //当前区域
-        $scope.currentLocation = 'OSS-1.1.4.0'
+        $scope.currentLocation = 'OSS-1.1.5.0'
         $scope.currentNetType = ""
         var _loginLocation = OSS.invoke('getCurrentLocation');
         //console.log("login location:",_loginLocation);
         if(_loginLocation) {
-
-          $scope.currentLocation = "OSS-1.1.4.0" + gettext('当前选择区域：');
+          $scope.currentLocation = "OSS-1.1.5.0" + gettext('当前选择区域：');
           $scope.currentNetType = $filter('getLocationName')(OSS.invoke('getCurrentLocation'));
         }
     }])

@@ -165,7 +165,7 @@ msgstr ""
 msgid "上传速度："
 msgstr ""
 
-#: app/scripts/controllers/main.js:424
+#: app/scripts/controllers/main.js:423
 msgid "上传队列"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 msgid "下载速度："
 msgstr ""
 
-#: app/scripts/controllers/main.js:429
+#: app/scripts/controllers/main.js:428
 msgid "下载队列"
 msgstr ""
 
@@ -659,7 +659,7 @@ msgstr ""
 msgid "导出授权"
 msgstr ""
 
-#: app/scripts/controllers/main.js:662
+#: app/scripts/controllers/main.js:661
 #: app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr ""
@@ -743,7 +743,7 @@ msgstr ""
 msgid "当前语言："
 msgstr ""
 
-#: app/scripts/controllers/main.js:277
+#: app/scripts/controllers/main.js:276
 msgid "当前选择区域："
 msgstr ""
 
@@ -1006,7 +1006,7 @@ msgstr ""
 msgid "无法处理的方法"
 msgstr ""
 
-#: app/scripts/controllers/main.js:712
+#: app/scripts/controllers/main.js:711
 msgid "无法访问该Bucket"
 msgstr ""
 
@@ -1048,7 +1048,7 @@ msgstr ""
 msgid "更新时间："
 msgstr ""
 
-#: app/scripts/controllers/main.js:438
+#: app/scripts/controllers/main.js:437
 msgid "最新资讯"
 msgstr ""
 
@@ -1086,8 +1086,8 @@ msgstr ""
 msgid "没有下载"
 msgstr ""
 
-#: app/scripts/controllers/main.js:570
-#: app/scripts/controllers/main.js:575
+#: app/scripts/controllers/main.js:569
+#: app/scripts/controllers/main.js:574
 msgid "没有找到最新消息!"
 msgstr ""
 
@@ -1923,7 +1923,7 @@ msgstr ""
 msgid "错误"
 msgstr ""
 
-#: app/scripts/controllers/main.js:434
+#: app/scripts/controllers/main.js:433
 msgid "错误日志"
 msgstr ""
 
