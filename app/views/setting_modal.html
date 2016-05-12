@@ -64,6 +64,22 @@
             </div>
           </fieldset>
         </div>
+        <div class="col-xs-6">
+          <fieldset>
+            <legend translate>Content-Disposition设置</legend>
+            <div class="row">
+              <label for="content-disposition-setting" class="col-xs-6 text-right control-label" translate>默认设置：</label>
+              <div class="col-xs-6">
+                <label style="margin-right: 15px">
+                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="1" type="radio" /> 开
+                </label>
+                <label>
+                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="0" type="radio" /> 关
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
         <div class="col-xs-6" ng-if="false">
           <fieldset>
             <legend translate>RAM设置</legend>

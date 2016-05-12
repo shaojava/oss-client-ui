@@ -3017,6 +3017,9 @@ angular.module('ossClientUiApp')
                         $scope.lanLists = angular.copy(OSSI18N.getLanLists())
                         $scope.lanLists.selected = OSSI18N.getCurrLan();
                         $scope.showRam = OSSConfig.showRam();
+                        $scope.setContentDispositionDefault = {
+                          default:OSS.invoke('getDefaultContentDisposition').default
+                        };
                         var checkSetting = function(setting){
                             var unValidMsg = '';
                             angular.forEach(setting,function(val,key){
@@ -3064,6 +3067,7 @@ angular.module('ossClientUiApp')
                                 setting[key] = parseInt(val)
                             })
                             OSS.invoke('setTransInfo',setting);
+                            OSS.invoke("setDefaultContentDisposition",{"default":parseInt($scope.setContentDispositionDefault.default)});
                             $modalInstance.dismiss('cancel');
                         };
 
@@ -5192,7 +5196,7 @@ angular.module('ossClientUiApp')
                     controller: function ($scope, $modalInstance) {
                         //console.log("======get object uri=====",object.path,bucket)
                         $scope.filename = Util.String.baseName(object.path);
-                      //console.log("======get object filename=====",$scope.filename)
+                        //console.log("======get object filename=====",$scope.filename)
                         $scope.expire = 3600;
 
                         $scope.loading = true;
