@@ -1042,7 +1042,8 @@ angular.module('OSSCommon', [
             },
             templateUrl: 'views/location-select.html',
             link: function (scope) {
-                if (!OSSConfig.isCustomClient()) {
+                if (!OSSConfig.isCustomClient() || OSSConfig.isGuiZhouClient()) {
+                    $rootScope.$broadcast('unDisabledLocationSelect')
                     localStorageService.remove(OSSRegion.getRegionPerfix());
                     scope.locations = OSSRegion.list();
                     if (!scope.placeHolder) {

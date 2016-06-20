@@ -3018,7 +3018,7 @@ angular.module('ossClientUiApp')
                         $scope.lanLists.selected = OSSI18N.getCurrLan();
                         $scope.showRam = OSSConfig.showRam();
                         $scope.setContentDispositionDefault = {
-                          default:OSS.invoke('getDefaultContentDisposition').default
+                          default: OSSClient.getDefaultContentDisposition ? OSS.invoke('getDefaultContentDisposition').default : false
                         };
                         var checkSetting = function(setting){
                             var unValidMsg = '';
@@ -3054,12 +3054,16 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.saveSetting = function(setting){
+                          if(!OSSConfig.isCustomClient()) {
                             gettextCatalog.setCurrentLanguage($scope.lanLists.selected.lan);
                             OSSI18N.setCurrLan($scope.lanLists.selected.key);
                             $rootScope.$emit('loadAllNews');
                             OSSVersionLogs.getVersionLogs().then(function(res){
                               $rootScope.versionLogs = res;
                             })
+                            OSS.invoke("setDefaultContentDisposition",{"default":parseInt($scope.setContentDispositionDefault.default)});
+                          }
+
                             if(!checkSetting(setting)){
                                 return;
                             }
@@ -3067,7 +3071,7 @@ angular.module('ossClientUiApp')
                                 setting[key] = parseInt(val)
                             })
                             OSS.invoke('setTransInfo',setting);
-                            OSS.invoke("setDefaultContentDisposition",{"default":parseInt($scope.setContentDispositionDefault.default)});
+
                             $modalInstance.dismiss('cancel');
                         };
 

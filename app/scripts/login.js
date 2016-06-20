@@ -286,7 +286,7 @@ angular
         $scope.checkingLocation = false;
         $scope.predictionLocation = '';
         $scope.netWorkType = null;
-        if(OSSConfig.isCustomClient()){
+        if(OSSConfig.isCustomClient() && !OSSConfig.isGuiZhouClient()){
             $scope.checkingLocation = true;
             usSpinnerService.spin('checking-locaiton-spinner');
             checkCurrentLocation(function(predictionLocation){
