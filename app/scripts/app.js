@@ -24,10 +24,13 @@ angular
         'LocalStorageModule',
         'gettext'
     ])
-    .run(function(gettextCatalog,OSSI18N){
+    .run(function(gettextCatalog,OSSI18N,OSSConfig){
       OSSI18N.setDefaultLan();
       gettextCatalog.currentLanguage = OSSI18N.getCurrLan().lan;
       gettextCatalog.debug = false;
+      if(OSSConfig.isGuiZhouClient()){
+        OSS.invoke("setDefaultContentDisposition",{"default":parseInt(1)});
+      }
     })
     .config(['$routeProvider', '$httpProvider','uiSelectConfig', function ($routeProvider, $httpProvider,uiSelectConfig) {
         //设置ui-select的默认样式
