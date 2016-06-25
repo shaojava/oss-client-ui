@@ -3054,16 +3054,15 @@ angular.module('ossClientUiApp')
                         };
 
                         $scope.saveSetting = function(setting){
-                          if(!OSSConfig.isCustomClient()) {
-                            gettextCatalog.setCurrentLanguage($scope.lanLists.selected.lan);
-                            OSSI18N.setCurrLan($scope.lanLists.selected.key);
-                            $rootScope.$emit('loadAllNews');
-                            OSSVersionLogs.getVersionLogs().then(function(res){
-                              $rootScope.versionLogs = res;
-                            })
+                            if(!OSSConfig.isCustomClient()) {
+                              gettextCatalog.setCurrentLanguage($scope.lanLists.selected.lan);
+                              OSSI18N.setCurrLan($scope.lanLists.selected.key);
+                              $rootScope.$emit('loadAllNews');
+                              OSSVersionLogs.getVersionLogs().then(function(res){
+                                $rootScope.versionLogs = res;
+                              })
+                            }
                             OSS.invoke("setDefaultContentDisposition",{"default":parseInt($scope.setContentDispositionDefault.default)});
-                          }
-
                             if(!checkSetting(setting)){
                                 return;
                             }
