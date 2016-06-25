@@ -1,11 +1,11 @@
 {
   "version":"1.1.6.0",
-  "updateTime":"2016-05-12",
+  "updateTime":"2016-06-25",
   "logs":{
     "current":{
-      "zh_CN":["1、将上传文件默认设置content-disposition字段放到系统设置里面，根据用户需求自行设置，默认上传不设置。"],
-      "zh_TW":["1、将上传文件默认设置content-disposition字段放到系统设置里面，根据用户需求自行设置，默认上传不设置。"],
-      "en_US":["1、将上传文件默认设置content-disposition字段放到系统设置里面，根据用户需求自行设置，默认上传不设置。"]
+      "zh_CN":["1、添加贵安节点。"],
+      "zh_TW":[],
+      "en_US":[]
     },
     "next":{
       "zh_CN":[],
