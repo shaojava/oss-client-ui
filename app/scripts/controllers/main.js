@@ -69,7 +69,7 @@ angular.module('ossClientUiApp')
         //移除添加访问的bucket
         $scope.removeBucket = function (_bucket) {
           OSSAlert.confirm(gettextCatalog.getString(gettext('确定要将该bucket从列表中移除吗？'))).result.then(function() {
-            var _index = _.indexOf($scope.buckets,bucket);
+            var _index = _.indexOf($scope.buckets,_bucket);
             $scope.buckets.splice(_index,1);
             Bucket.removeBucket(_bucket);
             $location.path("/");
