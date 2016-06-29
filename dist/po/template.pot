@@ -78,11 +78,11 @@ msgstr ""
 msgid "Bucket数目超过限制"
 msgstr ""
 
-#: app/scripts/services/service.js:3187
+#: app/scripts/services/service.js:3188
 msgid "Bucket的名称不能为空"
 msgstr ""
 
-#: app/scripts/services/service.js:3191
+#: app/scripts/services/service.js:3192
 msgid "Bucket的名称格式错误"
 msgstr ""
 
@@ -90,7 +90,7 @@ msgstr ""
 msgid "Content-Disposition设置"
 msgstr ""
 
-#: app/scripts/services/service.js:3400
+#: app/scripts/services/service.js:3401
 msgid "Content-Type是必填字段"
 msgstr ""
 
@@ -98,8 +98,8 @@ msgstr ""
 msgid "HTTP头"
 msgstr ""
 
-#: app/scripts/services/service.js:3399
-#: app/scripts/services/service.js:3405
+#: app/scripts/services/service.js:3400
+#: app/scripts/services/service.js:3406
 msgid "HTTP属性值格式错误"
 msgstr ""
 
@@ -316,11 +316,11 @@ msgstr ""
 msgid "全部类型"
 msgstr ""
 
-#: app/scripts/services/service.js:1842
+#: app/scripts/services/service.js:1843
 msgid "公共读"
 msgstr ""
 
-#: app/scripts/services/service.js:1843
+#: app/scripts/services/service.js:1844
 msgid "公共读写"
 msgstr ""
 
@@ -355,7 +355,7 @@ msgstr ""
 msgid "创建AccessKey"
 msgstr ""
 
-#: app/scripts/services/service.js:3952
+#: app/scripts/services/service.js:3953
 msgid "创建AccessKey成功！"
 msgstr ""
 
@@ -404,7 +404,7 @@ msgstr ""
 msgid "删除"
 msgstr ""
 
-#: app/scripts/services/service.js:3993
+#: app/scripts/services/service.js:3994
 msgid "删除AccessKey成功！"
 msgstr ""
 
@@ -412,7 +412,7 @@ msgstr ""
 msgid "删除Bucket"
 msgstr ""
 
-#: app/scripts/services/service.js:4692
+#: app/scripts/services/service.js:4693
 msgid "删除版本成功！"
 msgstr ""
 
@@ -467,7 +467,7 @@ msgstr ""
 msgid "加入用户组"
 msgstr ""
 
-#: app/scripts/services/service.js:4102
+#: app/scripts/services/service.js:4103
 msgid "加入用户组成功！"
 msgstr ""
 
@@ -492,7 +492,7 @@ msgstr ""
 msgid "匹配正则:"
 msgstr ""
 
-#: app/scripts/services/service.js:3029
+#: app/scripts/services/service.js:3030
 msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
@@ -547,7 +547,7 @@ msgstr ""
 msgid "台湾高雄"
 msgstr ""
 
-#: app/scripts/services/service.js:3031
+#: app/scripts/services/service.js:3032
 msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
@@ -569,7 +569,7 @@ msgstr ""
 msgid "启用"
 msgstr ""
 
-#: app/scripts/services/service.js:3972
+#: app/scripts/services/service.js:3973
 msgid "启用AccessKey成功！"
 msgstr ""
 
@@ -676,15 +676,15 @@ msgstr ""
 msgid "属性名称"
 msgstr ""
 
-#: app/scripts/services/service.js:3406
+#: app/scripts/services/service.js:3407
 msgid "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号"
 msgstr ""
 
-#: app/scripts/services/service.js:3413
+#: app/scripts/services/service.js:3414
 msgid "属性名称只能包含英文、数子或横线"
 msgstr ""
 
-#: app/scripts/services/service.js:3412
+#: app/scripts/services/service.js:3413
 msgid "属性名称格式错误"
 msgstr ""
 
@@ -696,11 +696,11 @@ msgstr ""
 msgid "已加入"
 msgstr ""
 
-#: app/scripts/services/service.js:5236
+#: app/scripts/services/service.js:5237
 msgid "已复制到剪切板"
 msgstr ""
 
-#: app/scripts/services/service.js:3199
+#: app/scripts/services/service.js:3200
 msgid "已存在相同名称的Bucket"
 msgstr ""
 
@@ -771,19 +771,19 @@ msgstr ""
 msgid "您好，您还没有开启RAM服务，请进入阿里云控制台开启该服务。"
 msgstr ""
 
-#: app/scripts/services/service.js:4951
+#: app/scripts/services/service.js:4952
 msgid "您确定要删除该授权策略吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4689
+#: app/scripts/services/service.js:4690
 msgid "您确定要删除该版本吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4578
+#: app/scripts/services/service.js:4579
 msgid "您确定要删除该角色吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4675
+#: app/scripts/services/service.js:4676
 msgid "您确定要将该版本设置为默认版本吗？"
 msgstr ""
 
@@ -827,9 +827,9 @@ msgstr ""
 msgid "授权"
 msgstr ""
 
-#: app/scripts/services/service.js:4020
-#: app/scripts/services/service.js:4367
-#: app/scripts/services/service.js:4618
+#: app/scripts/services/service.js:4021
+#: app/scripts/services/service.js:4368
+#: app/scripts/services/service.js:4619
 msgid "授权成功！"
 msgstr ""
 
@@ -862,7 +862,7 @@ msgstr ""
 msgid "授权策略不存在"
 msgstr ""
 
-#: app/scripts/services/service.js:4957
+#: app/scripts/services/service.js:4958
 msgid "授权策略删除成功！"
 msgstr ""
 
@@ -942,7 +942,7 @@ msgstr ""
 msgid "文件Part过时"
 msgstr ""
 
-#: app/scripts/services/service.js:3456
+#: app/scripts/services/service.js:3457
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
@@ -1136,7 +1136,7 @@ msgstr ""
 msgid "添加授权"
 msgstr ""
 
-#: app/scripts/services/service.js:4392
+#: app/scripts/services/service.js:4393
 msgid "添加用户成功！"
 msgstr ""
 
@@ -1201,11 +1201,11 @@ msgstr ""
 msgid "用户信息"
 msgstr ""
 
-#: app/scripts/services/service.js:3910
+#: app/scripts/services/service.js:3911
 msgid "用户信息修改成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:3921
+#: app/scripts/services/service.js:3922
 msgid "用户删除成功！"
 msgstr ""
 
@@ -1265,7 +1265,7 @@ msgstr ""
 msgid "用户组不存在"
 msgstr ""
 
-#: app/scripts/services/service.js:4404
+#: app/scripts/services/service.js:4405
 msgid "用户组删除成功！"
 msgstr ""
 
@@ -1346,19 +1346,19 @@ msgstr ""
 msgid "确定要下载整个Bucket吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:5334
+#: app/scripts/services/service.js:5335
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr ""
 
-#: app/scripts/services/service.js:3919
+#: app/scripts/services/service.js:3920
 msgid "确定要删除当前用户吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:3991
+#: app/scripts/services/service.js:3992
 msgid "确定要删除当前用户的AccessKey吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4402
+#: app/scripts/services/service.js:4403
 msgid "确定要删除当前用户组吗？"
 msgstr ""
 
@@ -1374,15 +1374,15 @@ msgstr ""
 msgid "确定要清除安全密码？"
 msgstr ""
 
-#: app/scripts/services/service.js:3983
+#: app/scripts/services/service.js:3984
 msgid "确定要禁用当前AccessKey吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4377
+#: app/scripts/services/service.js:4378
 msgid "确定要移除该用户吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4088
+#: app/scripts/services/service.js:4089
 msgid "确定要移除该用户组吗？"
 msgstr ""
 
@@ -1411,11 +1411,11 @@ msgstr ""
 msgid "禁用"
 msgstr ""
 
-#: app/scripts/services/service.js:3972
+#: app/scripts/services/service.js:3973
 msgid "禁用AccessKey成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:1844
+#: app/scripts/services/service.js:1845
 msgid "私有"
 msgstr ""
 
@@ -1436,17 +1436,17 @@ msgstr ""
 msgid "移除"
 msgstr ""
 
-#: app/scripts/services/service.js:4009
-#: app/scripts/services/service.js:4356
-#: app/scripts/services/service.js:4607
+#: app/scripts/services/service.js:4010
+#: app/scripts/services/service.js:4357
+#: app/scripts/services/service.js:4608
 msgid "移除授权成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:4380
+#: app/scripts/services/service.js:4381
 msgid "移除用户成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:4091
+#: app/scripts/services/service.js:4092
 msgid "移除用户组成功！"
 msgstr ""
 
@@ -1542,7 +1542,7 @@ msgstr ""
 msgid "组信息"
 msgstr ""
 
-#: app/scripts/services/service.js:4421
+#: app/scripts/services/service.js:4422
 msgid "组信息修改成功！"
 msgstr ""
 
@@ -1629,11 +1629,11 @@ msgstr ""
 msgid "角色信息"
 msgstr ""
 
-#: app/scripts/services/service.js:4596
+#: app/scripts/services/service.js:4597
 msgid "角色信息修改成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:4580
+#: app/scripts/services/service.js:4581
 msgid "角色删除成功！"
 msgstr ""
 
@@ -1706,7 +1706,7 @@ msgstr ""
 msgid "设置成功"
 msgstr ""
 
-#: app/scripts/services/service.js:3027
+#: app/scripts/services/service.js:3028
 msgid "设置的值必须是正整数"
 msgstr ""
 
@@ -1714,7 +1714,7 @@ msgstr ""
 msgid "设置默认"
 msgstr ""
 
-#: app/scripts/services/service.js:4684
+#: app/scripts/services/service.js:4685
 msgid "设置默认成功！"
 msgstr ""
 
@@ -1744,13 +1744,13 @@ msgstr ""
 
 #: app/scripts/export-authorization.js:42
 #: app/scripts/login.js:89
-#: app/scripts/services/service.js:5326
+#: app/scripts/services/service.js:5327
 msgid "请输入 Access Key ID"
 msgstr ""
 
 #: app/scripts/export-authorization.js:47
 #: app/scripts/login.js:94
-#: app/scripts/services/service.js:5330
+#: app/scripts/services/service.js:5331
 msgid "请输入 Access Key Secret"
 msgstr ""
 

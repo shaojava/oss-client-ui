@@ -42,7 +42,7 @@ angular
                 controller: 'FileListCtrl',
                 resolve: {
                     buckets: function (Bucket) {
-                        return Bucket.list();
+                      return Bucket.list();
                     }
                 }
             })

@@ -1689,6 +1689,7 @@ angular.module('ossClientUiApp')
                 } else {
                     OSSApi.getBuckets().success(function (res) {
                         $rootScope.$broadcast('bucketsLoaded');
+                        $rootScope.$broadcast('setCurrentConnectType',3)
                         if(!res['ListAllMyBucketsResult']){
                             $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('数据请求失败，如果你自定义了服务器地址，请检查是否正常。')));
                             return;
@@ -1757,9 +1758,20 @@ angular.module('ossClientUiApp')
                         });
                         deferred.resolve(buckets);
                     }).error(function (res,status) {
+                        if(+status == -1){
+                          $rootScope.$broadcast('setCurrentConnectType',0);
+                        }else if(res && res.Error && res.Error.Code == 'InvalidAccessKeyId'){
+                          $rootScope.$broadcast('setCurrentConnectType',1);
+                        }else if(res && res.Error && res.Error.Code == 'AccessDenied'){
+                          $rootScope.$broadcast('setCurrentConnectType',2);
+                        }
+                        if(!res || !res.Error || res.Error.Code != 'AccessDenied'){
+                          $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                          deferred.reject(res,status);
+                        }else{
+                          deferred.resolve([]);
+                        }
                         $rootScope.$broadcast('bucketsLoaded');
-                        $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                        deferred.reject(res,status);
                     });
                     return listPromise = deferred.promise;
                 }
@@ -1834,7 +1846,10 @@ angular.module('ossClientUiApp')
                         buckets = buckets.concat(newBuckets);
                     }
                     _deferred.resolve(buckets);
-                });
+                })
+              .error(function (res,status) {
+                 _deferred.reject(res,status);
+              });
               return _deferred.promise;
             },
             getAcls: function () {
@@ -1855,6 +1870,18 @@ angular.module('ossClientUiApp')
             },
             getCurrentBucket: function () {
                 return _.findWhere(buckets, {selected: true});
+            },
+            appendBucket: function (bucket){
+                if(!buckets){
+                  buckets = []
+                }
+                buckets = buckets.concat([bucket]);
+            },
+            removeBucket: function (bucket){
+              if(bucket){
+                var _index = _.indexOf(buckets,bucket);
+                buckets.splice(_index,1);
+              }
             }
         };
     }])
@@ -3085,6 +3112,63 @@ angular.module('ossClientUiApp')
                 };
                 option = angular.extend({}, defaultOption, option);
                 return $modal.open(option);
+            },
+            /**
+             * 添加要访问的bucket
+             * @param bucket
+             */
+            addVisitBucket: function (bucket) {
+              var _context = this;
+              var option = {
+                templateUrl: 'views/add_visit_bucket_modal.html',
+                windowClass: 'add_bucket_modal',
+                controller: function ($scope, $modalInstance) {
+                  $scope.loading = false;
+                  $scope.isCustomClient = OSSConfig.isCustomClient();
+                  $scope.cBucket = {};
+                  var currentLocation = OSS.invoke('getCurrentLocation');
+                  $scope.regions = OSSRegion.list();
+                  //console.log("------currentLocation  regions========",currentLocation,$scope.regions);
+                  if (!currentLocation) {
+                    $scope.cBucket.region = $scope.regions[0];
+                  } else {
+                    $scope.cBucket.region = OSSRegion.getRegionByLocation(currentLocation);
+                  }
+                  $scope.$watch('loading', function (newVal) {
+                    if (newVal) {
+                      usSpinnerService.spin('add-bucket-spinner');
+                    } else {
+                      usSpinnerService.stop('add-bucket-spinner');
+                    }
+                  });
+
+                  //取消
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+
+                  $scope.createBucket = function (bucketName, region) {
+                    if (!bucketName || !bucketName.length) {
+                      $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('Bucket的名称不能为空')));
+                      return;
+                    }
+                    if(!/^[a-z0-9][a-z0-9\-]{1,61}[a-z0-9]$/.test(bucketName)){
+                      $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('Bucket的名称格式错误')));
+                      return;
+                    }
+                    $modalInstance.close({
+                      act: 'add',
+                      bucket: {
+                        Name: bucketName,
+                        Location: region.location,
+                        Custom:true
+                      }
+                    });
+                  };
+                }
+              };
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
             },
             /**
              * 新建或编辑bucket

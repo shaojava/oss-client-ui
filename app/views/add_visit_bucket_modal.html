@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()">&times;</button>
+    <h4  translate>添加访问的Bucket</h4>
+</div>
+<div class="modal-body min-height-100">
+    <form class="form-horizontal" name="bucketForm" role="form">
+        <div class="form-group">
+            <label for="bucket_name" class="col-sm-3 control-label" translate>Bucket名称：</label>
+            <div class="col-sm-5">
+              <input ng-show="!bucket" type="text" class="form-control ng-hide" ng-model="cBucket.name" name="bucket_name" id="bucket_name" placeholder="" />
+            </div>
+            <div style="line-height:30px;">
+              <i class="glyphicon glyphicon-info-sign" tooltip-placement="right" tooltip="{{'以小写字母和数字开头及结尾并且只能包含小写字母、数字及横线的长度限制在3-63之间的字符'|translate}}"></i>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="location" class="col-sm-3 control-label" translate>所属地区：</label>
+            <div class="col-sm-9" style="line-height: 32px;">
+                <span ng-if="isCustomClient">{{cBucket.region.name |translate}}</span>
+                <location-select ng-if="!isCustomClient" search-disabled="true" select-location="cBucket.region" name="location"/>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default pull-right" style="margin-left:5px;" ng-click="cancel()" translate>取消</button>
+    <button type="button" class="btn btn-primary pull-right"   ng-disabled="loading" ng-click="createBucket(cBucket.name,cBucket.region)" translate>确定</button>
+    <div class="pull-right spinner-wrapper">
+        <span us-spinner="{lines:8,radius:10, length: 0,radius:6}"  spinner-key="add-bucket-spinner"  spinner-start-active="1"></span>
+    </div>
+</div>

@@ -29,12 +29,22 @@ angular.module('ossClientUiApp')
         */
         $scope.speedSetting = SpeedService.getSpeedSetting();
 
+      /**
+       * 链接类型，0代表网络不通，1代表ak不存在，2代表ak没有list权限，3代表正常
+       * @type {int}
+       */
+        $scope.connectType = 0;
+
         $scope.bucketsLoaded = false;
         $scope.loadDownloadCount = {
           count:0,
           downloadcount:0
         }
         usSpinnerService.spin('body-spinner');
+
+        $scope.$on('setCurrentConnectType',function($event,connectType){
+          $scope.connectType = connectType;
+        })
 
         //bucket加载完成后关闭loading
         $scope.$on('bucketsLoaded',function(){
@@ -45,6 +55,27 @@ angular.module('ossClientUiApp')
         //获取所有bucket列表
         $scope.buckets = [];
 
+        //没有listbucket权限的ak手动添加bucket
+        $scope.showAddBucketManageModal = function () {
+          OSSModal.addVisitBucket().result.then(function (param) {
+            if (param && param.act == 'add') {
+              $scope.buckets.push(param.bucket);
+              Bucket.appendBucket(param.bucket);
+              $scope.scrollToIndex = $scope.buckets.length - 1;
+              $location.path(OSSLocation.getUrl(param.bucket.Name));
+            }
+          });
+        }
+        //移除添加访问的bucket
+        $scope.removeBucket = function (_bucket) {
+          OSSAlert.confirm(gettextCatalog.getString(gettext('确定要将该bucket从列表中移除吗？'))).result.then(function() {
+            var _index = _.indexOf($scope.buckets,bucket);
+            $scope.buckets.splice(_index,1);
+            Bucket.removeBucket(_bucket);
+            $location.path("/");
+          })
+
+        }
         //新建bucket对话框
         $scope.showAddBucketModal = function () {
             OSSModal.addBucket().result.then(function (param) {
@@ -174,6 +205,8 @@ angular.module('ossClientUiApp')
                 $scope.buckets = angular.isArray(buckets) ? buckets : [buckets];
               }
               $scope.loading = false;
+            },function () {
+              $scope.loading = false;
             });
         }
         loadBuckets();
@@ -205,6 +238,8 @@ angular.module('ossClientUiApp')
                 var newBuckets = angular.isArray(buckets) ? buckets : [buckets];
                 $scope.buckets = newBuckets;
               }
+              $scope.loading = false;
+            },function (){
               $scope.loading = false;
             });
         };
@@ -646,6 +681,7 @@ angular.module('ossClientUiApp')
  * 文件列表
  */
     .controller('FileListCtrl', ['$scope', '$routeParams','localStorageService', 'OSSApi', 'buckets', '$rootScope', 'OSSObject', 'OSSMenu', 'Bucket', '$route', '$location', 'OSSLocation', 'usSpinnerService', '$filter', 'OSSException','$timeout','gettext','gettextCatalog', function ($scope, $routeParams, localStorageService,OSSApi, buckets, $rootScope, OSSObject, OSSMenu, Bucket, $route, $location, OSSLocation, usSpinnerService, $filter, OSSException,$timeout,gettext,gettextCatalog) {
+
         var bucketName = $routeParams.bucket || '',
             keyword = $routeParams.keyword || '',
             prefix = '',
@@ -666,6 +702,7 @@ angular.module('ossClientUiApp')
 
         //默认排序
         $scope.orderBy = '';
+
         //默认去第一个bucket
         if (buckets.length && !bucketName) {
             $location.path(OSSLocation.getUrl(buckets[0].Name));
@@ -673,7 +710,7 @@ angular.module('ossClientUiApp')
         }
 
         $scope.bucket = Bucket.getBucket(bucketName);
-        if(!$scope.bucket){
+        if(!$scope.bucket && buckets.length){
             $location.path(OSSLocation.getUrl(buckets[0].Name));
             return;
         }
@@ -713,8 +750,9 @@ angular.module('ossClientUiApp')
                 usSpinnerService.stop('file-list-spinner');
             });
         };
-        loadFile();
-
+        if($scope.bucket){
+          loadFile();
+        }
         //打开文件（夹）
         $scope.openFile = function (file, isDir) {
             if (isDir == 1) {

@@ -27,19 +27,24 @@
             <i ng-if="false" class="speed-icon icon-24x24" ng-class="{true:'icon-speeded',false:'icon-no-speed'}[speedSetting.active]" title="{{'加速服务'|translate}}" ng-click="showSpeedModal();"></i>
         </div>
         <div class="left-buttons">
-          <a title="{{'新建'|translate}}" ng-click="showAddBucketModal()">
+          <a class="btn btn-link" title="{{'创建新的bucket'|translate}}" ng-disabled="+connectType == 0 || +connectType == 1" ng-click="showAddBucketModal()">
             <i class="fa fa-plus button-icon"></i>
             <span class="button-label" translate>新建</span>
           </a>
 
-          <a title="{{'设置'|translate}}" ng-click="exportAuthorization()">
+          <a class="btn btn-link" title="{{'设置'|translate}}" ng-disabled="+connectType == 0 || +connectType == 1" ng-click="exportAuthorization()">
             <i class="fa fa-cog button-icon button-setting-icon"></i>
             <span class="button-label" translate>设置</span>
           </a>
 
-          <a title="{{'刷新'|translate}}" ng-click="refreshBuckets()">
+          <a class="btn btn-link" title="{{'刷新'|translate}}" ng-if="+connectType != 2" ng-disabled="+connectType == 0 || +connectType == 1" ng-click="refreshBuckets()">
             <i class="fa fa-refresh button-icon button-setting-icon"></i>
             <span class="button-label" translate>刷新</span>
+          </a>
+
+          <a class="btn btn-link" title="{{'添加访问的bucket'|translate}}" ng-if="+connectType == 2" ng-disabled="+connectType == 0 || +connectType == 1" ng-click="showAddBucketManageModal()">
+            <i class="fa fa-refresh button-icon button-setting-icon"></i>
+            <span class="button-label" translate>添加</span>
           </a>
 
         </div>
@@ -78,6 +83,7 @@
                 <li><a href="javascript:;" ng-if="showRefer" ng-click="setRefer(activeBucket)" translate>Refer设置</a></li>
                 <li><a href="javascript:;" ng-if="showChannel" ng-click="setImageServer(activeBucket)" translate>图片设置</a></li>
                 <li><a href="javascript:;" ng-click="downloadBucket(activeBucket)" translate>Bucket下载</a></li>
+                <li><a href="javascript:;" ng-if="activeBucket.Custom" ng-click="removeBucket(activeBucket)" translate>Bucket移除</a></li>
             </ul>
         </div>
     </div>
@@ -88,11 +94,17 @@
            </div>
            <div class="text-container">
               <div class="title" translate>欢迎使用OSS客户端</div>
-              <div class="detail">
+              <div class="detail" ng-if="+connectType != 2">
                 <span translate>点击左侧栏的</span>
-                <a ng-click="showAddBucketModal();" translate>新建</a>
+                <a ng-click="showAddBucketModal();" translate ng-if="+connectType != 0 && +connectType != 1 ">新建</a>
+                <span ng-if="+connectType == 0 || +connectType == 1" translate>新建</span>
                 <span translate>按钮，开始创建你的Bucket</span>
               </div>
+             <div class="detail" ng-if="+connectType == 2">
+               <span translate>点击</span>
+               <a ng-click="showAddBucketManageModal();" translate>添加</a>
+               <span translate>按钮，开始访问您的Bucket</span>
+             </div>
            </div>
        </div>
 

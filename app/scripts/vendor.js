@@ -49631,8 +49631,6 @@ angular
  * Version: 0.8.3 - 2014-11-25T22:50:54.095Z
  * License: MIT
  */
-
-
 (function () {
   "use strict";
 
