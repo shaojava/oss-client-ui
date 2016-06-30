@@ -2598,27 +2598,28 @@ angular.module('ossClientUiApp')
             if(isImgServer){
               requestUrl = requestUrl.replace(region,region.replace("oss",'img'))
             }
-            //console.log("--------get request url customHost--------",customHost)
+            console.log("--------get request url customHost--------",customHost)
             //如果设置了自定义服务器，则以自定义服务器的host进行请求
             if(customHost){
                 var _imgServer = null
                 var _customHost = customHost
                 //当前是自定义版本
                 if(OSSConfig.isCustomClient()){
-                  //console.log("--------get request url isIntranetNet isIntranet--------",isIntranetNet,isIntranet)
+                  console.log("--------get request url isIntranetNet isIntranet--------",isIntranetNet,isIntranet)
                     //当前是在政务外网环境下
                     if(isIntranetNet) {
                         var intranetLocations =  []
                         //登录的是政务外网下的域名
-                        if(isIntranet && isIntranetNet === '1'){
+                        if(isIntranet && +isIntranetNet == 1){
                             intranetLocations = OSSRegion.getIntranetLocationItem();
                         }
                         //登录的不是政务外网下的域名
                         else{
                             intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(true)])
                         }
+                        console.log("==========get current location=========",intranetLocations,region);
                         var _item = _.find(intranetLocations, function (item) {
-                            return item.enable === 1 && item.location.indexOf(region)>=0;
+                            return item.enable === 1 && item.location.indexOf(region) >= 0;
                         })
                         requestUrl = 'http://' + (bucket ? bucket + "." : "") + _item.customhost;
                         _imgServer = _item.imghost
@@ -2673,7 +2674,7 @@ angular.module('ossClientUiApp')
                         if(isIntranetNet){
                             var intranetLocations =  []
                             //登录的是政务外网下的域名
-                            if(isIntranet && isIntranetNet === '1'){
+                            if(isIntranet && +isIntranetNet == 1){
                                 intranetLocations = OSSRegion.getIntranetLocationItem();
                             }
                             //登录的不是政务外网下的域名
@@ -3154,6 +3155,15 @@ angular.module('ossClientUiApp')
                     }
                     if(!/^[a-z0-9][a-z0-9\-]{1,61}[a-z0-9]$/.test(bucketName)){
                       $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('Bucket的名称格式错误')));
+                      return;
+                    }
+                    if(Bucket.getBucket(bucketName)){
+                      var _options = {
+                        bucketName:bucketName,
+                        Code: "BucketAlreadyExists",
+                        Custom:true
+                      }
+                      $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('已存在相同名称的Bucket')),null,null,_options);
                       return;
                     }
                     $modalInstance.close({
