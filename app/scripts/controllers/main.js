@@ -303,7 +303,7 @@ angular.module('ossClientUiApp')
         });
 
         //当前区域
-        $scope.currentLocation = 'OSS-1.1.6.0'
+        $scope.currentLocation = 'OSS-1.1.7.0'
         $scope.currentNetType = ""
         var _loginLocation = OSS.invoke('getCurrentLocation');
         //console.log("login location:",_loginLocation);

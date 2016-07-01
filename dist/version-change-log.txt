@@ -1,9 +1,9 @@
 {
-  "version":"1.1.6.0",
-  "updateTime":"2016-06-25",
+  "version":"1.1.7.0",
+  "updateTime":"2016-07-01",
   "logs":{
     "current":{
-      "zh_CN":["1、添加贵安节点。"],
+      "zh_CN":["1、解决子账号没有list bucket权限无法登陆问题。"],
       "zh_TW":[],
       "en_US":[]
     },
