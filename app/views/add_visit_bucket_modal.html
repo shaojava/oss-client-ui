@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label for="location" class="col-sm-3 control-label" translate>所属地区：</label>
-            <div class="col-sm-9" style="line-height: 32px;">
+            <div class="col-sm-5" style="line-height: 32px;">
                 <span ng-if="isCustomClient">{{cBucket.region.name |translate}}</span>
                 <location-select ng-if="!isCustomClient" search-disabled="true" select-location="cBucket.region" name="location"/>
             </div>
