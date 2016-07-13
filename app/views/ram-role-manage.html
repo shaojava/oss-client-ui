@@ -11,11 +11,11 @@
                 {{info.data.RoleName}}
               </div>
               <div class="col-sm-2">
-                <a ng-click="changeEditModel();">编辑</a>
+                <a ng-click="changeEditModel();" translate>编辑</a>
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-3 text-right" translate>Arn：</div>
+              <div class="col-sm-3 text-right">Arn：</div>
               <div class="col-sm-7">
                 {{info.data.Arn}}
               </div>
@@ -40,11 +40,11 @@
                 {{info.data.RoleName}}
               </div>
               <div class="col-sm-2">
-                <a ng-click="changeEditModel();">关闭编辑</a>
+                <a ng-click="changeEditModel();" translate>关闭编辑</a>
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-3 text-right" translate>Arn：</div>
+              <div class="col-sm-3 text-right">Arn：</div>
               <div class="col-sm-7">
                 {{info.data.Arn}}
               </div>
@@ -95,7 +95,7 @@
                   </tr>
                   <tr ng-if="!policies.hasPolicies.loading && +policies.hasPolicies.list.length == 0">
                     <td colspan="6" align="center">
-                      没有数据
+                      <span translate>没有数据</span>
                     </td>
                   </tr>
                   <tr ng-repeat="policy in policies.hasPolicies.list">
@@ -157,7 +157,7 @@
                   </tr>
                   <tr ng-if="!policies.listPolicies.loading && +policies.listPolicies.list.length == 0">
                     <td colspan="5" align="center">
-                      没有数据
+                      <span translate>没有数据</span>
                     </td>
                   </tr>
                   <tr ng-repeat="policy in policies.listPolicies.list">
@@ -166,8 +166,8 @@
                     <td align="left">{{policy.AttachmentCount}}</td>
                     <td align="left">{{policy.PolicyType == 'Custom'?('自定义'|translate):('系统'|translate)}}</td>
                     <td align="left">
-                      <a ng-if="!policy.exist" ng-click="setPolicy(policy)" translate>授权</a>
-                      <span ng-if="policy.exist" class="text-success">已授权</span>
+                      <a ng-show="!policy.exist" ng-click="setPolicy(policy)" translate>授权</a>
+                      <span ng-show="policy.exist" class="text-success" translate>已授权</span>
                     </td>
                   </tr>
                   </tbody>

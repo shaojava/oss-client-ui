@@ -28,7 +28,7 @@
               </tr>
               <tr ng-if="!user.loading && +user.list.length == 0">
                 <td colspan="5" align="center">
-                  没有数据
+                  <span translate>暂无数据</span>
                 </td>
               </tr>
               <tr ng-repeat="user in user.list">
@@ -69,7 +69,7 @@
             </tr>
             <tr ng-if="!group.loading && +group.list.length == 0">
               <td colspan="5" align="center">
-                没有数据
+                <span translate>暂无数据</span>
               </td>
             </tr>
             <tr ng-repeat="group in group.list">
@@ -107,12 +107,12 @@
             </tr>
             <tr ng-if="!role.loading && (!role.list || role.list.length == 0)">
               <td colspan="5" align="center" translate>
-                没有数据
+                暂无数据
               </td>
             </tr>
             <tr ng-repeat="role in role.list">
               <td>{{role.RoleName}}
-                <a class="btn btn-link" ng-click="role.showArn = !role.showArn;" translate>Arn</a>
+                <a class="btn btn-link" ng-click="role.showArn = !role.showArn;">Arn</a>
                 <div ng-show="role.showArn" class="secret-container" style="margin-left:165px;">
                   <input readonly="readonly" class="form-control" type="text" ng-value="role.Arn" style="color:orange;width: 350px;display: inline-block;">
                   <button type="button" class="close" ng-click="role.showArn =  false;" style="margin-top:4px;">&times;</button>
@@ -174,7 +174,7 @@
               </tr>
               <tr ng-if="!policy.loading && +policy.list.length == 0">
                 <td colspan="5" align="center">
-                  没有数据
+                  <span translate>暂无数据</span>
                 </td>
               </tr>
               <tr ng-repeat="policy in policy.list">

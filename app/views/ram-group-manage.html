@@ -11,7 +11,7 @@
                 {{info.data.GroupName}}
               </div>
               <div class="col-sm-2">
-                <a ng-click="changeEditModel();">编辑</a>
+                <a ng-click="changeEditModel();" translate>编辑</a>
               </div>
             </div>
             <div class="row">
@@ -28,7 +28,7 @@
                 <input class="form-control" ng-required="true" placeholder="{{'请输入名称'|translate}}" ng-pattern="info.pattern.name"  ng-model="info.editData.GroupName">
               </div>
               <div class="col-sm-2">
-                <a ng-click="changeEditModel();">关闭编辑</a>
+                <a ng-click="changeEditModel();" translate>关闭编辑</a>
               </div>
               <div class="col-sm-3"></div>
               <div class="col-sm-9 desc-test" translate>必填，可包含大小写字母、数字、'-'或中文且长度在1~64之间的字符</div>
@@ -70,7 +70,7 @@
                   </tr>
                   <tr ng-if="!user.hasUser.loading && +user.hasUser.list.length == 0">
                     <td colspan="5">
-                      没有数据
+                      <span translate>没有数据</span>
                     </td>
                   </tr>
                   <tr ng-repeat="user in user.hasUser.list">
@@ -108,7 +108,7 @@
                   </tr>
                   <tr ng-if="!user.listUser.loading && +user.listUser.list.length == 0">
                     <td colspan="5">
-                      没有数据
+                      <span translate>没有数据</span>
                     </td>
                   </tr>
                   <tr ng-repeat="user in user.listUser.list">
@@ -116,8 +116,8 @@
                     <td align="left"> {{user.DisplayName}}</td>
                     <td align="left">{{user.CreateDate|formatTime}}</td>
                     <td align="left">
-                      <a ng-if="!user.exist" ng-click="addUserToGroup(user);" translate>添加</a>
-                      <span ng-if="user.exist" class="text-success">已添加</span>
+                      <a ng-show="!user.exist" ng-click="addUserToGroup(user);" translate>添加</a>
+                      <span ng-show="user.exist" class="text-success" translate>已添加</span>
                     </td>
                   </tr>
                   </tbody>
@@ -154,7 +154,7 @@
                   </tr>
                   <tr ng-if="!policies.hasPolicies.loading && +policies.hasPolicies.list.length == 0">
                     <td colspan="6" align="center">
-                      没有数据
+                      <span translate>没有数据</span>
                     </td>
                   </tr>
                   <tr ng-repeat="policy in policies.hasPolicies.list">
@@ -216,7 +216,7 @@
                   </tr>
                   <tr ng-if="!policies.listPolicies.loading && +policies.listPolicies.list.length == 0">
                     <td colspan="5" align="center">
-                      没有数据
+                      <span translate>没有数据</span>
                     </td>
                   </tr>
                   <tr ng-repeat="policy in policies.listPolicies.list">
@@ -225,8 +225,8 @@
                     <td align="left">{{policy.AttachmentCount}}</td>
                     <td align="left">{{policy.PolicyType == 'Custom'?('自定义'|translate):('系统'|translate)}}</td>
                     <td align="left">
-                      <a ng-if="!policy.exist" ng-click="setPolicy(policy)" translate>授权</a>
-                      <span ng-if="policy.exist" class="text-success">已授权</span>
+                      <a ng-show="!policy.exist" ng-click="setPolicy(policy)" translate>授权</a>
+                      <span ng-show="policy.exist" class="text-success" translate>已授权</span>
                     </td>
                   </tr>
                   </tbody>

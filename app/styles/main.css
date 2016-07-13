@@ -9778,7 +9778,6 @@ i.fa.button-setting-icon {
 }
 /* line 136, ../../app/styles/_app.scss */
 .left-sidebar .left-buttons a {
-  margin: auto 3px;
   vertical-align: middle;
   cursor: pointer;
 }

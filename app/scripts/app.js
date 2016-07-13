@@ -27,7 +27,7 @@ angular
     .run(function(gettextCatalog,OSSI18N,OSSConfig){
       OSSI18N.setDefaultLan();
       gettextCatalog.currentLanguage = OSSI18N.getCurrLan().lan;
-      gettextCatalog.debug = false;
+      gettextCatalog.debug = true;
       if(OSSConfig.isGuiZhouClient()){
         OSS.invoke("setDefaultContentDisposition",{"default":parseInt(1)});
       }

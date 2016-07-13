@@ -11,7 +11,7 @@
                 {{info.data.userName}}
               </div>
               <div class="col-sm-2">
-                <a ng-click="changeEditModel();">编辑</a>
+                <a ng-click="changeEditModel();" translate>编辑</a>
               </div>
             </div>
             <div class="row">
@@ -48,7 +48,7 @@
                 <input class="form-control" placeholder="{{'请输入用户名'|translate}}" ng-required="true" ng-pattern="info.pattern.name" ng-model="info.editData.userName">
               </div>
               <div class="col-sm-2">
-                <a ng-click="changeEditModel();">关闭编辑</a>
+                <a ng-click="changeEditModel();" translate>关闭编辑</a>
               </div>
               <div class="col-sm-3"></div>
               <div class="col-sm-9 desc-test" translate>可包含大小写字母、数字、"."、"@"或中文且长度在1~64之间的字符</div>
@@ -92,7 +92,7 @@
           <table class="table table-hover">
             <thead>
             <tr>
-              <th width="50%" translate>AccessKeyId</th>
+              <th width="50%">AccessKeyId</th>
               <th width="10%" translate>状态</th>
               <th width="15%" translate>创建时间</th>
               <th width="25%" translate>操作</th>
@@ -109,7 +109,7 @@
             </tr>
             <tr ng-if="!accessKey.loading && +accessKey.list.length == 0">
               <td colspan="5" align="center">
-                没有数据
+                <span translate>暂无数据</span>
               </td>
             </tr>
             <tr ng-repeat="ak in accessKey.list">
@@ -239,7 +239,7 @@
                   </tr>
                   <tr ng-if="!policies.hasPolicies.loading && +policies.hasPolicies.list.length == 0">
                     <td colspan="6" align="center">
-                      没有数据
+                      <span translate>没有数据</span>
                     </td>
                   </tr>
                   <tr ng-repeat="policy in policies.hasPolicies.list">
@@ -301,7 +301,7 @@
                   </tr>
                   <tr ng-if="!policies.listPolicies.loading && +policies.listPolicies.list.length == 0">
                     <td colspan="5" align="center">
-                      没有数据
+                      <span translate>没有数据</span>
                     </td>
                   </tr>
                   <tr ng-repeat="policy in policies.listPolicies.list">
