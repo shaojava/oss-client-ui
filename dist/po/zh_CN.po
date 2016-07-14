@@ -48,14 +48,6 @@ msgstr "Access Key ID不存在"
 msgid "AccessKey管理"
 msgstr "AccessKey管理"
 
-#: app/views/ram-setting.html:115
-msgid "Arn"
-msgstr "Arn"
-
-#: app/views/ram-role-manage.html:47
-msgid "Arn："
-msgstr "Arn："
-
 #: app/index.html:85
 msgid "Bucket下载"
 msgstr "Bucket下载"
@@ -349,7 +341,7 @@ msgstr "关闭RAM服务"
 #: app/views/ram-group-manage.html:31 app/views/ram-role-manage.html:43
 #: app/views/ram-user-manage.html:51
 msgid "关闭编辑"
-msgstr ""
+msgstr "关闭编辑"
 
 #: app/login.html:131
 msgid "再输一次"
@@ -700,11 +692,11 @@ msgstr "已存在相同名称的文件夹"
 
 #: app/views/ram-group-manage.html:229 app/views/ram-role-manage.html:170
 msgid "已授权"
-msgstr ""
+msgstr "已授权"
 
 #: app/views/ram-group-manage.html:120
 msgid "已添加"
-msgstr ""
+msgstr "已添加"
 
 #: app/views/callback-setting.html:26 app/views/set_image_server_modal.html:21
 #: app/views/set_image_server_modal.html:38
@@ -1043,7 +1035,7 @@ msgstr "杭州"
 
 #: app/views/ram-policy-manage.html:60
 msgid "查看"
-msgstr ""
+msgstr "查看"
 
 #: app/views/create-ram-items.html:29 app/views/ram-user-manage.html:70
 msgid "格式：国际区号-号码或11位手机号码，默认国际区号：86"
@@ -1531,7 +1523,7 @@ msgstr "编号"
 #: app/views/ram-group-manage.html:14 app/views/ram-role-manage.html:14
 #: app/views/ram-user-manage.html:14
 msgid "编辑"
-msgstr ""
+msgstr "编辑"
 
 #: app/scripts/oss-common.js:717
 msgid "缺少内容长度"
@@ -1926,6 +1918,12 @@ msgid ""
 "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""
 "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
+
+#~ msgid "Arn"
+#~ msgstr "Arn"
+
+#~ msgid "Arn："
+#~ msgstr "Arn："
 
 #~ msgid "AccessKeyId"
 #~ msgstr "AccessKeyId"

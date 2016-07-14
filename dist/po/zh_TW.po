@@ -20,7 +20,7 @@ msgstr "(最少6位)"
 msgid ",你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】复制以下名称创建："
 msgstr ",你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】複製以下名稱建立："
 
-#: app/index.html:131 app/index.html:141
+#: app/index.html:143 app/index.html:153
 msgid "/秒"
 msgstr "/秒"
 
@@ -44,23 +44,11 @@ msgstr "4. Object總長度必須在1-1023之間"
 msgid "Access Key ID不存在"
 msgstr "Access Key ID不存在"
 
-#: app/views/ram-user-manage.html:95
-msgid "AccessKeyId"
-msgstr "AccessKeyId"
-
 #: app/views/ram-user-manage.html:90
 msgid "AccessKey管理"
 msgstr "AccessKey Manage"
 
-#: app/views/ram-setting.html:115
-msgid "Arn"
-msgstr "Arn"
-
-#: app/views/ram-role-manage.html:18 app/views/ram-role-manage.html:47
-msgid "Arn："
-msgstr "Arn:"
-
-#: app/index.html:80
+#: app/index.html:85
 msgid "Bucket下载"
 msgstr "Bucket下載"
 
@@ -72,7 +60,7 @@ msgstr "Bucket不為空"
 msgid "Bucket不存在"
 msgstr "Bucket不存在"
 
-#: app/views/add_bucket_modal.html:10
+#: app/views/add_bucket_modal.html:10 app/views/add_visit_bucket_modal.html:8
 msgid "Bucket名称："
 msgstr "Bucket名稱："
 
@@ -84,15 +72,23 @@ msgstr "Bucket已經存在"
 msgid "Bucket数目超过限制"
 msgstr "Bucket數目超過限制"
 
-#: app/scripts/services/service.js:3180
+#: app/scripts/services/service.js:3154 app/scripts/services/service.js:3282
 msgid "Bucket的名称不能为空"
 msgstr "Bucket的名稱不能為空"
 
-#: app/scripts/services/service.js:3184
+#: app/scripts/services/service.js:3158 app/scripts/services/service.js:3286
 msgid "Bucket的名称格式错误"
 msgstr "Bucket的名稱格式錯誤"
 
-#: app/scripts/services/service.js:3393
+#: app/index.html:86
+msgid "Bucket移除"
+msgstr ""
+
+#: app/views/setting_modal.html:69
+msgid "Content-Disposition设置"
+msgstr ""
+
+#: app/scripts/services/service.js:3495
 msgid "Content-Type是必填字段"
 msgstr "Content-Type是必填欄位"
 
@@ -100,7 +96,7 @@ msgstr "Content-Type是必填欄位"
 msgid "HTTP头"
 msgstr "HTTP頭"
 
-#: app/scripts/services/service.js:3392 app/scripts/services/service.js:3398
+#: app/scripts/services/service.js:3494 app/scripts/services/service.js:3500
 msgid "HTTP属性值格式错误"
 msgstr "HTTP屬性值格式錯誤"
 
@@ -112,15 +108,11 @@ msgstr "Logging操作中有無效的目的bucket"
 msgid "Multipart Upload ID不存在"
 msgstr "Multipart Upload ID不存在"
 
-#: app/scripts/controllers/main.js:276
-msgid "OSS-当前选择区域："
-msgstr "OSS-目前選擇區域："
-
 #: app/scripts/oss-common.js:713
 msgid "OSS内部发生错误"
 msgstr "OSS內部發生錯誤"
 
-#: app/index.html:163
+#: app/index.html:175
 msgid "OSS控制台客户端"
 msgstr "OSS控制台客戶端"
 
@@ -132,11 +124,11 @@ msgstr "RAM授權"
 msgid "RAM服务开启"
 msgstr "RAM服務"
 
-#: app/views/setting_modal.html:69
+#: app/views/setting_modal.html:85
 msgid "RAM设置"
 msgstr "RAM設置"
 
-#: app/index.html:78 app/scripts/services/service.js:1236
+#: app/index.html:83 app/scripts/services/service.js:1236
 #: app/views/set_refer_modal.html:3
 msgid "Refer设置"
 msgstr "Refer設置"
@@ -173,11 +165,11 @@ msgstr "上傳時間"
 msgid "上传设置"
 msgstr "上傳設置"
 
-#: app/index.html:127
+#: app/index.html:139
 msgid "上传速度："
 msgstr "上傳速度："
 
-#: app/scripts/controllers/main.js:423
+#: app/scripts/controllers/main.js:458
 msgid "上传队列"
 msgstr "上傳佇列"
 
@@ -185,7 +177,7 @@ msgstr "上傳佇列"
 msgid "上海"
 msgstr "上海"
 
-#: app/index.html:169
+#: app/index.html:181
 msgid "下一期功能预告"
 msgstr "下一期功能預告"
 
@@ -201,11 +193,11 @@ msgstr "下載目前目錄"
 msgid "下载设置"
 msgstr "下載設置"
 
-#: app/index.html:137
+#: app/index.html:149
 msgid "下载速度："
 msgstr "下載速度："
 
-#: app/scripts/controllers/main.js:428
+#: app/scripts/controllers/main.js:463
 msgid "下载队列"
 msgstr "下載佇列"
 
@@ -225,11 +217,11 @@ msgstr "不同區域的Bucket之間不能複製"
 msgid "不支持的方法"
 msgstr "不支持的方法"
 
-#: app/scripts/login.js:164
+#: app/scripts/login.js:172
 msgid "两次输入的密码不一致"
 msgstr "兩次輸入的密碼不一致"
 
-#: app/index.html:272
+#: app/index.html:284
 msgid "个文件，请稍候..."
 msgstr "個文件，請稍候..."
 
@@ -237,7 +229,7 @@ msgstr "個文件，請稍候..."
 msgid "中搜索"
 msgstr "中搜索"
 
-#: app/index.html:180
+#: app/index.html:192
 msgid "了解详情"
 msgstr "了解詳情"
 
@@ -245,7 +237,7 @@ msgstr "了解詳情"
 msgid "互联网"
 msgstr "網際網路"
 
-#: app/views/add_bucket_modal.html:18
+#: app/views/add_bucket_modal.html:18 app/views/add_visit_bucket_modal.html:13
 msgid ""
 "以小写字母和数字开头及结尾并且只能包含小写字母、数字及横线的长度限制在3-63之"
 "间的字符"
@@ -277,7 +269,7 @@ msgstr "你確定要取消這個文件的上傳？"
 msgid "你确定要取消这个文件的下载？"
 msgstr "你確定要取消這個文件的下載？"
 
-#: app/scripts/login.js:236
+#: app/scripts/login.js:244
 msgid ""
 "你连续密码输入错误已超过{{allowErrorCount}}次,请重新使用Access Key ID 和 "
 "Access Key Secret登录"
@@ -324,11 +316,11 @@ msgstr "全部暫停"
 msgid "全部类型"
 msgstr "全部類型"
 
-#: app/scripts/services/service.js:1842
+#: app/scripts/services/service.js:1857
 msgid "公共读"
 msgstr "公開讀"
 
-#: app/scripts/services/service.js:1843
+#: app/scripts/services/service.js:1858
 msgid "公共读写"
 msgstr "公開讀寫"
 
@@ -346,6 +338,11 @@ msgstr "關閉"
 msgid "关闭RAM服务"
 msgstr "關閉RAM服務"
 
+#: app/views/ram-group-manage.html:31 app/views/ram-role-manage.html:43
+#: app/views/ram-user-manage.html:51
+msgid "关闭编辑"
+msgstr ""
+
 #: app/login.html:131
 msgid "再输一次"
 msgstr "再輸入一次"
@@ -358,13 +355,17 @@ msgstr "分"
 msgid "创建AccessKey"
 msgstr "创建AccessKey"
 
-#: app/scripts/services/service.js:3945
+#: app/scripts/services/service.js:4047
 msgid "创建AccessKey成功！"
 msgstr "創建AccessKey成功！"
 
 #: app/views/create-ram-items.html:109 app/views/ram-setting.html:202
 msgid "创建授权策略"
 msgstr "創建授權策略"
+
+#: app/index.html:30
+msgid "创建新的bucket"
+msgstr ""
 
 #: app/views/filelist.html:27 app/views/ram-group-manage.html:96
 #: app/views/ram-policy-manage.html:38 app/views/ram-setting.html:16
@@ -396,7 +397,7 @@ msgstr "創建角色"
 msgid "删除"
 msgstr "刪除"
 
-#: app/scripts/services/service.js:3986
+#: app/scripts/services/service.js:4088
 msgid "删除AccessKey成功！"
 msgstr "刪除AccessKey成功！"
 
@@ -404,7 +405,7 @@ msgstr "刪除AccessKey成功！"
 msgid "删除Bucket"
 msgstr "刪除Bucket"
 
-#: app/scripts/services/service.js:4685
+#: app/scripts/services/service.js:4787
 msgid "删除版本成功！"
 msgstr "刪除版本成功！"
 
@@ -424,11 +425,11 @@ msgstr "刪除該組"
 msgid "刷新"
 msgstr "刷新"
 
-#: app/scripts/controllers/main.js:167
+#: app/scripts/controllers/main.js:198
 msgid "前进"
 msgstr "前進"
 
-#: app/scripts/controllers/main.js:165
+#: app/scripts/controllers/main.js:196
 msgid "前进到 {{path}}"
 msgstr "前進到 {{path}}"
 
@@ -436,7 +437,7 @@ msgstr "前進到 {{path}}"
 msgid "剩余加速时长:"
 msgstr "剩餘加速時間:"
 
-#: app/views/setting_modal.html:71
+#: app/views/setting_modal.html:87
 msgid "功能开关："
 msgstr "功能開關："
 
@@ -456,7 +457,7 @@ msgstr "加入用戶"
 msgid "加入用户组"
 msgstr "加入用戶組"
 
-#: app/scripts/services/service.js:4095
+#: app/scripts/services/service.js:4197
 msgid "加入用户组成功！"
 msgstr "加入用戶組成功！"
 
@@ -480,7 +481,7 @@ msgstr "北京"
 msgid "匹配正则:"
 msgstr "符合正規表示式:"
 
-#: app/scripts/services/service.js:3026
+#: app/scripts/services/service.js:3058
 msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr "單行程執行緒數必須大於{{min}}小於等於{{max}}的整數"
 
@@ -498,14 +499,15 @@ msgstr "發起請求的時間和服務器時間超出15分鐘"
 
 #: app/scripts/directives/directive.js:22 app/scripts/services/service.js:499
 #: app/scripts/services/service.js:722 app/scripts/services/service.js:75
-#: app/views/add_bucket_modal.html:52 app/views/create-ram-items.html:145
+#: app/views/add_bucket_modal.html:52 app/views/add_visit_bucket_modal.html:27
+#: app/views/create-ram-items.html:145
 #: app/views/del_bucket_confirm_modal.html:23
 #: app/views/ram-group-manage.html:250 app/views/ram-policy-manage.html:92
 #: app/views/ram-role-manage.html:191 app/views/ram-service-modal.html:20
 #: app/views/ram-setting.html:204 app/views/ram-user-manage.html:337
 #: app/views/set_http_header_modal.html:55
 #: app/views/set_image_server_modal.html:72 app/views/set_refer_modal.html:42
-#: app/views/setting_modal.html:88
+#: app/views/setting_modal.html:104
 msgid "取消"
 msgstr "取消"
 
@@ -526,7 +528,7 @@ msgstr "可包含大小寫字母、數字、”@“且長度在1~128之間的字
 msgid "台湾高雄"
 msgstr "台灣高雄"
 
-#: app/scripts/services/service.js:3028
+#: app/scripts/services/service.js:3060
 msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr "並行行程數必須是大於{{min}}小於等於{{max}}的整數"
 
@@ -546,7 +548,7 @@ msgstr "名稱："
 msgid "启用"
 msgstr "啟用"
 
-#: app/scripts/services/service.js:3965
+#: app/scripts/services/service.js:4067
 msgid "启用AccessKey成功！"
 msgstr "啟用AccessKey成功！"
 
@@ -554,7 +556,7 @@ msgstr "啟用AccessKey成功！"
 msgid "回调地址:"
 msgstr "重導位址："
 
-#: app/index.html:76 app/views/callback-setting.html:3
+#: app/index.html:81 app/views/callback-setting.html:3
 msgid "回调设置"
 msgstr "重導設置"
 
@@ -570,7 +572,7 @@ msgstr ""
 msgid "图片服务器设置"
 msgstr "圖片服務器設置"
 
-#: app/index.html:79
+#: app/index.html:84
 msgid "图片设置"
 msgstr "圖片設置"
 
@@ -586,7 +588,7 @@ msgstr "地址："
 msgid "复制"
 msgstr "複製"
 
-#: app/scripts/login.js:190
+#: app/scripts/login.js:198
 msgid "复制成功"
 msgstr "複製成功"
 
@@ -622,7 +624,7 @@ msgstr "實體過大"
 msgid "实体过小"
 msgstr "實體過小"
 
-#: app/scripts/login.js:155
+#: app/scripts/login.js:163
 msgid "密码长度最少6位"
 msgstr "密碼長度最少6位"
 
@@ -635,11 +637,11 @@ msgid "导出成功"
 msgstr "匯出成功"
 
 #: app/export-authorization.html:14 app/export-authorization.html:28
-#: app/views/setting_modal.html:87
+#: app/views/setting_modal.html:103
 msgid "导出授权"
 msgstr "匯出授權"
 
-#: app/scripts/controllers/main.js:661 app/views/filelist.html:18
+#: app/scripts/controllers/main.js:697 app/views/filelist.html:18
 msgid "小技巧：使用Shift和Ctrl键(Mac下Command键)可以实现多选操作。"
 msgstr "小技巧：使用Shift和Ctrl鍵(Mac下Command鍵)可以作多重選取操作。"
 
@@ -651,7 +653,7 @@ msgstr "屬性內容"
 msgid "属性名称"
 msgstr "屬性名稱"
 
-#: app/scripts/services/service.js:3399
+#: app/scripts/services/service.js:3501
 msgid ""
 "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文"
 "冒号、英文双引号和等号"
@@ -659,29 +661,41 @@ msgstr ""
 "屬性名稱只能包含英文、數字、橫線(-)、底線(_)、斜線(/)、點(.)、分號(;)、逗號"
 "(,)、冒號(:)、雙引號(\")和等號(=)"
 
-#: app/scripts/services/service.js:3406
+#: app/scripts/services/service.js:3508
 msgid "属性名称只能包含英文、数子或横线"
 msgstr "屬性名稱只能包含英文、數字或橫線(-)"
 
-#: app/scripts/services/service.js:3405
+#: app/scripts/services/service.js:3507
 msgid "属性名称格式错误"
 msgstr "屬性名稱格式錯誤"
 
-#: app/index.html:75
+#: app/index.html:80
 msgid "属性管理"
 msgstr "屬性管理"
 
-#: app/scripts/services/service.js:5229
+#: app/views/ram-user-manage.html:205
+msgid "已加入"
+msgstr ""
+
+#: app/scripts/services/service.js:5331
 msgid "已复制到剪切板"
 msgstr "已複製到剪貼簿"
 
-#: app/scripts/services/service.js:3192
+#: app/scripts/services/service.js:3167 app/scripts/services/service.js:3294
 msgid "已存在相同名称的Bucket"
 msgstr "已存在相同名稱的Bucket"
 
 #: app/scripts/services/service.js:971
 msgid "已存在相同名称的文件夹"
 msgstr "已存在相同名稱的文件夾"
+
+#: app/views/ram-group-manage.html:229 app/views/ram-role-manage.html:170
+msgid "已授权"
+msgstr ""
+
+#: app/views/ram-group-manage.html:120
+msgid "已添加"
+msgstr ""
 
 #: app/views/callback-setting.html:26 app/views/set_image_server_modal.html:21
 #: app/views/set_image_server_modal.html:38
@@ -702,7 +716,7 @@ msgstr "開始加速"
 msgid "引用次数"
 msgstr "引用次數"
 
-#: app/index.html:273
+#: app/index.html:285
 msgid "当前加载队列已超出客户端下载能力，请使用OSS提供的API下载。"
 msgstr "目前載入佇列已超出用戶端下載能力，請使用OSS提供的API下載。"
 
@@ -717,6 +731,10 @@ msgstr "當前用戶還有創建的AK"
 #: app/views/setting_modal.html:55
 msgid "当前语言："
 msgstr "當前語言："
+
+#: app/scripts/controllers/main.js:311
+msgid "当前选择区域："
+msgstr ""
 
 #: app/views/create-ram-items.html:117
 msgid "必填，可包含大小写字母、数字、'-'或中文且长度在1~128之间的字符"
@@ -735,19 +753,19 @@ msgstr "必填，長度在1~2048之間的字符"
 msgid "您好，您还没有开启RAM服务，请进入阿里云控制台开启该服务。"
 msgstr "您好，您還沒有開啟RAM服務，請進入阿里雲控制台開啟該服務。"
 
-#: app/scripts/services/service.js:4944
+#: app/scripts/services/service.js:5046
 msgid "您确定要删除该授权策略吗？"
 msgstr "您確定要刪除該授權策略嗎？"
 
-#: app/scripts/services/service.js:4682
+#: app/scripts/services/service.js:4784
 msgid "您确定要删除该版本吗？"
 msgstr "您確定要刪除該版本嗎？"
 
-#: app/scripts/services/service.js:4571
+#: app/scripts/services/service.js:4673
 msgid "您确定要删除该角色吗？"
 msgstr "您確定要刪除該角色嗎？"
 
-#: app/scripts/services/service.js:4668
+#: app/scripts/services/service.js:4770
 msgid "您确定要将该版本设置为默认版本吗？"
 msgstr "您確定要講該版本設置為默認版本嗎?"
 
@@ -756,6 +774,7 @@ msgid "成功"
 msgstr "成功"
 
 #: app/views/add_bucket_modal.html:22 app/views/add_bucket_modal.html:28
+#: app/views/add_visit_bucket_modal.html:18
 msgid "所属地区："
 msgstr "所屬地區："
 
@@ -768,7 +787,7 @@ msgstr "手機號碼格式錯誤"
 msgid "手机号："
 msgstr "手機號"
 
-#: app/index.html:245
+#: app/index.html:257
 msgid "打开日志文件夹"
 msgstr "打開日誌文件夾"
 
@@ -776,9 +795,13 @@ msgstr "打開日誌文件夾"
 msgid "拒绝访问"
 msgstr "拒絕訪問"
 
-#: app/index.html:94
+#: app/index.html:101
 msgid "按钮，开始创建你的Bucket"
 msgstr "按鈕，開始建立你的Bucket"
+
+#: app/index.html:106
+msgid "按钮，开始访问您的Bucket"
+msgstr ""
 
 #: app/views/ram-group-manage.html:228 app/views/ram-role-manage.html:169
 #: app/views/ram-setting.html:125 app/views/ram-setting.html:41
@@ -786,8 +809,8 @@ msgstr "按鈕，開始建立你的Bucket"
 msgid "授权"
 msgstr "授權"
 
-#: app/scripts/services/service.js:4013 app/scripts/services/service.js:4360
-#: app/scripts/services/service.js:4611
+#: app/scripts/services/service.js:4115 app/scripts/services/service.js:4462
+#: app/scripts/services/service.js:4713
 msgid "授权成功！"
 msgstr "授權成功！"
 
@@ -817,7 +840,7 @@ msgstr "授權策略下還有用戶組"
 msgid "授权策略不存在"
 msgstr "授權策略不存在"
 
-#: app/scripts/services/service.js:4950
+#: app/scripts/services/service.js:5052
 msgid "授权策略删除成功！"
 msgstr "授權策略刪除成功！"
 
@@ -876,7 +899,7 @@ msgstr ""
 "資料載入失敗，目前您電腦的時間比服務器時間慢{{d}}天{{h}}小時{{m}}分鐘{{s}}"
 "秒，請調整您的電腦時間後重試。"
 
-#: app/scripts/services/service.js:1693
+#: app/scripts/services/service.js:1694
 msgid "数据请求失败，如果你自定义了服务器地址，请检查是否正常。"
 msgstr "資料請求失敗，如果你自定義了服務器位址，請檢查是否正常。"
 
@@ -888,7 +911,7 @@ msgstr "文件Part不存在"
 msgid "文件Part过时"
 msgstr "文件Part逾時"
 
-#: app/scripts/services/service.js:3449
+#: app/scripts/services/service.js:3551
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr "文件{{fileName}}設置http頭的錯誤訊息:"
 
@@ -916,7 +939,7 @@ msgstr "文件組過大"
 msgid "新加坡"
 msgstr "新加坡"
 
-#: app/index.html:30 app/index.html:32 app/index.html:93
+#: app/index.html:100 app/index.html:32 app/index.html:99
 msgid "新建"
 msgstr "新建"
 
@@ -952,7 +975,7 @@ msgstr "無效的摘要"
 msgid "无法处理的方法"
 msgstr "無法處理的方法"
 
-#: app/scripts/controllers/main.js:711
+#: app/scripts/controllers/main.js:748
 msgid "无法访问该Bucket"
 msgstr "無法訪問該Bucket"
 
@@ -983,15 +1006,17 @@ msgstr "顯示名："
 msgid "暂停"
 msgstr "暫停"
 
-#: app/views/ram-user-manage.html:159
+#: app/views/ram-setting.html:109 app/views/ram-setting.html:177
+#: app/views/ram-setting.html:31 app/views/ram-setting.html:72
+#: app/views/ram-user-manage.html:112 app/views/ram-user-manage.html:159
 msgid "暂无数据"
 msgstr "暫無數據"
 
-#: app/index.html:164
+#: app/index.html:176
 msgid "更新时间："
 msgstr "更新時間："
 
-#: app/scripts/controllers/main.js:437
+#: app/scripts/controllers/main.js:472
 msgid "最新资讯"
 msgstr "最新資訊"
 
@@ -1007,31 +1032,40 @@ msgstr "機器碼"
 msgid "杭州"
 msgstr "杭州"
 
+#: app/views/ram-policy-manage.html:60
+msgid "查看"
+msgstr ""
+
 #: app/views/create-ram-items.html:29 app/views/ram-user-manage.html:70
 msgid "格式：国际区号-号码或11位手机号码，默认国际区号：86"
 msgstr "格式：國際區號﹣號碼或11位手機號碼，默認國際區號：86"
 
-#: app/index.html:90
+#: app/index.html:96
 msgid "欢迎使用OSS客户端"
 msgstr "歡迎使用OSS用戶端"
 
-#: app/index.html:270
+#: app/index.html:282
 msgid "正在加载下载列表，当前已加载了"
 msgstr "正在載入下載列表，目前已載入了"
 
-#: app/index.html:196
+#: app/index.html:208
 msgid "没有上传"
 msgstr "沒有上傳"
 
-#: app/index.html:223
+#: app/index.html:235
 msgid "没有下载"
 msgstr "沒有下載"
 
-#: app/scripts/controllers/main.js:569 app/scripts/controllers/main.js:574
+#: app/scripts/controllers/main.js:604 app/scripts/controllers/main.js:609
 msgid "没有找到最新消息!"
 msgstr "沒有找到最新消息！"
 
-#: app/views/ram-setting.html:109 app/views/upload_detail_modal.html:12
+#: app/views/ram-group-manage.html:111 app/views/ram-group-manage.html:157
+#: app/views/ram-group-manage.html:219 app/views/ram-group-manage.html:73
+#: app/views/ram-policy-manage.html:52 app/views/ram-role-manage.html:160
+#: app/views/ram-role-manage.html:98 app/views/ram-user-manage.html:195
+#: app/views/ram-user-manage.html:242 app/views/ram-user-manage.html:304
+#: app/views/upload_detail_modal.html:12
 msgid "没有数据"
 msgstr "沒有資料"
 
@@ -1039,7 +1073,7 @@ msgstr "沒有資料"
 msgid "没有文件"
 msgstr "沒有文件"
 
-#: app/index.html:252
+#: app/index.html:264
 msgid "没有日志"
 msgstr "沒有日誌"
 
@@ -1051,7 +1085,7 @@ msgstr "沒有碎片"
 msgid "注：多个refer以换行分隔，支持通配符(*,?)"
 msgstr "註：多個refer以換行分隔，支持通用符號(*,?)"
 
-#: app/index.html:281
+#: app/index.html:293
 msgid "注：如果下载队列已加载完成,则删除已加载列表选项无效"
 msgstr "註：如果下載佇列已加載完成,則刪除已載入列表選項無效"
 
@@ -1059,7 +1093,7 @@ msgstr "註：如果下載佇列已加載完成,則刪除已載入列表選項�
 msgid "深圳"
 msgstr "深圳"
 
-#: app/views/ram-group-manage.html:119
+#: app/index.html:105 app/index.html:47 app/views/ram-group-manage.html:119
 msgid "添加"
 msgstr "添加"
 
@@ -1068,9 +1102,17 @@ msgstr "添加"
 msgid "添加授权"
 msgstr "添加授權"
 
-#: app/scripts/services/service.js:4385
+#: app/scripts/services/service.js:4487
 msgid "添加用户成功！"
 msgstr "添加用戶成功！"
+
+#: app/views/add_visit_bucket_modal.html:3
+msgid "添加访问的Bucket"
+msgstr ""
+
+#: app/index.html:45
+msgid "添加访问的bucket"
+msgstr ""
 
 #: app/views/set_http_header_modal.html:42
 msgid "添加输入框"
@@ -1084,7 +1126,11 @@ msgstr "清空已完成"
 msgid "清除安全密码"
 msgstr "清除安全密碼"
 
-#: app/index.html:92
+#: app/index.html:104
+msgid "点击"
+msgstr ""
+
+#: app/index.html:98
 msgid "点击左侧栏的"
 msgstr "點擊左側欄的"
 
@@ -1100,7 +1146,7 @@ msgstr "版本信息"
 msgid "版本号不存在"
 msgstr "版本號不存在"
 
-#: app/index.html:164
+#: app/index.html:176
 msgid "版本号："
 msgstr "版本號："
 
@@ -1132,11 +1178,11 @@ msgstr "用戶不存在"
 msgid "用户信息"
 msgstr "用戶信息"
 
-#: app/scripts/services/service.js:3903
+#: app/scripts/services/service.js:4005
 msgid "用户信息修改成功！"
 msgstr "用戶信息修改成功！"
 
-#: app/scripts/services/service.js:3914
+#: app/scripts/services/service.js:4016
 msgid "用户删除成功！"
 msgstr "用戶刪除成功！"
 
@@ -1194,7 +1240,7 @@ msgstr "用戶組下面還有用戶"
 msgid "用户组不存在"
 msgstr "用戶組不存在"
 
-#: app/scripts/services/service.js:4397
+#: app/scripts/services/service.js:4499
 msgid "用户组删除成功！"
 msgstr "用戶組刪除成功！"
 
@@ -1256,34 +1302,34 @@ msgstr "的屬性"
 
 #: app/custom-domain.html:25 app/scripts/directives/directive.js:21
 #: app/scripts/services/service.js:68 app/views/add_bucket_modal.html:53
-#: app/views/add_bucket_modal.html:54 app/views/callback-setting.html:48
-#: app/views/create-ram-items.html:144
+#: app/views/add_bucket_modal.html:54 app/views/add_visit_bucket_modal.html:28
+#: app/views/callback-setting.html:48 app/views/create-ram-items.html:144
 #: app/views/del_bucket_confirm_modal.html:22
 #: app/views/get_object_uri_modal.html:47 app/views/ram-group-manage.html:249
 #: app/views/ram-role-manage.html:190 app/views/ram-setting.html:203
 #: app/views/ram-user-manage.html:336 app/views/set_http_header_modal.html:54
 #: app/views/set_image_server_modal.html:71 app/views/set_refer_modal.html:41
-#: app/views/setting_modal.html:89 app/views/upload_detail_modal.html:25
+#: app/views/setting_modal.html:105 app/views/upload_detail_modal.html:25
 msgid "确定"
 msgstr "確定"
 
-#: app/scripts/controllers/main.js:96
+#: app/scripts/controllers/main.js:127
 msgid "确定要下载整个Bucket吗？"
 msgstr "確定要下載整個Bucket嗎？"
 
-#: app/scripts/services/service.js:5327
+#: app/scripts/services/service.js:5429
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr "確定要刪除Bucket “{{bucketName}}“嗎？刪除後數據將無法恢復"
 
-#: app/scripts/services/service.js:3912
+#: app/scripts/services/service.js:4014
 msgid "确定要删除当前用户吗？"
 msgstr "確定要刪除當前用戶嗎？"
 
-#: app/scripts/services/service.js:3984
+#: app/scripts/services/service.js:4086
 msgid "确定要删除当前用户的AccessKey吗？"
 msgstr "確定要刪除當前用戶的AccessKey嗎?"
 
-#: app/scripts/services/service.js:4395
+#: app/scripts/services/service.js:4497
 msgid "确定要删除当前用户组吗？"
 msgstr "確定要刪除當前用戶組嗎？"
 
@@ -1295,19 +1341,23 @@ msgstr "確定要刪除選擇的碎片？"
 msgid "确定要删除？"
 msgstr "確定要刪除？"
 
-#: app/scripts/login.js:251
+#: app/scripts/controllers/main.js:71
+msgid "确定要将该bucket从列表中移除吗？"
+msgstr ""
+
+#: app/scripts/login.js:259
 msgid "确定要清除安全密码？"
 msgstr "確定要清除安全密碼？"
 
-#: app/scripts/services/service.js:3976
+#: app/scripts/services/service.js:4078
 msgid "确定要禁用当前AccessKey吗？"
 msgstr "確定要禁用當前AccessKey嗎？"
 
-#: app/scripts/services/service.js:4370
+#: app/scripts/services/service.js:4472
 msgid "确定要移除该用户吗？"
 msgstr "確定要移除該用戶嗎？"
 
-#: app/scripts/services/service.js:4081
+#: app/scripts/services/service.js:4183
 msgid "确定要移除该用户组吗？"
 msgstr "確定要移除該用戶組嗎？"
 
@@ -1319,7 +1369,7 @@ msgstr "確認"
 msgid "确认设置"
 msgstr "確認設置"
 
-#: app/index.html:77 app/scripts/services/service.js:1573
+#: app/index.html:82 app/scripts/services/service.js:1573
 msgid "碎片管理"
 msgstr "碎片管理"
 
@@ -1335,11 +1385,11 @@ msgstr "禁止訪問原圖："
 msgid "禁用"
 msgstr "禁用"
 
-#: app/scripts/services/service.js:3965
+#: app/scripts/services/service.js:4067
 msgid "禁用AccessKey成功！"
 msgstr "禁用AccessKey成功！"
 
-#: app/scripts/services/service.js:1844
+#: app/scripts/services/service.js:1859
 msgid "私有"
 msgstr "私有"
 
@@ -1357,16 +1407,16 @@ msgstr "移除"
 msgid "移除"
 msgstr "移除"
 
-#: app/scripts/services/service.js:4002 app/scripts/services/service.js:4349
-#: app/scripts/services/service.js:4600
+#: app/scripts/services/service.js:4104 app/scripts/services/service.js:4451
+#: app/scripts/services/service.js:4702
 msgid "移除授权成功！"
 msgstr "移除授權成功！"
 
-#: app/scripts/services/service.js:4373
+#: app/scripts/services/service.js:4475
 msgid "移除用户成功！"
 msgstr "移除用戶成功！"
 
-#: app/scripts/services/service.js:4084
+#: app/scripts/services/service.js:4186
 msgid "移除用户组成功！"
 msgstr "移除用戶組成功！"
 
@@ -1448,7 +1498,7 @@ msgstr "系統"
 msgid "组信息"
 msgstr "組信息"
 
-#: app/scripts/services/service.js:4414
+#: app/scripts/services/service.js:4516
 msgid "组信息修改成功！"
 msgstr "組信息修改成功！"
 
@@ -1461,13 +1511,18 @@ msgstr "組名稱"
 msgid "组名："
 msgstr "組名："
 
-#: app/index.html:279
+#: app/index.html:291
 msgid "终止操作"
 msgstr "終止操作"
 
 #: app/views/upload_detail_modal.html:8
 msgid "编号"
 msgstr "編號"
+
+#: app/views/ram-group-manage.html:14 app/views/ram-role-manage.html:14
+#: app/views/ram-user-manage.html:14
+msgid "编辑"
+msgstr ""
 
 #: app/scripts/oss-common.js:717
 msgid "缺少内容长度"
@@ -1532,11 +1587,11 @@ msgstr "角色不存在"
 msgid "角色信息"
 msgstr "角色信息"
 
-#: app/scripts/services/service.js:4589
+#: app/scripts/services/service.js:4691
 msgid "角色信息修改成功！"
 msgstr "角色信息修改成功！"
 
-#: app/scripts/services/service.js:4573
+#: app/scripts/services/service.js:4675
 msgid "角色删除成功！"
 msgstr "角色刪除成功！"
 
@@ -1605,7 +1660,7 @@ msgstr "設置一個安全密碼，下次打開用戶端時只需輸入這個安
 msgid "设置成功"
 msgstr "設置成功"
 
-#: app/scripts/services/service.js:3024
+#: app/scripts/services/service.js:3056
 msgid "设置的值必须是正整数"
 msgstr "設置的值必須是正整數"
 
@@ -1613,7 +1668,7 @@ msgstr "設置的值必須是正整數"
 msgid "设置默认"
 msgstr "設置默認"
 
-#: app/scripts/services/service.js:4677
+#: app/scripts/services/service.js:4779
 msgid "设置默认成功！"
 msgstr "設置默認成功！"
 
@@ -1637,17 +1692,17 @@ msgstr "請求逾時"
 msgid "请确认"
 msgstr "請確認"
 
-#: app/scripts/login.js:159
+#: app/scripts/login.js:167
 msgid "请确认安全密码"
 msgstr "請確認安全密碼"
 
-#: app/scripts/export-authorization.js:42 app/scripts/login.js:89
-#: app/scripts/services/service.js:5319
+#: app/scripts/export-authorization.js:42 app/scripts/login.js:97
+#: app/scripts/services/service.js:5421
 msgid "请输入 Access Key ID"
 msgstr "請輸入 Access Key ID"
 
-#: app/scripts/export-authorization.js:47 app/scripts/login.js:94
-#: app/scripts/services/service.js:5323
+#: app/scripts/export-authorization.js:47 app/scripts/login.js:102
+#: app/scripts/services/service.js:5425
 msgid "请输入 Access Key Secret"
 msgstr "請輸入 Access Key Secret"
 
@@ -1668,7 +1723,7 @@ msgstr "請輸入名稱"
 msgid "请输入大于0的整数"
 msgstr "請輸入大於0的整數"
 
-#: app/scripts/login.js:151 app/scripts/login.js:219
+#: app/scripts/login.js:159 app/scripts/login.js:227
 msgid "请输入安全密码"
 msgstr "請輸入安全密碼"
 
@@ -1715,7 +1770,7 @@ msgstr "請輸入郵箱"
 msgid "请输入链接的有效期："
 msgstr "請輸入鏈接的有效期："
 
-#: app/scripts/login.js:103 app/scripts/login.js:115
+#: app/scripts/login.js:111 app/scripts/login.js:123
 msgid "请选择区域"
 msgstr "請選擇區域"
 
@@ -1739,7 +1794,7 @@ msgstr "輸入您設置的安全密碼即可快速登錄管理器"
 msgid "返&nbsp;&nbsp;&nbsp;&nbsp;回"
 msgstr "返&nbsp;&nbsp;&nbsp;&nbsp;回"
 
-#: app/scripts/controllers/main.js:147
+#: app/scripts/controllers/main.js:178
 msgid "返回"
 msgstr "返回"
 
@@ -1747,7 +1802,7 @@ msgstr "返回"
 msgid "返回列表"
 msgstr "返回列表"
 
-#: app/scripts/controllers/main.js:145
+#: app/scripts/controllers/main.js:176
 msgid "返回到 {{path}}"
 msgstr "返回到 {{path}}"
 
@@ -1764,7 +1819,7 @@ msgstr "返回用戶"
 msgid "返回用户组"
 msgstr "返回用戶組"
 
-#: app/index.html:51
+#: app/index.html:56
 msgid "还未创建Bucket"
 msgstr "還未建立Bucket"
 
@@ -1805,7 +1860,7 @@ msgstr "重連次數"
 msgid "错误"
 msgstr "錯誤"
 
-#: app/scripts/controllers/main.js:433
+#: app/scripts/controllers/main.js:468
 msgid "错误日志"
 msgstr "錯誤日誌"
 
@@ -1852,11 +1907,27 @@ msgstr "默認版本"
 msgid "默认版本号不能删除"
 msgstr "默認版本號不能刪除"
 
+#: app/views/setting_modal.html:71
+msgid "默认设置："
+msgstr ""
+
 #: app/scripts/oss-common.js:784
 msgid ""
 "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""
 "（可能是你登錄時選擇的區域與目前的網路環境不匹配，请退出用戶端後重新選擇）"
+
+#~ msgid "AccessKeyId"
+#~ msgstr "AccessKeyId"
+
+#~ msgid "Arn"
+#~ msgstr "Arn"
+
+#~ msgid "Arn："
+#~ msgstr "Arn:"
+
+#~ msgid "OSS-当前选择区域："
+#~ msgstr "OSS-目前選擇區域："
 
 #~ msgid "语言设置："
 #~ msgstr "語言設置："

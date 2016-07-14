@@ -52,14 +52,6 @@ msgstr "Access Key ID does not exist"
 msgid "AccessKey管理"
 msgstr ""
 
-#: app/views/ram-setting.html:115
-msgid "Arn"
-msgstr ""
-
-#: app/views/ram-role-manage.html:47
-msgid "Arn："
-msgstr ""
-
 #: app/index.html:85
 msgid "Bucket下载"
 msgstr "Download Bucket"
