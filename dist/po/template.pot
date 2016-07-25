@@ -33,7 +33,7 @@ msgstr ""
 msgid "4. Object总长度必须在1-1023之间"
 msgstr ""
 
-#: app/scripts/oss-common.js:706
+#: app/scripts/oss-common.js:709
 msgid "Access Key ID不存在"
 msgstr ""
 
@@ -45,11 +45,11 @@ msgstr ""
 msgid "Bucket下载"
 msgstr ""
 
-#: app/scripts/oss-common.js:699
+#: app/scripts/oss-common.js:702
 msgid "Bucket不为空"
 msgstr ""
 
-#: app/scripts/oss-common.js:718
+#: app/scripts/oss-common.js:721
 msgid "Bucket不存在"
 msgstr ""
 
@@ -58,21 +58,21 @@ msgstr ""
 msgid "Bucket名称："
 msgstr ""
 
-#: app/scripts/oss-common.js:698
+#: app/scripts/oss-common.js:701
 msgid "Bucket已经存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:726
+#: app/scripts/oss-common.js:729
 msgid "Bucket数目超过限制"
 msgstr ""
 
-#: app/scripts/services/service.js:3154
-#: app/scripts/services/service.js:3282
+#: app/scripts/services/service.js:3162
+#: app/scripts/services/service.js:3290
 msgid "Bucket的名称不能为空"
 msgstr ""
 
-#: app/scripts/services/service.js:3158
-#: app/scripts/services/service.js:3286
+#: app/scripts/services/service.js:3166
+#: app/scripts/services/service.js:3294
 msgid "Bucket的名称格式错误"
 msgstr ""
 
@@ -84,7 +84,7 @@ msgstr ""
 msgid "Content-Disposition设置"
 msgstr ""
 
-#: app/scripts/services/service.js:3495
+#: app/scripts/services/service.js:3503
 msgid "Content-Type是必填字段"
 msgstr ""
 
@@ -92,20 +92,20 @@ msgstr ""
 msgid "HTTP头"
 msgstr ""
 
-#: app/scripts/services/service.js:3494
-#: app/scripts/services/service.js:3500
+#: app/scripts/services/service.js:3502
+#: app/scripts/services/service.js:3508
 msgid "HTTP属性值格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:712
+#: app/scripts/oss-common.js:715
 msgid "Logging操作中有无效的目标bucket"
 msgstr ""
 
-#: app/scripts/oss-common.js:720
+#: app/scripts/oss-common.js:723
 msgid "Multipart Upload ID不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:713
+#: app/scripts/oss-common.js:716
 msgid "OSS内部发生错误"
 msgstr ""
 
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Style设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:714
+#: app/scripts/oss-common.js:717
 msgid "XML格式非法"
 msgstr ""
 
@@ -208,7 +208,7 @@ msgstr ""
 msgid "不同区域的Bucket之间不能复制"
 msgstr ""
 
-#: app/scripts/oss-common.js:715
+#: app/scripts/oss-common.js:718
 msgid "不支持的方法"
 msgstr ""
 
@@ -311,11 +311,11 @@ msgstr ""
 msgid "全部类型"
 msgstr ""
 
-#: app/scripts/services/service.js:1857
+#: app/scripts/services/service.js:1865
 msgid "公共读"
 msgstr ""
 
-#: app/scripts/services/service.js:1858
+#: app/scripts/services/service.js:1866
 msgid "公共读写"
 msgstr ""
 
@@ -356,7 +356,7 @@ msgstr ""
 msgid "创建AccessKey"
 msgstr ""
 
-#: app/scripts/services/service.js:4047
+#: app/scripts/services/service.js:4055
 msgid "创建AccessKey成功！"
 msgstr ""
 
@@ -409,7 +409,7 @@ msgstr ""
 msgid "删除"
 msgstr ""
 
-#: app/scripts/services/service.js:4088
+#: app/scripts/services/service.js:4096
 msgid "删除AccessKey成功！"
 msgstr ""
 
@@ -417,7 +417,7 @@ msgstr ""
 msgid "删除Bucket"
 msgstr ""
 
-#: app/scripts/services/service.js:4787
+#: app/scripts/services/service.js:4795
 msgid "删除版本成功！"
 msgstr ""
 
@@ -472,7 +472,7 @@ msgstr ""
 msgid "加入用户组"
 msgstr ""
 
-#: app/scripts/services/service.js:4197
+#: app/scripts/services/service.js:4205
 msgid "加入用户组成功！"
 msgstr ""
 
@@ -497,7 +497,7 @@ msgstr ""
 msgid "匹配正则:"
 msgstr ""
 
-#: app/scripts/services/service.js:3058
+#: app/scripts/services/service.js:3066
 msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
@@ -506,11 +506,11 @@ msgstr ""
 msgid "单任务线程数："
 msgstr ""
 
-#: app/scripts/oss-common.js:705
+#: app/scripts/oss-common.js:708
 msgid "参数格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:723
+#: app/scripts/oss-common.js:726
 msgid "发起请求的时间和服务器时间超出15分钟"
 msgstr ""
 
@@ -553,7 +553,7 @@ msgstr ""
 msgid "台湾高雄"
 msgstr ""
 
-#: app/scripts/services/service.js:3060
+#: app/scripts/services/service.js:3068
 msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
@@ -575,7 +575,7 @@ msgstr ""
 msgid "启用"
 msgstr ""
 
-#: app/scripts/services/service.js:4067
+#: app/scripts/services/service.js:4075
 msgid "启用AccessKey成功！"
 msgstr ""
 
@@ -643,11 +643,11 @@ msgstr ""
 msgid "完成"
 msgstr ""
 
-#: app/scripts/oss-common.js:700
+#: app/scripts/oss-common.js:703
 msgid "实体过大"
 msgstr ""
 
-#: app/scripts/oss-common.js:701
+#: app/scripts/oss-common.js:704
 msgid "实体过小"
 msgstr ""
 
@@ -682,15 +682,15 @@ msgstr ""
 msgid "属性名称"
 msgstr ""
 
-#: app/scripts/services/service.js:3501
+#: app/scripts/services/service.js:3509
 msgid "属性名称只能包含英文、数子、横线、下划线、斜杠、点、英文分号、英文逗号、英文冒号、英文双引号和等号"
 msgstr ""
 
-#: app/scripts/services/service.js:3508
+#: app/scripts/services/service.js:3516
 msgid "属性名称只能包含英文、数子或横线"
 msgstr ""
 
-#: app/scripts/services/service.js:3507
+#: app/scripts/services/service.js:3515
 msgid "属性名称格式错误"
 msgstr ""
 
@@ -702,12 +702,12 @@ msgstr ""
 msgid "已加入"
 msgstr ""
 
-#: app/scripts/services/service.js:5331
+#: app/scripts/services/service.js:5339
 msgid "已复制到剪切板"
 msgstr ""
 
-#: app/scripts/services/service.js:3167
-#: app/scripts/services/service.js:3294
+#: app/scripts/services/service.js:3175
+#: app/scripts/services/service.js:3302
 msgid "已存在相同名称的Bucket"
 msgstr ""
 
@@ -755,7 +755,7 @@ msgstr ""
 msgid "当前状态:"
 msgstr ""
 
-#: app/scripts/oss-common.js:744
+#: app/scripts/oss-common.js:747
 msgid "当前用户还有创建的AK"
 msgstr ""
 
@@ -787,19 +787,19 @@ msgstr ""
 msgid "您好，您还没有开启RAM服务，请进入阿里云控制台开启该服务。"
 msgstr ""
 
-#: app/scripts/services/service.js:5046
+#: app/scripts/services/service.js:5054
 msgid "您确定要删除该授权策略吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4784
+#: app/scripts/services/service.js:4792
 msgid "您确定要删除该版本吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4673
+#: app/scripts/services/service.js:4681
 msgid "您确定要删除该角色吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4770
+#: app/scripts/services/service.js:4778
 msgid "您确定要将该版本设置为默认版本吗？"
 msgstr ""
 
@@ -813,7 +813,7 @@ msgstr ""
 msgid "所属地区："
 msgstr ""
 
-#: app/scripts/oss-common.js:742
+#: app/scripts/oss-common.js:745
 msgid "手机号码格式错误"
 msgstr ""
 
@@ -827,7 +827,7 @@ msgstr ""
 msgid "打开日志文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:697
+#: app/scripts/oss-common.js:700
 msgid "拒绝访问"
 msgstr ""
 
@@ -848,9 +848,9 @@ msgstr ""
 msgid "授权"
 msgstr ""
 
-#: app/scripts/services/service.js:4115
-#: app/scripts/services/service.js:4462
-#: app/scripts/services/service.js:4713
+#: app/scripts/services/service.js:4123
+#: app/scripts/services/service.js:4470
+#: app/scripts/services/service.js:4721
 msgid "授权成功！"
 msgstr ""
 
@@ -867,31 +867,31 @@ msgstr ""
 msgid "授权策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:755
+#: app/scripts/oss-common.js:758
 msgid "授权策略下还有其他版本"
 msgstr ""
 
-#: app/scripts/oss-common.js:753
+#: app/scripts/oss-common.js:756
 msgid "授权策略下还有用户"
 msgstr ""
 
-#: app/scripts/oss-common.js:754
+#: app/scripts/oss-common.js:757
 msgid "授权策略下还有用户组"
 msgstr ""
 
-#: app/scripts/oss-common.js:752
+#: app/scripts/oss-common.js:755
 msgid "授权策略不存在"
 msgstr ""
 
-#: app/scripts/services/service.js:5052
+#: app/scripts/services/service.js:5060
 msgid "授权策略删除成功！"
 msgstr ""
 
-#: app/scripts/oss-common.js:750
+#: app/scripts/oss-common.js:753
 msgid "授权策略已存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:751
+#: app/scripts/oss-common.js:754
 msgid "授权策略已达最大限制"
 msgstr ""
 
@@ -943,11 +943,11 @@ msgstr ""
 msgid "政务外网"
 msgstr ""
 
-#: app/scripts/oss-common.js:681
+#: app/scripts/oss-common.js:684
 msgid "数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
-#: app/scripts/oss-common.js:682
+#: app/scripts/oss-common.js:685
 msgid "数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
@@ -955,19 +955,19 @@ msgstr ""
 msgid "数据请求失败，如果你自定义了服务器地址，请检查是否正常。"
 msgstr ""
 
-#: app/scripts/oss-common.js:703
+#: app/scripts/oss-common.js:706
 msgid "文件Part不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:704
+#: app/scripts/oss-common.js:707
 msgid "文件Part过时"
 msgstr ""
 
-#: app/scripts/services/service.js:3551
+#: app/scripts/services/service.js:3559
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
-#: app/scripts/oss-common.js:719
+#: app/scripts/oss-common.js:722
 msgid "文件不存在"
 msgstr ""
 
@@ -984,7 +984,7 @@ msgstr ""
 msgid "文件夹名称格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:702
+#: app/scripts/oss-common.js:705
 msgid "文件组过大"
 msgstr ""
 
@@ -1007,27 +1007,27 @@ msgstr ""
 msgid "新建文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:707
+#: app/scripts/oss-common.js:710
 msgid "无效的Bucket名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:709
+#: app/scripts/oss-common.js:712
 msgid "无效的Object名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:710
+#: app/scripts/oss-common.js:713
 msgid "无效的Part"
 msgstr ""
 
-#: app/scripts/oss-common.js:711
+#: app/scripts/oss-common.js:714
 msgid "无效的part顺序"
 msgstr ""
 
-#: app/scripts/oss-common.js:708
+#: app/scripts/oss-common.js:711
 msgid "无效的摘要"
 msgstr ""
 
-#: app/scripts/oss-common.js:721
+#: app/scripts/oss-common.js:724
 msgid "无法处理的方法"
 msgstr ""
 
@@ -1175,7 +1175,7 @@ msgstr ""
 msgid "添加授权"
 msgstr ""
 
-#: app/scripts/services/service.js:4487
+#: app/scripts/services/service.js:4495
 msgid "添加用户成功！"
 msgstr ""
 
@@ -1216,7 +1216,7 @@ msgstr ""
 msgid "版本信息"
 msgstr ""
 
-#: app/scripts/oss-common.js:757
+#: app/scripts/oss-common.js:760
 msgid "版本号不存在"
 msgstr ""
 
@@ -1224,7 +1224,7 @@ msgstr ""
 msgid "版本号："
 msgstr ""
 
-#: app/scripts/oss-common.js:756
+#: app/scripts/oss-common.js:759
 msgid "版本数已达最大限制"
 msgstr ""
 
@@ -1236,15 +1236,15 @@ msgstr ""
 msgid "状态"
 msgstr ""
 
-#: app/scripts/oss-common.js:746
+#: app/scripts/oss-common.js:749
 msgid "用户AK不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:745
+#: app/scripts/oss-common.js:748
 msgid "用户AK已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:741
+#: app/scripts/oss-common.js:744
 msgid "用户不存在"
 msgstr ""
 
@@ -1252,11 +1252,11 @@ msgstr ""
 msgid "用户信息"
 msgstr ""
 
-#: app/scripts/services/service.js:4005
+#: app/scripts/services/service.js:4013
 msgid "用户信息修改成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:4016
+#: app/scripts/services/service.js:4024
 msgid "用户删除成功！"
 msgstr ""
 
@@ -1266,7 +1266,7 @@ msgstr ""
 msgid "用户名"
 msgstr ""
 
-#: app/scripts/oss-common.js:737
+#: app/scripts/oss-common.js:740
 msgid "用户名称含有不支持的字符"
 msgstr ""
 
@@ -1276,11 +1276,11 @@ msgstr ""
 msgid "用户名："
 msgstr ""
 
-#: app/scripts/oss-common.js:739
+#: app/scripts/oss-common.js:742
 msgid "用户已存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:759
+#: app/scripts/oss-common.js:762
 msgid "用户已经授权了该策略"
 msgstr ""
 
@@ -1288,19 +1288,19 @@ msgstr ""
 msgid "用户授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:740
+#: app/scripts/oss-common.js:743
 msgid "用户数量已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:738
+#: app/scripts/oss-common.js:741
 msgid "用户显示名称含有不支持的字符"
 msgstr ""
 
-#: app/scripts/oss-common.js:761
+#: app/scripts/oss-common.js:764
 msgid "用户未授权该策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:760
+#: app/scripts/oss-common.js:763
 msgid "用户添加的授权策略已达最大限制"
 msgstr ""
 
@@ -1308,27 +1308,27 @@ msgstr ""
 msgid "用户管理"
 msgstr ""
 
-#: app/scripts/oss-common.js:730
+#: app/scripts/oss-common.js:733
 msgid "用户组下面还有用户"
 msgstr ""
 
-#: app/scripts/oss-common.js:749
+#: app/scripts/oss-common.js:752
 msgid "用户组不存在"
 msgstr ""
 
-#: app/scripts/services/service.js:4499
+#: app/scripts/services/service.js:4507
 msgid "用户组删除成功！"
 msgstr ""
 
-#: app/scripts/oss-common.js:747
+#: app/scripts/oss-common.js:750
 msgid "用户组已存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:762
+#: app/scripts/oss-common.js:765
 msgid "用户组已经授权了该策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:748
+#: app/scripts/oss-common.js:751
 msgid "用户组已达最大限制"
 msgstr ""
 
@@ -1336,23 +1336,23 @@ msgstr ""
 msgid "用户组授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:764
+#: app/scripts/oss-common.js:767
 msgid "用户组未授权该策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:763
+#: app/scripts/oss-common.js:766
 msgid "用户组添加的授权策略已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:729
+#: app/scripts/oss-common.js:732
 msgid "用户组还有加入的授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:728
+#: app/scripts/oss-common.js:731
 msgid "用户还有加入的授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:727
+#: app/scripts/oss-common.js:730
 msgid "用户还有加入的组"
 msgstr ""
 
@@ -1360,7 +1360,7 @@ msgstr ""
 msgid "登&nbsp;&nbsp;&nbsp;&nbsp;录"
 msgstr ""
 
-#: app/scripts/oss-common.js:806
+#: app/scripts/oss-common.js:809
 msgid "登录失败，网络请求错误"
 msgstr ""
 
@@ -1398,19 +1398,19 @@ msgstr ""
 msgid "确定要下载整个Bucket吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:5429
+#: app/scripts/services/service.js:5437
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr ""
 
-#: app/scripts/services/service.js:4014
+#: app/scripts/services/service.js:4022
 msgid "确定要删除当前用户吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4086
+#: app/scripts/services/service.js:4094
 msgid "确定要删除当前用户的AccessKey吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4497
+#: app/scripts/services/service.js:4505
 msgid "确定要删除当前用户组吗？"
 msgstr ""
 
@@ -1430,15 +1430,15 @@ msgstr ""
 msgid "确定要清除安全密码？"
 msgstr ""
 
-#: app/scripts/services/service.js:4078
+#: app/scripts/services/service.js:4086
 msgid "确定要禁用当前AccessKey吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4472
+#: app/scripts/services/service.js:4480
 msgid "确定要移除该用户吗？"
 msgstr ""
 
-#: app/scripts/services/service.js:4183
+#: app/scripts/services/service.js:4191
 msgid "确定要移除该用户组吗？"
 msgstr ""
 
@@ -1467,11 +1467,11 @@ msgstr ""
 msgid "禁用"
 msgstr ""
 
-#: app/scripts/services/service.js:4067
+#: app/scripts/services/service.js:4075
 msgid "禁用AccessKey成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:1859
+#: app/scripts/services/service.js:1867
 msgid "私有"
 msgstr ""
 
@@ -1492,17 +1492,17 @@ msgstr ""
 msgid "移除"
 msgstr ""
 
-#: app/scripts/services/service.js:4104
-#: app/scripts/services/service.js:4451
-#: app/scripts/services/service.js:4702
+#: app/scripts/services/service.js:4112
+#: app/scripts/services/service.js:4459
+#: app/scripts/services/service.js:4710
 msgid "移除授权成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:4475
+#: app/scripts/services/service.js:4483
 msgid "移除用户成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:4186
+#: app/scripts/services/service.js:4194
 msgid "移除用户组成功！"
 msgstr ""
 
@@ -1553,11 +1553,11 @@ msgstr ""
 msgid "策略类型"
 msgstr ""
 
-#: app/scripts/oss-common.js:768
+#: app/scripts/oss-common.js:771
 msgid "策略规则不正确"
 msgstr ""
 
-#: app/scripts/oss-common.js:732
+#: app/scripts/oss-common.js:735
 msgid "策略规则长度超过限制"
 msgstr ""
 
@@ -1568,7 +1568,7 @@ msgstr ""
 msgid "策略规则："
 msgstr ""
 
-#: app/scripts/oss-common.js:725
+#: app/scripts/oss-common.js:728
 msgid "签名错误"
 msgstr ""
 
@@ -1598,7 +1598,7 @@ msgstr ""
 msgid "组信息"
 msgstr ""
 
-#: app/scripts/services/service.js:4516
+#: app/scripts/services/service.js:4524
 msgid "组信息修改成功！"
 msgstr ""
 
@@ -1626,15 +1626,15 @@ msgstr ""
 msgid "编辑"
 msgstr ""
 
-#: app/scripts/oss-common.js:717
+#: app/scripts/oss-common.js:720
 msgid "缺少内容长度"
 msgstr ""
 
-#: app/scripts/oss-common.js:716
+#: app/scripts/oss-common.js:719
 msgid "缺少参数"
 msgstr ""
 
-#: app/scripts/oss-common.js:782
+#: app/scripts/oss-common.js:785
 msgid "网络请求错误"
 msgstr ""
 
@@ -1683,7 +1683,7 @@ msgstr ""
 msgid "规则："
 msgstr ""
 
-#: app/scripts/oss-common.js:735
+#: app/scripts/oss-common.js:738
 msgid "角色不存在"
 msgstr ""
 
@@ -1691,11 +1691,11 @@ msgstr ""
 msgid "角色信息"
 msgstr ""
 
-#: app/scripts/services/service.js:4691
+#: app/scripts/services/service.js:4699
 msgid "角色信息修改成功！"
 msgstr ""
 
-#: app/scripts/services/service.js:4675
+#: app/scripts/services/service.js:4683
 msgid "角色删除成功！"
 msgstr ""
 
@@ -1703,7 +1703,7 @@ msgstr ""
 msgid "角色名称"
 msgstr ""
 
-#: app/scripts/oss-common.js:731
+#: app/scripts/oss-common.js:734
 msgid "角色名称含有不支持的字符"
 msgstr ""
 
@@ -1713,11 +1713,11 @@ msgstr ""
 msgid "角色名称："
 msgstr ""
 
-#: app/scripts/oss-common.js:733
+#: app/scripts/oss-common.js:736
 msgid "角色已存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:765
+#: app/scripts/oss-common.js:768
 msgid "角色已经授权了该策略"
 msgstr ""
 
@@ -1725,19 +1725,19 @@ msgstr ""
 msgid "角色授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:734
+#: app/scripts/oss-common.js:737
 msgid "角色数已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:767
+#: app/scripts/oss-common.js:770
 msgid "角色未授权该策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:766
+#: app/scripts/oss-common.js:769
 msgid "角色添加的授权策略已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:736
+#: app/scripts/oss-common.js:739
 msgid "角色还存在策略规则"
 msgstr ""
 
@@ -1768,7 +1768,7 @@ msgstr ""
 msgid "设置成功"
 msgstr ""
 
-#: app/scripts/services/service.js:3056
+#: app/scripts/services/service.js:3064
 msgid "设置的值必须是正整数"
 msgstr ""
 
@@ -1776,7 +1776,7 @@ msgstr ""
 msgid "设置默认"
 msgstr ""
 
-#: app/scripts/services/service.js:4779
+#: app/scripts/services/service.js:4787
 msgid "设置默认成功！"
 msgstr ""
 
@@ -1792,7 +1792,7 @@ msgstr ""
 msgid "语言设置"
 msgstr ""
 
-#: app/scripts/oss-common.js:724
+#: app/scripts/oss-common.js:727
 msgid "请求超时"
 msgstr ""
 
@@ -1806,13 +1806,13 @@ msgstr ""
 
 #: app/scripts/export-authorization.js:42
 #: app/scripts/login.js:97
-#: app/scripts/services/service.js:5421
+#: app/scripts/services/service.js:5429
 msgid "请输入 Access Key ID"
 msgstr ""
 
 #: app/scripts/export-authorization.js:47
 #: app/scripts/login.js:102
-#: app/scripts/services/service.js:5425
+#: app/scripts/services/service.js:5433
 msgid "请输入 Access Key Secret"
 msgstr ""
 
@@ -1971,7 +1971,7 @@ msgstr ""
 msgid "选择语言"
 msgstr ""
 
-#: app/scripts/oss-common.js:743
+#: app/scripts/oss-common.js:746
 msgid "邮箱格式错误"
 msgstr ""
 
@@ -2024,7 +2024,7 @@ msgstr ""
 msgid "青岛"
 msgstr ""
 
-#: app/scripts/oss-common.js:722
+#: app/scripts/oss-common.js:725
 msgid "预处理错误"
 msgstr ""
 
@@ -2038,7 +2038,7 @@ msgstr ""
 msgid "默认版本"
 msgstr ""
 
-#: app/scripts/oss-common.js:758
+#: app/scripts/oss-common.js:761
 msgid "默认版本号不能删除"
 msgstr ""
 
@@ -2046,6 +2046,6 @@ msgstr ""
 msgid "默认设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:784
+#: app/scripts/oss-common.js:787
 msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""

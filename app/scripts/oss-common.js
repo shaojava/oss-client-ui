@@ -444,6 +444,9 @@ angular.module('OSSCommon', [
             isAnHuiClient: function (){
               return config.source == 'anhui';
             },
+            isHuaTongClient: function (){
+              return config.source == 'huatong';
+            },
             isGuiYangClient:function () {
               return config.source == 'guiyang';
             },

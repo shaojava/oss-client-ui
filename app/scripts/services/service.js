@@ -1703,6 +1703,7 @@ angular.module('ossClientUiApp')
                             buckets = []
                             var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
                             if(OSSConfig.isCustomClient()){
+                               console.log("is IntranetNet:",isIntranetNet,currentLocation);
                                 if(!isIntranetNet) {
                                     angular.forEach(_list, function (bucket) {
                                         if (currentLocation.indexOf(bucket.Location) === 0) {
@@ -1714,13 +1715,23 @@ angular.module('ossClientUiApp')
                                     var intranetLocations =  []
                                     console.log("=========isIntranet=========",isIntranet)
                                     if(isIntranet && isIntranetNet === '1'){
-                                        intranetLocations = OSSRegion.getIntranetLocationItem();
+                                      intranetLocations = OSSRegion.getIntranetLocationItem();
                                     }else{
                                       intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(OSSConfig.hasMoreZwLocations())])
                                     }
                                     console.log("=========intranetLocations=========",intranetLocations,_list)
                                     angular.forEach(_list, function (bucket) {
+                                        if(OSSConfig.isHuaTongClient()){
+                                          bucket.Location = 'oss-cn-hangzhou-hsa'
+                                        }
                                         var _item = _.find(intranetLocations,function(item){
+                                            //if(OSSConfig.isHuaTongClient()){
+                                            //  if(isIntranet && isIntranetNet === '1') {
+                                            //    item.location = 'oss-cn-hangzhou-internal'
+                                            //  }else{
+                                            //    item.location = 'oss-cn-hangzhou'
+                                            //  }
+                                            //}
                                             return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
                                         })
                                         if(_item){
