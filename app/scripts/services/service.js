@@ -1711,27 +1711,20 @@ angular.module('ossClientUiApp')
                                         }
                                     })
                                 }else {
-                                    console.log("=========load bucket=========",resBuckets)
+                                    //console.log("=========load bucket=========",resBuckets)
                                     var intranetLocations =  []
-                                    console.log("=========isIntranet=========",isIntranet)
+                                    //console.log("=========isIntranet=========",isIntranet)
                                     if(isIntranet && isIntranetNet === '1'){
                                       intranetLocations = OSSRegion.getIntranetLocationItem();
                                     }else{
                                       intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(OSSConfig.hasMoreZwLocations())])
                                     }
-                                    console.log("=========intranetLocations=========",intranetLocations,_list)
+                                    //console.log("=========intranetLocations=========",intranetLocations,_list)
                                     angular.forEach(_list, function (bucket) {
                                         if(OSSConfig.isHuaTongClient()){
                                           bucket.Location = 'oss-cn-hangzhou-hsa'
                                         }
                                         var _item = _.find(intranetLocations,function(item){
-                                            //if(OSSConfig.isHuaTongClient()){
-                                            //  if(isIntranet && isIntranetNet === '1') {
-                                            //    item.location = 'oss-cn-hangzhou-internal'
-                                            //  }else{
-                                            //    item.location = 'oss-cn-hangzhou'
-                                            //  }
-                                            //}
                                             return item.enable === 1 && (item.location === bucket.Location || item.location === bucket.Location + '-internal' || item.location === bucket.Location + '-a-internal');
                                         })
                                         if(_item){
