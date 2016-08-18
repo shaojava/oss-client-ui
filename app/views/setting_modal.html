@@ -71,10 +71,12 @@
               <label for="content-disposition-setting" class="col-xs-6 text-right control-label" translate>默认设置：</label>
               <div class="col-xs-6">
                 <label style="margin-right: 15px">
-                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="1" type="radio" /> 开
+                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="1" type="radio" />
+                  <span translate>开启</span>
                 </label>
                 <label>
-                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="0" type="radio" /> 关
+                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="0" type="radio"/>
+                  <span translate>关闭</span>
                 </label>
               </div>
             </div>
@@ -87,10 +89,10 @@
               <label for="ram-setting" class="col-xs-6 text-right control-label" translate>功能开关：</label>
               <div class="col-xs-6">
                 <label style="margin-right: 15px">
-                  <input name="ram-setting" value="true" type="radio" /> 开
+                  <input name="ram-setting" value="true" type="radio" translate/> 开启
                 </label>
                 <label>
-                  <input name="ram-setting" value="false" type="radio" /> 关
+                  <input name="ram-setting" value="false" type="radio" translate/> 关闭
                 </label>
               </div>
             </div>

@@ -15,7 +15,8 @@ angular.module('OSSCommon', [
         uiSelectConfig.theme = 'bootstrap';
     }])
   .factory('OSSI18N',['OSSConfig',function(OSSConfig){
-    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'繁體中文',lan:'zh_TW',key:3},{name:'English',lan:'en_US',key:2}]
+    //,{name:'繁體中文',lan:'zh_TW',key:3}
+    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'English',lan:'en_US',key:2}]
     return {
       setDefaultLan:function(){
       },
@@ -324,8 +325,8 @@ angular.module('OSSCommon', [
                 showchannel:false,
                 showrefer:false,
                 showLanSetting:true,
-                showRam:true,
-                defaultLan:"zh_CN",
+                showRam:false,
+                defaultLan:"en_US",
                 host: "aliyuncs.com",
                 news:{
                   isPreview:false,
@@ -402,17 +403,17 @@ angular.module('OSSCommon', [
                     {
                       location:"oss-cn-qdjbp-a",
                       name: "青岛-金融云",
-                      enable: 1
+                      enable: 0
                     },
                     {
                       location:"oss-cn-shenzhen-finance-1",
                       name: "深圳-金融云",
-                      enable: 1
+                      enable: 0
                     },
                     {
                       location:"oss-cn-hzjbp-b",
                       name: "杭州-金融云",
-                      enable: 1
+                      enable: 0
                     }
                 ]
             };

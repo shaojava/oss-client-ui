@@ -33,7 +33,7 @@ msgstr ""
 msgid "4. Object总长度必须在1-1023之间"
 msgstr ""
 
-#: app/scripts/oss-common.js:709
+#: app/scripts/oss-common.js:710
 msgid "Access Key ID不存在"
 msgstr ""
 
@@ -45,11 +45,11 @@ msgstr ""
 msgid "Bucket下载"
 msgstr ""
 
-#: app/scripts/oss-common.js:702
+#: app/scripts/oss-common.js:703
 msgid "Bucket不为空"
 msgstr ""
 
-#: app/scripts/oss-common.js:721
+#: app/scripts/oss-common.js:722
 msgid "Bucket不存在"
 msgstr ""
 
@@ -58,11 +58,11 @@ msgstr ""
 msgid "Bucket名称："
 msgstr ""
 
-#: app/scripts/oss-common.js:701
+#: app/scripts/oss-common.js:702
 msgid "Bucket已经存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:729
+#: app/scripts/oss-common.js:730
 msgid "Bucket数目超过限制"
 msgstr ""
 
@@ -97,15 +97,15 @@ msgstr ""
 msgid "HTTP属性值格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:715
+#: app/scripts/oss-common.js:716
 msgid "Logging操作中有无效的目标bucket"
 msgstr ""
 
-#: app/scripts/oss-common.js:723
+#: app/scripts/oss-common.js:724
 msgid "Multipart Upload ID不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:716
+#: app/scripts/oss-common.js:717
 msgid "OSS内部发生错误"
 msgstr ""
 
@@ -121,7 +121,7 @@ msgstr ""
 msgid "RAM服务开启"
 msgstr ""
 
-#: app/views/setting_modal.html:85
+#: app/views/setting_modal.html:87
 msgid "RAM设置"
 msgstr ""
 
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Style设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:717
+#: app/scripts/oss-common.js:718
 msgid "XML格式非法"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgstr ""
 msgid "上传队列"
 msgstr ""
 
-#: app/scripts/oss-common.js:384
+#: app/scripts/oss-common.js:385
 msgid "上海"
 msgstr ""
 
@@ -208,7 +208,7 @@ msgstr ""
 msgid "不同区域的Bucket之间不能复制"
 msgstr ""
 
-#: app/scripts/oss-common.js:718
+#: app/scripts/oss-common.js:719
 msgid "不支持的方法"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "了解详情"
 msgstr ""
 
-#: app/scripts/oss-common.js:341
+#: app/scripts/oss-common.js:342
 msgid "互联网"
 msgstr ""
 
@@ -331,6 +331,7 @@ msgstr ""
 #: app/views/set_image_server_modal.html:43
 #: app/views/set_image_server_modal.html:60
 #: app/views/set_speed_modal.html:33
+#: app/views/setting_modal.html:79
 msgid "关闭"
 msgstr ""
 
@@ -450,7 +451,7 @@ msgstr ""
 msgid "剩余加速时长:"
 msgstr ""
 
-#: app/views/setting_modal.html:87
+#: app/views/setting_modal.html:89
 msgid "功能开关："
 msgstr ""
 
@@ -489,7 +490,7 @@ msgstr ""
 msgid "加速服务"
 msgstr ""
 
-#: app/scripts/oss-common.js:369
+#: app/scripts/oss-common.js:370
 msgid "北京"
 msgstr ""
 
@@ -506,11 +507,11 @@ msgstr ""
 msgid "单任务线程数："
 msgstr ""
 
-#: app/scripts/oss-common.js:708
+#: app/scripts/oss-common.js:709
 msgid "参数格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:726
+#: app/scripts/oss-common.js:727
 msgid "发起请求的时间和服务器时间超出15分钟"
 msgstr ""
 
@@ -531,7 +532,7 @@ msgstr ""
 #: app/views/set_http_header_modal.html:55
 #: app/views/set_image_server_modal.html:72
 #: app/views/set_refer_modal.html:42
-#: app/views/setting_modal.html:104
+#: app/views/setting_modal.html:106
 msgid "取消"
 msgstr ""
 
@@ -549,7 +550,7 @@ msgstr ""
 msgid "可包含大小写字母、数字、'@'、-'且长度在1~128之间的字符"
 msgstr ""
 
-#: app/scripts/oss-common.js:399
+#: app/scripts/oss-common.js:400
 msgid "台湾高雄"
 msgstr ""
 
@@ -643,11 +644,11 @@ msgstr ""
 msgid "完成"
 msgstr ""
 
-#: app/scripts/oss-common.js:703
+#: app/scripts/oss-common.js:704
 msgid "实体过大"
 msgstr ""
 
-#: app/scripts/oss-common.js:704
+#: app/scripts/oss-common.js:705
 msgid "实体过小"
 msgstr ""
 
@@ -665,7 +666,7 @@ msgstr ""
 
 #: app/export-authorization.html:14
 #: app/export-authorization.html:28
-#: app/views/setting_modal.html:103
+#: app/views/setting_modal.html:105
 msgid "导出授权"
 msgstr ""
 
@@ -728,6 +729,7 @@ msgstr ""
 #: app/views/set_image_server_modal.html:21
 #: app/views/set_image_server_modal.html:38
 #: app/views/set_image_server_modal.html:55
+#: app/views/setting_modal.html:75
 msgid "开启"
 msgstr ""
 
@@ -755,7 +757,7 @@ msgstr ""
 msgid "当前状态:"
 msgstr ""
 
-#: app/scripts/oss-common.js:747
+#: app/scripts/oss-common.js:748
 msgid "当前用户还有创建的AK"
 msgstr ""
 
@@ -813,7 +815,7 @@ msgstr ""
 msgid "所属地区："
 msgstr ""
 
-#: app/scripts/oss-common.js:745
+#: app/scripts/oss-common.js:746
 msgid "手机号码格式错误"
 msgstr ""
 
@@ -827,7 +829,7 @@ msgstr ""
 msgid "打开日志文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:700
+#: app/scripts/oss-common.js:701
 msgid "拒绝访问"
 msgstr ""
 
@@ -867,19 +869,19 @@ msgstr ""
 msgid "授权策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:758
+#: app/scripts/oss-common.js:759
 msgid "授权策略下还有其他版本"
 msgstr ""
 
-#: app/scripts/oss-common.js:756
+#: app/scripts/oss-common.js:757
 msgid "授权策略下还有用户"
 msgstr ""
 
-#: app/scripts/oss-common.js:757
+#: app/scripts/oss-common.js:758
 msgid "授权策略下还有用户组"
 msgstr ""
 
-#: app/scripts/oss-common.js:755
+#: app/scripts/oss-common.js:756
 msgid "授权策略不存在"
 msgstr ""
 
@@ -887,11 +889,11 @@ msgstr ""
 msgid "授权策略删除成功！"
 msgstr ""
 
-#: app/scripts/oss-common.js:753
+#: app/scripts/oss-common.js:754
 msgid "授权策略已存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:754
+#: app/scripts/oss-common.js:755
 msgid "授权策略已达最大限制"
 msgstr ""
 
@@ -938,16 +940,16 @@ msgstr ""
 msgid "操作"
 msgstr ""
 
-#: app/scripts/oss-common.js:347
-#: app/scripts/oss-common.js:353
+#: app/scripts/oss-common.js:348
+#: app/scripts/oss-common.js:354
 msgid "政务外网"
 msgstr ""
 
-#: app/scripts/oss-common.js:684
+#: app/scripts/oss-common.js:685
 msgid "数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
-#: app/scripts/oss-common.js:685
+#: app/scripts/oss-common.js:686
 msgid "数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,请调整您的电脑时间后重试。"
 msgstr ""
 
@@ -955,11 +957,11 @@ msgstr ""
 msgid "数据请求失败，如果你自定义了服务器地址，请检查是否正常。"
 msgstr ""
 
-#: app/scripts/oss-common.js:706
+#: app/scripts/oss-common.js:707
 msgid "文件Part不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:707
+#: app/scripts/oss-common.js:708
 msgid "文件Part过时"
 msgstr ""
 
@@ -967,7 +969,7 @@ msgstr ""
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
-#: app/scripts/oss-common.js:722
+#: app/scripts/oss-common.js:723
 msgid "文件不存在"
 msgstr ""
 
@@ -984,11 +986,11 @@ msgstr ""
 msgid "文件夹名称格式错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:705
+#: app/scripts/oss-common.js:706
 msgid "文件组过大"
 msgstr ""
 
-#: app/scripts/oss-common.js:389
+#: app/scripts/oss-common.js:390
 msgid "新加坡"
 msgstr ""
 
@@ -1007,27 +1009,27 @@ msgstr ""
 msgid "新建文件夹"
 msgstr ""
 
-#: app/scripts/oss-common.js:710
+#: app/scripts/oss-common.js:711
 msgid "无效的Bucket名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:712
+#: app/scripts/oss-common.js:713
 msgid "无效的Object名字"
 msgstr ""
 
-#: app/scripts/oss-common.js:713
+#: app/scripts/oss-common.js:714
 msgid "无效的Part"
 msgstr ""
 
-#: app/scripts/oss-common.js:714
+#: app/scripts/oss-common.js:715
 msgid "无效的part顺序"
 msgstr ""
 
-#: app/scripts/oss-common.js:711
+#: app/scripts/oss-common.js:712
 msgid "无效的摘要"
 msgstr ""
 
-#: app/scripts/oss-common.js:724
+#: app/scripts/oss-common.js:725
 msgid "无法处理的方法"
 msgstr ""
 
@@ -1091,7 +1093,7 @@ msgstr ""
 msgid "机器码"
 msgstr ""
 
-#: app/scripts/oss-common.js:359
+#: app/scripts/oss-common.js:360
 msgid "杭州"
 msgstr ""
 
@@ -1159,7 +1161,7 @@ msgstr ""
 msgid "注：如果下载队列已加载完成,则删除已加载列表选项无效"
 msgstr ""
 
-#: app/scripts/oss-common.js:379
+#: app/scripts/oss-common.js:380
 msgid "深圳"
 msgstr ""
 
@@ -1216,7 +1218,7 @@ msgstr ""
 msgid "版本信息"
 msgstr ""
 
-#: app/scripts/oss-common.js:760
+#: app/scripts/oss-common.js:761
 msgid "版本号不存在"
 msgstr ""
 
@@ -1224,7 +1226,7 @@ msgstr ""
 msgid "版本号："
 msgstr ""
 
-#: app/scripts/oss-common.js:759
+#: app/scripts/oss-common.js:760
 msgid "版本数已达最大限制"
 msgstr ""
 
@@ -1236,15 +1238,15 @@ msgstr ""
 msgid "状态"
 msgstr ""
 
-#: app/scripts/oss-common.js:749
+#: app/scripts/oss-common.js:750
 msgid "用户AK不存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:748
+#: app/scripts/oss-common.js:749
 msgid "用户AK已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:744
+#: app/scripts/oss-common.js:745
 msgid "用户不存在"
 msgstr ""
 
@@ -1266,7 +1268,7 @@ msgstr ""
 msgid "用户名"
 msgstr ""
 
-#: app/scripts/oss-common.js:740
+#: app/scripts/oss-common.js:741
 msgid "用户名称含有不支持的字符"
 msgstr ""
 
@@ -1276,11 +1278,11 @@ msgstr ""
 msgid "用户名："
 msgstr ""
 
-#: app/scripts/oss-common.js:742
+#: app/scripts/oss-common.js:743
 msgid "用户已存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:762
+#: app/scripts/oss-common.js:763
 msgid "用户已经授权了该策略"
 msgstr ""
 
@@ -1288,19 +1290,19 @@ msgstr ""
 msgid "用户授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:743
+#: app/scripts/oss-common.js:744
 msgid "用户数量已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:741
+#: app/scripts/oss-common.js:742
 msgid "用户显示名称含有不支持的字符"
 msgstr ""
 
-#: app/scripts/oss-common.js:764
+#: app/scripts/oss-common.js:765
 msgid "用户未授权该策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:763
+#: app/scripts/oss-common.js:764
 msgid "用户添加的授权策略已达最大限制"
 msgstr ""
 
@@ -1308,11 +1310,11 @@ msgstr ""
 msgid "用户管理"
 msgstr ""
 
-#: app/scripts/oss-common.js:733
+#: app/scripts/oss-common.js:734
 msgid "用户组下面还有用户"
 msgstr ""
 
-#: app/scripts/oss-common.js:752
+#: app/scripts/oss-common.js:753
 msgid "用户组不存在"
 msgstr ""
 
@@ -1320,15 +1322,15 @@ msgstr ""
 msgid "用户组删除成功！"
 msgstr ""
 
-#: app/scripts/oss-common.js:750
+#: app/scripts/oss-common.js:751
 msgid "用户组已存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:765
+#: app/scripts/oss-common.js:766
 msgid "用户组已经授权了该策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:751
+#: app/scripts/oss-common.js:752
 msgid "用户组已达最大限制"
 msgstr ""
 
@@ -1336,23 +1338,23 @@ msgstr ""
 msgid "用户组授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:767
+#: app/scripts/oss-common.js:768
 msgid "用户组未授权该策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:766
+#: app/scripts/oss-common.js:767
 msgid "用户组添加的授权策略已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:732
+#: app/scripts/oss-common.js:733
 msgid "用户组还有加入的授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:731
+#: app/scripts/oss-common.js:732
 msgid "用户还有加入的授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:730
+#: app/scripts/oss-common.js:731
 msgid "用户还有加入的组"
 msgstr ""
 
@@ -1360,7 +1362,7 @@ msgstr ""
 msgid "登&nbsp;&nbsp;&nbsp;&nbsp;录"
 msgstr ""
 
-#: app/scripts/oss-common.js:809
+#: app/scripts/oss-common.js:810
 msgid "登录失败，网络请求错误"
 msgstr ""
 
@@ -1389,7 +1391,7 @@ msgstr ""
 #: app/views/set_http_header_modal.html:54
 #: app/views/set_image_server_modal.html:71
 #: app/views/set_refer_modal.html:41
-#: app/views/setting_modal.html:105
+#: app/views/setting_modal.html:107
 #: app/views/upload_detail_modal.html:25
 msgid "确定"
 msgstr ""
@@ -1553,11 +1555,11 @@ msgstr ""
 msgid "策略类型"
 msgstr ""
 
-#: app/scripts/oss-common.js:771
+#: app/scripts/oss-common.js:772
 msgid "策略规则不正确"
 msgstr ""
 
-#: app/scripts/oss-common.js:735
+#: app/scripts/oss-common.js:736
 msgid "策略规则长度超过限制"
 msgstr ""
 
@@ -1568,7 +1570,7 @@ msgstr ""
 msgid "策略规则："
 msgstr ""
 
-#: app/scripts/oss-common.js:728
+#: app/scripts/oss-common.js:729
 msgid "签名错误"
 msgstr ""
 
@@ -1626,19 +1628,19 @@ msgstr ""
 msgid "编辑"
 msgstr ""
 
-#: app/scripts/oss-common.js:720
+#: app/scripts/oss-common.js:721
 msgid "缺少内容长度"
 msgstr ""
 
-#: app/scripts/oss-common.js:719
+#: app/scripts/oss-common.js:720
 msgid "缺少参数"
 msgstr ""
 
-#: app/scripts/oss-common.js:785
+#: app/scripts/oss-common.js:786
 msgid "网络请求错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:394
+#: app/scripts/oss-common.js:395
 msgid "美国"
 msgstr ""
 
@@ -1683,7 +1685,7 @@ msgstr ""
 msgid "规则："
 msgstr ""
 
-#: app/scripts/oss-common.js:738
+#: app/scripts/oss-common.js:739
 msgid "角色不存在"
 msgstr ""
 
@@ -1703,7 +1705,7 @@ msgstr ""
 msgid "角色名称"
 msgstr ""
 
-#: app/scripts/oss-common.js:734
+#: app/scripts/oss-common.js:735
 msgid "角色名称含有不支持的字符"
 msgstr ""
 
@@ -1713,11 +1715,11 @@ msgstr ""
 msgid "角色名称："
 msgstr ""
 
-#: app/scripts/oss-common.js:736
+#: app/scripts/oss-common.js:737
 msgid "角色已存在"
 msgstr ""
 
-#: app/scripts/oss-common.js:768
+#: app/scripts/oss-common.js:769
 msgid "角色已经授权了该策略"
 msgstr ""
 
@@ -1725,19 +1727,19 @@ msgstr ""
 msgid "角色授权"
 msgstr ""
 
-#: app/scripts/oss-common.js:737
+#: app/scripts/oss-common.js:738
 msgid "角色数已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:770
+#: app/scripts/oss-common.js:771
 msgid "角色未授权该策略"
 msgstr ""
 
-#: app/scripts/oss-common.js:769
+#: app/scripts/oss-common.js:770
 msgid "角色添加的授权策略已达最大限制"
 msgstr ""
 
-#: app/scripts/oss-common.js:739
+#: app/scripts/oss-common.js:740
 msgid "角色还存在策略规则"
 msgstr ""
 
@@ -1792,7 +1794,7 @@ msgstr ""
 msgid "语言设置"
 msgstr ""
 
-#: app/scripts/oss-common.js:727
+#: app/scripts/oss-common.js:728
 msgid "请求超时"
 msgstr ""
 
@@ -1971,7 +1973,7 @@ msgstr ""
 msgid "选择语言"
 msgstr ""
 
-#: app/scripts/oss-common.js:746
+#: app/scripts/oss-common.js:747
 msgid "邮箱格式错误"
 msgstr ""
 
@@ -2020,15 +2022,15 @@ msgstr ""
 msgid "限制数字范围："
 msgstr ""
 
-#: app/scripts/oss-common.js:364
+#: app/scripts/oss-common.js:365
 msgid "青岛"
 msgstr ""
 
-#: app/scripts/oss-common.js:725
+#: app/scripts/oss-common.js:726
 msgid "预处理错误"
 msgstr ""
 
-#: app/scripts/oss-common.js:374
+#: app/scripts/oss-common.js:375
 msgid "香港"
 msgstr ""
 
@@ -2038,7 +2040,7 @@ msgstr ""
 msgid "默认版本"
 msgstr ""
 
-#: app/scripts/oss-common.js:761
+#: app/scripts/oss-common.js:762
 msgid "默认版本号不能删除"
 msgstr ""
 
@@ -2046,6 +2048,6 @@ msgstr ""
 msgid "默认设置："
 msgstr ""
 
-#: app/scripts/oss-common.js:787
+#: app/scripts/oss-common.js:788
 msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""
