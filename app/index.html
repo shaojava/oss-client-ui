@@ -19,7 +19,7 @@
 </head>
 <body  id="index-page">
 <div ng-if="!bucketsLoaded" class="loading-page"></div>
-<a ng-if="winNews.data" ng-click="exportNewsWin();" class="news-tooltip">News!</a>
+<a ng-if="showNews && winNews.data" ng-click="exportNewsWin();" class="news-tooltip">News!</a>
 <div class="wrapper" ng-show="bucketsLoaded">
     <div class="left-sidebar" ng-class="{'has-current-locaiton':currentLocation,'custom-client':isCustomClient}">
         <div class="left-header">

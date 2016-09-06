@@ -23,7 +23,7 @@ angular.module('ossClientUiApp')
          * 是否显示图片服务器设置
          */
         $scope.showChannel = OSSConfig.showChannel();
-
+        $scope.showNews = OSSConfig.showNews();
         /**
          *加速服务
         */
@@ -466,14 +466,15 @@ angular.module('ossClientUiApp')
             {
                 name: 'log',
                 title: gettext('错误日志')
-            },
-            {
-              name: 'news',
-              title: gettext('最新资讯'),
-              active:true
             }
         ];
-
+        if(OSSNews.showNews()){
+          $scope.tabs.push({
+            name: 'news',
+            title: gettext('最新资讯'),
+            active:true
+          });
+        }
         //选中tab
         $scope.$on('toggleTransQueue', function ($event, isShow, currentTab) {
             if (!angular.isUndefined(currentTab)) {

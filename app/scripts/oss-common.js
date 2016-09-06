@@ -139,6 +139,9 @@ angular.module('OSSCommon', [
       return signStr.replace(/\//g, "-");
     }
     return {
+      showNews:function(){
+        return OSSConfig.showNews();
+      },
       getNews:function(clientType,newsLocation){
         var params = {
           "res":clientType,
@@ -318,14 +321,15 @@ angular.module('OSSCommon', [
         var config = OSS.invoke('configInfo');
         if (!config) {
             config = {
-                source: "",
+                source: "sk",
                 disable_location_select: 0,
                 hideLogo:false,
                 showchannel:false,
                 showrefer:false,
                 showLanSetting:true,
-                showRam:true,
-                defaultLan:"zh_CN",
+                showRam:false,
+                showNews:false,
+                defaultLan:"en_US",
                 host: "aliyuncs.com",
                 news:{
                   isPreview:false,
@@ -426,7 +430,7 @@ angular.module('OSSCommon', [
              * @returns {boolean}
              */
             isCustomClient: function () {
-                return config.source && config.source != '' && config.source != 'taiwan' && config.source != 'jinrongyun';
+                return config.source && config.source != '' && config.source != 'sk' && config.source != 'wg' && config.source != 'taiwan' && config.source != 'jinrongyun';
             },
             /**
              * 是否是贵州的定制客户端
@@ -473,6 +477,9 @@ angular.module('OSSCommon', [
              */
             showRam:function(){
               return !!config.showRam;
+            },
+            showNews:function(){
+              return !!config.showNews;
             },
             /**
              * 是否显示图片服务器设置
