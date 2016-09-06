@@ -35,7 +35,7 @@
             <label><input type="checkbox" ng-model="isCloudHost"/>
               <span translate>本机是ECS云主机</span></label>
           </div>
-          <div class="pull-right" style="{{isCustomClient?'width:100%;':'width:120px;'}}">
+          <div class="pull-right" style="{{isCustomClient?'width:100%;':'width:150px;'}}">
               <location-select select-location="region" login-networktype="netWorkType" default-location="{{defaultLocation}}" disable-select="checkingLocation||(!isCloudHost && !isCustomClient)"
                                place-holder="{{regionSelectTip}}"/>
 
@@ -48,7 +48,7 @@
               <span translate>自定义服务器地址</span>
             </a>
           </div>
-          <div ng-if="showLanSetting" class="pull-right" style="{{isCustomClient?'width:100%;':'width:120px;'}}">
+          <div ng-if="showLanSetting" class="pull-right" style="{{isCustomClient?'width:100%;':'width:150px;'}}">
             <ui-select ng-model="lanLists.selected" search-enabled="true" on-select="selectLan($item)">
               <ui-select-match placeholder="{{'选择语言'|translate}}">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices repeat="lanItem in lanLists">
