@@ -65,16 +65,19 @@
           </fieldset>
         </div>
         <div class="col-xs-6">
-          <fieldset>
-            <legend translate>Content-Disposition设置</legend>
+          <fieldset class="tooltip-container-disposition">
+            <legend>
+              <span translate>Content-Disposition设置</span>
+              <i class="glyphicon glyphicon-info-sign" tooltip-placement="top" tooltip="{{'Http头设置，如果是开启状态，则下载该文件的时候会默认设置成以附件形式下载；否则，如果是浏览器支持直接打开的文件类型，则直接在浏览器中打开。'|translate}}"></i>
+            </legend>
             <div class="row">
               <label for="content-disposition-setting" class="col-xs-5 text-right control-label" translate>默认设置：</label>
               <div class="col-xs-7">
                 <label style="margin-right: 15px">
-                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="1" type="radio"/> <span translate>开启</span>
+                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="1" type="radio"/> <span translate>启用</span>
                 </label>
                 <label>
-                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="0" type="radio"/> <span translate>关闭</span>
+                  <input name="content-disposition-setting" ng-model="setContentDispositionDefault.default" value="0" type="radio"/> <span translate>禁用</span>
                 </label>
               </div>
             </div>

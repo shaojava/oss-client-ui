@@ -829,3 +829,11 @@ a.news-tooltip:after {
     top: 280px;
   }
 }
+
+.tooltip-container-disposition{
+  position: absolute;
+  .tooltip{
+    width:200px !important;
+    text-align:left;
+  }
+}

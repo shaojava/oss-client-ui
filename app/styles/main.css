@@ -10489,6 +10489,16 @@ a.news-tooltip:after {
   top: 280px;
 }
 
+/* line 833, ../../app/styles/_app.scss */
+.tooltip-container-disposition {
+  position: absolute;
+}
+/* line 835, ../../app/styles/_app.scss */
+.tooltip-container-disposition .tooltip {
+  width: 200px !important;
+  text-align: left;
+}
+
 /* line 2, ../../app/styles/_modal.scss */
 .add_bucket_modal .bucket-name {
   overflow: hidden;

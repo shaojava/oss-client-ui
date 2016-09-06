@@ -30,7 +30,8 @@ angular
          * @type {boolean|*}
          */
         $scope.isCustomClient = OSSConfig.isCustomClient();
-
+        $scope.hideCustomServer = !!OSSConfig.getConfig().hideCustomServer;
+        $scope.imagePowerbyUrl = OSSConfig.getPowerByImageUrl();
         /**
          * 语言国际化
          * @type {{lan: string}[]}

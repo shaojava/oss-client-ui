@@ -1,0 +1,32 @@
+{
+  "source": "huatong",
+  "disable_location_select": 1,
+  "host": "aliyuncs.com",
+  "news":{
+    "isPreview":false,
+    "clientType":"huitong",
+    "key":"staycloud",
+    "baseUri":"http://ossupdate.jiagouyun.com",
+    "getUri":"/Interface/getNewAd",
+    "clickUri":"/Interface/onAdClick"
+  },
+  "showrefer":false,
+  "showchannel":false,
+  "showLanSetting":false,
+  "showRam":true,
+  "defaultLan":"zh_CN",
+  "locations": [
+    {
+      "location": "oss-cn-hangzhou-hsa",
+      "name": "华通云(外网)",
+      "enable": 1,
+      "network":"internet"
+    },
+    {
+      "location": "oss-cn-hangzhou-hsa-internal",
+      "name": "华通云(内网)",
+      "enable": 1,
+      "network":"intranet"
+    }
+  ]
+}

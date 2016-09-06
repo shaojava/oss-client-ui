@@ -43,11 +43,16 @@
         </div>
         <div class="form-group" >
           <div class="pull-left set-http-server" ng-show="!isCustomClient">
-            <a ng-click="step = 'setHttpServer';host = customHost;">
+            <a ng-show="!hideCustomServer" ng-click="step = 'setHttpServer';host = customHost;">
               <i class="fa button-icon button-setting-icon" style="{{customHost&&customHost.length?'color:rgb(45,146,255);':''}}" ng-class="{'fa-check-square-o':customHost && customHost.length,'fa-cog':!customHost || !customHost.length}" style="font-size: 14px;margin-right:5px;"></i>
               <span translate>自定义服务器地址</span>
             </a>
+            <span ng-if="hideCustomServer">
+              <i class="fa button-icon button-setting-icon" style="{{customHost&&customHost.length?'color:rgb(45,146,255);':''}}" ng-class="{'fa-check-square-o':customHost && customHost.length,'fa-cog':!customHost || !customHost.length}" style="font-size: 14px;margin-right:5px;"></i>
+              <span translate>请选择当前语言</span>
+            </span>
           </div>
+
           <div ng-if="showLanSetting" class="pull-right" style="{{isCustomClient?'width:100%;':'width:150px;'}}">
             <ui-select ng-model="lanLists.selected" search-enabled="true" on-select="selectLan($item)">
               <ui-select-match placeholder="{{'选择语言'|translate}}">{{$select.selected.name}}</ui-select-match>
@@ -157,7 +162,7 @@
         </div>
     </section>
     <div class="login-log" ng-hide="isCustomClient">
-      <img src="images/zy_powerby.png" />
+      <img ng-src="{{imagePowerbyUrl}}" />
     </div>
 </div>
 

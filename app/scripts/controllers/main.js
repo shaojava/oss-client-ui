@@ -13,6 +13,7 @@ angular.module('ossClientUiApp')
          * 是否定制客户端
          * @type {boolean|*}
          */
+        $scope.imagePowerbyUrl = OSSConfig.getPowerByImageUrl();
         $scope.isCustomClient = OSSConfig.isCustomClient();
         $scope.isHideLogo = OSSConfig.isHideLogo();
         /**

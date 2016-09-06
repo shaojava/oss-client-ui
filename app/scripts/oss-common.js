@@ -15,7 +15,10 @@ angular.module('OSSCommon', [
         uiSelectConfig.theme = 'bootstrap';
     }])
   .factory('OSSI18N',['OSSConfig',function(OSSConfig){
-    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'繁體中文',lan:'zh_TW',key:3},{name:'English',lan:'en_US',key:2}]
+    var _lanArrs = [{name:'简体中文',lan:'zh_CN',key:1},{name:'English',lan:'en_US',key:2}];
+    if(OSSConfig.getConfig().source != "sk"){
+      _lanArrs.push({name:'繁體中文',lan:'zh_TW',key:3});
+    }
     return {
       setDefaultLan:function(){
       },
@@ -321,15 +324,16 @@ angular.module('OSSCommon', [
         var config = OSS.invoke('configInfo');
         if (!config) {
             config = {
-                source: "sk",
+                source: "",
                 disable_location_select: 0,
                 hideLogo:false,
                 showchannel:false,
                 showrefer:false,
                 showLanSetting:true,
-                showRam:false,
-                showNews:false,
-                defaultLan:"en_US",
+                showRam:true,
+                showNews:true,
+                hideCustomServer:false,
+                defaultLan:"zh_CN",
                 host: "aliyuncs.com",
                 news:{
                   isPreview:false,
@@ -339,86 +343,91 @@ angular.module('OSSCommon', [
                   getUri:'/Interface/getNewAd',
                   clickUri:'/Interface/onAdClick'
                 },
-                locations: [
-                    {
-                      "location": "oss-cn-guizhou-a",
-                      "name": gettext("互联网"),
-                      "enable": 0,
-                      "network":"internet"
-                    },
-                    {
-                      "location": "oss-cn-guizhou-a-internal",
-                      "name": gettext("政务外网"),
-                      "enable": 0,
-                      "network":"internet"
-                    },
-                    {
-                      "location": "oss-cn-gzzwy-a-internal",
-                      "name": gettext("政务外网"),
-                      "enable": 0,
-                      "network":"intranet"
-                    },
-                    {
-                      "location": "oss-cn-hangzhou",
-                      "name": gettext('杭州'),
-                      "enable": 1
-                    },
-                    {
-                        location: 'oss-cn-qingdao',
-                        name: gettext('青岛'),
-                        enable: 1
-                    },
-                    {
-                        location: 'oss-cn-beijing',
-                        name: gettext('北京'),
-                        enable: 1
-                    },
-                    {
-                        location: 'oss-cn-hongkong',
-                        name: gettext('香港'),
-                        enable: 1
-                    },
-                    {
-                        location: 'oss-cn-shenzhen',
-                        name: gettext('深圳'),
-                        enable: 1
-                    },
-                    {
-                        location: 'oss-cn-shanghai',
-                        name: gettext('上海'),
-                        enable: 1
-                    },
-                    {
-                      location:'oss-ap-southeast-1',
-                      name:gettext('新加坡'),
-                      enable:1
-                    },
-                    {
-                      location: 'oss-us-west-1',
-                      name: gettext('美国'),
-                      enable: 1
-                    },
-                    {
-                      location: 'oss-tw-kaohsiung',
-                      name: gettext('台湾高雄'),
-                      enable: 0
-                    },
-                    {
-                      location:"oss-cn-qdjbp-a",
-                      name: "青岛-金融云",
-                      enable: 0
-                    },
-                    {
-                      location:"oss-cn-shenzhen-finance-1",
-                      name: "深圳-金融云",
-                      enable: 0
-                    },
-                    {
-                      location:"oss-cn-hzjbp-b",
-                      name: "杭州-金融云",
-                      enable: 0
-                    }
-                ]
+              locations: [
+                {
+                  "location": "oss-cn-guizhou-a",
+                  "name": gettext("互联网"),
+                  "enable": 0,
+                  "network":"internet"
+                },
+                {
+                  "location": "oss-cn-guizhou-a-internal",
+                  "name": gettext("政务外网"),
+                  "enable": 0,
+                  "network":"internet"
+                },
+                {
+                  "location": "oss-cn-gzzwy-a-internal",
+                  "name": gettext("政务外网"),
+                  "enable": 0,
+                  "network":"intranet"
+                },
+                {
+                  "location": "oss-cn-hangzhou",
+                  "name": gettext('杭州'),
+                  "enable": 1
+                },
+                {
+                  "location": "oss-cn-shanghai",
+                  "name": gettext("上海"),
+                  "enable": 1
+                },
+                {
+                  "location": "oss-cn-qingdao",
+                  "name": gettext("青岛"),
+                  "enable": 1
+                },
+                {
+                  "location": "oss-cn-beijing",
+                  "name": gettext("北京"),
+                  "enable": 1
+                },
+                {
+                  "location": "oss-cn-shenzhen",
+                  "name": gettext("深圳"),
+                  "enable": 1
+                },
+                {
+                  "location": "oss-cn-hongkong",
+                  "name": gettext("香港"),
+                  "enable": 1
+                },
+                {
+                  "location":"oss-ap-southeast-1",
+                  "name":gettext("新加坡"),
+                  "enable":1
+                },
+                {
+                  "location": "oss-us-east-1",
+                  "name": gettext("美东"),
+                  "enable": 1
+                },
+                {
+                  "location": "oss-us-west-1",
+                  "name": gettext("美西"),
+                  "enable": 1
+                },
+                {
+                  "location": "oss-tw-kaohsiung",
+                  "name": gettext("台湾高雄"),
+                  "enable": 0
+                },
+                {
+                  "location":"oss-cn-qdjbp-a",
+                  "name": "青岛-金融云",
+                  "enable": 0
+                },
+                {
+                  "location":"oss-cn-shenzhen-finance-1",
+                  "name": "深圳-金融云",
+                  "enable": 0
+                },
+                {
+                  "location":"oss-cn-hzjbp-b",
+                  "name": "杭州-金融云",
+                  "enable": 0
+                }
+              ]
             };
         }
         return {
@@ -453,6 +462,13 @@ angular.module('OSSCommon', [
             },
             isGuiYangClient:function () {
               return config.source == 'guiyang';
+            },
+            getPowerByImageUrl:function() {
+              var _imageName = 'zy_powerby';
+              if(config.source && config.source.length > 0){
+                _imageName = _imageName + "_"+config.source.toLowerCase();
+              }
+              return "images/powerby/"+_imageName+".png"
             },
             getConfig: function() {
               return config;

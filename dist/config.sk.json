@@ -1,0 +1,68 @@
+{
+  "source": "sk",
+  "disable_location_select": 0,
+  "hideLogo":false,
+  "showchannel":false,
+  "showrefer":false,
+  "showLanSetting":true,
+  "showRam":false,
+  "showNews":false,
+  "hideCustomServer":true,
+  "defaultLan":"en_US",
+  "host": "aliyuncs.com",
+  "news":{
+    "isPreview":false,
+    "clientType":"sk",
+    "key":"staycloud",
+    "baseUri":"http://ossupdate.jiagouyun.com",
+    "getUri":"/Interface/getNewAd",
+    "clickUri":"/Interface/onAdClick"
+  },
+  "locations": [
+    {
+      "location": "oss-cn-hangzhou",
+      "name": "杭州",
+      "enable": 1
+    },
+    {
+      "location": "oss-cn-shanghai",
+      "name": "上海",
+      "enable": 1
+    },
+    {
+      "location": "oss-cn-qingdao",
+      "name": "青岛",
+      "enable": 1
+    },
+    {
+      "location": "oss-cn-beijing",
+      "name": "北京",
+      "enable": 1
+    },
+    {
+      "location": "oss-cn-shenzhen",
+      "name": "深圳",
+      "enable": 1
+    },
+    {
+      "location": "oss-cn-hongkong",
+      "name": "香港",
+      "enable": 1
+    },
+    {
+      "location":"oss-ap-southeast-1",
+      "name":"新加坡",
+      "enable":1
+    },
+    {
+      "location": "oss-us-east-1",
+      "name": "美东",
+      "enable": 1
+    },
+    {
+      "location": "oss-us-west-1",
+      "name": "美西",
+      "enable": 1
+    }
+  ]
+}
