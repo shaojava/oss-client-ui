@@ -37,8 +37,8 @@
                 <td>{{user.Comments}}</td>
                 <td>{{user.CreateDate|formatTime}}</td>
                 <td>
-                  <a ng-click="manageRam(user,'user');" translate>管理</a>
-                  <a ng-click="manageRam(user,'user','policy');" translate>授权</a>
+                  <nobr><a ng-click="manageRam(user,'user');" translate>管理</a></nobr>
+                  <nobr><a ng-click="manageRam(user,'user','policy');" translate>授权</a></nobr>
                 </td>
               </tr>
             </tbody>
@@ -77,8 +77,8 @@
               <td>{{group.Comments}}</td>
               <td>{{group.CreateDate|formatTime}}</td>
               <td>
-                <a ng-click="manageRam(group,'group');" translate>管理</a>
-                <a ng-click="manageRam(group,'group','policy');" translate>授权</a>
+                <nobr><a ng-click="manageRam(group,'group');" translate>管理</a></nobr>
+                <nobr><a ng-click="manageRam(group,'group','policy');" translate>授权</a></nobr>
               </td>
             </tr>
             </tbody>
@@ -121,8 +121,8 @@
               <td>{{role.Description}}</td>
               <td>{{role.CreateDate|formatTime}}</td>
               <td>
-                <a ng-click="manageRam(role,'role');" translate>管理</a>
-                <a ng-click="manageRam(role,'role','policy');" translate>授权</a>
+                <nobr><a ng-click="manageRam(role,'role');" translate>管理</a></nobr>
+                <nobr><a ng-click="manageRam(role,'role','policy');" translate>授权</a></nobr>
               </td>
             </tr>
             </tbody>
@@ -183,8 +183,8 @@
                 <td>{{policy.AttachmentCount}}</td>
                 <td>{{policy.PolicyType == 'Custom'?('自定义'|translate):('系统'|translate)}}</td>
                 <td>
-                  <a ng-click="manageRam(policy,'policy')" translate>管理</a>
-                  <a ng-if="policy.PolicyType == 'Custom'" ng-click="deletePolicy(policy,$index)" translate>删除</a>
+                  <nobr><a ng-click="manageRam(policy,'policy')" translate>管理</a></nobr>
+                  <nobr><a ng-if="policy.PolicyType == 'Custom'" ng-click="deletePolicy(policy,$index)" translate>删除</a></nobr>
                 </td>
               </tr>
             </tbody>

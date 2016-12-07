@@ -4,12 +4,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
+#: app/views/alert_modal.html:15
+msgid ",你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】复制以下名称创建："
+msgstr ""
+
 #: app/login.html:129
 msgid "(最少6位)"
 msgstr ""
 
-#: app/views/alert_modal.html:15
-msgid ",你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】复制以下名称创建："
+#: app/scripts/oss-common.js:810
+msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""
 
 #: app/index.html:143
@@ -92,13 +96,13 @@ msgstr ""
 msgid "HTTP头"
 msgstr ""
 
+#: app/views/setting_modal.html:71
+msgid "Http头设置，如果是开启状态，则下载该文件的时候会默认设置成以附件形式下载；否则，如果是浏览器支持直接打开的文件类型，则直接在浏览器中打开。"
+msgstr ""
+
 #: app/scripts/services/service.js:3502
 #: app/scripts/services/service.js:3508
 msgid "HTTP属性值格式错误"
-msgstr ""
-
-#: app/views/setting_modal.html:71
-msgid "Http头设置，如果是开启状态，则下载该文件的时候会默认设置成以附件形式下载；否则，如果是浏览器支持直接打开的文件类型，则直接在浏览器中打开。"
 msgstr ""
 
 #: app/scripts/oss-common.js:738
@@ -352,6 +356,10 @@ msgstr ""
 msgid "再输一次"
 msgstr ""
 
+#: app/scripts/controllers/main.js:475
+msgid "最新资讯"
+msgstr ""
+
 #: app/views/set_speed_modal.html:13
 msgid "分"
 msgstr ""
@@ -501,13 +509,13 @@ msgstr ""
 msgid "匹配正则:"
 msgstr ""
 
-#: app/scripts/services/service.js:3062
-msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
-msgstr ""
-
 #: app/views/setting_modal.html:19
 #: app/views/setting_modal.html:40
 msgid "单任务线程数："
+msgstr ""
+
+#: app/scripts/services/service.js:3062
+msgid "单任务线程数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
 #: app/scripts/oss-common.js:731
@@ -539,6 +547,10 @@ msgstr ""
 msgid "取消"
 msgstr ""
 
+#: app/views/create-ram-items.html:85
+msgid "可包含大小写字母、数字、'@'、-'且长度在1~128之间的字符"
+msgstr ""
+
 #: app/views/create-ram-items.html:21
 #: app/views/ram-user-manage.html:62
 msgid "可包含大小写字母、数字、\".\"、\"@\"、\"-\"或中文且长度在0~12之间的字符"
@@ -549,21 +561,17 @@ msgstr ""
 msgid "可包含大小写字母、数字、\".\"、\"@\"或中文且长度在1~64之间的字符"
 msgstr ""
 
-#: app/views/create-ram-items.html:85
-msgid "可包含大小写字母、数字、'@'、-'且长度在1~128之间的字符"
-msgstr ""
-
 #: app/scripts/oss-common.js:412
 msgid "台湾高雄"
-msgstr ""
-
-#: app/scripts/services/service.js:3064
-msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
 #: app/views/setting_modal.html:11
 #: app/views/setting_modal.html:32
 msgid "同时任务数："
+msgstr ""
+
+#: app/scripts/services/service.js:3064
+msgid "同时任务数必须是大于{{min}}小于等于{{max}}的整数"
 msgstr ""
 
 #: app/views/set_image_server_modal.html:9
@@ -814,14 +822,14 @@ msgstr ""
 msgid "所属地区："
 msgstr ""
 
-#: app/scripts/oss-common.js:768
-msgid "手机号码格式错误"
-msgstr ""
-
 #: app/views/create-ram-items.html:24
 #: app/views/ram-user-manage.html:25
 #: app/views/ram-user-manage.html:65
 msgid "手机号："
+msgstr ""
+
+#: app/scripts/oss-common.js:768
+msgid "手机号码格式错误"
 msgstr ""
 
 #: app/index.html:257
@@ -956,16 +964,16 @@ msgstr ""
 msgid "数据请求失败，如果你自定义了服务器地址，请检查是否正常。"
 msgstr ""
 
+#: app/scripts/services/service.js:3559
+msgid "文件{{fileName}}设置http头的错误信息:"
+msgstr ""
+
 #: app/scripts/oss-common.js:729
 msgid "文件Part不存在"
 msgstr ""
 
 #: app/scripts/oss-common.js:730
 msgid "文件Part过时"
-msgstr ""
-
-#: app/scripts/services/service.js:3559
-msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr ""
 
 #: app/scripts/oss-common.js:745
@@ -1079,10 +1087,6 @@ msgstr ""
 msgid "更新时间："
 msgstr ""
 
-#: app/scripts/controllers/main.js:475
-msgid "最新资讯"
-msgstr ""
-
 #: app/login.html:36
 #: app/login.html:89
 msgid "本机是ECS云主机"
@@ -1180,12 +1184,12 @@ msgstr ""
 msgid "添加用户成功！"
 msgstr ""
 
-#: app/views/add_visit_bucket_modal.html:3
-msgid "添加访问的Bucket"
-msgstr ""
-
 #: app/index.html:45
 msgid "添加访问的bucket"
+msgstr ""
+
+#: app/views/add_visit_bucket_modal.html:3
+msgid "添加访问的Bucket"
 msgstr ""
 
 #: app/views/set_http_header_modal.html:42
@@ -1217,12 +1221,12 @@ msgstr ""
 msgid "版本信息"
 msgstr ""
 
-#: app/scripts/oss-common.js:783
-msgid "版本号不存在"
-msgstr ""
-
 #: app/index.html:176
 msgid "版本号："
+msgstr ""
+
+#: app/scripts/oss-common.js:783
+msgid "版本号不存在"
 msgstr ""
 
 #: app/scripts/oss-common.js:782
@@ -1267,14 +1271,14 @@ msgstr ""
 msgid "用户名"
 msgstr ""
 
-#: app/scripts/oss-common.js:763
-msgid "用户名称含有不支持的字符"
-msgstr ""
-
 #: app/views/create-ram-items.html:8
 #: app/views/ram-user-manage.html:46
 #: app/views/ram-user-manage.html:9
 msgid "用户名："
+msgstr ""
+
+#: app/scripts/oss-common.js:763
+msgid "用户名称含有不支持的字符"
 msgstr ""
 
 #: app/scripts/oss-common.js:765
@@ -1399,6 +1403,10 @@ msgstr ""
 msgid "确定要下载整个Bucket吗？"
 msgstr ""
 
+#: app/scripts/services/service.js:1174
+msgid "确定要删除？"
+msgstr ""
+
 #: app/scripts/services/service.js:5437
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr ""
@@ -1417,10 +1425,6 @@ msgstr ""
 
 #: app/scripts/services/service.js:1319
 msgid "确定要删除选择的碎片？"
-msgstr ""
-
-#: app/scripts/services/service.js:1174
-msgid "确定要删除？"
 msgstr ""
 
 #: app/scripts/controllers/main.js:72
@@ -1555,19 +1559,19 @@ msgstr ""
 msgid "策略类型"
 msgstr ""
 
+#: app/views/create-ram-items.html:120
+#: app/views/ram-policy-manage.html:13
+#: app/views/ram-role-manage.html:24
+#: app/views/ram-role-manage.html:53
+msgid "策略规则："
+msgstr ""
+
 #: app/scripts/oss-common.js:794
 msgid "策略规则不正确"
 msgstr ""
 
 #: app/scripts/oss-common.js:758
 msgid "策略规则长度超过限制"
-msgstr ""
-
-#: app/views/create-ram-items.html:120
-#: app/views/ram-policy-manage.html:13
-#: app/views/ram-role-manage.html:24
-#: app/views/ram-role-manage.html:53
-msgid "策略规则："
 msgstr ""
 
 #: app/scripts/oss-common.js:751
@@ -1604,14 +1608,14 @@ msgstr ""
 msgid "组信息修改成功！"
 msgstr ""
 
+#: app/views/ram-group-manage.html:9
+msgid "组名："
+msgstr ""
+
 #: app/views/ram-setting.html:55
 #: app/views/ram-user-manage.html:144
 #: app/views/ram-user-manage.html:179
 msgid "组名称"
-msgstr ""
-
-#: app/views/ram-group-manage.html:9
-msgid "组名："
 msgstr ""
 
 #: app/index.html:291
@@ -1709,14 +1713,14 @@ msgstr ""
 msgid "角色名称"
 msgstr ""
 
-#: app/scripts/oss-common.js:757
-msgid "角色名称含有不支持的字符"
-msgstr ""
-
 #: app/views/create-ram-items.html:80
 #: app/views/ram-role-manage.html:38
 #: app/views/ram-role-manage.html:9
 msgid "角色名称："
+msgstr ""
+
+#: app/scripts/oss-common.js:757
+msgid "角色名称含有不支持的字符"
 msgstr ""
 
 #: app/scripts/oss-common.js:759
@@ -1782,12 +1786,12 @@ msgstr ""
 msgid "设置默认"
 msgstr ""
 
-#: app/scripts/services/service.js:4787
-msgid "设置默认成功！"
-msgstr ""
-
 #: app/views/ram-policy-manage.html:22
 msgid "设置默认："
+msgstr ""
+
+#: app/scripts/services/service.js:4787
+msgid "设置默认成功！"
 msgstr ""
 
 #: app/scripts/services/service.js:1332
@@ -1981,14 +1985,14 @@ msgstr ""
 msgid "选择语言"
 msgstr ""
 
-#: app/scripts/oss-common.js:769
-msgid "邮箱格式错误"
-msgstr ""
-
 #: app/views/create-ram-items.html:32
 #: app/views/ram-user-manage.html:31
 #: app/views/ram-user-manage.html:73
 msgid "邮箱："
+msgstr ""
+
+#: app/scripts/oss-common.js:769
+msgid "邮箱格式错误"
 msgstr ""
 
 #: app/views/callback-setting.html:36
@@ -1999,12 +2003,12 @@ msgstr ""
 msgid "错误"
 msgstr ""
 
-#: app/scripts/controllers/main.js:469
-msgid "错误日志"
-msgstr ""
-
 #: app/scripts/filters/filter.js:89
 msgid "错误："
+msgstr ""
+
+#: app/scripts/controllers/main.js:469
+msgid "错误日志"
 msgstr ""
 
 #: app/views/create-ram-items.html:103
@@ -2054,8 +2058,4 @@ msgstr ""
 
 #: app/views/setting_modal.html:74
 msgid "默认设置："
-msgstr ""
-
-#: app/scripts/oss-common.js:810
-msgid "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""
