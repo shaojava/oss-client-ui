@@ -1377,15 +1377,15 @@ msgstr ""
 
 #: app/scripts/services/service.js:4022
 msgid "确定要删除当前用户吗？"
-msgstr "Are you sure you want to delete the current user?"
+msgstr "Are you sure delete the current user?"
 
 #: app/scripts/services/service.js:4094
 msgid "确定要删除当前用户的AccessKey吗？"
-msgstr "Are you sure you want to delete the current user's AccessKey?"
+msgstr "Are you sure  to delete the current user's AccessKey?"
 
 #: app/scripts/services/service.js:4505
 msgid "确定要删除当前用户组吗？"
-msgstr "Are you sure you want to delete the current user group?"
+msgstr "Are you sure to delete the current user group?"
 
 #: app/scripts/services/service.js:1319
 msgid "确定要删除选择的碎片？"
@@ -1393,7 +1393,7 @@ msgstr "Are you confirm to delete selected fragments?"
 
 #: app/scripts/controllers/main.js:72
 msgid "确定要将该bucket从列表中移除吗？"
-msgstr "Are you sure you want to remove the bucket from the list?"
+msgstr "Are you sure  to remove the bucket from the list?"
 
 #: app/scripts/login.js:260
 msgid "确定要清除安全密码？"
@@ -1401,15 +1401,15 @@ msgstr "Are your confirm to clear the security password?"
 
 #: app/scripts/services/service.js:4086
 msgid "确定要禁用当前AccessKey吗？"
-msgstr "Are you sure you want to disable the current AccessKey?"
+msgstr "Are you sure  to disable the current AccessKey?"
 
 #: app/scripts/services/service.js:4480
 msgid "确定要移除该用户吗？"
-msgstr "Are you sure you want to remove this user?"
+msgstr "Are you sure to remove this user?"
 
 #: app/scripts/services/service.js:4191
 msgid "确定要移除该用户组吗？"
-msgstr "Are you sure you want to remove this user group?"
+msgstr "Are you sure to remove this user group?"
 
 #: app/scripts/services/service.js:98
 msgid "确认"
@@ -1724,15 +1724,15 @@ msgstr "Setting values must be positive integer"
 
 #: app/views/ram-policy-manage.html:65
 msgid "设置默认"
-msgstr "Set the default"
+msgstr "Set to default"
 
 #: app/views/ram-policy-manage.html:22
 msgid "设置默认："
-msgstr "Set the default:"
+msgstr "Set to default:"
 
 #: app/scripts/services/service.js:4787
 msgid "设置默认成功！"
-msgstr "Set the default success!"
+msgstr "Set to default success!"
 
 #: app/scripts/services/service.js:1332
 msgid "详细"
