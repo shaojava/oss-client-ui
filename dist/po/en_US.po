@@ -138,7 +138,7 @@ msgstr "OSS Console Client"
 
 #: app/scripts/services/service.js:1252
 msgid "RAM授权"
-msgstr "RAM Auth"
+msgstr "RAM"
 
 #: app/views/ram-service-modal.html:3
 msgid "RAM服务开启"
