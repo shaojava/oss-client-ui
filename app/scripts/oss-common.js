@@ -35,10 +35,11 @@ angular.module('OSSCommon', [
         if (!_defaultLanKey){
           _defaultLanKey = 'zh_CN';
         }
+
         var _defaultLan = _.find(_lanArrs,function(item){
           return item.lan === _defaultLanKey
         })
-
+        //OSS.invoke('gChangeLanguage',{type:_defaultLan.key})
         var _lan = {type:_defaultLan.key}
         if (OSSClient.gGetLanguage){
           var _l = OSS.invoke('gGetLanguage')
@@ -333,7 +334,7 @@ angular.module('OSSCommon', [
                 showRam:true,
                 showNews:true,
                 hideCustomServer:false,
-                defaultLan:"zh_CN",
+                defaultLan:"en_US", //zh_CN
                 host: "aliyuncs.com",
                 news:{
                   isPreview:false,
@@ -413,19 +414,24 @@ angular.module('OSSCommon', [
                   "enable": 0
                 },
                 {
+                  "location":"oss-cn-hzjbp-a",
+                  "name": gettext("杭州-金融云"),
+                  "enable": 1
+                },
+                {
                   "location":"oss-cn-qdjbp-a",
-                  "name": "青岛-金融云",
-                  "enable": 0
+                  "name": gettext("青岛-金融云"),
+                  "enable": 1
+                },
+                {
+                  "location":"oss-cn-shanghai-finance-1",
+                  "name": gettext("上海-金融云"),
+                  "enable": 1
                 },
                 {
                   "location":"oss-cn-shenzhen-finance-1",
-                  "name": "深圳-金融云",
-                  "enable": 0
-                },
-                {
-                  "location":"oss-cn-hzjbp-b",
-                  "name": "杭州-金融云",
-                  "enable": 0
+                  "name": gettext("深圳-金融云"),
+                  "enable": 1
                 }
               ]
             };

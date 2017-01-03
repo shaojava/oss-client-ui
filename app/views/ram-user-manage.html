@@ -311,7 +311,7 @@
                     <td align="left">{{policy.PolicyType == 'Custom'?('自定义'|translate):('系统'|translate)}}</td>
                     <td align="left">
                       <a ng-if="!policy.exist" ng-click="setPolicy(policy)" translate>授权</a>
-                      <span ng-if="policy.exist" class="text-success">已授权</span>
+                      <span ng-if="policy.exist" class="text-success" translate>已授权</span>
                     </td>
                   </tr>
                   </tbody>

@@ -5239,7 +5239,7 @@ angular.module('ossClientUiApp')
                       OSSRam.createUser($scope.user.userName,$scope.user.displayName,$scope.user.phone,$scope.user.email,$scope.user.desc).then(function(res){
                         console.log("create user result:",res)
                         $rootScope.$broadcast('UpdateRamListData','user',res.User);
-                        alert("用户创建成功！");
+                        alert(gettextCatalog.getString(gettext("用户创建成功！")));
                         $modalInstance.dismiss('cancel');
                         //if($scope.user.defaultKey){
                         //
@@ -5254,7 +5254,7 @@ angular.module('ossClientUiApp')
                       OSSRam.createGroup($scope.group.groupName,$scope.group.desc).then(function(res){
                         console.log("create group result:",res)
                         $rootScope.$broadcast('UpdateRamListData','group');
-                        alert("用户组创建成功！")
+                        alert(gettextCatalog.getString(gettext("用户组创建成功！")))
                         $modalInstance.dismiss('cancel');
                       },function(res){
                         res = {
@@ -5266,7 +5266,7 @@ angular.module('ossClientUiApp')
                       OSSRam.createRole($scope.role.roleName,$scope.role.doc,$scope.role.desc).then(function(res){
 
                         $rootScope.$broadcast('UpdateRamListData','role');
-                        alert("角色创建成功！")
+                        alert(gettextCatalog.getString(gettext("角色创建成功！")))
                         $modalInstance.dismiss('cancel');
                       },function(res){
                         res = {
@@ -5277,7 +5277,7 @@ angular.module('ossClientUiApp')
                     }else if($scope.policy.tabActive){
                       OSSRam.createPolicy($scope.policy.policyName,$scope.policy.policyDocument,$scope.policy.desc).then(function(res){
                         $rootScope.$broadcast('UpdateRamListData','policy');
-                        alert("授权策略创建成功！")
+                        alert(gettextCatalog.getString(gettext("授权策略创建成功！")))
                         $modalInstance.dismiss('cancel');
                       },function(res){
                         res = {

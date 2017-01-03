@@ -12,17 +12,19 @@ msgstr ""
 "X-Generator: Poedit 1.8.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/views/alert_modal.html:15
-msgid ",你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】复制以下名称创建："
-msgstr ""
-", you can press【{{isWindowClient?'Ctrl+C':'⌘ + C’}}】to copy the following "
-"name and create:"
+#: app/views/alert_modal.html:17
+msgid ",你可以按【 ⌘ + C 】复制以下名称创建："
+msgstr ", you can press【 ⌘ + C 】to copy the following name and create:"
+
+#: app/views/alert_modal.html:16
+msgid ",你可以按【 Ctrl + C 】复制以下名称创建："
+msgstr ", you can press【 Ctrl + C 】to copy the following name and create:"
 
 #: app/login.html:129
 msgid "(最少6位)"
 msgstr "(At least 6 characters)"
 
-#: app/scripts/oss-common.js:810
+#: app/scripts/oss-common.js:816
 msgid ""
 "（可能是你登录时选择的区域与当前的网络环境不匹配，请退出客户端后重新选择）"
 msgstr ""
@@ -51,7 +53,7 @@ msgstr "3. The name of folder should be limit between 1-254 characters"
 msgid "4. Object总长度必须在1-1023之间"
 msgstr "4. The total length of object must be between 1-1023 characters."
 
-#: app/scripts/oss-common.js:732
+#: app/scripts/oss-common.js:738
 msgid "Access Key ID不存在"
 msgstr "Access Key ID does not exist"
 
@@ -63,11 +65,11 @@ msgstr "AccessKey"
 msgid "Bucket下载"
 msgstr "Download Bucket"
 
-#: app/scripts/oss-common.js:725
+#: app/scripts/oss-common.js:731
 msgid "Bucket不为空"
 msgstr "Bucket can not be empty"
 
-#: app/scripts/oss-common.js:744
+#: app/scripts/oss-common.js:750
 msgid "Bucket不存在"
 msgstr "Bucket does not exist"
 
@@ -75,11 +77,11 @@ msgstr "Bucket does not exist"
 msgid "Bucket名称："
 msgstr "Bucket Name:"
 
-#: app/scripts/oss-common.js:724
+#: app/scripts/oss-common.js:730
 msgid "Bucket已经存在"
 msgstr "Bucket is already existed"
 
-#: app/scripts/oss-common.js:752
+#: app/scripts/oss-common.js:758
 msgid "Bucket数目超过限制"
 msgstr "The amount of buckets exceed the limit"
 
@@ -120,15 +122,15 @@ msgstr ""
 msgid "HTTP属性值格式错误"
 msgstr "HTTP attribute value format is wrong."
 
-#: app/scripts/oss-common.js:738
+#: app/scripts/oss-common.js:744
 msgid "Logging操作中有无效的目标bucket"
 msgstr "Invaild target buckets exist in the Logging"
 
-#: app/scripts/oss-common.js:746
+#: app/scripts/oss-common.js:752
 msgid "Multipart Upload ID不存在"
 msgstr "Mulitpart Upload ID does not exist"
 
-#: app/scripts/oss-common.js:739
+#: app/scripts/oss-common.js:745
 msgid "OSS内部发生错误"
 msgstr "OSS internal Error"
 
@@ -161,7 +163,7 @@ msgstr "Refer Settings:"
 msgid "Style设置："
 msgstr "Style Settings:"
 
-#: app/scripts/oss-common.js:740
+#: app/scripts/oss-common.js:746
 msgid "XML格式非法"
 msgstr "XML format does not permit"
 
@@ -191,9 +193,13 @@ msgstr "Upload :"
 msgid "上传队列"
 msgstr "Upload Queue:"
 
-#: app/scripts/oss-common.js:372
+#: app/scripts/oss-common.js:373
 msgid "上海"
 msgstr "China East 2(Shanghai)"
+
+#: app/scripts/oss-common.js:428
+msgid "上海-金融云"
+msgstr "Shanghai-financial"
 
 #: app/index.html:181
 msgid "下一期功能预告"
@@ -231,7 +237,7 @@ msgstr "No tips anymore"
 msgid "不同区域的Bucket之间不能复制"
 msgstr "Cannot duplicate buckets between two different region."
 
-#: app/scripts/oss-common.js:741
+#: app/scripts/oss-common.js:747
 msgid "不支持的方法"
 msgstr "Unsupported methods"
 
@@ -251,7 +257,7 @@ msgstr "search"
 msgid "了解详情"
 msgstr "more"
 
-#: app/scripts/oss-common.js:349
+#: app/scripts/oss-common.js:350
 msgid "互联网"
 msgstr "Internet"
 
@@ -495,7 +501,7 @@ msgstr "Loading…"
 msgid "加速服务"
 msgstr "accelerate server"
 
-#: app/scripts/oss-common.js:382
+#: app/scripts/oss-common.js:383
 msgid "北京"
 msgstr "China North 2(Beijing)"
 
@@ -513,11 +519,11 @@ msgstr ""
 "Single task thread must be integer, it’s value lager than {{min}} and less "
 "than or equal {{max}}"
 
-#: app/scripts/oss-common.js:731
+#: app/scripts/oss-common.js:737
 msgid "参数格式错误"
 msgstr "Parameter Format is wrong"
 
-#: app/scripts/oss-common.js:749
+#: app/scripts/oss-common.js:755
 msgid "发起请求的时间和服务器时间超出15分钟"
 msgstr "The time between request and server response is more than 15 minutes"
 
@@ -525,7 +531,7 @@ msgstr "The time between request and server response is more than 15 minutes"
 #: app/scripts/services/service.js:722 app/scripts/services/service.js:75
 #: app/views/add_bucket_modal.html:52 app/views/add_visit_bucket_modal.html:27
 #: app/views/create-ram-items.html:145
-#: app/views/del_bucket_confirm_modal.html:23
+#: app/views/del_bucket_confirm_modal.html:23 app/views/queue-item.html:12
 #: app/views/ram-group-manage.html:250 app/views/ram-policy-manage.html:92
 #: app/views/ram-role-manage.html:191 app/views/ram-service-modal.html:20
 #: app/views/ram-setting.html:204 app/views/ram-user-manage.html:337
@@ -553,7 +559,7 @@ msgstr ""
 "It can contain uppercase letters, lowercase letters, digits, Chinese or "
 "special character as \".\", \"@\", \"-\" and the length is between 1 and 64."
 
-#: app/scripts/oss-common.js:412
+#: app/scripts/oss-common.js:413
 msgid "台湾高雄"
 msgstr "Kaohsiung, Taiwan"
 
@@ -645,11 +651,11 @@ msgstr "Security Password"
 msgid "完成"
 msgstr "Complete"
 
-#: app/scripts/oss-common.js:726
+#: app/scripts/oss-common.js:732
 msgid "实体过大"
 msgstr "object is too large"
 
-#: app/scripts/oss-common.js:727
+#: app/scripts/oss-common.js:733
 msgid "实体过小"
 msgstr "object is too small"
 
@@ -719,6 +725,7 @@ msgid "已存在相同名称的文件夹"
 msgstr "The same file name is already existed"
 
 #: app/views/ram-group-manage.html:229 app/views/ram-role-manage.html:170
+#: app/views/ram-user-manage.html:314
 msgid "已授权"
 msgstr "Authorized"
 
@@ -733,6 +740,7 @@ msgid "开启"
 msgstr "Open"
 
 #: app/scripts/services/service.js:429 app/scripts/services/service.js:650
+#: app/views/queue-item.html:11
 msgid "开始"
 msgstr "Begin"
 
@@ -755,7 +763,7 @@ msgstr ""
 msgid "当前状态:"
 msgstr "Current state"
 
-#: app/scripts/oss-common.js:770
+#: app/scripts/oss-common.js:776
 msgid "当前用户还有创建的AK"
 msgstr "The current user also has an AK"
 
@@ -821,7 +829,7 @@ msgstr "Region:"
 msgid "手机号："
 msgstr "Phone:"
 
-#: app/scripts/oss-common.js:768
+#: app/scripts/oss-common.js:774
 msgid "手机号码格式错误"
 msgstr "Wrong format of phone number"
 
@@ -829,7 +837,7 @@ msgstr "Wrong format of phone number"
 msgid "打开日志文件夹"
 msgstr "Open log folder"
 
-#: app/scripts/oss-common.js:723
+#: app/scripts/oss-common.js:729
 msgid "拒绝访问"
 msgstr "Access denied"
 
@@ -862,31 +870,35 @@ msgstr "Authorization Time"
 msgid "授权策略"
 msgstr "Policy"
 
-#: app/scripts/oss-common.js:781
+#: app/scripts/oss-common.js:787
 msgid "授权策略下还有其他版本"
 msgstr "There are other versions under the authorization policy"
 
-#: app/scripts/oss-common.js:779
+#: app/scripts/oss-common.js:785
 msgid "授权策略下还有用户"
 msgstr "There are also users under the authorization policy"
 
-#: app/scripts/oss-common.js:780
+#: app/scripts/oss-common.js:786
 msgid "授权策略下还有用户组"
 msgstr "There are also groups under the authorization policy"
 
-#: app/scripts/oss-common.js:778
+#: app/scripts/oss-common.js:784
 msgid "授权策略不存在"
 msgstr "The Authorize  Policy does not exist."
+
+#: app/scripts/services/service.js:5280
+msgid "授权策略创建成功！"
+msgstr "The Authorize Policy create success!"
 
 #: app/scripts/services/service.js:5060
 msgid "授权策略删除成功！"
 msgstr "Delete Authorize  Policy  success!"
 
-#: app/scripts/oss-common.js:776
+#: app/scripts/oss-common.js:782
 msgid "授权策略已存在"
 msgstr "Authorize  Policy  does exist!"
 
-#: app/scripts/oss-common.js:777
+#: app/scripts/oss-common.js:783
 msgid "授权策略已达最大限制"
 msgstr "The maximum number of policy has been reached"
 
@@ -917,11 +929,11 @@ msgstr "Description:"
 msgid "操作"
 msgstr "Action"
 
-#: app/scripts/oss-common.js:355 app/scripts/oss-common.js:361
+#: app/scripts/oss-common.js:356 app/scripts/oss-common.js:362
 msgid "政务外网"
 msgstr "Government public internet"
 
-#: app/scripts/oss-common.js:707
+#: app/scripts/oss-common.js:713
 msgid ""
 "数据加载失败，当前您电脑的时间比服务器时间快{{d}}天{{h}}小时{{m}}分钟{{s}}秒,"
 "请调整您的电脑时间后重试。"
@@ -930,7 +942,7 @@ msgstr ""
 "about {{d}}days {{h}}hours {{m}}minutes {{s}}seconds, please modify your "
 "computer system date."
 
-#: app/scripts/oss-common.js:708
+#: app/scripts/oss-common.js:714
 msgid ""
 "数据加载失败，当前您电脑的时间比服务器时间慢{{d}}天{{h}}小时{{m}}分钟{{s}}秒,"
 "请调整您的电脑时间后重试。"
@@ -949,15 +961,15 @@ msgstr ""
 msgid "文件{{fileName}}设置http头的错误信息:"
 msgstr "The {{fileName}} file sets http header error information:"
 
-#: app/scripts/oss-common.js:729
+#: app/scripts/oss-common.js:735
 msgid "文件Part不存在"
 msgstr "File Part does not exist"
 
-#: app/scripts/oss-common.js:730
+#: app/scripts/oss-common.js:736
 msgid "文件Part过时"
 msgstr "File Part is out of time"
 
-#: app/scripts/oss-common.js:745
+#: app/scripts/oss-common.js:751
 msgid "文件不存在"
 msgstr "File does not exist"
 
@@ -973,11 +985,11 @@ msgstr "File name:"
 msgid "文件夹名称格式错误"
 msgstr "Folder name format is wrong"
 
-#: app/scripts/oss-common.js:728
+#: app/scripts/oss-common.js:734
 msgid "文件组过大"
 msgstr "File group is too large"
 
-#: app/scripts/oss-common.js:397
+#: app/scripts/oss-common.js:398
 msgid "新加坡"
 msgstr "Singapore"
 
@@ -993,27 +1005,27 @@ msgstr "create a bucket"
 msgid "新建文件夹"
 msgstr "New folder"
 
-#: app/scripts/oss-common.js:733
+#: app/scripts/oss-common.js:739
 msgid "无效的Bucket名字"
 msgstr "Invaild bucket name"
 
-#: app/scripts/oss-common.js:735
+#: app/scripts/oss-common.js:741
 msgid "无效的Object名字"
 msgstr "Invaild object name"
 
-#: app/scripts/oss-common.js:736
+#: app/scripts/oss-common.js:742
 msgid "无效的Part"
 msgstr "Invaild Part"
 
-#: app/scripts/oss-common.js:737
+#: app/scripts/oss-common.js:743
 msgid "无效的part顺序"
 msgstr "Invaild Part order"
 
-#: app/scripts/oss-common.js:734
+#: app/scripts/oss-common.js:740
 msgid "无效的摘要"
 msgstr "Invaild abstract"
 
-#: app/scripts/oss-common.js:747
+#: app/scripts/oss-common.js:753
 msgid "无法处理的方法"
 msgstr "Unknown processing methods"
 
@@ -1046,7 +1058,7 @@ msgid "显示名："
 msgstr "Display Name:"
 
 #: app/scripts/filters/filter.js:83 app/scripts/services/service.js:460
-#: app/scripts/services/service.js:681
+#: app/scripts/services/service.js:681 app/views/queue-item.html:10
 msgid "暂停"
 msgstr "pause"
 
@@ -1068,9 +1080,13 @@ msgstr "The host computer is ECS"
 msgid "机器码"
 msgstr "Machine code"
 
-#: app/scripts/oss-common.js:367
+#: app/scripts/oss-common.js:368
 msgid "杭州"
 msgstr "China East 1(Hangzhou)"
+
+#: app/scripts/oss-common.js:418
+msgid "杭州-金融云"
+msgstr "Hangzhou-financial"
 
 #: app/views/ram-policy-manage.html:60
 msgid "查看"
@@ -1134,9 +1150,13 @@ msgstr ""
 "Note: if the downloads queue is already completed,  the function of deleting "
 "loaded list is invalid."
 
-#: app/scripts/oss-common.js:387
+#: app/scripts/oss-common.js:388
 msgid "深圳"
 msgstr "China South 1(Shenzhen)"
+
+#: app/scripts/oss-common.js:433
+msgid "深圳-金融云"
+msgstr "Shenzhen-financial"
 
 #: app/index.html:105 app/index.html:47 app/views/ram-group-manage.html:119
 msgid "添加"
@@ -1191,11 +1211,11 @@ msgstr "Version"
 msgid "版本号："
 msgstr "Version："
 
-#: app/scripts/oss-common.js:783
+#: app/scripts/oss-common.js:789
 msgid "版本号不存在"
 msgstr "Version does not exist"
 
-#: app/scripts/oss-common.js:782
+#: app/scripts/oss-common.js:788
 msgid "版本数已达最大限制"
 msgstr "The maximum number of versions has been reached"
 
@@ -1207,15 +1227,15 @@ msgstr "Status:"
 msgid "状态"
 msgstr "Status"
 
-#: app/scripts/oss-common.js:772
+#: app/scripts/oss-common.js:778
 msgid "用户AK不存在"
 msgstr "User AK does not exist"
 
-#: app/scripts/oss-common.js:771
+#: app/scripts/oss-common.js:777
 msgid "用户AK已达最大限制"
 msgstr "The maximum number of AK has been reached"
 
-#: app/scripts/oss-common.js:767
+#: app/scripts/oss-common.js:773
 msgid "用户不存在"
 msgstr "User does not exist"
 
@@ -1226,6 +1246,10 @@ msgstr "User"
 #: app/scripts/services/service.js:4013
 msgid "用户信息修改成功！"
 msgstr "User information modified successfully!"
+
+#: app/scripts/services/service.js:5242
+msgid "用户创建成功！"
+msgstr "User created successfully!"
 
 #: app/scripts/services/service.js:4024
 msgid "用户删除成功！"
@@ -1241,15 +1265,15 @@ msgstr "User Name"
 msgid "用户名："
 msgstr "User Name:"
 
-#: app/scripts/oss-common.js:763
+#: app/scripts/oss-common.js:769
 msgid "用户名称含有不支持的字符"
 msgstr "User name contains unsupported characters"
 
-#: app/scripts/oss-common.js:765
+#: app/scripts/oss-common.js:771
 msgid "用户已存在"
 msgstr "User existed"
 
-#: app/scripts/oss-common.js:785
+#: app/scripts/oss-common.js:791
 msgid "用户已经授权了该策略"
 msgstr "The user has authorized the policy"
 
@@ -1257,19 +1281,19 @@ msgstr "The user has authorized the policy"
 msgid "用户授权"
 msgstr "User Authorization"
 
-#: app/scripts/oss-common.js:766
+#: app/scripts/oss-common.js:772
 msgid "用户数量已达最大限制"
 msgstr "Maximum number of users has been reached"
 
-#: app/scripts/oss-common.js:764
+#: app/scripts/oss-common.js:770
 msgid "用户显示名称含有不支持的字符"
 msgstr "User display name contains unsupported characters"
 
-#: app/scripts/oss-common.js:787
+#: app/scripts/oss-common.js:793
 msgid "用户未授权该策略"
 msgstr "User does not authorize this policy"
 
-#: app/scripts/oss-common.js:786
+#: app/scripts/oss-common.js:792
 msgid "用户添加的授权策略已达最大限制"
 msgstr "The user-added authorization policy has reached the maximum limit"
 
@@ -1277,27 +1301,31 @@ msgstr "The user-added authorization policy has reached the maximum limit"
 msgid "用户管理"
 msgstr "User"
 
-#: app/scripts/oss-common.js:756
+#: app/scripts/oss-common.js:762
 msgid "用户组下面还有用户"
 msgstr "There are users below the user group"
 
-#: app/scripts/oss-common.js:775
+#: app/scripts/oss-common.js:781
 msgid "用户组不存在"
 msgstr "The group does not exist"
+
+#: app/scripts/services/service.js:5257
+msgid "用户组创建成功！"
+msgstr "The group create successfully!"
 
 #: app/scripts/services/service.js:4507
 msgid "用户组删除成功！"
 msgstr "Group deleted successfully!"
 
-#: app/scripts/oss-common.js:773
+#: app/scripts/oss-common.js:779
 msgid "用户组已存在"
 msgstr "The Group already exists"
 
-#: app/scripts/oss-common.js:788
+#: app/scripts/oss-common.js:794
 msgid "用户组已经授权了该策略"
 msgstr "The group has already authorized this policy"
 
-#: app/scripts/oss-common.js:774
+#: app/scripts/oss-common.js:780
 msgid "用户组已达最大限制"
 msgstr "The group has reached the maximum limit"
 
@@ -1305,33 +1333,33 @@ msgstr "The group has reached the maximum limit"
 msgid "用户组授权"
 msgstr "Group Authorization"
 
-#: app/scripts/oss-common.js:790
+#: app/scripts/oss-common.js:796
 msgid "用户组未授权该策略"
 msgstr "The group does not authorize the policy"
 
-#: app/scripts/oss-common.js:789
+#: app/scripts/oss-common.js:795
 msgid "用户组添加的授权策略已达最大限制"
 msgstr ""
 "The authorization policy added by the user group has reached the maximum "
 "limit"
 
-#: app/scripts/oss-common.js:755
+#: app/scripts/oss-common.js:761
 msgid "用户组还有加入的授权"
 msgstr "User groups are also authorized to join"
 
-#: app/scripts/oss-common.js:754
+#: app/scripts/oss-common.js:760
 msgid "用户还有加入的授权"
 msgstr "The user is also authorized to join"
 
-#: app/scripts/oss-common.js:753
+#: app/scripts/oss-common.js:759
 msgid "用户还有加入的组"
-msgstr "用户还有加入的组"
+msgstr "The use is joined to group"
 
 #: app/login.html:68
 msgid "登&nbsp;&nbsp;&nbsp;&nbsp;录"
 msgstr "Login"
 
-#: app/scripts/oss-common.js:832
+#: app/scripts/oss-common.js:838
 msgid "登录失败，网络请求错误"
 msgstr "The user also has joined groups"
 
@@ -1452,8 +1480,8 @@ msgid "移出"
 msgstr "Out"
 
 #: app/scripts/services/service.js:544 app/scripts/services/service.js:761
-#: app/views/ram-group-manage.html:167 app/views/ram-role-manage.html:108
-#: app/views/ram-user-manage.html:252
+#: app/views/queue-item.html:13 app/views/ram-group-manage.html:167
+#: app/views/ram-role-manage.html:108 app/views/ram-user-manage.html:252
 msgid "移除"
 msgstr "remove"
 
@@ -1516,15 +1544,15 @@ msgstr "Type"
 msgid "策略规则："
 msgstr "Policy rules:"
 
-#: app/scripts/oss-common.js:794
+#: app/scripts/oss-common.js:800
 msgid "策略规则不正确"
 msgstr "The policy rule is incorrect"
 
-#: app/scripts/oss-common.js:758
+#: app/scripts/oss-common.js:764
 msgid "策略规则长度超过限制"
 msgstr "Policy rule length exceeds the limit"
 
-#: app/scripts/oss-common.js:751
+#: app/scripts/oss-common.js:757
 msgid "签名错误"
 msgstr "Signature error"
 
@@ -1574,23 +1602,23 @@ msgstr "Numbers"
 msgid "编辑"
 msgstr "edit"
 
-#: app/scripts/oss-common.js:743
+#: app/scripts/oss-common.js:749
 msgid "缺少内容长度"
 msgstr "Missing content length"
 
-#: app/scripts/oss-common.js:742
+#: app/scripts/oss-common.js:748
 msgid "缺少参数"
 msgstr "Missing parameters"
 
-#: app/scripts/oss-common.js:808
+#: app/scripts/oss-common.js:814
 msgid "网络请求错误"
 msgstr "Network requests error"
 
-#: app/scripts/oss-common.js:402
+#: app/scripts/oss-common.js:403
 msgid "美东"
 msgstr "US East 1(Virginia)"
 
-#: app/scripts/oss-common.js:407
+#: app/scripts/oss-common.js:408
 msgid "美西"
 msgstr "US West 1(Silicon Valley)"
 
@@ -1634,7 +1662,7 @@ msgstr "Get address"
 msgid "规则："
 msgstr "Rule:"
 
-#: app/scripts/oss-common.js:761
+#: app/scripts/oss-common.js:767
 msgid "角色不存在"
 msgstr "Role does not exist"
 
@@ -1645,6 +1673,10 @@ msgstr "Role information"
 #: app/scripts/services/service.js:4699
 msgid "角色信息修改成功！"
 msgstr "Role information successfully modified!"
+
+#: app/scripts/services/service.js:5269
+msgid "角色创建成功！"
+msgstr "Role create successfully!"
 
 #: app/scripts/services/service.js:4683
 msgid "角色删除成功！"
@@ -1659,15 +1691,15 @@ msgstr "Role Name"
 msgid "角色名称："
 msgstr "Role Name:"
 
-#: app/scripts/oss-common.js:757
+#: app/scripts/oss-common.js:763
 msgid "角色名称含有不支持的字符"
 msgstr "Role names contain unsupported characters"
 
-#: app/scripts/oss-common.js:759
+#: app/scripts/oss-common.js:765
 msgid "角色已存在"
 msgstr "Role already exists"
 
-#: app/scripts/oss-common.js:791
+#: app/scripts/oss-common.js:797
 msgid "角色已经授权了该策略"
 msgstr "The role has already authorized the policy"
 
@@ -1675,20 +1707,20 @@ msgstr "The role has already authorized the policy"
 msgid "角色授权"
 msgstr "Role Authorization"
 
-#: app/scripts/oss-common.js:760
+#: app/scripts/oss-common.js:766
 msgid "角色数已达最大限制"
 msgstr "The maximum number of characters has been reached"
 
-#: app/scripts/oss-common.js:793
+#: app/scripts/oss-common.js:799
 msgid "角色未授权该策略"
 msgstr "The role is not authorized for this policy"
 
-#: app/scripts/oss-common.js:792
+#: app/scripts/oss-common.js:798
 msgid "角色添加的授权策略已达最大限制"
 msgstr ""
 "The authorization policy for the role has been added to the maximum limit"
 
-#: app/scripts/oss-common.js:762
+#: app/scripts/oss-common.js:768
 msgid "角色还存在策略规则"
 msgstr "Roles also have policy rules"
 
@@ -1742,7 +1774,7 @@ msgstr "Details"
 msgid "语言设置"
 msgstr "Language Settings"
 
-#: app/scripts/oss-common.js:750
+#: app/scripts/oss-common.js:756
 msgid "请求超时"
 msgstr "Request time out"
 
@@ -1912,7 +1944,7 @@ msgstr "Select a language:"
 msgid "邮箱："
 msgstr "mailbox:"
 
-#: app/scripts/oss-common.js:769
+#: app/scripts/oss-common.js:775
 msgid "邮箱格式错误"
 msgstr "The mailbox is malformed"
 
@@ -1950,15 +1982,19 @@ msgstr "The length of the text shoud be between 0 and 128"
 msgid "限制数字范围："
 msgstr "limit the range of number"
 
-#: app/scripts/oss-common.js:377
+#: app/scripts/oss-common.js:378
 msgid "青岛"
 msgstr "China North 1(Qingdao)"
 
-#: app/scripts/oss-common.js:748
+#: app/scripts/oss-common.js:423
+msgid "青岛-金融云"
+msgstr "Qingdao-financial"
+
+#: app/scripts/oss-common.js:754
 msgid "预处理错误"
 msgstr "Preprocessing is wrong"
 
-#: app/scripts/oss-common.js:392
+#: app/scripts/oss-common.js:393
 msgid "香港"
 msgstr "Hong Kong"
 
@@ -1967,13 +2003,24 @@ msgstr "Hong Kong"
 msgid "默认版本"
 msgstr "The default version"
 
-#: app/scripts/oss-common.js:784
+#: app/scripts/oss-common.js:790
 msgid "默认版本号不能删除"
 msgstr "The default version number can not be deleted"
 
 #: app/views/setting_modal.html:74
 msgid "默认设置："
 msgstr "Default :  "
+
+#~ msgid ""
+#~ ",你可以按【{{isWindowClient?\"Ctrl+C\":\"⌘ + C\"}}】复制以下名称创建："
+#~ msgstr ""
+#~ ", you can press【{{isWindowClient?\"Ctrl+C\":\"⌘ + C\"}}】to copy the "
+#~ "following name and create:"
+
+#~ msgid ",你可以按【{{isWindowClient?'Ctrl+C':'⌘ + C'}}】复制以下名称创建："
+#~ msgstr ""
+#~ ", you can press【{{isWindowClient?'Ctrl+C':'⌘ + C’}}】to copy the "
+#~ "following name and create:"
 
 #~ msgid ""
 #~ ",你可以按【{{isWindowClient ? \"Ctrl + C\":\"⌘ + C\"}}】复制以下名称创建："
