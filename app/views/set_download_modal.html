@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()">&times;</button>
+  <h4 translate>归档文件下载</h4>
+</div>
+<div class="modal-body">
+  <div>
+    <span ng-if="loading" translate>正在查询文件Restore状态,请稍后...</span>
+    <span ng-if="!loading && downloadFile.status=='completing'" translate>
+      该资源正在 Restore 中，预计需要几个小时的时间，请耐心等待。
+    </span>
+    <span ng-if="!loading && downloadFile.status=='norestore'" translate>
+      该文件是归档存储类型，需要 Restore 之后才能下载。
+    </span>
+    <div ng-if="!loading && downloadFile.status=='completed'">
+      <div><span translate>当前资源解冻到期时间</span>：{{downloadFile.expiryDate |formatTime}}</div>
+      <div translate>继续 Restore 操作可以延长 1 天资源解冻的时间，最长为 7 天。</div>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button ng-if="!loading && downloadFile.status=='completed'" type="button" class="btn btn-default pull-left" ng-click="onRestoreFile()">Restore</button>
+  <button ng-if="!loading && downloadFile.status=='completed'" type="button" class="btn btn-primary" ng-click="onDownload()" translate>下载</button>
+  <button ng-if="!loading && downloadFile.status=='norestore'" type="button" class="btn btn-primary" ng-click="onRestoreFile()">Restore</button>
+  <button type="button" class="btn btn-default" ng-click="cancel()" translate>取消</button>
+</div>

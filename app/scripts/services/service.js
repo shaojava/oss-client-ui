@@ -1062,47 +1062,65 @@ angular.module('ossClientUiApp')
             {
                 name: 'download',
                 text: gettext('下载'),
-                getState: function (selectedFiles) {
-                    var len = selectedFiles.length;
-                    if (!len) {
+                getState: function (selectedFiles, bucket) {
+                    if(!bucket){
                         return 0;
+                    }
+                    var len = selectedFiles.length;
+                    //归档bucket一次只能下载一个文件
+                    if(OSSConfig.isArchiveBucket(bucket)) {
+                        if(len != 1){
+                            return 0
+                        }
+                    }else{
+                      if (!len) {
+                        return 0;
+                      }
                     }
                     return 1;
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
-                    var list = _.map(selectedFiles, function (val) {
+                    if(OSSConfig.isArchiveBucket(bucket)) {
+                      OSSModal.downloadObject(bucket, selectedFiles);
+                    }else{
+                      var list = _.map(selectedFiles, function (val) {
                         return {
-                            location: bucket['Location'],
-                            bucket: bucket['Name'],
-                            object: val.path,
-                            filesize: val.size,
-                            etag:val.etag
+                          location: bucket['Location'],
+                          bucket: bucket['Name'],
+                          object: val.path,
+                          filesize: val.size,
+                          etag:val.etag
                         }
-                    });
-                    OSS.invoke('saveFileDlg',null,function(res){
-                      var _path = res.path
-                      if(_path){
-                        $rootScope.$broadcast('startDownloadFilesLoading');
-                        OSS.invoke('saveFile', {
-                          list: list,
-                          path:_path
-                        }, function (res) {
-                          $rootScope.$broadcast('endDownloadFilesLoading')
-                          if (!res.error) {
-                            $rootScope.$broadcast('toggleTransQueue', true, 'download');
-                            $rootScope.$broadcast('reloadDownloadQueue');
-                          } else {
-                            $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
-                          }
-                        })
-                      }
-                    })
+                      });
+                      OSS.invoke('saveFileDlg',null,function(res){
+                        var _path = res.path
+                        if(_path){
+                          $rootScope.$broadcast('startDownloadFilesLoading');
+                          OSS.invoke('saveFile', {
+                            list: list,
+                            path:_path
+                          }, function (res) {
+                            $rootScope.$broadcast('endDownloadFilesLoading')
+                            if (!res.error) {
+                              $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                              $rootScope.$broadcast('reloadDownloadQueue');
+                            } else {
+                              $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                            }
+                          })
+                        }
+                      })
+                    }
+
                 }
             },
             {
                 name: 'copy',
                 text: gettext('复制'),
-                getState: function (selectedFiles) {
+                getState: function (selectedFiles, bucket) {
+                    if(!bucket || OSSConfig.isArchiveBucket(bucket)){
+                        return 0;
+                    }
                     var len = selectedFiles.length;
                     if (!len) {
                         return 0;
@@ -1121,8 +1139,11 @@ angular.module('ossClientUiApp')
             {
                 name: 'paste',
                 text: gettext('粘贴'),
-                getState: function () {
-                    return Clipboard.len() ? 1 : -1;
+                getState: function (selectedFiles, bucket) {
+                  if(!bucket || OSSConfig.isArchiveBucket(bucket)){
+                    return -1;
+                  }
+                  return Clipboard.len() ? 1 : -1;
                 },
                 execute: function (bucket, currentObject, selectedFiles) {
                     var clipData = Clipboard.get();
@@ -1636,15 +1657,18 @@ angular.module('ossClientUiApp')
                   "</Channel>"
                 ].join('');
             },
-            getCreateBucketXML: function (region) {
+            getCreateBucketXML: function (bucketType) {
                 //去掉”-internal“
-                region = region.replace('-internal', '');
+                // region = region.replace('-internal', '');
                 return [
                     this.getXMLHeader(),
                     "<CreateBucketConfiguration >",
-                    "<LocationConstraint >",
-                    region,
-                    "</LocationConstraint >",
+                    // "<LocationConstraint >",
+                    // region,
+                    // "</LocationConstraint >",
+                        "<StorageClass>",
+                            bucketType,
+                         "</StorageClass>",
                     "</CreateBucketConfiguration >"
                 ].join('');
             },
@@ -1855,6 +1879,13 @@ angular.module('ossClientUiApp')
                  _deferred.reject(res,status);
               });
               return _deferred.promise;
+            },
+            getBucketTypes: function() {
+                return {
+                    "Standard": gettext("标准存储"),
+                    "IA": gettext("低频访问"),
+                    "Archive": gettext("归档存储")
+                }
             },
             getAcls: function () {
                 return {
@@ -2780,7 +2811,7 @@ angular.module('ossClientUiApp')
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource,null,true);
                 return $http.get(requestUrl);
             },
-            createBucket: function (bucketName, region, acl) {
+            createBucket: function (bucketName, region, acl, bucketType) {
                 var expires = getExpires();
                 var canonicalizedOSSheaders = {
                     'x-oss-acl': acl
@@ -2800,8 +2831,7 @@ angular.module('ossClientUiApp')
                 var headers = angular.extend({}, canonicalizedOSSheaders, {
                     'Content-Type': contentType
                 });
-                // RequestXML.getCreateBucketXML(region)
-                return $http.put(requestUrl,null, {
+                return $http.put(requestUrl,RequestXML.getCreateBucketXML(bucketType), {
                     headers: headers
                 });
             },
@@ -2883,6 +2913,25 @@ angular.module('ossClientUiApp')
 
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, getCanonicalizedResource(bucket.Name, encodeURIComponent(object)));
                 return $http.head(requestUrl);
+            },
+            restoreFile: function (bucket, objectPath) {
+              var expires = getExpires();
+              var canonicalizedResource = getCanonicalizedResource(bucket.Name, objectPath,{restore: undefined});
+              var contentType = 'application/xml';
+              var signature = OSS.invoke('getSignature', {
+                verb: 'POST',
+                content_type: contentType,
+                expires: expires,
+                canonicalized_resource: canonicalizedResource
+              });
+              var headers = angular.extend({}, {}, {
+                'Accept': contentType,
+                'Content-Type': contentType
+              });
+              var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource);
+              return $http.post(requestUrl,null,{
+                headers: headers
+              });
             },
             putObject: function (bucket, objectPath, headers, canonicalizedOSSheaders) {
                 var expires = getExpires();
@@ -3212,7 +3261,8 @@ angular.module('ossClientUiApp')
                         $scope.cBucket = {};
 
                         //bucket的权限
-                        var acls = [], regions = [];
+                        var acls = [], regions = [], types = [];
+
                         angular.forEach(Bucket.getAcls(), function (val, key) {
                             acls.push({
                                 name: val,
@@ -3220,8 +3270,21 @@ angular.module('ossClientUiApp')
                             })
                         });
                         $scope.acls = acls;
+                        angular.forEach(Bucket.getBucketTypes(), function (val, key) {
+                          types.push({
+                            name: val,
+                            value: key
+                          })
+                        });
+                        $scope.bucketTypes = types;
                         if (!bucket) {
                             $scope.acls.selected = $scope.acls[0];
+                            $scope.bucketTypes.selected = $scope.bucketTypes[0];
+                        }else{
+
+                           var buecktType = Util.Array.getObjectByKeyValue($scope.bucketTypes, 'value', bucket.StorageClass);
+                          console.log("bucket new::",bucket,buecktType,$scope.bucketTypes)
+                           bucket.StorageName = buecktType.name;
                         }
 
                         $scope.$watch('loading', function (newVal) {
@@ -3285,7 +3348,7 @@ angular.module('ossClientUiApp')
 
                         //创建bucket
                         $scope.loading = false;
-                        $scope.createBucket = function (bucketName, region, acl) {
+                        $scope.createBucket = function (bucketName, region, acl,bucketType) {
                             if (!bucketName || !bucketName.length) {
                                 $rootScope.$broadcast('showError',gettextCatalog.getString(gettext('Bucket的名称不能为空')));
                                 return;
@@ -3303,13 +3366,14 @@ angular.module('ossClientUiApp')
                                 return;
                             }
                             $scope.loading = true;
-                            OSSApi.createBucket(bucketName, region.location, acl.value).success(function (res) {
+                            OSSApi.createBucket(bucketName, region.location, acl.value,bucketType.value).success(function (res) {
                                 $scope.loading = false;
                                 $modalInstance.close({
                                     act: 'add',
                                     bucket: {
                                         Name: bucketName,
                                         Location: region.location,
+                                        StorageClass: bucketType.value,
                                         Acl: acl.value
                                     }
                                 });
@@ -5307,6 +5371,13 @@ angular.module('ossClientUiApp')
 
                         $scope.loading = true;
 
+                        $scope.isArchiveBucket = OSSConfig.isArchiveBucket(bucket);
+
+                        $scope.currentFile = {
+                          restore: null,
+                          status: 'norestore'
+                        };
+
                         $scope.$watch('loading', function (newVal) {
                             if (newVal) {
                                 usSpinnerService.spin('get-acl-spinner');
@@ -5315,19 +5386,70 @@ angular.module('ossClientUiApp')
                             }
                         });
 
-                        //获取bucket的acl信息
-                        OSSApi.getBucketAcl(bucket).success(function (res) {
-                            $scope.loading = false;
-                            if (res && res["AccessControlPolicy"] && res["AccessControlPolicy"]["AccessControlList"] && res["AccessControlPolicy"]["AccessControlList"]["Grant"]) {
+                        var formatRestoreStr = function(restoreStr){
+                            var restoreObj = {};
+                            var restoreArr = restoreStr.split('\",');
+                            angular.forEach(restoreArr,function(itemStr, index){
+                              var itemArr = itemStr.replace(/"/g,"").split("=");
+                              restoreObj[itemArr[0].replace(/ /g,"")] = itemArr[1];
+                              if(index == 0){
+                                restoreObj[itemArr[0]] = itemArr[1] == 'true' ? true : false
+                              }
+                            })
+                            return restoreObj;
+                        }
+
+                        var getObjectAcl = function(){
+                            //获取bucket的acl信息
+                            OSSApi.getBucketAcl(bucket).success(function (res) {
+                              $scope.loading = false;
+                              if (res && res["AccessControlPolicy"] && res["AccessControlPolicy"]["AccessControlList"] && res["AccessControlPolicy"]["AccessControlList"]["Grant"]) {
                                 var acl = res["AccessControlPolicy"]["AccessControlList"]["Grant"];
                                 if (acl != 'private') {
-                                    $scope.uri = OSSApi.getURI(bucket, object.path);
+                                  $scope.uri = OSSApi.getURI(bucket, object.path);
                                 }
+                              }
+                            }).error(function (res,status) {
+                              $scope.loading = false;
+                              $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                            });
+                        }
+
+                        if($scope.isArchiveBucket){
+                          OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
+                            var headers = getHeader();
+                            if(headers['x-oss-restore']){
+                              $scope.currentFile.restore = formatRestoreStr(headers['x-oss-restore']);
+                              if($scope.currentFile.restore['ongoing-request']){
+                                $scope.currentFile.status = 'completing';
+                              }else{
+                                $scope.currentFile.expiryDate = new Date($scope.currentFile.restore['expiry-date']);
+                                $scope.currentFile.status = 'completed';
+                                getObjectAcl();
+                              }
                             }
-                        }).error(function (res,status) {
-                            $scope.loading = false;
-                            $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
-                        });
+                            $scope.loading = false
+                          })
+                        }else{
+                          getObjectAcl();
+                        }
+
+                        $scope.onRestoreFile = function () {
+                            OSSApi.restoreFile(bucket, object.path).then(function(res,status) {
+                              if(+res.status == 202){
+                                $scope.currentFile.restore = {'ongoing-request': true}
+                                $scope.currentFile.status = 'completing';
+                                OSSAlert.success('Restore 请求提交成功，该操作可能需要几个小时的时间，请耐心等待。');
+                                $modalInstance.dismiss('cancel');
+                              }else if(+res.status == 200) {
+                                OSSAlert.success('Restore 请求发送成功!');
+                                $modalInstance.dismiss('cancel');
+                              }
+                            },function(res, status){
+                              $scope.loading = false;
+                              $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                            })
+                        }
 
                         //获取私有bucket的uri
                         $scope.getUri = function (expire) {
@@ -5446,6 +5568,106 @@ angular.module('ossClientUiApp')
                 };
                 option = angular.extend({}, defaultOption, option);
                 return $modal.open(option);
+            },
+            downloadObject: function (bucket, selectFiles) {
+              var option = {
+                templateUrl: 'views/set_download_modal.html',
+                windowClass: 'set-download-modal',
+                controller: function ($scope, $modalInstance) {
+                  $scope.downloadFile = {
+                      restore: null,
+                      status: 'norestore'
+                  };
+                  var object = selectFiles[0];
+                  $scope.loading = true;
+                  var formatRestoreStr = function(restoreStr){
+                    var restoreObj = {};
+
+                    var restoreArr = restoreStr.split('\",');
+                    angular.forEach(restoreArr,function(itemStr, index){
+                      var itemArr = itemStr.replace(/"/g,"").split("=");
+                      restoreObj[itemArr[0].replace(/ /g,"")] = itemArr[1];
+                      if(index == 0){
+                        restoreObj[itemArr[0]] = itemArr[1] == 'true' ? true : false
+                      }
+                    })
+                    return restoreObj;
+                  }
+                  OSSApi.getObjectMeta(bucket, object.path).success(function (data, status, getHeader) {
+                    $scope.loading = false
+                    var headers = getHeader();
+                    if(headers['x-oss-restore']){
+                      console.log('get restore data:', headers['x-oss-restore'])
+                      $scope.downloadFile.restore = formatRestoreStr(headers['x-oss-restore']);
+                      if($scope.downloadFile.restore['ongoing-request']){
+                          $scope.downloadFile.status = 'completing';
+                      }else{
+                        $scope.downloadFile.expiryDate = new Date($scope.downloadFile.restore['expiry-date']);
+                        $scope.downloadFile.status = 'completed';
+                      }
+                    }
+
+                  }).error(function (res,status) {
+                    $scope.loading = false;
+                    $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                  });
+
+                  $scope.onDownload = function () {
+                      console.log("start download file:::", selectFiles)
+                    var list = _.map(selectFiles, function (val) {
+                      return {
+                        location: bucket['Location'],
+                        bucket: bucket['Name'],
+                        object: val.path,
+                        filesize: val.size,
+                        etag:val.etag
+                      }
+                    });
+                    OSS.invoke('saveFileDlg',null,function(res){
+                      var _path = res.path
+                      if(_path){
+                        $rootScope.$broadcast('startDownloadFilesLoading');
+                        OSS.invoke('saveFile', {
+                          list: list,
+                          path:_path
+                        }, function (res) {
+                          $rootScope.$broadcast('endDownloadFilesLoading')
+                          if (!res.error) {
+                            $rootScope.$broadcast('toggleTransQueue', true, 'download');
+                            $rootScope.$broadcast('reloadDownloadQueue');
+                          } else {
+                            $rootScope.$broadcast('showError', OSSException.getClientErrorMsg(res));
+                          }
+                        })
+                      }
+                    })
+                  }
+
+                  $scope.onRestoreFile = function () {
+                    OSSApi.restoreFile(bucket, object.path).then(function(res,status){
+                      if(+res.status == 202){
+                        $scope.downloadFile.restore = {'ongoing-request': true}
+                        $scope.downloadFile.status = 'completing';
+                        OSSAlert.success('Restore 请求提交成功，该操作可能需要几个小时的时间，请耐心等待。');
+                        $modalInstance.dismiss('cancel');
+                      }else if(+res.status == 200){
+                        OSSAlert.success('Restore 请求发送成功!');
+                        $modalInstance.dismiss('cancel');
+                      }
+                    },function(res, status){
+                      $scope.loading = false;
+                      $rootScope.$broadcast('showError',OSSException.getError(res,status).msg);
+                    })
+                  }
+
+                  $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                  };
+
+                }
+              }
+              option = angular.extend({}, defaultOption, option);
+              return $modal.open(option);
             }
         };
         return OSSModal;

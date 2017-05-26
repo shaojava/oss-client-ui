@@ -43,6 +43,7 @@ angular.module('OSSCommon', [
         var _lan = {type:_defaultLan.key}
         if (OSSClient.gGetLanguage){
           var _l = OSS.invoke('gGetLanguage')
+
           var _cl = _.find(_lanArrs,function(item){
             return +item.key === +_l.type
           })
@@ -334,7 +335,7 @@ angular.module('OSSCommon', [
                 showRam:true,
                 showNews:true,
                 hideCustomServer:false,
-                defaultLan:"en_US", //zh_CN
+                defaultLan:"zh_CN", //zh_CN
                 host: "aliyuncs.com",
                 news:{
                   isPreview:false,
@@ -437,6 +438,12 @@ angular.module('OSSCommon', [
             };
         }
         return {
+            isArchiveBucket: function(bucket){
+              if(bucket){
+                return bucket.StorageClass == 'Archive';
+              }
+              return false
+            },
             isHideLogo:function (){
               return config.hideLogo
             },

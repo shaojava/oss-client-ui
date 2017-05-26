@@ -255,6 +255,15 @@
     margin:0 auto;
   }
 }
+.set-download-modal{
+  .modal-dialog{
+    width:500px;
+  }
+  .modal-body {
+    padding: 15px 30px !important;
+    line-height: 30px;
+  }
+}
 
 .ram-setting-modal,
 .create-ram-items-modal,

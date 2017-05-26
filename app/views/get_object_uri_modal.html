@@ -13,7 +13,15 @@
                     </div>
                 </div>
             </li>
-            <li >
+            <li ng-if="isArchiveBucket && currentFile.status!='completed'">
+                <div ng-if="currentFile.status == 'norestore'">
+                    <div class="col-sm-12 input-wrapper" style="padding-left:68px;" translate>该文件是归档存储类型，需要 Restore 之后才能获取地址。</div>
+                </div>
+                <div ng-if="currentFile.status == 'completing'">
+                    <div class="col-sm-12 input-wrapper" style="padding-left:68px;" translate>该资源正在 Restore 中，预计需要几个小时的时间，请耐心等待。</div>
+                </div>
+            </li>
+            <li ng-if="!isArchiveBucket || (isArchiveBucket && currentFile.status=='completed')">
                 <form name="getURIForm">
                     <div class="form-group">
                         <label class="col-sm-3 control-label" translate>地址：</label>
@@ -44,5 +52,6 @@
     <span us-spinner="{radius:10, length: 0}" spinner-key="get-acl-spinner"  spinner-start-active="1"></span>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" ng-click="cancel()" translate>确定</button>
+    <button type="button" ng-if="isArchiveBucket && currentFile.status == 'norestore'" class="btn btn-primary" ng-click="onRestoreFile()">Restore</button>
+    <button type="button" class="btn btn-default" ng-click="cancel()" translate>取消</button>
 </div>
