@@ -82,7 +82,7 @@
                 <li><a href="javascript:;" ng-click="manageBucketPartition(activeBucket)" translate>碎片管理</a></li>
                 <li><a href="javascript:;" ng-if="showRefer" ng-click="setRefer(activeBucket)" translate>Refer设置</a></li>
                 <li><a href="javascript:;" ng-if="showChannel" ng-click="setImageServer(activeBucket)" translate>图片设置</a></li>
-                <li><a href="javascript:;" ng-click="downloadBucket(activeBucket)" translate>Bucket下载</a></li>
+                <li><a href="javascript:;" ng-if="!isArchive" ng-click="downloadBucket(activeBucket)" translate>Bucket下载</a></li>
                 <li><a href="javascript:;" ng-if="activeBucket.Custom" ng-click="removeBucket(activeBucket)" translate>Bucket移除</a></li>
             </ul>
         </div>

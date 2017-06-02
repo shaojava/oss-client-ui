@@ -996,7 +996,10 @@ angular.module('ossClientUiApp')
             {
               name: 'downloadcurrent',
               text: gettext('下载当前目录'),
-              getState: function(){
+              getState: function(selectFiles, bucket){
+                if(OSSConfig.isArchiveBucket(bucket)){
+                    return 0
+                }
                 return 1;
               },
               execute: function (bucket, currentObject){

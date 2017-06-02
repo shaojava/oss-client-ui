@@ -73,7 +73,7 @@
 
 <div class="dropdown position-fixed" id="menu-select-file">
     <ul class="dropdown-menu" role="menu">
-        <li ng-repeat="menu in selectFileMenuList" ng-show="menu.getState(getSelectedList())>0">
+        <li ng-repeat="menu in selectFileMenuList" ng-show="menu.getState(getSelectedList(), bucket)>0">
             <a class="pointer" href="javascript:void(0)" role="menuitem" tabindex="1" ng-click="menu.execute(bucket,objectPrefix,getSelectedList())">
                 {{menu.text|translate}}
             </a>
@@ -83,7 +83,7 @@
 
 <div class="dropdown position-fixed" id="menu-current-file">
     <ul class="dropdown-menu" role="menu">
-        <li ng-repeat="menu in currentFileMenuList" ng-show="menu.getState(getSelectedList())>0">
+        <li ng-repeat="menu in currentFileMenuList" ng-show="menu.getState(getSelectedList(), bucket)>0">
             <a class="pointer" href="javascript:void(0)" role="menuitem" tabindex="1" ng-click="menu.execute(bucket,objectPrefix,getSelectedList())">
                 {{menu.text|translate}}
             </a>

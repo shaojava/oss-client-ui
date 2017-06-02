@@ -547,6 +547,7 @@ msgstr ""
 #: app/views/add_visit_bucket_modal.html:27
 #: app/views/create-ram-items.html:145
 #: app/views/del_bucket_confirm_modal.html:23
+#: app/views/get_object_uri_modal.html:56
 #: app/views/queue-item.html:12
 #: app/views/ram-group-manage.html:250
 #: app/views/ram-policy-manage.html:92
@@ -632,12 +633,12 @@ msgstr ""
 msgid "在"
 msgstr ""
 
-#: app/views/get_object_uri_modal.html:19
+#: app/views/get_object_uri_modal.html:27
 msgid "地址："
 msgstr ""
 
 #: app/scripts/services/service.js:1119
-#: app/views/get_object_uri_modal.html:35
+#: app/views/get_object_uri_modal.html:43
 msgid "复制"
 msgstr ""
 
@@ -730,7 +731,7 @@ msgstr ""
 msgid "已加入"
 msgstr ""
 
-#: app/scripts/services/service.js:5403
+#: app/scripts/services/service.js:5461
 msgid "已复制到剪切板"
 msgstr ""
 
@@ -799,6 +800,10 @@ msgstr ""
 
 #: app/views/setting_modal.html:55
 msgid "当前语言："
+msgstr ""
+
+#: app/views/set_download_modal.html:15
+msgid "当前资源解冻到期时间"
 msgstr ""
 
 #: app/scripts/controllers/main.js:312
@@ -1159,6 +1164,10 @@ msgstr ""
 msgid "正在加载下载列表，当前已加载了"
 msgstr ""
 
+#: app/views/set_download_modal.html:7
+msgid "正在查询文件Restore状态,请稍后..."
+msgstr ""
+
 #: app/index.html:208
 msgid "没有上传"
 msgstr ""
@@ -1440,7 +1449,6 @@ msgstr ""
 #: app/views/callback-setting.html:48
 #: app/views/create-ram-items.html:144
 #: app/views/del_bucket_confirm_modal.html:22
-#: app/views/get_object_uri_modal.html:47
 #: app/views/ram-group-manage.html:249
 #: app/views/ram-role-manage.html:190
 #: app/views/ram-setting.html:203
@@ -1461,7 +1469,7 @@ msgstr ""
 msgid "确定要删除？"
 msgstr ""
 
-#: app/scripts/services/service.js:5501
+#: app/scripts/services/service.js:5559
 msgid "确定要删除Bucket “{{bucketName}}“吗？删除后数据将无法恢复"
 msgstr ""
 
@@ -1535,7 +1543,7 @@ msgstr ""
 msgid "私有"
 msgstr ""
 
-#: app/views/get_object_uri_modal.html:25
+#: app/views/get_object_uri_modal.html:33
 #: app/views/set_speed_modal.html:15
 msgid "秒"
 msgstr ""
@@ -1677,6 +1685,10 @@ msgstr ""
 msgid "终止操作"
 msgstr ""
 
+#: app/views/set_download_modal.html:16
+msgid "继续 Restore 操作可以延长 1 天资源解冻的时间，最长为 7 天。"
+msgstr ""
+
 #: app/views/upload_detail_modal.html:8
 msgid "编号"
 msgstr ""
@@ -1732,7 +1744,7 @@ msgstr ""
 msgid "自定义服务地址设置后只有设置了登录密码才能一直保存，否则下次登录时将自动清空。"
 msgstr ""
 
-#: app/views/get_object_uri_modal.html:27
+#: app/views/get_object_uri_modal.html:35
 msgid "获取"
 msgstr ""
 
@@ -1853,6 +1865,19 @@ msgstr ""
 msgid "设置默认成功！"
 msgstr ""
 
+#: app/views/set_download_modal.html:11
+msgid "该文件是归档存储类型，需要 Restore 之后才能下载。"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:18
+msgid "该文件是归档存储类型，需要 Restore 之后才能获取地址。"
+msgstr ""
+
+#: app/views/get_object_uri_modal.html:21
+#: app/views/set_download_modal.html:8
+msgid "该资源正在 Restore 中，预计需要几个小时的时间，请耐心等待。"
+msgstr ""
+
 #: app/scripts/services/service.js:1353
 msgid "详细"
 msgstr ""
@@ -1875,13 +1900,13 @@ msgstr ""
 
 #: app/scripts/export-authorization.js:42
 #: app/scripts/login.js:98
-#: app/scripts/services/service.js:5493
+#: app/scripts/services/service.js:5551
 msgid "请输入 Access Key ID"
 msgstr ""
 
 #: app/scripts/export-authorization.js:47
 #: app/scripts/login.js:103
-#: app/scripts/services/service.js:5497
+#: app/scripts/services/service.js:5555
 msgid "请输入 Access Key Secret"
 msgstr ""
 
@@ -1900,7 +1925,7 @@ msgstr ""
 msgid "请输入名称"
 msgstr ""
 
-#: app/views/get_object_uri_modal.html:39
+#: app/views/get_object_uri_modal.html:47
 msgid "请输入大于0的整数"
 msgstr ""
 
@@ -1957,7 +1982,7 @@ msgstr ""
 msgid "请输入邮箱"
 msgstr ""
 
-#: app/views/get_object_uri_modal.html:21
+#: app/views/get_object_uri_modal.html:29
 msgid "请输入链接的有效期："
 msgstr ""
 
