@@ -1725,7 +1725,7 @@ angular.module('ossClientUiApp')
                         if(res['ListAllMyBucketsResult']['Buckets'] && res['ListAllMyBucketsResult']['Buckets']['Bucket']){
                             resBuckets = res['ListAllMyBucketsResult']['Buckets']['Bucket'];
                         }
-
+                        console.log('current buckets:', resBuckets)
                         if(resBuckets){
                             buckets = []
                             var _list = angular.isArray(resBuckets) ? resBuckets : [resBuckets]
@@ -1738,15 +1738,16 @@ angular.module('ossClientUiApp')
                                         }
                                     })
                                 }else {
-                                    //console.log("=========load bucket=========",resBuckets)
+                                    console.log("=========load bucket=========",resBuckets)
                                     var intranetLocations =  []
-                                    //console.log("=========isIntranet=========",isIntranet)
+                                    console.log("=========isIntranet=========",isIntranet)
                                     if(isIntranet && isIntranetNet === '1'){
                                       intranetLocations = OSSRegion.getIntranetLocationItem();
                                     }else{
+                                      console.log('---get internet location item---')
                                       intranetLocations = [OSSRegion.getInternetLocationItem()].concat([OSSRegion.getIntranetInner(OSSConfig.hasMoreZwLocations())])
                                     }
-                                    //console.log("=========intranetLocations=========",intranetLocations,_list)
+                                    console.log("=========intranetLocations=========",intranetLocations, _list)
                                     angular.forEach(_list, function (bucket) {
                                         if(OSSConfig.isHuaTongClient()){
                                           bucket.Location = 'oss-cn-hangzhou-hsa'
@@ -2698,6 +2699,7 @@ angular.module('ossClientUiApp')
 
         var getCanonicalizedResource = function (bucketName, objectName, subResources) {
             var subResourcesStr = subResources ? Util.param(subResources) : '';
+            console.log('----request url----', subResourcesStr)
             return '/' + (bucketName ? bucketName + '/' : '') + (objectName ? objectName : '') + (subResourcesStr ? '?' + subResourcesStr : '');
         };
 
@@ -2781,7 +2783,7 @@ angular.module('ossClientUiApp')
             },
             saveBucketChannel:function (bucketName,bucketRegion,_status,_origPicForbidden,_useStyleOnly){
               var expires = getExpires();
-              var canonicalizedResource = getCanonicalizedResource(bucketName);
+              var canonicalizedResource = getCanonicalizedResource(bucketName, null, {img:undefined});
               var contentType = 'application/xml';
               var signature = OSS.invoke('getSignature', {
                 verb: 'PUT',
@@ -2799,19 +2801,21 @@ angular.module('ossClientUiApp')
                 'Content-Type': contentType
               });
               var requestUrl = getRequestUrl(bucketName, bucketRegion, expires, signature, canonicalizedResource,null,true);
+              console.log('put channal url: ', requestUrl)
               return $http.put(requestUrl,RequestXML.getCreateChannelXml(setting),{
                 headers: headers
               });
             },
             getBucketChannel: function (bucket) {
                 var expires = getExpires();
-                var canonicalizedResource = getCanonicalizedResource(bucket.Name);
+                var canonicalizedResource = getCanonicalizedResource(bucket.Name, null, {img:undefined});
                 var signature = OSS.invoke('getSignature', {
                   verb: 'GET',
                   expires: expires,
                   canonicalized_resource: canonicalizedResource
                 });
                 var requestUrl = getRequestUrl(bucket.Name, bucket.Location, expires, signature, canonicalizedResource,null,true);
+                console.log('get bucket channel: ', requestUrl)
                 return $http.get(requestUrl);
             },
             createBucket: function (bucketName, region, acl, bucketType) {
@@ -3262,6 +3266,8 @@ angular.module('ossClientUiApp')
                         $scope.bucket = bucket || null;
 
                         $scope.cBucket = {};
+  
+                        $scope.isCustomClient = OSSConfig.isCustomClient();
 
                         //bucket的权限
                         var acls = [], regions = [], types = [];

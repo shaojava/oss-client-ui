@@ -1,0 +1,87 @@
+{
+    "source": "guizhou",
+    "disable_location_select": 1,
+    "host": "aliyuncs.com",
+    "news":{
+            "isPreview":false,
+            "clientType":"guizhou",
+            "key":"staycloud",
+            "baseUri":"http://ossupdate.jiagouyun.com",
+            "getUri":"/Interface/getNewAd",
+            "clickUri":"/Interface/onAdClick"
+          },
+    "showrefer":true,
+    "showchannel":true,
+    "showLanSetting":false,
+    "defaultLan":"zh_CN",
+	   "showRam":true,
+    "locations": [
+
+        {
+            "location": "oss-cn-guizhou-a",
+            "customhost":"oss.gzdata.com.cn",
+            "imghost":"oss-picture.gzdata.com.cn",
+            "name": "观山湖集群-互联网",
+            "enable": 1,
+            "network":"internet",
+            "locationKey": "guizhou"
+        },
+        {
+            "location": "oss-cn-guizhou-a-internal",
+            "customhost":"oss.gzdata.gov.cn",
+            "imghost":"oss-picture.gzdata.gov.cn",
+            "name": "观山湖集群-经典网络",
+            "enable": 1,
+            "network":"intranet",
+            "locationKey": "guizhou"
+        },
+        {
+            "location": "oss-cn-gzzwy-a-internal",
+            "customhost":"oss-intranet.gzdata.gov.cn",
+            "imghost":"oss-intranet-picture.gzdata.gov.cn",
+            "name": "观山湖集群-政务外网",
+            "enable": 1,
+            "network":"intranet",
+            "locationKey": "guizhou"
+        },
+		      {
+            "location": "oss-cn-guizhou-gov",
+            "name": "贵安节点-互联网",
+            "enable": 1,
+            "network":"internet",
+            "locationKey": "guian"
+        },
+		      {
+            "location": "oss-cn-guizhou-gov-internal",
+            "name": "贵安节点-政务外网",
+            "enable": 1,
+            "network":"intranet",
+            "locationKey": "guian"
+        },
+        {
+            "location": "oss-cn-hangzhou",
+            "name": "杭州",
+            "enable": 0
+        },
+        {
+            "location": "oss-cn-qingdao",
+            "name": "青岛",
+            "enable": 0
+        },
+        {
+            "location": "oss-cn-beijing",
+            "name": "北京",
+            "enable": 0
+        },
+        {
+            "location": "oss-cn-hongkong",
+            "name": "香港",
+            "enable": 0
+        },
+        {
+            "location": "oss-cn-shenzhen",
+            "name": "深圳",
+            "enable": 0
+        }
+    ]
+}

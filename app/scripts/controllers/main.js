@@ -919,7 +919,7 @@ angular.module('ossClientUiApp')
 
         //点击空白处取消选中
         $scope.handleFileListClick = function($event){
-            if($($event.target).closest('.file-item').size()){
+            if($($event.target).closest('.file-item').length){
                 return;
             }
             $scope.unSelectAll();

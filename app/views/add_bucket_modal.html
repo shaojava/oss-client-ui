@@ -18,7 +18,7 @@
               <i class="glyphicon glyphicon-info-sign" tooltip-placement="right" tooltip="{{'以小写字母和数字开头及结尾并且只能包含小写字母、数字及横线的长度限制在3-63之间的字符'|translate}}"></i>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="!isCustomClient">
           <label for="types" class="col-sm-3 control-label" translate>存储类型：</label>
           <div class="col-sm-5">
             <ui-select ng-model="bucketTypes.selected" search-enabled="false" ng-if="!bucket">

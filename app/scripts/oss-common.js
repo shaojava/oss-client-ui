@@ -981,12 +981,12 @@ angular.module('OSSCommon', [
             restrict: 'A',
             link: function (scope, element, attrs) {
                 attrs.$observe('scrollToItem', function (newVal) {
-                    if(typeof newVal === 'undefiend') return;
+                    if(!newVal || typeof newVal === 'undefiend') return;
                     $timeout(function () {
                         var index = newVal;
                         if (index < 0) return;
                         var $fileItem = element.find(attrs.itemSelector + ':eq(' + index + ')');
-                        if (!$fileItem.size()) return;
+                        if (!$fileItem.length) return;
                         var top = $fileItem.position().top;
                         var grep = top + $fileItem.height() - element.height();
                         if (top < 0) {

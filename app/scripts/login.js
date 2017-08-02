@@ -84,9 +84,10 @@ angular
 
         //提交登录
         $scope.login = function (accessKeyId, accessKeySecret, isCloudHost, region) {
-            console.info("login oss argument:",arguments)
-            //return false;
-            if(OSSConfig.isGuiZhouClient()){
+            console.info("login oss argument111:",arguments)
+            localStorageService.remove(OSSRegion.getRegionPerfix())
+            // return false;
+            if(OSSConfig.isGuiZhouClient() && region.locationKey == 'guizhou'){
               if (OSSRegion.isIntranet(null,region.network)){
                   localStorageService.set(OSSRegion.getRegionPerfix(),1);
               }else{
@@ -251,7 +252,6 @@ angular
                         }
                     }
                 });
-
             })
         };
 
